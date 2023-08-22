@@ -1,15 +1,42 @@
-import fastify from 'fastify'
+import Fastify, { FastifyError } from 'fastify'
+import * as plugins from './plugins'
 
-const server = fastify()
+const fastify: any = Fastify({
+  logger: plugins.logger,
+  ignoreTrailingSlash: true,
+  ignoreDuplicateSlashes: true
+});
 
-server.get('/ping', async (req, res) => {
-  return 'pong\n'
-})
+const initialize = async () => {
+  await plugins.envPlugin(fastify);
+  await fastify.after()
 
-server.listen({ port: 8080 }, (err, address) => {
-  if (err) {
-    console.error(err)
+  await plugins.websocketPlugin(fastify).ready((err: Error) => {
+    if (err) console.error(err)
+  });
+
+  await plugins.corsPlugin(fastify).ready((err: Error) => {
+    if (err) console.error(err)
+  });
+};
+
+initialize();
+
+fastify.get('/', async () => {
+  return { hello: 'world' };
+});
+
+(async () => {
+  try {
+    await fastify.ready()
+    await fastify.listen({ port: fastify.config.PORT }, (err: FastifyError) => {
+      if (err) {
+        fastify.log.error(err);
+        process.exit(1);
+      }
+    });
+  } catch (error) {
+    fastify.log.error(error)
     process.exit(1)
   }
-  console.log(`Server listening at ${address}`)
-})
+})();

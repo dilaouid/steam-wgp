@@ -12,12 +12,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cors": "^8.3.0",
+    "@fastify/env": "^4.2.0",
+    "@fastify/websocket": "^8.2.0",
     "fastify": "^4.21.0",
-    "passport-steam": "^1.0.18"
+    "fastify-env": "^2.2.0",
+    "passport-steam": "^1.0.18",
+    "pino": "^8.15.0",
+    "socket.io": "^4.7.2"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.1",
     "@types/node": "^20.5.0",
+    "@types/passport": "^1.0.12",
+    "@types/ws": "^8.5.5",
     "typescript": "^5.1.6"
   }
 }
