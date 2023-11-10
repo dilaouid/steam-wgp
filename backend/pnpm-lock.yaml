@@ -16,13 +16,16 @@ dependencies:
     version: 8.2.0
   drizzle-orm:
     specifier: ^0.29.0
-    version: 0.29.0
+    version: 0.29.0(postgres@3.4.3)
   fastify:
     specifier: ^4.24.3
     version: 4.24.3
   fastify-env:
     specifier: ^2.2.0
     version: 2.2.0
+  fastify-plugin:
+    specifier: ^4.5.1
+    version: 4.5.1
   passport:
     specifier: ^0.6.0
     version: 0.6.0
@@ -32,6 +35,9 @@ dependencies:
   pino:
     specifier: ^8.16.1
     version: 8.16.1
+  postgres:
+    specifier: ^3.4.3
+    version: 3.4.3
   socket.io:
     specifier: ^4.7.2
     version: 4.7.2
@@ -1019,7 +1025,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /drizzle-orm@0.29.0:
+  /drizzle-orm@0.29.0(postgres@3.4.3):
     resolution: {integrity: sha512-AC+CuW4GezVjsZDGU9u9B4HyikudOyYVhjm6he3Xn1D6Kky7bHGKob97MMX2piO+t9b6UuajLzlii/T/lu1qwA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -1080,6 +1086,8 @@ packages:
         optional: true
       sqlite3:
         optional: true
+    dependencies:
+      postgres: 3.4.3
     dev: false
 
   /engine.io-parser@5.2.1:
@@ -1788,6 +1796,11 @@ packages:
       safe-stable-stringify: 2.4.3
       sonic-boom: 3.7.0
       thread-stream: 2.4.1
+    dev: false
+
+  /postgres@3.4.3:
+    resolution: {integrity: sha512-iHJn4+M9vbTdHSdDzNkC0crHq+1CUdFhx+YqCE+SqWxPjm+Zu63jq7yZborOBF64c8pc58O5uMudyL1FQcHacA==}
+    engines: {node: '>=12'}
     dev: false
 
   /printable-characters@1.0.42:
