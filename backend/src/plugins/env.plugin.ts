@@ -2,7 +2,7 @@ import fastifyEnv from '@fastify/env';
 
 const schema = {
     type: 'object',
-    required: ['PORT'],
+    required: ['PORT', 'STEAM_API_KEY'],
     properties: {
         PORT: {
             type: 'string',
@@ -11,16 +11,17 @@ const schema = {
         ORIGIN: {
             type: 'string',
             default: 'http://localhost:3000'
+        },
+        STEAM_API_KEY: {
+            type: 'string'
         }
     }
 };
 
-const options = {
-    confKey: 'config',
-    schema,
-    dotenv: true
-};
-
 export const envPlugin = async (fastify: any) => {
-    return fastify.register(fastifyEnv, options);
+    return fastify.register(fastifyEnv, {
+        confKey: 'config',
+        schema,
+        dotenv: true
+    });
 };
