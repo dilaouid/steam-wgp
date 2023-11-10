@@ -14,6 +14,10 @@ const schema = {
         },
         STEAM_API_KEY: {
             type: 'string'
+        },
+        DATABASE_URL: {
+            type: 'string',
+            default: 'postgres://postgres:postgres@localhost:5432/steam'
         }
     }
 };
