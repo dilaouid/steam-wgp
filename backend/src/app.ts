@@ -16,7 +16,7 @@ fastify.get('/', async () => {
 const initialize = async () => {
   try {
     await plugins.envPlugin(fastify);
-    // await fastify.after();
+    await fastify.after();
 
     // ====================  Every plugins are loaded, we can now load the routes below
     plugins.websocketPlugin(fastify).ready((err: Error) => {
@@ -26,6 +26,9 @@ const initialize = async () => {
     plugins.corsPlugin(fastify).ready((err: Error) => {
       if (err) fastify.log.error(err);
     });
+
+    await fastify.register(plugins.drizzlePlugin, { databaseUrl: fastify.config.DATABASE_URL });
+
     // ==================== End of plugins loading
 
     // ==================== Server boot and listen
