@@ -1,5 +1,5 @@
-import Fastify, { FastifyError } from 'fastify'
-import * as plugins from './plugins'
+import Fastify, { FastifyError } from 'fastify';
+import * as plugins from './plugins';
 
 const fastify: any = Fastify({
   logger: plugins.logger,
@@ -7,36 +7,37 @@ const fastify: any = Fastify({
   ignoreDuplicateSlashes: true
 });
 
-const initialize = async () => {
-  await plugins.envPlugin(fastify);
-  await fastify.after()
-
-  await plugins.websocketPlugin(fastify).ready((err: Error) => {
-    if (err) console.error(err)
-  });
-
-  await plugins.corsPlugin(fastify).ready((err: Error) => {
-    if (err) console.error(err)
-  });
-};
-
-initialize();
-
+// ==================== Routes loading below
 fastify.get('/', async () => {
   return { hello: 'world' };
 });
+// ==================== End of routes loading
 
-(async () => {
+const initialize = async () => {
   try {
-    await fastify.ready()
-    await fastify.listen({ port: fastify.config.PORT }, (err: FastifyError) => {
-      if (err) {
-        fastify.log.error(err);
-        process.exit(1);
-      }
+    await plugins.envPlugin(fastify);
+    // await fastify.after();
+
+    // ====================  Every plugins are loaded, we can now load the routes below
+    plugins.websocketPlugin(fastify).ready((err: Error) => {
+      if (err) fastify.log.error(err);
     });
-  } catch (error) {
-    fastify.log.error(error)
-    process.exit(1)
+
+    plugins.corsPlugin(fastify).ready((err: Error) => {
+      if (err) fastify.log.error(err);
+    });
+    // ==================== End of plugins loading
+
+    // ==================== Server boot and listen
+    const port = parseInt(fastify.config.PORT, 10) || 8000;
+    await fastify.listen({port, listenTextResolver: (address: string) => {
+      return `Server listening on port ${address}:${port}`
+    }});
+
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
   }
-})();
+};
+
+initialize();
