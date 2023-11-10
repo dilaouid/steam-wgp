@@ -20,6 +20,9 @@ dependencies:
   fastify-env:
     specifier: ^2.2.0
     version: 2.2.0
+  passport:
+    specifier: ^0.6.0
+    version: 0.6.0
   passport-steam:
     specifier: ^1.0.18
     version: 1.0.18
@@ -40,6 +43,9 @@ devDependencies:
   '@types/passport':
     specifier: ^1.0.12
     version: 1.0.12
+  '@types/passport-steam':
+    specifier: ^1.0.1
+    version: 1.0.1
   '@types/ws':
     specifier: ^8.5.5
     version: 8.5.5
@@ -173,6 +179,10 @@ packages:
 
   /@types/node@20.5.0:
     resolution: {integrity: sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q==}
+
+  /@types/passport-steam@1.0.1:
+    resolution: {integrity: sha512-dgqJLk0SxquRE8rbF3FLVtkCUvGqKdzSeLmeVQ3SQlzCSiiT0UnA9oJz8fFjUjZ/j673SvzYkRLQ1OKP7oA0XQ==}
+    dev: true
 
   /@types/passport@1.0.12:
     resolution: {integrity: sha512-QFdJ2TiAEoXfEQSNDISJR1Tm51I78CymqcBa8imbjo6dNNu+l2huDxxbDEIoFIwOSKMkOfHEikyDuZ38WwWsmw==}
@@ -633,6 +643,24 @@ packages:
       - debug
     dev: false
 
+  /passport-strategy@1.0.0:
+    resolution: {integrity: sha512-CB97UUvDKJde2V0KDWWB3lyf6PC3FaZP7YxZ2G8OAtn9p4HI9j9JLP9qjOGZFvyl8uwNT8qM+hGnz/n16NI7oA==}
+    engines: {node: '>= 0.4.0'}
+    dev: false
+
+  /passport@0.6.0:
+    resolution: {integrity: sha512-0fe+p3ZnrWRW74fe8+SvCyf4a3Pb2/h7gFkQ8yTJpAO50gDzlfjZUZTO1k5Eg9kUct22OxHLqDZoKUWRHOh9ug==}
+    engines: {node: '>= 0.4.0'}
+    dependencies:
+      passport-strategy: 1.0.0
+      pause: 0.0.1
+      utils-merge: 1.0.1
+    dev: false
+
+  /pause@0.0.1:
+    resolution: {integrity: sha512-KG8UEiEVkR3wGEb4m5yZkVCzigAD+cVEJck2CzYZO37ZGJfctvVptVO192MwrtPhzONn6go8ylnOdMhKqi4nfg==}
+    dev: false
+
   /pino-abstract-transport@1.0.0:
     resolution: {integrity: sha512-c7vo5OpW4wIS42hUVcT5REsL8ZljsUfBjqV/e2sFxmFEFZiq1XLUp5EYLtuDH6PEHq9W1egWqRbnLUP5FuZmOA==}
     dependencies:
@@ -853,6 +881,11 @@ packages:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
       punycode: 2.3.0
+    dev: false
+
+  /utils-merge@1.0.1:
+    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
+    engines: {node: '>= 0.4.0'}
     dev: false
 
   /vary@1.1.2:
