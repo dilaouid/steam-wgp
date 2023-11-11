@@ -6,7 +6,7 @@ export const logger = pino({
     target: 'pino-pretty',
     options: {
       colorize: true,
-      messageFormat: '{levelLabel} {msg}',
+      messageFormat: '{msg}',
       singleLine: true
     }
   }
