@@ -7,6 +7,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     server: fastify.server,
     verifyClient: function (info, next) {
       // [todo] jwt mw check
+      fastify.log.info('websocket verifyClient');
+      next(true);
     }
   }});
 };
