@@ -1,17 +1,12 @@
 import Fastify from 'fastify';
 import * as plugins from './plugins';
+import envRoutesController from './controllers/debug/env';
 
 const fastify: any = Fastify({
   logger: plugins.logger,
   ignoreTrailingSlash: true,
   ignoreDuplicateSlashes: true
 });
-
-// ==================== Routes loading below
-fastify.get('/', async () => {
-  return { hello: 'world' };
-});
-// ==================== End of routes loading
 
 const initialize = async () => {
   try {
@@ -28,8 +23,12 @@ const initialize = async () => {
     });
 
     await fastify.register(plugins.drizzlePlugin, { databaseUrl: fastify.config.DATABASE_URL });
-
     // ==================== End of plugins loading
+
+    // ==================== Routes loading below
+    if (fastify.config.NODE_ENV === 'development')
+      await fastify.register(envRoutesController, { prefix: '/debug/env' });
+    // ==================== End of routes loading
 
     // ==================== Server boot and listen
     const port = parseInt(fastify.config.PORT) || 8000;
