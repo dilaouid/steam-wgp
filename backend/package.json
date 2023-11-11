@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "npm run build && node dist/app.js",
-    "dev": "npx concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npx tsc --watch\" \"npx tsnd --respawn src/app.ts\""
+    "dev": "npx nodemon --watch src --ext ts,tsx,js,jsx --exec ts-node src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -33,7 +33,9 @@
     "@types/ws": "^8.5.9",
     "concurrently": "^8.2.2",
     "drizzle-kit": "^0.20.1",
+    "nodemon": "^3.0.1",
     "pino-pretty": "^10.2.3",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }
