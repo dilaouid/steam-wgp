@@ -4,6 +4,10 @@ const schema = {
     type: 'object',
     required: ['PORT', 'STEAM_API_KEY'],
     properties: {
+        HOST: {
+            type: 'string',
+            default: 'localhost'
+        },
         PORT: {
             type: 'string',
             default: '8080'

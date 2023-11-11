@@ -1,4 +1,4 @@
-import Fastify, { FastifyError } from 'fastify';
+import Fastify from 'fastify';
 import * as plugins from './plugins';
 
 const fastify: any = Fastify({
@@ -33,8 +33,8 @@ const initialize = async () => {
 
     // ==================== Server boot and listen
     const port = parseInt(fastify.config.PORT, 10) || 8000;
-    await fastify.listen({port, listenTextResolver: (address: string) => {
-      return `Server listening on port ${address}:${port}`
+    await fastify.listen({ port, host: fastify.config.HOST, listenTextResolver: (address: string) => {
+      return `Server listening on ${address}`
     }});
 
   } catch (err) {
