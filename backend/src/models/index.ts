@@ -5,9 +5,9 @@ import * as Waitlists from "./Waitlists";
 import * as WaitlistsPlayers from "./WaitlistsPlayers";
 
 export {
-    Games,
-    Players,
-    Libraries,
-    Waitlists,
-    WaitlistsPlayers
+  Games,
+  Players,
+  Libraries,
+  Waitlists,
+  WaitlistsPlayers
 };

@@ -5,9 +5,9 @@ import { envPlugin } from "./env.plugin";
 import { drizzlePlugin } from "./drizzle.plugin";
 
 export {
-    logger,
-    corsPlugin,
-    envPlugin,
-    websocketPlugin,
-    drizzlePlugin
+  logger,
+  corsPlugin,
+  envPlugin,
+  websocketPlugin,
+  drizzlePlugin
 };
