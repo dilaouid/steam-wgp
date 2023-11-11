@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: ./
+      dockerfile: Dockerfile-db
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile-app
+    working_dir: /app
+    command: pnpm run dev
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
+      - ./tsconfig.json:/app/tsconfig.json
+    environment:
+      - HOST=0.0.0.0
+
+volumes:
+  postgres_data:

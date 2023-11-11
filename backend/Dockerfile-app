@@ -1,0 +1,22 @@
+# Dockerfile-app
+FROM node:18
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Set the working directory in the container to /app
+WORKDIR /app
+
+# Copy the package.json file and pnpm-lock.yaml file into the container
+COPY package.json ./
+COPY pnpm-lock.yaml* ./
+
+# Install the project dependencies
+RUN pnpm install
+
+# Copy the rest of your project's source code into the container
+COPY . .
+
+EXPOSE 8000
+
+CMD ["pnpm", "run", "dev"]
