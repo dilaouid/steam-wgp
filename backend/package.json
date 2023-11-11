@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "npm run build && node dist/app.js",
-    "dev": "SET NODE_ENV=dev&& concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"tsnd --respawn src/app.ts\""
+    "dev": "npx concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npx tsc --watch\" \"npx tsnd --respawn src/app.ts\""
   },
   "keywords": [],
   "author": "",
@@ -31,7 +31,10 @@
     "@types/passport": "^1.0.15",
     "@types/passport-steam": "^1.0.4",
     "@types/ws": "^8.5.9",
+    "concurrently": "^8.2.2",
     "drizzle-kit": "^0.20.1",
+    "pino-pretty": "^10.2.3",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }
 }
