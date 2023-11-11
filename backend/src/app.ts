@@ -32,7 +32,7 @@ const initialize = async () => {
     // ==================== End of plugins loading
 
     // ==================== Server boot and listen
-    const port = parseInt(fastify.config.PORT, 10) || 8000;
+    const port = parseInt(fastify.config.PORT) || 8000;
     await fastify.listen({ port, host: fastify.config.HOST, listenTextResolver: (address: string) => {
       return `Server listening on ${address}`
     }});
