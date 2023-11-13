@@ -19,6 +19,10 @@ const schema = {
     STEAM_API_KEY: {
       type: 'string'
     },
+    STEAM_REDIRECT_URI: {
+      type: 'string',
+      default: 'http://localhost:3000/auth/steam/callback'
+    },
     DATABASE_URL: {
       type: 'string',
       default: 'postgres://postgres:postgres@localhost:5432/steam'
@@ -30,6 +34,10 @@ const schema = {
     SECRET_KEY: {
       type: 'string',
       default: 'your-secret'
+    },
+    FRONT: {
+      type: 'string',
+      default: 'http://localhost:3000'
     }
   }
 };
