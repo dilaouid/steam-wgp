@@ -26,8 +26,8 @@ export const options: RouteShorthandOptions = {
 }
 
 export default async function getPlayerLibrary(fastify: FastifyInstance) {
-  fastify.get< { Params: RequestParams } >('/:id?', options, async (request: FastifyRequest<{ Params: RequestParams }>, reply: FastifyReply) => {
-    const id = request.params.id;
+  fastify.get< { Params: RequestParams } >('/id', options, async (request: FastifyRequest<{ Params: RequestParams }>, reply: FastifyReply) => {
+    const { id } = request.params;
     fastify.db.select({
       id,
       is_selectable: true
