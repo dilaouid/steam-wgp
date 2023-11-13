@@ -1,8 +1,9 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { pgTable, serial } from "drizzle-orm/pg-core";
+import { pgTable, bigserial, varchar } from "drizzle-orm/pg-core";
 
 export const model = pgTable("players", {
-  id: serial("id").primaryKey()
+  id: bigserial("id", { mode: "bigint" }).primaryKey(),
+  avatar_hash: varchar("avatar_hash", { length: 255 }),
 });
 
 export type Player = InferSelectModel<typeof model>;
