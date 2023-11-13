@@ -10,6 +10,7 @@ export declare module 'fastify' {
       STEAM_API_KEY?: string;
       DATABASE_URL?: string;
       NODE_ENV?: string;
+      SECRET_KEY?: string;
     },
     db: PostgresJsDatabase<Record<string, never>>,
     websocket: FastifyWebsocket;

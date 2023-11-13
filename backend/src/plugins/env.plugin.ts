@@ -26,6 +26,10 @@ const schema = {
     NODE_ENV: {
       type: 'string',
       default: 'development',
+    },
+    SECRET_KEY: {
+      type: 'string',
+      default: 'your-secret'
     }
   }
 };

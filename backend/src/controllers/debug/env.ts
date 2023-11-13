@@ -16,7 +16,8 @@ export const options: RouteShorthandOptions = {
               ORIGIN: { type: 'string' },
               STEAM_API_KEY: { type: 'string' },
               DATABASE_URL: { type: 'string' },
-              NODE_ENV: { type: 'string' }
+              NODE_ENV: { type: 'string' },
+              SECRET_KEY: { type: 'string' },
             }
           }
         }
