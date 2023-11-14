@@ -36,6 +36,9 @@ export default async function getPlayerLibrary(fastify: FastifyInstance) {
       .then((result: any) => {
         if (!result) reply.code(404).send({ error: 'Not found' });
         else reply.send({ data: result });
+      }).catch((err: any) => {
+        fastify.log.error(err);
+        reply.code(500).send({ error: 'Internal server error' });
       });
   });
 }
