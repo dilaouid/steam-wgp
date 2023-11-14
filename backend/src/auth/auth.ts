@@ -5,6 +5,7 @@ import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session';
 import fastifyPassport from '@fastify/passport';
 import { Players } from '../models';
+import { Player } from '../models/Players';
 
 export default async function (fastify: FastifyInstance) {
 
@@ -51,8 +52,8 @@ export default async function (fastify: FastifyInstance) {
   ));
 
   // Serialization et deserialization des utilisateurs
-  fastifyPassport.registerUserSerializer(async (user) => user);
-  fastifyPassport.registerUserDeserializer(async (user) => user);
+  fastifyPassport.registerUserSerializer(async (user: Player) => user);
+  fastifyPassport.registerUserDeserializer(async (user: Player) => user);
 
   // Enregistrement des plugins nécessaires pour la gestion des sessions
   fastify.register(fastifyCookie);
