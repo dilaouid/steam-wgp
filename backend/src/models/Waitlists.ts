@@ -1,8 +1,8 @@
 import { pgTable, uuid, text, bigserial, boolean, timestamp } from "drizzle-orm/pg-core";
-import { model as players } from "./Players";
-import { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { hashGenerator } from "../utils/hash";
+import { Players, WaitlistsPlayers } from ".";
 
 export const model = pgTable('waitlists', {
   id: uuid('id').primaryKey(),
@@ -19,6 +19,33 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   } as WaitlistInsert;
 
   return await fastify.db.insert(model).values(newWaitlist).execute();
+}
+
+export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {
+  const result = await fastify.db
+    .select({
+      waitlist: '*',
+      players: { player_id: 'id', avatar_hash: 'avatar_hash' }
+    })
+    .from(model)
+    .leftJoin(WaitlistsPlayers.model, and(
+      eq(model.id, WaitlistsPlayers.model.waitlist_id),
+      eq(WaitlistsPlayers.model.player_id, userId)
+    ))
+    .leftJoin(Players.model, eq(WaitlistsPlayers.model.player_id, Players.model.id))
+    .where(eq(model.id, waitlistId))
+    .execute();
+
+  if (result.length === 0) {
+    return null;
+  }
+
+  const waitlist = {
+    ...result[0].waitlist,
+    players: result.map((row: { players: any; }) => row.players)
+  };
+
+  return waitlist;
 }
 
 export type Waitlist = InferSelectModel<typeof model>;
