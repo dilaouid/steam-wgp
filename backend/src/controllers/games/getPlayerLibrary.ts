@@ -1,9 +1,8 @@
 import { FastifyReply, RouteShorthandOptions, FastifyRequest } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
-import { Libraries, Players } from "../../models";
-import { eq } from 'drizzle-orm';
 import { isAuthenticated } from "../../auth/mw";
 import { Player } from "../../models/Players";
+import { getPlayerLibrary } from "../../models/Libraries";
 
 interface RequestParams {
   id: string;
@@ -28,7 +27,8 @@ export const options: RouteShorthandOptions = {
   preValidation: [ isAuthenticated ]
 }
 
-export default async function getPlayerLibrary(fastify: FastifyInstance) {
+// Get the authenticated player's game library (only the games that are selectable)
+export default async function getLibrary(fastify: FastifyInstance) {
   fastify.get< { Params: RequestParams } >('/', options, async (request: FastifyRequest<{ Params: RequestParams }>, reply: FastifyReply) => {
 
     if (!request.user) {
@@ -37,17 +37,13 @@ export default async function getPlayerLibrary(fastify: FastifyInstance) {
     }
 
     const { id } = (request.user as Player);
-    fastify.db.select({
-      id,
-      is_selectable: true
-    }).from(Libraries.model)
-      .leftJoin(Players.model, eq(Libraries.model.player_id, Players.model.id))
-      .then((result: any) => {
-        if (!result) reply.code(404).send({ error: 'Not found' });
-        else reply.send({ data: result });
-      }).catch((err: any) => {
-        fastify.log.error(err);
-        reply.code(500).send({ error: 'Internal server error' });
-      });
+
+    try {
+      const library = await getPlayerLibrary(fastify, id);
+      return reply.code(200).send(library);
+    } catch (err) {
+      fastify.log.error(err);
+      return reply.code(500).send({ error: 'Internal server error' });
+    }
   });
 }
