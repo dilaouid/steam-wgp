@@ -14,7 +14,7 @@ export const model = pgTable('waitlists', {
 });
 
 export type Waitlist = InferSelectModel<typeof model>;
-export type WaitlistInsert = Omit<InferInsertModel<typeof model>, 'id' | 'created_at' | 'updated_at'> & {
+export type WaitlistInsert = Omit<InferInsertModel<typeof model>, 'id' | 'hash' | 'created_at' | 'updated_at'> & {
   id?: string;
   hash?: string;
   created_at?: Date;
