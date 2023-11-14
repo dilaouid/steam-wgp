@@ -37,6 +37,19 @@ export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, wai
 }
 
 export async function leaveWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<void> {
+
+  const waitlist = await fastify.db.select().from(waitlists).where(
+    and(
+      eq(waitlists.admin_id, userId),
+      eq(waitlists.id, waitlistId)
+    )).execute();
+
+  if (waitlist.length > 0) {
+    // if admin, delete waitlist and all waitlist players associated with it
+    await fastify.db.delete(waitlists).where(eq(waitlists.id, waitlistId)).execute();
+    await fastify.db.delete(model).where(eq(model.waitlist_id, waitlistId)).execute();
+  }
+
   await fastify.db.delete(model)
     .where(
       and(
