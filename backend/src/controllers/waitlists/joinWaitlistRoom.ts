@@ -8,7 +8,7 @@ interface RequestParams {
   id: string;
 }
 
-export const options: RouteShorthandOptions = {
+const options: RouteShorthandOptions = {
   schema: {
     response: {
       200: {
@@ -27,7 +27,7 @@ export const options: RouteShorthandOptions = {
   preValidation: [ isAuthenticated ]
 }
 
-export default async function joinWaitlistRoom(fastify: FastifyInstance) {
+export default async function joinOrLeaveWaitlist(fastify: FastifyInstance) {
   fastify.patch< { Params: RequestParams } >('/:id', options, async (request: FastifyRequest<{ Params: RequestParams }>, reply: FastifyReply) => {
     const { id } = request.params;
     const user = (request.user as Player);
