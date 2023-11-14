@@ -16,15 +16,10 @@ export const model = pgTable('waitlists', {
 export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): Promise<Waitlist | null> {
   const newWaitlist: WaitlistInsert = {
     admin_id: userId,
-  };
+  } as WaitlistInsert;
 
   return await fastify.db.insert(model).values(newWaitlist).execute();
 }
 
 export type Waitlist = InferSelectModel<typeof model>;
-export type WaitlistInsert = Omit<InferInsertModel<typeof model>, 'id' | 'hash' | 'created_at' | 'updated_at'> & {
-  id?: string;
-  hash?: string;
-  created_at?: Date;
-  updated_at?: Date;
-};
+export type WaitlistInsert = InferInsertModel<typeof model>;
