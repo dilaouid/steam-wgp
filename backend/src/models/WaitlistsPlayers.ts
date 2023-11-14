@@ -59,5 +59,25 @@ export async function leaveWaitlist(fastify: FastifyInstance, userId: bigint, wa
     ).execute();
 }
 
+export async function kickPlayer(fastify: FastifyInstance, userId: bigint, waitlistId: string, playerId: bigint): Promise<void> {
+  const waitlist = await fastify.db.select().from(waitlists).where(
+    and(
+      eq(waitlists.admin_id, userId),
+      eq(waitlists.id, waitlistId)
+    )).execute();
+
+  if (waitlist.length === 0) {
+    throw new Error('Not authorized');
+  }
+
+  await fastify.db.delete(model)
+    .where(
+      and(
+        eq(model.player_id, playerId),
+        eq(model.waitlist_id, waitlistId)
+      )
+    ).execute();
+}
+
 export type WaitlistPlayer = InferSelectModel<typeof model>;
 export type WaitlistPlayerInsert = InferInsertModel<typeof model>;
