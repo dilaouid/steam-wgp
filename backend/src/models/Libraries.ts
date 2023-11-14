@@ -12,7 +12,7 @@ export const model = pgTable("libraries", {
   game_id: integer("game_id").references(() => games.id)
 });
 
-export async function getPlayerLibrary(fastify: FastifyInstance, playerId: bigint): Promise<void> {
+export async function getPlayerLibrary(fastify: FastifyInstance, playerId: bigint): Promise<Library[]> {
   const result = fastify.db.select().from(model)
     .leftJoin(Players.model, eq(model.player_id, Players.model.id))
     .leftJoin(Games.model, eq(model.game_id, Games.model.id))
