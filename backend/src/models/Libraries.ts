@@ -1,14 +1,30 @@
-import { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { integer } from "drizzle-orm/pg-core";
 import { pgTable, uuid } from "drizzle-orm/pg-core";
 import { model as players } from "./Players";
 import { model as games } from "./Games";
+import { FastifyInstance } from "fastify";
+import { Games, Players } from ".";
 
 export const model = pgTable("libraries", {
   id: uuid("id").primaryKey(),
   player_id: integer("player_id").references(() => players.id),
   game_id: integer("game_id").references(() => games.id)
 });
+
+export async function getPlayerLibrary(fastify: FastifyInstance, playerId: bigint): Promise<void> {
+  const result = fastify.db.select().from(model)
+    .leftJoin(Players.model, eq(model.player_id, Players.model.id))
+    .leftJoin(Games.model, eq(model.game_id, Games.model.id))
+    .where(
+      and(
+        eq(Players.model.id, playerId),
+        eq(Games.model.is_selectable, true)
+      )
+    ).execute();
+
+  return result;
+}
 
 export type Library = InferSelectModel<typeof model>;
 export type LibraryInsert = InferInsertModel<typeof model>;
