@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS games (
 
 -- Création de la table players
 CREATE TABLE IF NOT EXISTS players (
-    id SERIAL PRIMARY KEY
+    id SERIAL PRIMARY KEY,
+    avatar_hash VARCHAR(255) NOT NULL
 );
 
 -- Création de la table libraries
