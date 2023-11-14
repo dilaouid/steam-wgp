@@ -14,7 +14,6 @@ export const model = pgTable('waitlists', {
 });
 
 export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): Promise<Waitlist | null> {
-  if (!userId) return null;
   const newWaitlist: WaitlistInsert = {
     admin_id: userId,
   };
