@@ -18,7 +18,7 @@ export const model = pgTable('waitlists_players', {
 export async function isUserInWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<{ inWaitlist: boolean, waitlistId: string | null }> {
   const result = await fastify.db.select().from(model).where(
     eq(model.player_id, userId)
-  );
+  ).execute();
 
   if (result && result.waitlist_id !== waitlistId) {
     return { inWaitlist: true, waitlistId: result.waitlist_id };
@@ -33,7 +33,7 @@ export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, wai
     waitlist_id: waitlistId
   };
 
-  await fastify.db.insert(model).values(newWaitlistPlayer);
+  await fastify.db.insert(model).values(newWaitlistPlayer).execute();
 }
 
 export async function leaveWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<void> {
@@ -43,7 +43,7 @@ export async function leaveWaitlist(fastify: FastifyInstance, userId: bigint, wa
         eq(model.player_id, userId),
         eq(model.waitlist_id, waitlistId)
       )
-    );
+    ).execute();
 }
 
 export type WaitlistPlayer = InferSelectModel<typeof model>;
