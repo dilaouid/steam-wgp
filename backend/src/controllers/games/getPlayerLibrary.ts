@@ -2,6 +2,8 @@ import { FastifyReply, RouteShorthandOptions, FastifyRequest } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 import { Libraries, Players } from "../../models";
 import { eq } from 'drizzle-orm';
+import { isAuthenticated } from "../../auth/mw";
+import { Player } from "../../models/Players";
 
 interface RequestParams {
   id: string;
@@ -22,12 +24,19 @@ export const options: RouteShorthandOptions = {
       },
       required: ['id']
     }
-  }
+  },
+  preValidation: [ isAuthenticated ]
 }
 
 export default async function getPlayerLibrary(fastify: FastifyInstance) {
-  fastify.get< { Params: RequestParams } >('/id', options, async (request: FastifyRequest<{ Params: RequestParams }>, reply: FastifyReply) => {
-    const { id } = request.params;
+  fastify.get< { Params: RequestParams } >('/', options, async (request: FastifyRequest<{ Params: RequestParams }>, reply: FastifyReply) => {
+
+    if (!request.user) {
+      reply.code(401).send({ error: 'Forbidden' });
+      return;
+    }
+
+    const { id } = (request.user as Player);
     fastify.db.select({
       id,
       is_selectable: true
