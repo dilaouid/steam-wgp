@@ -1,10 +1,24 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Player } from "../../models/Players";
 import { getWaitlist } from "../../models/Waitlists";
+import { isAuthenticated } from "../../auth/mw";
 
 export interface getWaitlistWithPlayersParams {
     hash: string;
 }
+
+export const getWaitlistWithPlayersOpts = {
+  preValidation: [isAuthenticated],
+  schema: {
+    params: {
+      type: 'object',
+      required: ['hash'],
+      properties: {
+        hash: { type: 'string' }
+      }
+    }
+  }
+};
 
 export async function getWaitlistWithPlayers(request: FastifyRequest< { Params: getWaitlistWithPlayersParams } >, reply: FastifyReply) {
   const { hash } = request.params;

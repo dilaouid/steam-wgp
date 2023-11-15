@@ -1,5 +1,5 @@
 import { createWaitlist } from "./createWaitlistRoom";
-import { getWaitlistWithPlayers, getWaitlistWithPlayersParams } from "./getWaitlistRoom";
+import { getWaitlistWithPlayers, getWaitlistWithPlayersParams, getWaitlistWithPlayersOpts } from "./getWaitlistRoom";
 import { joinOrLeaveWaitlist, joinOrLeaveWaitlistParams } from "./joinWaitlistRoom";
 
 export {
@@ -7,5 +7,6 @@ export {
   getWaitlistWithPlayers,
   joinOrLeaveWaitlist,
   joinOrLeaveWaitlistParams,
-  getWaitlistWithPlayersParams
+  getWaitlistWithPlayersParams,
+  getWaitlistWithPlayersOpts
 }
