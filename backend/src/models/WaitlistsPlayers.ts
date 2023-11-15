@@ -1,14 +1,12 @@
 import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
-import { uuid, pgTable } from "drizzle-orm/pg-core";
+import { pgTable, primaryKey, bigserial, varchar } from "drizzle-orm/pg-core";
 import { model as players } from "./Players";
 import { model as waitlists } from "./Waitlists";
-import { primaryKey } from "drizzle-orm/pg-core";
-import { bigserial } from "drizzle-orm/pg-core";
 import { FastifyInstance } from "fastify";
 
 export const model = pgTable('waitlists_players', {
   player_id: bigserial('player_id', { mode: 'bigint'}).references(() => players.id),
-  waitlist_id: uuid('waitlist_id').references(() => waitlists.id)
+  waitlist_id: varchar('waitlist_id', { length: 60 }).references(() => waitlists.id)
 }, (waitlist_player) => {
   return {
     pk: primaryKey({columns: [waitlist_player.player_id, waitlist_player.waitlist_id]})

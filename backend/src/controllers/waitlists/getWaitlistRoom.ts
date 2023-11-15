@@ -4,7 +4,7 @@ import { getWaitlist } from "../../models/Waitlists";
 import { isAuthenticated } from "../../auth/mw";
 
 export interface getWaitlistWithPlayersParams {
-    hash: string;
+    id: string;
 }
 
 export const getWaitlistWithPlayersOpts = {
@@ -12,22 +12,22 @@ export const getWaitlistWithPlayersOpts = {
   schema: {
     params: {
       type: 'object',
-      required: ['hash'],
+      required: ['id'],
       properties: {
-        hash: { type: 'string' }
+        id: { type: 'string' }
       }
     }
   }
 };
 
 export async function getWaitlistWithPlayers(request: FastifyRequest< { Params: getWaitlistWithPlayersParams } >, reply: FastifyReply) {
-  const { hash } = request.params;
-  const { id } = (request.user as Player);
+  const { id } = request.params;
+  const user = (request.user as Player);
   const fastify = request.server as FastifyInstance;
 
-  if (!id || !hash.trim()) return reply.code(401).send({ error: 'Forbidden' });
+  if (!user.id || !id.trim()) return reply.code(401).send({ error: 'Forbidden' });
   try {
-    const waitlist = await getWaitlist(fastify, hash.trim(), id);
+    const waitlist = await getWaitlist(fastify, id.trim(), user.id);
     if (!waitlist)
       return reply.code(400).send({ error: 'Bad request' });
     return reply.code(200).send({ message: 'Waitlist fetched', data: waitlist });

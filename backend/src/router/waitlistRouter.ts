@@ -14,7 +14,7 @@ import {
 export default async function waitlistRouter(fastify: FastifyInstance) {
   fastify.register(async function (fastify) {
     fastify.post('/', { preValidation: [isAuthenticated] }, createWaitlist);
-    fastify.get<{ Params: getParams }>('/:hash', getOpts, getWaitlist);
+    fastify.get<{ Params: getParams }>('/:id', getOpts, getWaitlist);
     fastify.patch<{ Params: joinParams }>('/:id', { preValidation: [isAuthenticated] }, joinOrLeave);
   }, { prefix: '/waitlist' });
 }

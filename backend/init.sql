@@ -19,8 +19,7 @@ CREATE TABLE IF NOT EXISTS libraries (
 
 -- Création de la table waitlists
 CREATE TABLE IF NOT EXISTS waitlists (
-    id UUID PRIMARY KEY,
-    hash TEXT NOT NULL,
+    id VARCHAR(60) PRIMARY KEY,
     admin_id INT REFERENCES players(id),
     started BOOLEAN NOT NULL,
     created_at DATE NOT NULL,

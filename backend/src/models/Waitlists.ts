@@ -1,12 +1,12 @@
-import { pgTable, uuid, text, bigserial, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, bigserial, boolean, timestamp } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { hashGenerator } from "../utils/hash";
 import { Games, Libraries, Players, WaitlistsPlayers } from ".";
+import { varchar } from "drizzle-orm/pg-core";
 
 export const model = pgTable('waitlists', {
-  id: uuid('id').primaryKey(),
-  hash: text('hash').notNull().unique().default(hashGenerator(2)),
+  id: varchar('id', { length: 60 }).notNull().unique().default(hashGenerator(2)).primaryKey(),
   admin_id: bigserial('admin_id', { mode: 'bigint' }).references(() => Players.model.id),
   started: boolean('started').default(false),
   created_at: timestamp('created_at').notNull().defaultNow(),
@@ -40,7 +40,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   return { waitlist: insertWaitlist };
 }
 
-export async function getWaitlist(fastify: FastifyInstance, waitlistHash: string, userId: bigint): Promise<Waitlist | null> {
+export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {
   const result = await fastify.db
     .select({
       waitlist: '*',
@@ -57,7 +57,7 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistHash: string
       eq(Libraries.model.game_id, Games.model.id),
       eq(Games.model.is_selectable, true)
     ))
-    .where(eq(model.hash, waitlistHash))
+    .where(eq(model.id, waitlistId))
     .execute();
 
   if (result.length === 0) {
