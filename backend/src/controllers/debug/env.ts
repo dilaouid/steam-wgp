@@ -1,4 +1,3 @@
-// to see later (handler/router/prefixer) /!\ \\
 import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 

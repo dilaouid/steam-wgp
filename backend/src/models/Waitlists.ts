@@ -21,7 +21,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   return await fastify.db.insert(model).values(newWaitlist).execute();
 }
 
-export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {
+export async function getWaitlist(fastify: FastifyInstance, waitlistHash: string, userId: bigint): Promise<Waitlist | null> {
   const result = await fastify.db
     .select({
       waitlist: '*',
@@ -33,7 +33,7 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
       eq(WaitlistsPlayers.model.player_id, userId)
     ))
     .leftJoin(Players.model, eq(WaitlistsPlayers.model.player_id, Players.model.id))
-    .where(eq(model.id, waitlistId))
+    .where(eq(model.hash, waitlistHash))
     .execute();
 
   if (result.length === 0) {
