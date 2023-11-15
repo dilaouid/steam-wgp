@@ -1,5 +1,6 @@
-import getPlayerLibrary from "./getGamesPlayer";
+import { getUserLibrary, getUserLibraryParams } from "./getUserLibrary";
 
 export {
-  getPlayerLibrary
+  getUserLibrary,
+  getUserLibraryParams
 };
