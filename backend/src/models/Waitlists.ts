@@ -13,12 +13,31 @@ export const model = pgTable('waitlists', {
   updated_at: timestamp('updated_at').notNull().defaultNow()
 });
 
-export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): Promise<Waitlist | null> {
+interface InsertedWaitlist {
+  error?: string;
+  waitlist?: Waitlist;
+}
+
+export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): Promise<InsertedWaitlist> {
+  const alreadyInWaitlist = await fastify.db.select().from(WaitlistsPlayers.model).where(
+    eq(WaitlistsPlayers.model.player_id, userId)
+  ).execute();
+
+  if (alreadyInWaitlist.length > 0) {
+    return { error: 'Already in a waitlist' };
+  }
+
   const newWaitlist: WaitlistInsert = {
     admin_id: userId,
   } as WaitlistInsert;
 
-  return await fastify.db.insert(model).values(newWaitlist).execute();
+  const insertWaitlist = await fastify.db.insert(model).values(newWaitlist).execute();
+
+  if (!insertWaitlist) {
+    return { error: 'Error creating waitlist' };
+  }
+
+  return { waitlist: insertWaitlist };
 }
 
 export async function getWaitlist(fastify: FastifyInstance, waitlistHash: string, userId: bigint): Promise<Waitlist | null> {
