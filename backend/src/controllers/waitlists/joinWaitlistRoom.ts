@@ -3,11 +3,11 @@ import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { isUserInWaitlist, joinWaitlist, leaveWaitlist } from "../../models/WaitlistsPlayers";
 
-interface RequestParams {
+export interface joinOrLeaveWaitlistParams {
   id: string;
 }
 
-export async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: RequestParams }>, reply: FastifyReply) {
+export async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeaveWaitlistParams }>, reply: FastifyReply) {
   const { id } = request.params;
   const user = (request.user as Player);
   const fastify = request.server as FastifyInstance;
