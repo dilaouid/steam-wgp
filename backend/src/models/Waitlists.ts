@@ -2,7 +2,7 @@ import { pgTable, uuid, text, bigserial, boolean, timestamp } from "drizzle-orm/
 import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { hashGenerator } from "../utils/hash";
-import { Players, WaitlistsPlayers } from ".";
+import { Games, Libraries, Players, WaitlistsPlayers } from ".";
 
 export const model = pgTable('waitlists', {
   id: uuid('id').primaryKey(),
@@ -33,6 +33,11 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistHash: string
       eq(WaitlistsPlayers.model.player_id, userId)
     ))
     .leftJoin(Players.model, eq(WaitlistsPlayers.model.player_id, Players.model.id))
+    .leftJoin(Libraries.model, eq(Players.model.id, Libraries.model.player_id))
+    .leftJoin(Games.model, and(
+      eq(Libraries.model.game_id, Games.model.id),
+      eq(Games.model.is_selectable, true)
+    ))
     .where(eq(model.hash, waitlistHash))
     .execute();
 
@@ -40,9 +45,25 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistHash: string
     return null;
   }
 
+  const playersWithGames = result.reduce((acc: any[], row: { players: { player_id: any; avatar_hash: any; }; games: any; }) => {
+    const player = acc.find((p: { player_id: any; }) => p.player_id === row.players.player_id) || {
+      player_id: row.players.player_id,
+      avatar_hash: row.players.avatar_hash,
+      games: []
+    };
+
+    if (!acc.includes(player)) {
+      acc.push(player);
+    }
+
+    if (row.games) {
+      player.games.push(row.games);
+    }
+  });
+
   const waitlist = {
     ...result[0].waitlist,
-    players: result.map((row: { players: any; }) => row.players)
+    players: playersWithGames
   };
 
   return waitlist;
