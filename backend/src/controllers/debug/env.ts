@@ -27,8 +27,8 @@ export const options: RouteShorthandOptions = {
   }
 }
 
-export default async function envRoutesController(fastify: FastifyInstance) {
-  fastify.get('/', options, async (request: FastifyRequest, reply: FastifyReply) => {
-    reply.send({ config: fastify.config });
-  });
+export async function getAllEnvVariables(request: FastifyRequest, reply: FastifyReply) {
+  const fastify = request.server as FastifyInstance;
+
+  reply.send({ config: fastify.config });
 }
