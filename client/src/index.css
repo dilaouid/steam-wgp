@@ -1,12 +1,10 @@
 body {
   background: url("./assets/img/dots.png");
-  background-size: 2000px 250px;
+  background-size: contain, auto;
   background-repeat: repeat, no-repeat;
-  height: 120vh;
-  overflow: hidden;
 
   /* animate the background (dots are moving) */
-  animation: background 10s linear infinite;
+  animation: background 10s infinite linear;
 }
 
 @keyframes background {
@@ -14,6 +12,6 @@ body {
     background-position: 0 0, 0 0;
   }
   to {
-    background-position: 100px 0, 0 0;
+    background-position: 100px 200px, 0 0;
   }
 }
