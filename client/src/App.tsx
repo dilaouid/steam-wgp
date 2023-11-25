@@ -3,13 +3,17 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import AOS from 'aos';      // AOS animations
 import 'bootswatch/dist/cyborg/bootstrap.min.css'; // Bootswatch theme
 import 'aos/dist/aos.css'; // AOS styles
 import 'animate.css';      // Animate.css styles
 
+import { useEffect } from 'react';
 function App() {
-  const [count, setCount] = useState(0)
-
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+  }, []);
   return (
     <>
       <div>
