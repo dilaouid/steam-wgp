@@ -1,21 +1,16 @@
 import { FastifyInstance } from 'fastify';
-import passport, { Profile } from 'passport';
+import { Profile } from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
-import fastifySession from '@fastify/session';
 import fastifyPassport from '@fastify/passport';
+
 import { Players } from '../models';
 import { Player } from '../models/Players';
 
-export default async function (fastify: FastifyInstance) {
-  fastify.register(fastifySession, {
-    secret: fastify.config.SECRET_KEY ?? 'your-secret',
-    cookie: { secure: process.env.NODE_ENV === 'production' }
-  });
-
+export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());
   fastify.register(fastifyPassport.secureSession());
 
-  passport.use(new SteamStrategy({
+  fastifyPassport.use(new SteamStrategy({
     returnURL: fastify.config.STEAM_REDIRECT_URI,
     realm: fastify.config.FRONT,
     apiKey: fastify.config.STEAM_API_KEY
@@ -45,6 +40,23 @@ export default async function (fastify: FastifyInstance) {
     }
   }));
 
-  fastifyPassport.registerUserSerializer(async (user: Player) => user);
-  fastifyPassport.registerUserDeserializer(async (user: Player) => user);
+  fastify.register(async function (fastify) {
+
+    // Route pour initier l'authentification Steam
+    fastify.get('/steam', { preValidation: fastifyPassport.authenticate('steam', { session: false }) }, async (request, reply) => {
+      if (!request.user) throw new Error('Missing user object in request');
+      return reply.send(request.user);
+    });
+
+    // Route de callback après l'authentification Steam
+    fastify.get('/steam/callback',
+      { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/login' }) },
+      async (request, reply) => {
+        // Utilisateur authentifié avec succès
+        // Vous pouvez gérer l'utilisateur ici, par exemple générer un JWT ou gérer la session
+        // Puis rediriger l'utilisateur vers une page de profil ou d'accueil
+        return reply.send(request.user);
+      }
+    );
+  });
 }
