@@ -11,9 +11,28 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     maxPayload: 1048576,
     server: fastify.server,
     verifyClient: function (info, next) {
-      // [todo] jwt mw check
-      fastify.log.info('websocket verifyClient');
-      next(true);
+      try {
+        const url = new URL(info.req.url ?? '', `http://${info.req.headers.host}`);
+        const token = url.searchParams.get('token');
+        if (!token)
+          throw new Error('No token provided');
+
+        // TODO: verify token with jwt or something
+        // (it may be difficult: cookies are not sent with websocket requests :'()
+        // if you read this save me please :(
+        // sql request to check if token is valid ? (but it's not a good idea to do a sql request for each websocket request)
+        // maybe we can store the token in the database and check if it's valid
+        // but it's not a good idea to store the token in the database because it's not a good practice to store a token in a database
+        // so what can we do ? :(
+        // (I'm not sure if I can do this)
+        // also I just ate a delicious sandwich (batboute) :D
+        // I'm gonna stop writing comments now
+        // bye
+
+      } catch (err) {
+        fastify.log.error('WebSockets Authentification error', err);
+        next(false, 401, 'Unauthorized');
+      }
     }
   }}).after(() => {
 
