@@ -10,4 +10,4 @@ export default function HeadingSubtitleComponent() {
             What are we Going to Play?
         </HeadingSubtitle>
     );
-};
+}
