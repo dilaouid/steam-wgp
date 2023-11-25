@@ -16,5 +16,6 @@ export declare module 'fastify' {
     },
     db: PostgresJsDatabase<Record<string, never>>,
     websocket: FastifyWebsocket;
+    waitlists: Map<string, Set<WebSocket>>;
   }
 }

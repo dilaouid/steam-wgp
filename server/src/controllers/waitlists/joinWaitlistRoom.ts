@@ -14,13 +14,26 @@ export async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: join
 
   try {
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
+    const roomClients = fastify.waitlists.get(id);
     if (waitlistStatus.inWaitlist) {
       if (waitlistStatus.waitlistId !== id)
         return reply.code(400).send({ error: 'Already in a waitlist' });
       await leaveWaitlist(fastify, user.id, id);
+
+      // Inform users in the room that the user left
+      roomClients?.forEach(client => {
+        client.send(JSON.stringify({ message: 'User left waitlist', user: user.id, waitlistId: id }));
+      });
+
       return reply.code(200).send({ message: 'Waitlist left' });
     } else {
       await joinWaitlist(fastify, user.id, id);
+
+      // Inform users in the room that the user joined
+      roomClients?.forEach(client => {
+        client.send(JSON.stringify({ message: 'User joined waitlist', user: user.id, waitlistId: id }));
+      });
+
       return reply.code(200).send({ message: 'Waitlist joined' });
     }
   } catch (err) {
