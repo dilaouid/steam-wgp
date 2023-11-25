@@ -24,6 +24,7 @@
     "fastify": "^4.24.3",
     "fastify-env": "^2.2.0",
     "fastify-plugin": "^4.5.1",
+    "jsonwebtoken": "^9.0.2",
     "passport": "^0.6.0",
     "passport-steam": "^1.0.18",
     "pino": "^8.16.1",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.9.0",
     "@types/passport": "^1.0.15",
     "@types/passport-steam": "^1.0.4",

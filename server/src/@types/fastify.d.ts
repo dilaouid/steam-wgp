@@ -11,7 +11,7 @@ export declare module 'fastify' {
       STEAM_REDIRECT_URI?: string;
       DATABASE_URL?: string;
       NODE_ENV?: string;
-      SECRET_KEY?: string;
+      SECRET_KEY: string;
       FRONT?: string;
     },
     db: PostgresJsDatabase<Record<string, never>>,
