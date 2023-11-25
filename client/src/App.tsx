@@ -3,6 +3,10 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import 'bootswatch/dist/cyborg/bootstrap.min.css'; // Bootswatch theme
+import 'aos/dist/aos.css'; // AOS styles
+import 'animate.css';      // Animate.css styles
+
 function App() {
   const [count, setCount] = useState(0)
 
