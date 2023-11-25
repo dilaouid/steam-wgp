@@ -1,35 +1,38 @@
 import { FastifyInstance } from 'fastify';
-import { Profile } from 'passport';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import fastifyPassport from '@fastify/passport';
 
 import { Players } from '../models';
 import { Player } from '../models/Players';
+import { eq } from 'drizzle-orm';
 
 export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());
   fastify.register(fastifyPassport.secureSession());
 
+  const host = `http://${fastify.config.HOST}:${fastify.config.PORT}`;
+
   fastifyPassport.use(new SteamStrategy({
-    returnURL: fastify.config.STEAM_REDIRECT_URI,
-    realm: fastify.config.FRONT,
+    returnURL: `${host}/auth/steam/callback`,
+    realm: host,
     apiKey: fastify.config.STEAM_API_KEY
-  }, async (identifier: string, profile: Profile, done: (err: Error | null, user: Player | null) => void) => {
+  }, async (identifier: string, profile: any, done: (err: Error | null, user: Player | null) => void) => {
     try {
-      const response = await fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${fastify.config.STEAM_API_KEY}&steamids=${identifier}`);
-      const data = await response.json() as { response: { players: { steamid: string, avatarhash: string }[] } };
-      const player = data.response.players[0];
+      fastify.log.info(profile);
+      const player = profile._json;
       if (!player) {
         return done(null, null);
       }
 
-      let user = await fastify.db.select().from(Players.model).where('id', player.steamid);
+      let user = await fastify.db.select().from(Players.model).where(eq(Players.model.id, player.steamid as any));
       if (user.length === 0) {
-        user = await fastify.db.insert().into(Players.model).set({
+        fastify.log.info('Inserting new user');
+        user = await fastify.db.insert(Players.model).values({
           id: player.steamid,
           avatar_hash: player.avatarhash,
         });
       } else {
+        fastify.log.info('User already exists');
         user = user[0];
       }
 
@@ -49,14 +52,21 @@ export default async function authRouter(fastify: FastifyInstance) {
     });
 
     // Route de callback après l'authentification Steam
-    fastify.get('/steam/callback',
-      { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/login' }) },
+    fastify.get('/steam/callback', { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/logout' }) },
       async (request, reply) => {
+        if (!request.user) throw new Error('Missing user object in request');
         // Utilisateur authentifié avec succès
         // Vous pouvez gérer l'utilisateur ici, par exemple générer un JWT ou gérer la session
         // Puis rediriger l'utilisateur vers une page de profil ou d'accueil
-        return reply.send(request.user);
+        return reply.send({});
       }
     );
+
+    // Route pour déconnecter l'utilisateur
+    fastify.get('/logout', async (request, reply) => {
+      request.logOut();
+      reply.redirect('/');
+    });
+
   });
 }
