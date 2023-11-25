@@ -22,8 +22,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         // if you read this save me please :(
         // sql request to check if token is valid ? (but it's not a good idea to do a sql request for each websocket request)
         // maybe we can store the token in the database and check if it's valid
-        // but it's not a good idea to store the token in the database because it's not a good practice to store a token in a database
-        // so what can we do ? :(
+        // but it's not a good idea to store the token in the database because it's not a good practice to store a token in a database (I think)
+        // so what can we do ? :( boy I'm so sad right now :(
         // (I'm not sure if I can do this)
         // also I just ate a delicious sandwich (batboute) :D
         // I'm gonna stop writing comments now
