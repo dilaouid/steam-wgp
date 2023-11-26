@@ -38,6 +38,10 @@ const schema = {
     FRONT: {
       type: 'string',
       default: 'http://localhost:3000'
+    },
+    STEAM_GetOwnedGames: {
+      type: 'string',
+      default: 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001',
     }
   }
 };

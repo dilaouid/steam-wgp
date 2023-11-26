@@ -13,6 +13,7 @@ export declare module 'fastify' {
       NODE_ENV?: string;
       SECRET_KEY: string;
       FRONT?: string;
+      STEAM_GetOwnedGames?: string;
     },
     db: PostgresJsDatabase<Record<string, never>>,
     websocket: FastifyWebsocket;
