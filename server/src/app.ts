@@ -4,6 +4,7 @@ import debugRouter from './router/debugRouter';
 import authRouter from './router/authRouter';
 import fastifySession from '@fastify/session';
 import fastifyCookie from '@fastify/cookie';
+import playerRouter from './router/playersRouter';
 
 const fastify: any = Fastify({
   logger: plugins.logger,
@@ -35,6 +36,7 @@ const initialize = async () => {
     if (fastify.config.NODE_ENV === 'development')
       await fastify.register(debugRouter, { prefix: '/debug/env' });
     await fastify.register(authRouter, { prefix: '/auth' });
+    await fastify.register(playerRouter, { prefix: '/players' });
     // ==================== End of routes loading
 
     // ==================== Server boot and listen

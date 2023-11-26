@@ -56,8 +56,7 @@ export default async function authRouter(fastify: FastifyInstance) {
       async (request, reply) => {
         if (!request.user) throw new Error('Missing user object in request');
         // Utilisateur authentifié avec succès
-        // Vous pouvez gérer l'utilisateur ici, par exemple générer un JWT ou gérer la session
-        // Puis rediriger l'utilisateur vers une page de profil ou d'accueil
+        // [TODO] Rediriger vers la page d'accueil client side et créer le cookie
         return reply.send({});
       }
     );
