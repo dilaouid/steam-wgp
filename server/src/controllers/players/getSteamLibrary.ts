@@ -22,7 +22,7 @@ async function insertGameIntoDB(fastify: FastifyInstance, appId: number) {
   // check if gameDetails have a appId key
   if (!gameDetails || Object.keys(gameDetails).length === 0) {
     // game is not selectable
-    fastify.log.info(`Game ${appId} is not selectable - Steam API is not responding...`);
+    fastify.log.warn(`Game ${appId} is not selectable - Steam API is not responding...`);
     return;
   }
 
@@ -65,7 +65,7 @@ export async function getSteamLibrary(request: GetSteamLibraryRequest, reply: Fa
 
     if (gamesToAdd.length > 0) {
       fastify.log.info(`Inserting ${gamesToAdd.length} games into DB`);
-      await fastify.db.insert(Games.model).values(gamesToAdd).execute();
+      await fastify.db.insert(Games.model).values(gamesToAdd).onConflictDoNothing().execute();
     }
 
     const gamesToAddToLibrary = steamAppIds.filter((gameId: number) => !playerLibraryIds.has(gameId));
@@ -76,7 +76,7 @@ export async function getSteamLibrary(request: GetSteamLibraryRequest, reply: Fa
     }));
     if (insertData.length > 0) {
       fastify.log.info(`Inserting ${insertData.length} games into player library`);
-      await fastify.db.insert(Libraries.model).values(insertData).execute();
+      await fastify.db.insert(Libraries.model).values(insertData).onConflictDoNothing().execute();
     }
 
     // if some games weren't inserted correctly in insertGameIntoDB, we tell the user that X games were not inserted
