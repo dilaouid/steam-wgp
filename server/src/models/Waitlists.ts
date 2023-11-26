@@ -1,4 +1,4 @@
-import { pgTable, bigserial, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, bigint, boolean, timestamp } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { hashGenerator } from "../utils/hash";
@@ -7,7 +7,7 @@ import { varchar } from "drizzle-orm/pg-core";
 
 export const model = pgTable('waitlists', {
   id: varchar('id', { length: 60 }).notNull().unique().default(hashGenerator(2)).primaryKey(),
-  admin_id: bigserial('admin_id', { mode: 'bigint' }).references(() => Players.model.id),
+  admin_id: bigint('admin_id', { mode: 'bigint' }).references(() => Players.model.id),
   started: boolean('started').default(false),
   created_at: timestamp('created_at').notNull().defaultNow(),
   updated_at: timestamp('updated_at').notNull().defaultNow()

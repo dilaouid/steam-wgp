@@ -1,6 +1,5 @@
 import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
-import { integer } from "drizzle-orm/pg-core";
-import { pgTable, uuid } from "drizzle-orm/pg-core";
+import { pgTable, uuid, integer, bigint } from "drizzle-orm/pg-core";
 import { model as players } from "./Players";
 import { model as games } from "./Games";
 import { FastifyInstance } from "fastify";
@@ -8,7 +7,7 @@ import { Games, Players } from ".";
 
 export const model = pgTable("libraries", {
   id: uuid("id").primaryKey(),
-  player_id: integer("player_id").references(() => players.id),
+  player_id: bigint("player_id", { mode: "bigint" }).references(() => players.id),
   game_id: integer("game_id").references(() => games.id)
 });
 
