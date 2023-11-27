@@ -1,9 +1,25 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { EventMessage, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Games, Libraries } from "../../models";
 import { eq, inArray } from 'drizzle-orm';
+import { isAuthenticated } from "../../auth/mw";
 
-interface GetSteamLibraryRequest extends FastifyRequest<{ Params: { id: bigint; }; }> {}
+export interface GetSteamLibraryRequest extends FastifyRequest<{ Params: { id: string; }; }> {}
 interface IGamesToAdd { id: number; is_selectable: boolean; }
+interface ISteamResponse { response: { games: { appid: number; }[]; } }
+interface ILibrary { appid: number; game_id?: number }
+
+export const getWaitlistWithPlayersOpts = {
+  preValidation: [isAuthenticated],
+  schema: {
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: { type: 'bigint' }
+      }
+    }
+  }
+};
 
 // Fetch the game details from the steam api (is multiplayer or not, essentially)
 async function fetchGameDetails(fastify: FastifyInstance, appId: number): Promise<IGamesToAdd | null> {
@@ -53,32 +69,43 @@ export async function getSteamLibrary(request: GetSteamLibraryRequest, reply: Fa
 
   if (!id) return reply.code(401).send({ error: 'Forbidden' });
 
-  try {
-    const library = await fastify.db.select({ game_id: Libraries.model.game_id }).from(Libraries.model).where(eq(Libraries.model.player_id, id));
-    const playerLibraryIds = new Set(library.map((game: any) => game.game_id));
+  reply.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
+    try {
+      yield { message: 'Chargement de ta bibliothèque Steam ...', type: 'info' };
+      const library = await fastify.db.select({ game_id: Libraries.model.game_id }).from(Libraries.model).where(eq(Libraries.model.player_id, BigInt(id)));
+      const playerLibraryIds = new Set(library.map((game: ILibrary) => game.game_id));
 
-    const steamLibraryRequest = await fetch(`${fastify.config.STEAM_GetOwnedGames}/?key=${fastify.config.STEAM_API_KEY}&steamid=${id}&include_appinfo=true&include_played_free_games=true&format=json`);
-    const steamLibrary = await steamLibraryRequest.json() as any;
-    if (!steamLibrary.response) return reply.code(500).send({ error: 'Internal server error' });
+      const steamLibraryRequest = await fetch(`${fastify.config.STEAM_GetOwnedGames}/?key=${fastify.config.STEAM_API_KEY}&steamid=${id}&include_appinfo=true&include_played_free_games=true&format=json`);
+      const steamLibrary = await steamLibraryRequest.json() as ISteamResponse;
+      if (!steamLibrary.response) return reply.code(500).send({ error: 'Internal server error' });
 
-    const steamAppIds = steamLibrary.response.games.map((game: any) => game.appid);
-    const appIdsNotInDB = await getAppIdsNotInDB(fastify, steamAppIds);
+      yield { message: 'Ajout des jeux à la bibliothèque ...', type: 'info' };
+      const steamAppIds = steamLibrary.response.games.map((game: ILibrary) => game.appid);
+      const gamesToAddToLibrary = steamAppIds.filter((gameId: number) => !playerLibraryIds.has(gameId));
 
-    const gamesToAdd = await Promise.all(appIdsNotInDB.map(appId => fetchGameDetails(fastify, appId)));
-    await insertGames(fastify, gamesToAdd.filter(game => game !== null) as IGamesToAdd[]);
+      // get the app ids that are not in the database yet
+      const appIdsNotInDB = await getAppIdsNotInDB(fastify, steamAppIds);
 
-    const gamesToAddToLibrary = steamAppIds.filter((gameId: number) => !playerLibraryIds.has(gameId));
-    await insertGamesIntoLibrary(fastify, id, gamesToAddToLibrary);
+      // insert the games in the Games table if they are not already in the database
+      const gamesToAdd = await Promise.all(appIdsNotInDB.map(appId => fetchGameDetails(fastify, appId)));
+      await insertGames(fastify, gamesToAdd.filter(game => game !== null) as IGamesToAdd[]);
 
-    // if added games in db is less than gamesToAddToLibrary, then warn the user
-    if (gamesToAddToLibrary.length > 0 && gamesToAddToLibrary.length !== gamesToAdd.length) {
-      fastify.log.warn(`Only ${gamesToAdd.length} out of ${gamesToAddToLibrary.length} games were added to the database`);
-      return reply.send({ message: `Only ${gamesToAdd.length} out of ${gamesToAddToLibrary.length} games were added to the database` });
+      // insert the games in the Libraries table if they are not already in the database
+      yield { message: 'Ajout des jeux à ta collection ...', type: 'info'}
+      await insertGamesIntoLibrary(fastify, BigInt(id), gamesToAddToLibrary);
+
+      // if added games in db is less than gamesToAddToLibrary, then warn the user
+      if (gamesToAddToLibrary.length > 0 && gamesToAddToLibrary.length !== gamesToAdd.length) {
+        if (gamesToAdd.length <= 1) yield { message: `${gamesToAdd.length} jeu n'a pas pu être ajouté à la bibliothèque !`, type: 'danger' };
+        else yield { message: `${gamesToAdd.length} jeux n'ont pas pu être ajoutés à la bibliothèque !`, type: 'danger' };
+
+        fastify.log.warn(`Only ${gamesToAdd.length} out of ${gamesToAddToLibrary.length} games were added to the database`);
+      }
+      yield 'Fin du processus de mise à jour de la bibliothèque';
+      // return reply.send({ message: 'Library updated successfully' });
+    } catch (err) {
+      fastify.log.error(err);
+      // return reply.code(500).send({ error: 'Internal server error' });
     }
-
-    return reply.send({ message: 'Library updated successfully' });
-  } catch (err) {
-    fastify.log.error(err);
-    return reply.code(500).send({ error: 'Internal server error' });
-  }
+  })());
 }
