@@ -5,6 +5,7 @@ import authRouter from './router/authRouter';
 import fastifySession from '@fastify/session';
 import fastifyCookie from '@fastify/cookie';
 import playerRouter from './router/playersRouter';
+import { FastifySSEPlugin } from "fastify-sse-v2";
 
 const fastify: any = Fastify({
   logger: plugins.logger,
@@ -26,6 +27,7 @@ const initialize = async () => {
       if (err) fastify.log.error(err);
     });
 
+    await fastify.register(FastifySSEPlugin);
     await fastify.register(fastifyCookie);
     await fastify.register(fastifySession, { secret: fastify.config.SECRET_KEY });
 

@@ -24,6 +24,7 @@
     "fastify": "^4.24.3",
     "fastify-env": "^2.2.0",
     "fastify-plugin": "^4.5.1",
+    "fastify-sse-v2": "^3.1.2",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.6.0",
     "passport-steam": "^1.0.18",
