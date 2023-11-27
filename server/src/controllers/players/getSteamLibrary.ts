@@ -1,25 +1,11 @@
 import { EventMessage, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Games, Libraries } from "../../models";
 import { eq, inArray } from 'drizzle-orm';
-import { isAuthenticated } from "../../auth/mw";
 
-export interface GetSteamLibraryRequest extends FastifyRequest<{ Params: { id: string; }; }> {}
+export interface GetSteamLibraryRequest { id: string; }
 interface IGamesToAdd { id: number; is_selectable: boolean; }
 interface ISteamResponse { response: { games: { appid: number; }[]; } }
 interface ILibrary { appid: number; game_id?: number }
-
-export const getWaitlistWithPlayersOpts = {
-  preValidation: [isAuthenticated],
-  schema: {
-    params: {
-      type: 'object',
-      required: ['id'],
-      properties: {
-        id: { type: 'bigint' }
-      }
-    }
-  }
-};
 
 // Fetch the game details from the steam api (is multiplayer or not, essentially)
 async function fetchGameDetails(fastify: FastifyInstance, appId: number): Promise<IGamesToAdd | null> {
@@ -63,7 +49,7 @@ async function insertGamesIntoLibrary(fastify: FastifyInstance, player_id: bigin
   }
 }
 
-export async function getSteamLibrary(request: GetSteamLibraryRequest, reply: FastifyReply) {
+export async function getSteamLibrary(request: FastifyRequest< { Params: GetSteamLibraryRequest } >, reply: FastifyReply) {
   const { id } = request.params;
   const fastify = request.server as FastifyInstance;
 
@@ -101,11 +87,11 @@ export async function getSteamLibrary(request: GetSteamLibraryRequest, reply: Fa
 
         fastify.log.warn(`Only ${gamesToAdd.length} out of ${gamesToAddToLibrary.length} games were added to the database`);
       }
-      yield 'Fin du processus de mise à jour de la bibliothèque';
+      yield { message: 'Fin du processus de mise à jour de la bibliothèque, vous allez maintenant être redirigé', type: 'success' };
       // return reply.send({ message: 'Library updated successfully' });
     } catch (err) {
       fastify.log.error(err);
-      // return reply.code(500).send({ error: 'Internal server error' });
+      return reply.code(500).send({ error: 'Internal server error' });
     }
   })());
 }
