@@ -37,7 +37,7 @@ const initialize = async () => {
 
     // ==================== Routes loading below
     if (fastify.config.NODE_ENV === 'development')
-      await fastify.register(debugRouter, { prefix: '/debug/env' });
+      await fastify.register(debugRouter, { prefix: '/debug' });
     await fastify.register(authRouter, { prefix: '/auth' });
     await fastify.register(playerRouter, { prefix: '/players' });
     await fastify.register(waitlistRouter, { prefix: '/waitlist' });
