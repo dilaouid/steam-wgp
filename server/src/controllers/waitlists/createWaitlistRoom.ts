@@ -1,8 +1,16 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
 import { Player } from "../../models/Players";
 import { insertWaitlist } from "../../models/Waitlists";
+import { isAuthenticated } from "../../auth/mw";
 
-export async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
+export const createWaitlistOpts = {
+  method: 'POST' as HTTPMethods,
+  url: '/',
+  handler: createWaitlist,
+  preValidation: [isAuthenticated]
+};
+
+async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
   const { id } = (request.user as Player);
   const fastify = request.server as FastifyInstance;
 

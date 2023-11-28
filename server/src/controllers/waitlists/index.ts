@@ -1,12 +1,9 @@
-import { createWaitlist } from "./createWaitlistRoom";
-import { getWaitlistWithPlayers, getWaitlistWithPlayersParams, getWaitlistWithPlayersOpts } from "./getWaitlistRoom";
-import { joinOrLeaveWaitlist, joinOrLeaveWaitlistParams } from "./joinWaitlistRoom";
+import { createWaitlistOpts } from "./createWaitlistRoom";
+import { getWaitlistWithPlayersOpts } from "./getWaitlistRoom";
+import { joinOrLeaveWaitlistOpts } from "./joinWaitlistRoom";
 
 export {
-  createWaitlist,
-  getWaitlistWithPlayers,
-  joinOrLeaveWaitlist,
-  joinOrLeaveWaitlistParams,
-  getWaitlistWithPlayersParams,
+  createWaitlistOpts,
+  joinOrLeaveWaitlistOpts,
   getWaitlistWithPlayersOpts
 }

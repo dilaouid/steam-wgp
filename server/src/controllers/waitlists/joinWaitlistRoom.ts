@@ -1,13 +1,30 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { isUserInWaitlist, joinWaitlist, leaveWaitlist } from "../../models/WaitlistsPlayers";
+import { isAuthenticated } from "../../auth/mw";
 
 export interface joinOrLeaveWaitlistParams {
   id: string;
 }
 
-export async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeaveWaitlistParams }>, reply: FastifyReply) {
+export const joinOrLeaveWaitlistOpts = {
+  method: 'PATCH' as HTTPMethods,
+  url: '/:id',
+  handler: joinOrLeaveWaitlist,
+  preValidation: [isAuthenticated],
+  schema: {
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: { type: 'string' }
+      }
+    }
+  }
+};
+
+async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeaveWaitlistParams }>, reply: FastifyReply) {
   const { id } = request.params;
   const user = (request.user as Player);
   const fastify = request.server as FastifyInstance;
