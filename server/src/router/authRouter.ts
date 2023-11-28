@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { Players } from '../models';
 import { Player } from '../models/Players';
 import { eq } from 'drizzle-orm';
+import { isAuthenticated } from '../auth/mw';
 
 export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());
@@ -20,20 +21,22 @@ export default async function authRouter(fastify: FastifyInstance) {
   }, async (identifier: string, profile: any, done: (err: Error | null, user: Player | null) => void) => {
     try {
       const player = profile._json;
+      let user;
       if (!player) {
         return done(null, null);
       }
 
-      let user = await fastify.db.select().from(Players.model).where(eq(Players.model.id, player.steamid as any));
-      if (user.length === 0) {
+      const existingUser = await fastify.db.select().from(Players.model).where(eq(Players.model.id, player.steamid as any));
+      if (existingUser.length === 0) {
         fastify.log.info('Inserting new user');
-        user = await fastify.db.insert(Players.model).values({
+        const [newUser] = await fastify.db.insert(Players.model).values({
           id: player.steamid,
           avatar_hash: player.avatarhash,
-        });
+        }).returning({ id: Players.model.id, avatar_hash: Players.model.avatar_hash });
+        user = newUser as Player;
       } else {
         fastify.log.warn('User already exists');
-        user = user[0];
+        user = existingUser[0];
       }
 
       return done(null, user);
@@ -73,6 +76,12 @@ export default async function authRouter(fastify: FastifyInstance) {
       request.logOut();
       reply.status(200);
       reply.send({ message: 'Logged out' });
+    });
+
+    fastify.get('/me', { preValidation: isAuthenticated }, async (request, reply) => {
+      if (!request.user) throw new Error('Missing user object in request');
+      const user = request.user as Player;
+      return reply.send({ message: 'You are logged in!', id: user.id });
     });
 
   });
