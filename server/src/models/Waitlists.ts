@@ -40,11 +40,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
 
 export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {
   const result = await fastify.db
-    .select({
-      waitlist: model,
-      players: { player_id: 'id', avatar_hash: 'avatar_hash' },
-      librairies: { game_id: 'id', player_id: 'player_id' }
-    })
+    .select({ waitlist: model, players: Players.model, games: Games.model })
     .from(model)
     .leftJoin(WaitlistsPlayers.model, and(
       eq(model.id, WaitlistsPlayers.model.waitlist_id),
