@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import fastifyPassport from '@fastify/passport';
+import jwt from 'jsonwebtoken';
 
 import { Players } from '../models';
 import { Player } from '../models/Players';
@@ -18,7 +19,6 @@ export default async function authRouter(fastify: FastifyInstance) {
     apiKey: fastify.config.STEAM_API_KEY
   }, async (identifier: string, profile: any, done: (err: Error | null, user: Player | null) => void) => {
     try {
-      fastify.log.info(profile);
       const player = profile._json;
       if (!player) {
         return done(null, null);
@@ -32,7 +32,7 @@ export default async function authRouter(fastify: FastifyInstance) {
           avatar_hash: player.avatarhash,
         });
       } else {
-        fastify.log.info('User already exists');
+        fastify.log.warn('User already exists');
         user = user[0];
       }
 
@@ -55,16 +55,24 @@ export default async function authRouter(fastify: FastifyInstance) {
     fastify.get('/steam/callback', { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/logout' }) },
       async (request, reply) => {
         if (!request.user) throw new Error('Missing user object in request');
-        // Utilisateur authentifié avec succès
-        // [TODO] Rediriger vers la page d'accueil client side et créer le cookie
-        return reply.send({});
+        const user = request.user as Player;
+        const jwtToken = jwt.sign({ id: String(user.id) }, fastify.config.SECRET_KEY, { expiresIn: '1h' });
+        reply.setCookie('token', jwtToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          path: '/',
+          maxAge: 3600
+        });
+
+        return reply.redirect(fastify.config.FRONT + '');
       }
     );
 
     // Route pour déconnecter l'utilisateur
     fastify.get('/logout', async (request, reply) => {
       request.logOut();
-      reply.redirect('/');
+      reply.status(200);
+      reply.send({ message: 'Logged out' });
     });
 
   });
