@@ -1,11 +1,28 @@
-import { EventMessage, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { EventMessage, FastifyInstance, FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
 import { Games, Libraries } from "../../models";
 import { eq, inArray } from 'drizzle-orm';
+import { isAuthenticated } from "../../auth/mw";
 
 export interface GetSteamLibraryRequest { id: string; }
 interface IGamesToAdd { id: number; is_selectable: boolean; }
 interface ISteamResponse { response: { games: { appid: number; }[]; } }
 interface ILibrary { appid: number; game_id?: number }
+
+export const getSteamLibraryOpts = {
+  method: 'GET' as HTTPMethods,
+  url: '/:id',
+  handler: getSteamLibrary,
+  preValidation: [isAuthenticated],
+  schema: {
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: { type: 'string' }
+      }
+    }
+  }
+};
 
 // Fetch the game details from the steam api (is multiplayer or not, essentially)
 async function fetchGameDetails(fastify: FastifyInstance, appId: number): Promise<IGamesToAdd | null> {
@@ -49,7 +66,7 @@ async function insertGamesIntoLibrary(fastify: FastifyInstance, player_id: bigin
   }
 }
 
-export async function getSteamLibrary(request: FastifyRequest< { Params: GetSteamLibraryRequest } >, reply: FastifyReply) {
+async function getSteamLibrary(request: FastifyRequest< { Params: GetSteamLibraryRequest } >, reply: FastifyReply) {
   const { id } = request.params;
   const fastify = request.server as FastifyInstance;
 
