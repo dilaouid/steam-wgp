@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-spaces */
 import { FastifyInstance } from 'fastify';
 
 import {
@@ -6,10 +7,10 @@ import {
   joinOrLeaveWaitlistOpts as joinOrLeaveWaitlist } from '../controllers/waitlists';
 
 export default async function waitlistRouter(fastify: FastifyInstance) {
-  fastify.register(function (app, _, done) {
-    app.route(createWaitlist), // :POST /waitlist
-    app.route(getWaitlist); // :GET /waitlist/:id
-    app.route(joinOrLeaveWaitlist); // :PATCH /waitlist/:id
+  fastify.register(function (app: FastifyInstance, _, done) {
+    app.route(createWaitlist),        // :POST  /waitlist
+    app.route(getWaitlist);           // :GET   /waitlist/:id
+    app.route(joinOrLeaveWaitlist);   // :PATCH /waitlist/:id
     done();
   });
 }
