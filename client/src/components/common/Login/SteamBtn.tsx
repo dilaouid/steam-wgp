@@ -1,5 +1,8 @@
 
 import styled from 'styled-components';
+import {
+    Link
+} from 'react-router-dom';
 
 const SteamBtn = styled.img`
     width: 250px;
@@ -17,8 +20,8 @@ const SteamBtn = styled.img`
 
 export default function SteamBtnComponent() {
     return (
-        <a href="#">
+        <Link to="http://localhost:8000/auth/steam">
             <SteamBtn className="img-fluid" data-bss-hover-animate="pulse" src="./assets/img/loginsteamlarge.png" alt="openid_steam" loading="lazy" />
-        </a>
+        </Link>
     );
 }
