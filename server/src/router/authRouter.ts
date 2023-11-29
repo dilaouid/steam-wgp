@@ -33,10 +33,10 @@ export default async function authRouter(fastify: FastifyInstance) {
           id: player.steamid,
           avatar_hash: player.avatarhash,
         }).returning({ id: Players.model.id, avatar_hash: Players.model.avatar_hash });
-        user = newUser as Player;
+        user = { ...newUser, username: player.personaname } as Player & { username: string };
       } else {
         fastify.log.warn('User already exists');
-        user = existingUser[0];
+        user = { ...existingUser[0], username: player.personaname } as Player & { username: string };
       }
 
       return done(null, user);
@@ -58,8 +58,8 @@ export default async function authRouter(fastify: FastifyInstance) {
     fastify.get('/steam/callback', { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/logout' }) },
       async (request, reply) => {
         if (!request.user) throw new Error('Missing user object in request');
-        const user = request.user as Player;
-        const jwtToken = jwt.sign({ id: String(user.id) }, fastify.config.SECRET_KEY, { expiresIn: '1h' });
+        const user = request.user as Player & { username: string };
+        const jwtToken = jwt.sign({ id: String(user.id), username: user.username }, fastify.config.SECRET_KEY, { expiresIn: '1h' });
         reply.setCookie('token', jwtToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
@@ -80,8 +80,8 @@ export default async function authRouter(fastify: FastifyInstance) {
 
     fastify.get('/me', { preValidation: isAuthenticated }, async (request, reply) => {
       if (!request.user) throw new Error('Missing user object in request');
-      const user = request.user as Player;
-      return reply.send({ message: 'You are logged in!', id: user.id });
+      const user = request.user as Player & { username: string };
+      return reply.send({ message: 'You are logged in!', data: { id: user.id, username: user.username } });
     });
 
   });
