@@ -14,8 +14,8 @@ export const checkAuth = async () => {
       throw new Error('Authentification non vérifiée');
     }
 
-    const data = await response.json();
-    return data;
+    const res = await response.json();
+    return res.data;
   } catch (error) {
     console.error('Erreur lors de la vérification de l’authentification:', error);
     throw error;
