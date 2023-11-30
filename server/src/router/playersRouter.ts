@@ -6,6 +6,6 @@ import {
 
 export default async function playerRouter(fastify: FastifyInstance) {
   fastify.register(async function (app) {
-    app.route(getSteamLibrary); // :GET /library-checker/:id
+    app.route(getSteamLibrary); // :GET /library-checker
   });
 }
