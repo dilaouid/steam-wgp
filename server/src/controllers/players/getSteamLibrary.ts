@@ -102,7 +102,7 @@ async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
       fastify.log.info(`Inserting games into the database...`);
       const gamesToAdd = await Promise.all(appIdsNotInDB.map(async appId => await fetchGameDetails(fastify, appId).catch(err => {
         fastify.log.error(err);
-        return [];
+        return { game_id: appId, is_selectable: false }
       })))
       const filteredGamesToAdd = gamesToAdd.filter(game => game !== null);
       fastify.log.info(`--- We are about to insert ${gamesToAdd.length} games into the database...`);
