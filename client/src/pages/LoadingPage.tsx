@@ -18,6 +18,9 @@ const Legend = styled.p`
 export default function LoadingPage () {
     const { auth } = useContext(AuthContext)!;
     const [ messages, setMessages ] = useState<IMessage[]>([]);
+    const [showFirstDiv, setShowFirstDiv] = useState(true);
+    const [showSecondDiv, setShowSecondDiv] = useState(false);
+
 
     useEffect(() => {
         const eventSource = new EventSource(`${BASE_URL}/players/library-checker`, {
@@ -28,6 +31,13 @@ export default function LoadingPage () {
             const data = JSON.parse(event.data);
             if (data.complete) {
                 eventSource.close();
+                setTimeout(() => {
+                    setShowSecondDiv(true);
+
+                    setTimeout(() => {
+                        setShowFirstDiv(false);
+                    }, 1500);
+                }, 1000);
             }
             setMessages((messages) => [...messages, data]);
         };
@@ -35,7 +45,6 @@ export default function LoadingPage () {
         eventSource.onerror = (error) => {
           console.error('SSE error:', error);
           eventSource.close();
-    
         };
       
         return () => {
@@ -46,19 +55,26 @@ export default function LoadingPage () {
     return (
         <section className="py-4 py-xl-5">
             <div className="container">
-                <div className="text-center p-4 p-lg-5">
-                    <div id="sectionHeadingHomepage">
-                        <HeadingTitleComponent />
-                        <SteamLoadingIcon />
-                        <HelloComponent username={ auth.user.username } />
-                        <Legend className="text-light-emphasis">Nous préparons tout ce qu'il faut pour vous,<br />merci de patienter un instant, ça ne devrait pas être<br />long !&nbsp;</Legend>
-                        {messages.map((msg, index) => (
-                            <div key={index}>
-                                <ProgressLabelComponent message={msg.message} type={msg.type} />
-                            </div>
-                        ))}
+                {showFirstDiv && (
+                    <div className="text-center p-4 p-lg-5">
+                        <div id="sectionHeadingHomepage" className={showSecondDiv ? 'animate__animated animate__zoomOut animate__slower' : ''}>
+                            <HeadingTitleComponent />
+                            <SteamLoadingIcon />
+                            <HelloComponent username={ auth.user.username } />
+                            <Legend className="text-light-emphasis">Nous préparons tout ce qu'il faut pour vous,<br />merci de patienter un instant, ça ne devrait pas être<br />long !&nbsp;</Legend>
+                            {messages.map((msg, index) => (
+                                <div key={index}>
+                                    <ProgressLabelComponent message={msg.message} type={msg.type} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
+                {showSecondDiv && (
+                    <div className='animate__animated animate__fadeIn'>
+
+                    </div>
+                )}
             </div>
         </section>
     );
