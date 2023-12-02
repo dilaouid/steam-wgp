@@ -15,11 +15,15 @@ const TextButton = styled.span`
 `;
 
 export default function ActionButtonComponent({ text, target, icon, delay }: ActionButtonComponentProps) {
-    return(<div className={"col-auto align-self-center animate__animated animate__fadeInUp animate__delay-" + delay}>
+    const AnimateDiv = styled.div`
+      --animate-duration: ${delay}s;
+    `;
+
+    return(<AnimateDiv className="col-auto align-self-center animate__animated animate__fadeInUp">
         <button className="btn btn-outline-primary bg-black bg-opacity-75 bg-gradient joinOrCreateBtn" type="button" data-bs-target={ target } data-bs-toggle="modal">
             { icon }
             <br />
             <TextButton>{ text }</TextButton>
         </button>
-    </div>)
+    </AnimateDiv>)
 }
