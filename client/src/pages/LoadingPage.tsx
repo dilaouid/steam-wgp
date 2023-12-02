@@ -1,17 +1,18 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { IMessage } from "../api/players";
 
 import ProgressLoadingComponent from "../components/common/Home/ProgressLoading";
 import HomePageComponent from "../components/common/Home/HomePage";
+import { LoadingContext } from "../context/LoadingProvider";
 
 export default function LoadingPage () {
     const [ messages, setMessages ] = useState<IMessage[]>([]);
     const [ showFirstDiv, setShowFirstDiv ] = useState(true);
     const [ animateFirstDiv, setAnimateFirstDiv ] = useState(false);
-    const [ loadingComplete, setLoadingComplete ] = useState(false);
+    const { setLoadingComplete, loadingComplete } = useContext(LoadingContext)!;
 
 
     useEffect(() => {
@@ -42,7 +43,7 @@ export default function LoadingPage () {
         return () => {
           eventSource.close();
         };
-    }, []);
+    }, [setLoadingComplete]);
 
     return (
         <section className="py-4 py-xl-5">
