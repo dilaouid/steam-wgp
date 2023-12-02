@@ -15,6 +15,7 @@ import {
 
 import { useEffect } from 'react';
 import HomePage from './pages/Home';
+import { LoadingProvider } from './context/LoadingProvider';
 
 function App() {
   useEffect(() => {
@@ -23,11 +24,13 @@ function App() {
   }, []);
   return (
     <AuthProvider>
-      <Router>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-      </Router>
+      <LoadingProvider>
+        <Router>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+            </Routes>
+        </Router>
+      </LoadingProvider>
     </AuthProvider>
   )
 }
