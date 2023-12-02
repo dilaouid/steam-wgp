@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DangerIconComponent } from "./DangerIcon";
+import { DangerIconComponent } from "../Icons/DangerIcon";
 
 const ProgressLabel = styled.p`
     font-family: Abel, sans-serif;
