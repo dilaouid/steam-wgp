@@ -1,25 +1,16 @@
-import styled from "styled-components";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthProvider";
+import { useEffect, useState } from "react";
 
 import { IMessage } from "../api/players";
 
-import SteamLoadingIcon from "../components/common/Home/Loading";
-import HeadingTitleComponent from "../components/common/Login/HeadingTitle";
-import { HelloComponent } from "../components/common/Home/Hello";
-import { ProgressLabelComponent } from "../components/common/Home/ProgressLabel";
-
-const Legend = styled.p`
-    margin-bottom: 42px;
-`;
+import ProgressLoadingComponent from "../components/common/Home/ProgressLoading";
 
 export default function LoadingPage () {
-    const { auth } = useContext(AuthContext)!;
     const [ messages, setMessages ] = useState<IMessage[]>([]);
-    const [showFirstDiv, setShowFirstDiv] = useState(true);
-    const [showSecondDiv, setShowSecondDiv] = useState(false);
+    const [ showFirstDiv, setShowFirstDiv ] = useState(true);
+    const [ animateFirstDiv, setAnimateFirstDiv ] = useState(false);
+    const [ showSecondDiv, setShowSecondDiv ] = useState(false);
 
 
     useEffect(() => {
@@ -32,12 +23,12 @@ export default function LoadingPage () {
             if (data.complete) {
                 eventSource.close();
                 setTimeout(() => {
-                    setShowSecondDiv(true);
-
-                    setTimeout(() => {
-                        setShowFirstDiv(false);
-                    }, 1500);
+                    setAnimateFirstDiv(true);
                 }, 1000);
+                setTimeout(() => {
+                    setShowFirstDiv(false);
+                    setShowSecondDiv(true);
+                }, 2000);
             }
             setMessages((messages) => [...messages, data]);
         };
@@ -55,24 +46,10 @@ export default function LoadingPage () {
     return (
         <section className="py-4 py-xl-5">
             <div className="container">
-                {showFirstDiv && (
-                    <div className="text-center p-4 p-lg-5">
-                        <div id="sectionHeadingHomepage" className={showSecondDiv ? 'animate__animated animate__zoomOut animate__slower' : ''}>
-                            <HeadingTitleComponent />
-                            <SteamLoadingIcon />
-                            <HelloComponent username={ auth.user.username } />
-                            <Legend className="text-light-emphasis">Nous préparons tout ce qu'il faut pour vous,<br />merci de patienter un instant, ça ne devrait pas être<br />long !&nbsp;</Legend>
-                            {messages.map((msg, index) => (
-                                <div key={index}>
-                                    <ProgressLabelComponent message={msg.message} type={msg.type} />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
+                {showFirstDiv && <ProgressLoadingComponent messages={messages} animateFirstDiv={animateFirstDiv} />}
                 {showSecondDiv && (
                     <div className='animate__animated animate__fadeIn'>
-
+                        <h1 className="text-center text-light-emphasis">C'est bon, vous pouvez y aller !</h1>
                     </div>
                 )}
             </div>
