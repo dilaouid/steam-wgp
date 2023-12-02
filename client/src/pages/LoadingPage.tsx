@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import { IMessage } from "../api/players";
 
 import ProgressLoadingComponent from "../components/common/Home/ProgressLoading";
+import HomePageComponent from "../components/common/Home/HomePage";
 
 export default function LoadingPage () {
     const [ messages, setMessages ] = useState<IMessage[]>([]);
     const [ showFirstDiv, setShowFirstDiv ] = useState(true);
     const [ animateFirstDiv, setAnimateFirstDiv ] = useState(false);
-    const [ showSecondDiv, setShowSecondDiv ] = useState(false);
+    const [ loadingComplete, setLoadingComplete ] = useState(false);
 
 
     useEffect(() => {
@@ -27,7 +28,7 @@ export default function LoadingPage () {
                 }, 1000);
                 setTimeout(() => {
                     setShowFirstDiv(false);
-                    setShowSecondDiv(true);
+                    setLoadingComplete(true);
                 }, 2000);
             }
             setMessages((messages) => [...messages, data]);
@@ -46,12 +47,8 @@ export default function LoadingPage () {
     return (
         <section className="py-4 py-xl-5">
             <div className="container">
-                {showFirstDiv && <ProgressLoadingComponent messages={messages} animateFirstDiv={animateFirstDiv} />}
-                {showSecondDiv && (
-                    <div className='animate__animated animate__fadeIn'>
-                        <h1 className="text-center text-light-emphasis">C'est bon, vous pouvez y aller !</h1>
-                    </div>
-                )}
+                { showFirstDiv && <ProgressLoadingComponent messages={messages} animateFirstDiv={animateFirstDiv} /> }
+                { loadingComplete && (<HomePageComponent />) }
             </div>
         </section>
     );
