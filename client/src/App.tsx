@@ -5,7 +5,7 @@ import 'bootswatch/dist/cyborg/bootstrap.min.css'; // Bootswatch theme
 import 'aos/dist/aos.css'; // AOS styles
 import 'animate.css';      // Animate.css styles
 import { AuthProvider } from './context/AuthProvider';
-
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS
 
 import {
   BrowserRouter as Router,
