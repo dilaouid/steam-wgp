@@ -24,6 +24,7 @@ export default function HomePage () {
             setIsAuthenticated(true);
           } catch (error) {
             console.error('Utilisateur non authentifié');
+            localStorage.removeItem('animationPlayed');
             setAuth({ isAuthenticated: false, user: { id: '', username: '' } });
             setIsAuthenticated(false);
           }

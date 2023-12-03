@@ -16,6 +16,13 @@ export default function LoadingPage () {
 
 
     useEffect(() => {
+        const animationPlayed = localStorage.getItem('animationPlayed') === 'true';
+        if (animationPlayed) {
+            setShowFirstDiv(false);
+            setLoadingComplete(true);
+            return;
+        }
+
         const eventSource = new EventSource(`${BASE_URL}/players/library-checker`, {
             withCredentials: true
         });
@@ -30,6 +37,7 @@ export default function LoadingPage () {
                 setTimeout(() => {
                     setShowFirstDiv(false);
                     setLoadingComplete(true);
+                    localStorage.setItem('animationPlayed', 'true');
                 }, 2000);
             }
             setMessages((messages) => [...messages, data]);
