@@ -13,7 +13,7 @@ export default function HomePage () {
     const { loadingComplete } = useContext(LoadingContext)!;
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         setIsLoading(true);
