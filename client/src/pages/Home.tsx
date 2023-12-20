@@ -34,12 +34,12 @@ export default function HomePage () {
     }, [setAuth]);
 
     return (
-      <body>
+      <div>
         { !isLoading && loadingComplete ? <NavbarComponent /> : '' }
         <section className="py-4 py-xl-5">
             { isLoading ? <SteamLoadingIcon /> : isAuthenticated ? <LoadingPage /> : <LoginPage /> }
         </section>
         { !isLoading && loadingComplete ? <FooterComponent /> : '' }
-      </body>
+      </div>
     );
 }

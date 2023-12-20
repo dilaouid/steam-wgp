@@ -16,6 +16,8 @@ import {
 import { useEffect } from 'react';
 import HomePage from './pages/Home';
 import { LoadingProvider } from './context/LoadingProvider';
+import LogoutPage from './pages/Logout';
+import LobbyPage from './pages/Lobby';
 
 function App() {
   useEffect(() => {
@@ -28,6 +30,8 @@ function App() {
         <Router>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/logout" element={<LogoutPage />} />
+              <Route path="/waitlist/:id" element={<LobbyPage />} />
             </Routes>
         </Router>
       </LoadingProvider>

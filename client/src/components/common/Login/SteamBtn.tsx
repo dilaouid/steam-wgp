@@ -21,7 +21,8 @@ const SteamBtn = styled.img`
 
 export default function SteamBtnComponent() {
     return (
-        <Link to={ BASE_URL + "/auth/steam" }>
+        // <Link to={ BASE_URL + "/auth/steam" }>
+        <Link to={ BASE_URL + "/debug/login" }>
             <SteamBtn className="img-fluid" data-bss-hover-animate="pulse" src="./assets/img/loginsteamlarge.png" alt="openid_steam" loading="lazy" />
         </Link>
     );

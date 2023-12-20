@@ -21,3 +21,23 @@ export const checkAuth = async () => {
     throw error;
   }
 };
+
+// Log out the authenticated user
+export const logOut = async () => {
+  try {
+    const response = await fetch(BASE_URL + "/auth/logout", {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-type": "application/json"
+      }
+    });
+    if (!response.ok)
+      throw new Error("Impossible de déconnecter l'utilisateur authentifié")
+    
+    const res = await response.json();
+    return res;
+  } catch (err) {
+    console.error("Une erreur est survenue lors de la déconnexion de l'utilisateur: " + err)
+  }
+};

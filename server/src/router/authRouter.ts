@@ -74,6 +74,7 @@ export default async function authRouter(fastify: FastifyInstance) {
     // Route pour déconnecter l'utilisateur
     fastify.get('/logout', async (request, reply) => {
       request.logOut();
+      reply.clearCookie("token")
       reply.status(200);
       reply.send({ message: 'Logged out' });
     });
@@ -81,6 +82,7 @@ export default async function authRouter(fastify: FastifyInstance) {
     fastify.get('/me', { preValidation: isAuthenticated }, async (request, reply) => {
       if (!request.user) throw new Error('Missing user object in request');
       const user = request.user as Player & { username: string };
+      // fastify.db.select() todo-> get waitlist id
       return reply.send({ message: 'You are logged in!', data: { id: user.id, username: user.username } });
     });
 

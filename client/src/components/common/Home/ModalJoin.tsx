@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components"
+import { joinOrLeaveRoom } from "../../../api/lobby";
 
 const Alert = styled.div`
     margin-top: 16px;
@@ -30,8 +31,8 @@ export default function ModalJoinComponent() {
         }
         
         try {
-            // [todo] call api here
-            window.location.href = '/nouvelle-page';
+            const apiResponse = await joinOrLeaveRoom(uuid);
+            window.location.href = '/waitlist/' + uuid;
         } catch (error) {
             setAlert({ type: 'danger', message: 'Erreur lors de la soumission', display: true });
         }
