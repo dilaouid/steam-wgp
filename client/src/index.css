@@ -1,6 +1,6 @@
 body {
   height: 100vh;
-  background: url("./assets/img/dots.png");
+  background: url("/assets/img/dots.png");
   background-size: contain, auto;
   background-repeat: repeat, no-repeat;
 
