@@ -33,7 +33,7 @@ async function getWaitlistWithPlayers(request: FastifyRequest< { Params: getWait
     const waitlist = await getWaitlist(fastify, id.trim(), BigInt(player.id));
     if (!waitlist) {
       fastify.log.warn(`Waitlist ${id} not found`);
-      return reply.code(400).send({ error: 'Bad request' });
+      return reply.code(404).send({ error: 'Waitlist not found' });
     }
     return reply.code(200).send({ message: 'Waitlist fetched', data: waitlist });
   } catch (err) {
