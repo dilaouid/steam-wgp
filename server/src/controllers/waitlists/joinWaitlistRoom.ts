@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { isUserInWaitlist, joinWaitlist, leaveWaitlist } from "../../models/WaitlistsPlayers";
 import { isAuthenticated } from "../../auth/mw";
+import { getWaitlist } from "../../models/Waitlists";
 
 export interface joinOrLeaveWaitlistParams {
   id: string;
@@ -30,11 +31,19 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
   const fastify = request.server as FastifyInstance;
 
   try {
+    const waitlist = await getWaitlist(fastify, id.trim(), BigInt(user.id));
+    if (!waitlist) {
+      fastify.log.warn(`Waitlist ${id} not found`);
+      return reply.code(404).send({ error: 'Waitlist not found' });
+    }
+
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
     const roomClients = fastify.waitlists.get(id);
     if (waitlistStatus.inWaitlist) {
-      if (waitlistStatus.waitlistId !== id)
+      if (waitlistStatus.waitlistId && waitlistStatus.waitlistId !== id) {
         return reply.code(400).send({ error: 'Already in a waitlist' });
+      }
+
       await leaveWaitlist(fastify, user.id, id);
 
       // Inform users in the room that the user left
