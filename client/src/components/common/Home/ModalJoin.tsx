@@ -31,9 +31,10 @@ export default function ModalJoinComponent() {
         }
         
         try {
-            const apiResponse = await joinOrLeaveRoom(uuid);
+            await joinOrLeaveRoom(uuid);
             window.location.href = '/waitlist/' + uuid;
         } catch (error) {
+            console.log(error);
             setAlert({ type: 'danger', message: 'Erreur lors de la soumission', display: true });
         }
     };
