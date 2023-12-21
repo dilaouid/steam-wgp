@@ -12,8 +12,6 @@ const spinnerAnimation = keyframes`
 
 const AnimatedRectangle = styled.rect`
   animation: ${spinnerAnimation} 2.4s linear infinite;
-  width: 10;
-  height: 10;
 `;
 
 const FirstRectangle = styled(AnimatedRectangle)`
@@ -30,10 +28,10 @@ const ThirdRectangle = styled(AnimatedRectangle)`
 
 export const SpinnerIconComponent: React.FC = () => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <FirstRectangle x="1" y="1" rx="1" />
-            <SecondRectangle x="1" y="1" rx="1" />
-            <ThirdRectangle x="1" y="1" rx="1" />
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <FirstRectangle x="1" y="1" rx="1" width={10} height={10} fill="white" />
+            <SecondRectangle x="1" y="1" rx="1" width={10} height={10} fill="white" />
+            <ThirdRectangle x="1" y="1" rx="1" width={10} height={10} fill="white"  />
         </svg>
     );
 };
