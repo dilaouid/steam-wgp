@@ -1,4 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface APIResponse {
-    data: unknown;
+    data: any;
     message: string;
 }
