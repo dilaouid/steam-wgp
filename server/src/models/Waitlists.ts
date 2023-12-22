@@ -22,6 +22,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   ).execute();
 
   if (alreadyInWaitlist.length > 0) {
+    fastify.log.warn(`User ${userId} is already in a waitlist`);
     return { error: 'Already in a waitlist' };
   }
 
@@ -29,13 +30,16 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
     admin_id: userId,
   } as WaitlistInsert;
 
-  const insertWaitlist = await fastify.db.insert(model).values(newWaitlist).execute();
+  const insertWaitlist = await fastify.db.insert(model).values(newWaitlist).returning();
 
   if (!insertWaitlist) {
     return { error: 'Error creating waitlist' };
   }
 
-  return { waitlist: insertWaitlist };
+  const insertedRoomId = insertWaitlist[0].id;
+  await fastify.db.insert(WaitlistsPlayers.model).values({ player_id: userId, waitlist_id: insertedRoomId }).execute();
+
+  return { waitlist: insertWaitlist[0] };
 }
 
 export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {

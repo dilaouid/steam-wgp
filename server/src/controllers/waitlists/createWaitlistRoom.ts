@@ -18,11 +18,15 @@ async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
   if (!id)
     return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
   try {
-    const insert = await insertWaitlist(fastify, id);
+    const insert = await insertWaitlist(fastify, BigInt(id));
     if (insert.error)
       return APIResponse(reply, null, insert.error, 400);
-    return APIResponse(reply, insert, 'Room créée avec succès', 201);
+    if (!insert.waitlist)
+      return APIResponse(reply, null, 'Une erreur interne est survenue', 500);
+    insert.waitlist.admin_id = insert?.waitlist?.admin_id.toString() || '';
+    return APIResponse(reply, insert.waitlist, 'Room créée avec succès', 201);
   } catch (err) {
+    fastify.log.error(err);
     return APIResponse(reply, null, 'Une erreur interne est survenue', 500);
   }
 }
