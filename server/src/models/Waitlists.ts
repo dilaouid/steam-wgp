@@ -23,7 +23,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
 
   if (alreadyInWaitlist.length > 0) {
     fastify.log.warn(`User ${userId} is already in a waitlist`);
-    return { error: 'Already in a waitlist' };
+    return { error: 'Vous êtes déjà dans une room' };
   }
 
   const newWaitlist: WaitlistInsert = {
@@ -33,7 +33,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   const insertWaitlist = await fastify.db.insert(model).values(newWaitlist).returning();
 
   if (!insertWaitlist) {
-    return { error: 'Error creating waitlist' };
+    return { error: 'Une erreur interne est survenue' };
   }
 
   const insertedRoomId = insertWaitlist[0].id;
