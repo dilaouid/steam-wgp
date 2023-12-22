@@ -3,6 +3,7 @@ import { Games, Libraries } from "../../models";
 import { eq, inArray } from 'drizzle-orm';
 import { isAuthenticated } from "../../auth/mw";
 import { Player } from "../../models/Players";
+import { APIResponse } from "../../utils/response";
 
 interface IGamesToAdd { game_id: number; is_selectable: boolean; id?: number; }
 interface ISteamResponse { response: { games: { appid: number; }[]; } }
@@ -66,7 +67,8 @@ async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
   const { id } = request.user as Player;
   const fastify = request.server as FastifyInstance;
 
-  if (!id) return reply.code(401).send({ error: 'Forbidden' });
+  if (!id)
+    return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
 
   reply.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
     try {

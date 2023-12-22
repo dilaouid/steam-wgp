@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { getPlayerLibrary } from "../../models/Libraries";
+import { APIResponse } from "../../utils/response";
 
 export interface getUserLibraryParams {
   id: string;
@@ -10,8 +11,7 @@ export interface getUserLibraryParams {
 // Get the authenticated player's game library (only the games that are selectable)
 export async function getUserLibrary(request: FastifyRequest<{ Params: getUserLibraryParams }>, reply: FastifyReply) {
   if (!request.user) {
-    reply.code(401).send({ error: 'Forbidden' });
-    return;
+    return APIResponse(reply, null, 'Vous devez être connecté pour accéder à votre bibliothèque', 401);
   }
 
   const { id } = (request.user as Player);
@@ -19,9 +19,9 @@ export async function getUserLibrary(request: FastifyRequest<{ Params: getUserLi
 
   try {
     const library = await getPlayerLibrary(fastify, id);
-    return reply.code(200).send(library);
+    return APIResponse(reply, library, 'Bibliothèque récupérée', 200);
   } catch (err) {
     fastify.log.error(err);
-    return reply.code(500).send({ error: 'Internal server error' });
+    return APIResponse(reply, null, 'Une erreur interne est survenue', 500);
   }
 }

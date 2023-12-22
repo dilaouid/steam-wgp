@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyReply, FastifyRequest, HTTPMethods } from "fast
 import { Player } from "../../models/Players";
 import { getWaitlist } from "../../models/Waitlists";
 import { isAuthenticated } from "../../auth/mw";
+import { APIResponse } from "../../utils/response";
 
 export interface getWaitlistWithPlayersParams {
     id: string;
@@ -33,11 +34,11 @@ async function getWaitlistWithPlayers(request: FastifyRequest< { Params: getWait
     const waitlist = await getWaitlist(fastify, id.trim(), BigInt(player.id));
     if (!waitlist) {
       fastify.log.warn(`Waitlist ${id} not found`);
-      return reply.code(404).send({ error: 'Waitlist not found' });
+      return APIResponse(reply, null, "La room n'existe pas", 404);
     }
-    return reply.code(200).send({ message: 'Waitlist fetched', data: waitlist });
+    return APIResponse(reply, waitlist, 'Room récupérée', 200);
   } catch (err) {
     fastify.log.error(err);
-    return reply.code(500).send({ error: 'Internal server error' });
+    return APIResponse(reply, null, 'Une erreur interne est survenue', 500);
   }
 }

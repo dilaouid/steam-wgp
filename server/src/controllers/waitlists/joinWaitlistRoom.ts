@@ -4,6 +4,7 @@ import { Player } from "../../models/Players";
 import { isUserInWaitlist, joinWaitlist, leaveWaitlist } from "../../models/WaitlistsPlayers";
 import { isAuthenticated } from "../../auth/mw";
 import { getWaitlist } from "../../models/Waitlists";
+import { APIResponse } from "../../utils/response";
 
 export interface joinOrLeaveWaitlistParams {
   id: string;
@@ -34,14 +35,14 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
     const waitlist = await getWaitlist(fastify, id.trim(), BigInt(user.id));
     if (!waitlist) {
       fastify.log.warn(`Waitlist ${id} not found`);
-      return reply.code(404).send({ error: 'Waitlist not found' });
+      return APIResponse(reply, null, "La room n'existe pas", 404);
     }
 
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
     const roomClients = fastify.waitlists.get(id);
     if (waitlistStatus.inWaitlist) {
       if (waitlistStatus.waitlistId && waitlistStatus.waitlistId !== id) {
-        return reply.code(400).send({ error: 'Already in a waitlist' });
+        return APIResponse(reply, null, "Vous êtes déjà dans une room", 400);
       }
 
       await leaveWaitlist(fastify, user.id, id);
@@ -51,7 +52,7 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
         client.send(JSON.stringify({ message: 'User left waitlist', user: user.id, waitlistId: id }));
       });
 
-      return reply.code(200).send({ message: 'Waitlist left' });
+      return APIResponse(reply, null, 'Vous avez quitté la room', 200);
     } else {
       await joinWaitlist(fastify, user.id, id);
 
@@ -60,10 +61,10 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
         client.send(JSON.stringify({ message: 'User joined waitlist', user: user.id, waitlistId: id }));
       });
 
-      return reply.code(200).send({ message: 'Waitlist joined' });
+      return APIResponse(reply, null, 'Vous avez rejoint la room', 200);
     }
   } catch (err) {
     fastify.log.error(err);
-    return reply.code(500).send({ error: 'Internal server error' });
+    return APIResponse(reply, null, 'Une erreur interne est survenue', 500);
   }
 }
