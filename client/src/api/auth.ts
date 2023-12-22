@@ -1,3 +1,5 @@
+import { APIResponse } from "../types/API";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // Check if the user is authenticated
@@ -23,7 +25,7 @@ export const checkAuth = async () => {
 };
 
 // Log out the authenticated user
-export const logOut = async () => {
+export const logOut = async (): Promise<APIResponse> => {
   try {
     const response = await fetch(BASE_URL + "/auth/logout", {
       credentials: "include",
@@ -39,5 +41,6 @@ export const logOut = async () => {
     return res;
   } catch (err) {
     console.error("Une erreur est survenue lors de la déconnexion de l'utilisateur: " + err)
+    throw err;
   }
 };
