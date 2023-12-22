@@ -7,6 +7,13 @@
     border-style: solid;
     border-width: 1px;
 }
+
+.joinOrCreateBtn:disabled {
+    opacity: .4;
+    border-color: rgba(14, 56, 75, 0.63) !important;
+    border-style: dotted;
+    border-radius: 80%;
+}
   
 .joinOrCreateBtn:hover {
     transform: scale(1.1);
