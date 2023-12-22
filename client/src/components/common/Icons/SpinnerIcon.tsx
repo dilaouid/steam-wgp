@@ -28,10 +28,10 @@ const ThirdRectangle = styled(AnimatedRectangle)`
 
 export const SpinnerIconComponent: React.FC = () => {
     return (
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <FirstRectangle x="1" y="1" rx="1" width={10} height={10} fill="white" />
-            <SecondRectangle x="1" y="1" rx="1" width={10} height={10} fill="white" />
-            <ThirdRectangle x="1" y="1" rx="1" width={10} height={10} fill="white"  />
+        <svg viewBox="-5 -6 30 30" xmlns="http://www.w3.org/2000/svg">
+            <FirstRectangle x="1" y="1" rx="1" width={5} height={5} fill="#09202B" />
+            <SecondRectangle x="1" y="1" rx="1" width={5} height={5} fill="#09202B" />
+            <ThirdRectangle x="1" y="1" rx="1" width={5} height={5} fill="#09202B"  />
         </svg>
     );
 };
