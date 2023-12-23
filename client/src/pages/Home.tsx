@@ -35,7 +35,7 @@ export default function HomePage () {
 
     return (
       <div>
-        { !isLoading && loadingComplete ? <NavbarComponent /> : '' }
+        { !isLoading && loadingComplete ? <NavbarComponent active={"home"} /> : '' }
         <section className="py-4 py-xl-5">
             { isLoading ? <SteamLoadingIcon /> : isAuthenticated ? <LoadingPage /> : <LoginPage /> }
         </section>
