@@ -28,6 +28,10 @@ const initialize = async () => {
       if (err) fastify.log.error(err);
     });
 
+    plugins.rateLimitPlugin(fastify).ready((err: Error) => {
+      if (err) fastify.log.error('Rate limit exceeded');
+    });
+
     await fastify.register(FastifySSEPlugin);
     await fastify.register(fastifyCookie);
     await fastify.register(fastifySession, { secret: fastify.config.SECRET_KEY });
@@ -47,7 +51,9 @@ const initialize = async () => {
     const port = parseInt(fastify.config.PORT) || 8000;
     await fastify.listen({ port, host: fastify.config.HOST, listenTextResolver: (address: string) => {
       return `Server listening on ${address}`
-    }});
+    }}, (error: any) => {
+      if (error) throw error;
+    });
 
   } catch (err) {
     fastify.log.error(err);

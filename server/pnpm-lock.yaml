@@ -17,6 +17,9 @@ dependencies:
   '@fastify/passport':
     specifier: ^2.4.0
     version: 2.4.0
+  '@fastify/rate-limit':
+    specifier: ^9.0.1
+    version: 9.0.1
   '@fastify/session':
     specifier: ^10.5.0
     version: 10.5.0
@@ -715,6 +718,14 @@ packages:
       fastify-plugin: 4.5.1
     dev: false
 
+  /@fastify/rate-limit@9.0.1:
+    resolution: {integrity: sha512-BNKWtMHyJV+f3TUAQxWacq8dVfJLeTzBOthKpTpkYEBdBRY0cYn2UTPGpHglwZ84o0V+U7pS3wfO4mzF8eXFzg==}
+    dependencies:
+      '@lukeed/ms': 2.0.2
+      fastify-plugin: 4.5.1
+      toad-cache: 3.4.1
+    dev: false
+
   /@fastify/session@10.5.0:
     resolution: {integrity: sha512-2oXXSQ4Yy6pzLgbBoooblgHJ55DYqyxSLoKMq2CGmDZI2WPMrOIvN1bJbllWuUuCe7luPdQju3RJTRvNMW+j/g==}
     dependencies:
@@ -767,6 +778,11 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
+
+  /@lukeed/ms@2.0.2:
+    resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
+    engines: {node: '>=8'}
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3620,6 +3636,11 @@ packages:
 
   /toad-cache@3.3.0:
     resolution: {integrity: sha512-3oDzcogWGHZdkwrHyvJVpPjA7oNzY6ENOV3PsWJY9XYPZ6INo94Yd47s5may1U+nleBPwDhrRiTPMIvKaa3MQg==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /toad-cache@3.4.1:
+    resolution: {integrity: sha512-T0m3MxP3wcqW0LaV3dF1mHBU294sgYSm4FOpa5eEJaYO7PqJZBOjZEQI1y4YaKNnih1FXCEYTWDS9osCoTUefg==}
     engines: {node: '>=12'}
     dev: false
 
