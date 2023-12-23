@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { SpinnerIconComponent } from "../Icons/SpinnerIcon";
 import { toast } from "react-toastify";
 import { APIResponse } from "../../../types/API";
+import { useNavigate } from "react-router-dom";
 
 interface ActionButtonComponentProps {
     text: string;
@@ -24,14 +25,14 @@ const AnimateDiv = styled.div<{ delay: string }>`
 
 export default function ActionButtonComponent({ text, target, icon, delay, onClick }: ActionButtonComponentProps) {
     const [isLoading, setIsLoading] = useState(false);
-
+    const navigate = useNavigate();
 
     const handleClick = async () => {
         setIsLoading(true);
         if (onClick) {
             try {
                 const waitlist = await onClick();
-                window.location.href = `/waitlist/${waitlist.data.id}`;
+                navigate(`/waitlist/${waitlist.data.id}`);
                 setIsLoading(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
