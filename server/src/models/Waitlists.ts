@@ -62,9 +62,10 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
     return null;
   }
 
-  const playersWithGames = result.reduce((acc: any[], row: { players: { player_id: any; avatar_hash: any; }; games: any; }) => {
-    const player = acc.find((p: { player_id: any; }) => p.player_id === row.players.player_id) || {
-      player_id: row.players.player_id,
+  const playersWithGames = result.reduce((acc: any[], row: { players: { id: any; avatar_hash: any; }; games: any; }) => {
+    row.players.id = row.players.id.toString();
+    const player = acc.find((p: { player_id: any; }) => p.player_id === row.players.id) || {
+      player_id: row.players.id,
       avatar_hash: row.players.avatar_hash,
       games: []
     };
@@ -78,6 +79,8 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
     }
     return acc;
   }, []);
+
+  result[0].waitlist.admin_id = result[0].waitlist.admin_id.toString();
 
   const waitlist = {
     ...result[0].waitlist,
