@@ -5,7 +5,7 @@ import SteamLoadingIcon from "./Loading";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthProvider";
 import { ProgressLabelComponent } from "./ProgressLabel";
-import { IMessage } from "../../../api/players";
+import { IMessage } from "../../../types/API";
 
 const Legend = styled.p`
     margin-bottom: 42px;

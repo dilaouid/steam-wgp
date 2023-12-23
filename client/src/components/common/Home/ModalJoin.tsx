@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components"
+
+import { AuthContext } from "../../../context/AuthProvider";
 import { joinOrLeaveRoom } from "../../../api/lobby";
 
 const Alert = styled.div`
@@ -17,6 +19,7 @@ const Modal = styled.div`
 `;
 
 export default function ModalJoinComponent() {
+    const { setAuth } = useContext(AuthContext)!;
     const [ uuid, setUuid ] = useState('');
     const [ alert, setAlert ] = useState({ type: '', message: '', display: false });
 
@@ -31,7 +34,7 @@ export default function ModalJoinComponent() {
         }
         
         try {
-            await joinOrLeaveRoom(uuid);
+            await joinOrLeaveRoom(uuid, setAuth);
             window.location.href = '/waitlist/' + uuid;
         } catch (error) {
             console.log(error);
