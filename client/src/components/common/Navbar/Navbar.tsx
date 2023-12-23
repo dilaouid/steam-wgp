@@ -3,18 +3,13 @@ import './Navbar.css';
 import NavbarToggleComponent from "./NavbarToggle";
 import NavbarLinksComponent from "./NavbarLinks";
 
-interface NavbarComponentProps {
-    animate?: boolean;
-    active: string;
-}
-
-export default function NavbarComponent({ animate = true, active = "" }: NavbarComponentProps) {
+export default function NavbarComponent() {
     return (
-    <nav className="navbar navbar-expand-md bg-body bg-opacity-50 py-3"  data-aos={animate ? "fade-down" : ""} data-bs-theme="dark">
+    <nav className="navbar navbar-expand-md bg-body bg-opacity-50 py-3"  data-aos="fade-down" data-bs-theme="dark">
         <div className="container">
             <NavbarBrand title="SteamWGP" />
             <NavbarToggleComponent />
-            <NavbarLinksComponent active={active} />
+            <NavbarLinksComponent />
         </div>
     </nav>);
 }

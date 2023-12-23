@@ -1,13 +1,13 @@
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
 import { useContext } from "react";
+import { useLocation } from 'react-router-dom';
 
-interface NavbarLinksComponentProps {
-    active: string;
-}
-
-export default function NavbarLinksComponent({ active }: NavbarLinksComponentProps) {
+export default function NavbarLinksComponent() {
     const { auth } = useContext(AuthContext)!;
-    
+    const location = useLocation();
+    const currentPath = location.pathname;
+
     return(
     <div className="collapse navbar-collapse" id="navcol-1">
         <ul className="navbar-nav me-auto">
@@ -15,9 +15,9 @@ export default function NavbarLinksComponent({ active }: NavbarLinksComponentPro
                 <a className="nav-link" href="#">Faire un don</a>
             </li>
             { auth.user.waitlist ?
-            <li className="nav-item">
-                <a className={`nav-link ${active === "lobby" ? "active" : ""}`} href={"/waitlist/" + auth.user.waitlist}>Room actuelle</a>
-            </li>
+                <li className="nav-item">
+                    <Link to={"/waitlist/" + auth.user.waitlist} className={`nav-link ${currentPath.substring(0, 8) === "/waitlist" ? "active" : ""}`}>Room actuelle</Link>
+                </li>
             : ''}
         </ul>
         <a className="btn btn-outline-primary" role="button" href="/logout">Déconnexion</a>

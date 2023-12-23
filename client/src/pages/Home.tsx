@@ -4,7 +4,6 @@ import { checkAuth } from "../api/auth";
 import LoginPage from "./Login";
 import LoadingPage from "./LoadingPage";
 import { AuthContext } from "../context/AuthProvider";
-import NavbarComponent from "../components/common/Navbar/Navbar";
 import { LoadingContext } from "../context/LoadingProvider";
 import FooterComponent from "../components/common/Footer/Footer";
 
@@ -25,7 +24,7 @@ export default function HomePage () {
           } catch (error) {
             console.error('Utilisateur non authentifié');
             localStorage.removeItem('animationPlayed');
-            setAuth({ isAuthenticated: false, user: { id: '', username: '' } });
+            setAuth({ isAuthenticated: false, user: { id: '', username: '', waitlist: null } });
             setIsAuthenticated(false);
           }
           setIsLoading(false);
@@ -35,7 +34,6 @@ export default function HomePage () {
 
     return (
       <div>
-        { !isLoading && loadingComplete ? <NavbarComponent active={"home"} /> : '' }
         <section className="py-4 py-xl-5">
             { isLoading ? <SteamLoadingIcon /> : isAuthenticated ? <LoadingPage /> : <LoginPage /> }
         </section>
