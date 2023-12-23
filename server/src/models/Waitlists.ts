@@ -75,7 +75,7 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
     }
 
     if (row.games) {
-      player.games.push(row.games);
+      player.games.push(row.games.id);
     }
     return acc;
   }, []);
