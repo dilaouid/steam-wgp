@@ -7,7 +7,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 import { useContext } from "react";
 
 export default function HomePageChooseActionComponent() {
-    const { auth, setAuth } = useContext(AuthContext);
+    const { setAuth } = useContext(AuthContext)!;
 
     return(<div className="row justify-content-center">
         <ActionButtonComponent 
