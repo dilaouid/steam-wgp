@@ -3,7 +3,7 @@ import { Strategy as SteamStrategy } from 'passport-steam';
 import fastifyPassport from '@fastify/passport';
 import jwt from 'jsonwebtoken';
 
-import { Players } from '../models';
+import { Players, WaitlistsPlayers } from '../models';
 import { Player } from '../models/Players';
 import { eq } from 'drizzle-orm';
 import { isAuthenticated } from '../auth/mw';
@@ -84,8 +84,11 @@ export default async function authRouter(fastify: FastifyInstance) {
       if (!request.user)
         return APIResponse(reply, null, 'Vous devez être connecté pour accéder à votre profil', 401);
       const user = request.user as Player & { username: string };
-      // fastify.db.select() todo-> get waitlist id
-      return APIResponse(reply, { id: user.id, username: user.username }, "Vous êtes connecté", 200);
+      const findRoom = await fastify.db.select({
+        waitlist: WaitlistsPlayers.model.waitlist_id
+      }).from(WaitlistsPlayers.model).where(eq(WaitlistsPlayers.model.player_id, user.id))
+      const { waitlist } = findRoom?.length > 0 ? findRoom[0] : '';
+      return APIResponse(reply, { id: user.id, username: user.username, waitlist }, "Vous êtes connecté", 200);
     });
 
   });
