@@ -52,7 +52,7 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
         client.send(JSON.stringify({ message: 'User left waitlist', user: user.id, waitlistId: id }));
       });
 
-      return APIResponse(reply, null, 'Vous avez quitté la room', 200);
+      return APIResponse(reply, {action: 'leave'}, 'Vous avez quitté la room', 200);
     } else {
       await joinWaitlist(fastify, user.id, id);
 
@@ -61,7 +61,7 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
         client.send(JSON.stringify({ message: 'User joined waitlist', user: user.id, waitlistId: id }));
       });
 
-      return APIResponse(reply, null, 'Vous avez rejoint la room', 200);
+      return APIResponse(reply, {action: 'join'}, 'Vous avez rejoint la room', 200);
     }
   } catch (err) {
     fastify.log.error(err);
