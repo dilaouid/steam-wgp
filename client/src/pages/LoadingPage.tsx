@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import { useContext, useEffect, useState } from "react";
 
-import { IMessage } from "../api/players";
+import { IMessage } from "../types/API";
 
 import ProgressLoadingComponent from "../components/common/Home/ProgressLoading";
 import HomePageComponent from "../components/common/Home/HomePage";

@@ -3,3 +3,9 @@ export interface APIResponse {
     data: any;
     message: string;
 }
+
+export interface IMessage {
+    message: string;
+    type: 'error' | 'success';
+    complete: boolean;
+}
