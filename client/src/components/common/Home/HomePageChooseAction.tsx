@@ -3,8 +3,12 @@ import { APIResponse } from "../../../types/API";
 import CapslockIcon from "../Icons/CapslockIcon";
 import DoorOpenIcon from "../Icons/DoorOpenIcon";
 import ActionButtonComponent from "./ActionButton";
+import { AuthContext } from "../../../context/AuthProvider";
+import { useContext } from "react";
 
 export default function HomePageChooseActionComponent() {
+    const { auth, setAuth } = useContext(AuthContext);
+
     return(<div className="row justify-content-center">
         <ActionButtonComponent 
             text="Rejoindre"
@@ -19,7 +23,7 @@ export default function HomePageChooseActionComponent() {
             icon={<CapslockIcon className="text-primary-emphasis" />}
             delay="1"
             onClick={async (): Promise<APIResponse> => {
-                return await createRoom();
+                return await createRoom(setAuth);
             }}
         
         />

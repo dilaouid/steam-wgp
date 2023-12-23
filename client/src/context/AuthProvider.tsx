@@ -3,9 +3,10 @@ import React, { createContext, useState } from 'react';
 interface Player {
   id: string;
   username: string;
+  waitlist: string | null;
 }
 
-interface AuthState {
+export interface AuthState {
   isAuthenticated: boolean;
   user: Player;
 }
@@ -19,7 +20,8 @@ const initialAuthState: AuthState = {
   isAuthenticated: false,
   user: {
     id: '',
-    username: ''
+    username: '',
+    waitlist: ''
   }
 };
 
