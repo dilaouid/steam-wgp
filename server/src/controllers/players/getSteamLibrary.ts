@@ -44,7 +44,6 @@ async function getAppIdsNotInDB(fastify: FastifyInstance, steamAppIds: number[])
 
 // Insert the new games to the database
 async function insertGames(fastify: FastifyInstance, games: IGamesToAdd[]) {
-  fastify.log.info(`We are about to insert ${games.length} games into the database...`);
   if (games.length > 0) {
     fastify.log.info(`Inserting ${games.length} games into the database...`);
     // change the property name from game_id to id
@@ -55,8 +54,8 @@ async function insertGames(fastify: FastifyInstance, games: IGamesToAdd[]) {
 }
 
 // Insert the all the new games to the player's library
-async function insertGamesIntoLibrary(fastify: FastifyInstance, player_id: bigint, games: IGamesToAdd[]) {
-  const insertData = games.map(({ game_id }) => ({ game_id, player_id }));
+async function insertGamesIntoLibrary(fastify: FastifyInstance, player_id: bigint, games: number[]) {
+  const insertData = games.map((game_id) => ({ game_id, player_id }));
   // remove elements where game_id is null
   if (insertData.length > 0) {
     await fastify.db.insert(Libraries.model).values(insertData.filter(({ game_id }) => game_id !== null)).onConflictDoNothing().execute();
@@ -98,7 +97,7 @@ async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
       // get the app ids that are not in the database yet
       fastify.log.info(`Fetching games details from Steam API...`);
       const appIdsNotInDB = await getAppIdsNotInDB(fastify, steamAppIds);
-      fastify.log.info(`--- ${appIdsNotInDB.length} games are not in the database yet`);
+      fastify.log.info(`\n--- ${appIdsNotInDB.length} games are not in the database yet ---\n`);
 
       // insert the games in the Games table if they are not already in the database
       fastify.log.info(`Inserting games into the database...`);
@@ -107,16 +106,17 @@ async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
         return { game_id: appId, is_selectable: false }
       })))
       const filteredGamesToAdd = gamesToAdd.filter(game => game !== null);
-      fastify.log.info(`--- We are about to insert ${gamesToAdd.length} games into the database...`);
+      fastify.log.info(`\n--- We are about to insert ${filteredGamesToAdd.length} games into the database...\n`);
       await insertGames(fastify, filteredGamesToAdd);
 
       // insert the games in the Libraries table if they are not already in the database
       fastify.log.info(`Inserting games into the library...`);
       yield { data: JSON.stringify({ message: 'Ajout des jeux à ta collection ...', type: 'info', complete: false }) };
-      await insertGamesIntoLibrary(fastify, BigInt(id), filteredGamesToAdd);
+
+      await insertGamesIntoLibrary(fastify, BigInt(id), gamesToAddToLibrary);
 
       // if added games in db is less than gamesToAddToLibrary, then warn the user
-      if (gamesToAddToLibrary.length > 0 && gamesToAddToLibrary.length !== gamesToAdd.length) {
+      if (gamesToAddToLibrary.length > 0 && gamesToAddToLibrary.length < gamesToAdd.length) {
         if (gamesToAdd.length <= 1) yield { data: JSON.stringify({ message: `${gamesToAdd.length} jeu n'a pas pu être ajouté à la bibliothèque !`, type: 'danger' }) };
         else yield { data: JSON.stringify({ message: `${gamesToAdd.length} jeux n'ont pas pu être ajoutés à la bibliothèque !`, type: 'danger', complete: false }) };
 
