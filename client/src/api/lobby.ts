@@ -3,6 +3,21 @@ import { AuthState } from "../context/AuthProvider";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+export const getWaitlistInformations = async (roomId: string): Promise<APIResponse> => {
+    try {
+        const response = await  fetch(BASE_URL + "/waitlist/" + roomId, {
+            credentials: "include"
+        });
+        const res: APIResponse = await response.json();
+        if (!response.ok)
+            throw new Error(res.message || "Impossible de récupérer les informations de la room");
+        return res;
+    } catch(err) {
+        console.error("Une erreur est survenue lors de la récupération des informations de la room: " + err);
+        throw err;
+    }
+}
+
 export const joinOrLeaveRoom = async (roomId: string, setAuth: React.Dispatch<React.SetStateAction<AuthState>>): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId, {
