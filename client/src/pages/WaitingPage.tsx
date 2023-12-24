@@ -8,6 +8,7 @@ import Player from "../components/common/Waiting/Player";
 import { RoomInformations } from "../components/common/Waiting/RoomInformations";
 import { RoomActionButtons } from "../components/common/Waiting/RoomActionButtons";
 import { NotInCommonGames } from "../components/common/Waiting/NotInCommonGames";
+import { NotEnoughPlayers } from "../components/common/Waiting/NotEnoughPlayers";
 
 const RoomID = styled.span`
     font-weight: normal !important;
@@ -47,6 +48,7 @@ export default function WaitingPage() {
             <RoomActionButtons />
             <WarningLabels>
                 <NotInCommonGames />
+                <NotEnoughPlayers />
             </WarningLabels>
         </div>
     </div>

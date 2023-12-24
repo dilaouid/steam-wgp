@@ -30,7 +30,7 @@ export const RoomActionButtons: React.FC = () => {
     <Row className="justify-content-center">
         { isAdmin ?
         <Col xs="auto">
-            <Button variant="outline-primary" size="lg" disabled={!commonGames || !playersInRoom}>Démarrer</Button>
+            <Button variant="outline-primary" size="lg" disabled={!commonGames || playersInRoom <= 1}>Démarrer</Button>
         </Col> : <></> }
         <Col xs="auto">
             <Button variant="outline-danger" size="lg">Quitter</Button>
