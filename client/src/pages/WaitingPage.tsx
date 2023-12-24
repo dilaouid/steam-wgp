@@ -7,9 +7,17 @@ import { RoomContext } from "../context/RoomProvider";
 import Player from "../components/common/Waiting/Player";
 import { RoomInformations } from "../components/common/Waiting/RoomInformations";
 import { RoomActionButtons } from "../components/common/Waiting/RoomActionButtons";
+import { NotInCommonGames } from "../components/common/Waiting/NotInCommonGames";
 
 const RoomID = styled.span`
     font-weight: normal !important;
+`;
+
+const WarningLabels = styled.div`
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 9px;
+    text-align: center;
 `;
 
 export default function WaitingPage() {
@@ -35,9 +43,12 @@ export default function WaitingPage() {
                 { room.players.map((player, index) => {
                     return <Player key={index} player={player} />
                 }) }
-            </div>
             <RoomInformations />
             <RoomActionButtons />
+            <WarningLabels>
+                <NotInCommonGames />
+            </WarningLabels>
         </div>
+    </div>
     );
 }
