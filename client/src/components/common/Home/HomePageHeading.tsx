@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components"
-import { AuthContext } from "../../../context/AuthProvider";
+import { Auth } from "../../../context";
 
 const Heading = styled.div`
     cursor: default;
@@ -12,7 +12,7 @@ const Title = styled.h4`
 `;
 
 export default function HomePageHeadingComponent() {
-    const { auth } = useContext(AuthContext)!;
+    const { auth } = useContext(Auth.Context)!;
 
     return (
     <div className="text-center p-4 p-lg-5 animate__animated animate__fadeIn">

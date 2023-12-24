@@ -3,11 +3,13 @@ import { APIResponse } from "../../../types/API";
 import CapslockIcon from "../Icons/CapslockIcon";
 import DoorOpenIcon from "../Icons/DoorOpenIcon";
 import ActionButtonComponent from "./ActionButton";
-import { AuthContext } from "../../../context/AuthProvider";
+
 import { useContext } from "react";
 
+import { Auth } from "../../../context";
+
 export default function HomePageChooseActionComponent() {
-    const { setAuth } = useContext(AuthContext)!;
+    const { setAuth } = useContext(Auth.Context)!;
 
     return(<div className="row justify-content-center">
         <ActionButtonComponent 

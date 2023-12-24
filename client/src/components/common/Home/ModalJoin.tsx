@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import styled from "styled-components"
 
-import { AuthContext } from "../../../context/AuthProvider";
+import { Auth } from "../../../context";
 import { joinOrLeaveRoom } from "../../../api/lobby";
 
 const Alert = styled.div`
@@ -19,7 +19,7 @@ const Modal = styled.div`
 `;
 
 export default function ModalJoinComponent() {
-    const { setAuth } = useContext(AuthContext)!;
+    const { setAuth } = useContext(Auth.Context)!;
     const [ uuid, setUuid ] = useState('');
     const [ alert, setAlert ] = useState({ type: '', message: '', display: false });
 
