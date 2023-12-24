@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { ArrowRepeatIcon } from "../components/common/Icons/ArrowRepeatIcon";
 import { RoomContext } from "../context/RoomProvider";
+import Player from "../components/common/Waiting/Player";
 
 const RoomID = styled.span`
     font-weight: normal !important;
@@ -27,6 +28,11 @@ export default function WaitingPage() {
                         Room ID: <RoomID>{ room.id }</RoomID>
                     </p>
                 </div>
+            </div>
+            <div className="row gy-1 justify-content-center">
+                { room.players.map((player, index) => {
+                    return <Player key={index} player={player} />
+                }) }
             </div>
         </div>
     );
