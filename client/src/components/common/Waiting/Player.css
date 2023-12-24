@@ -8,3 +8,8 @@
 .other_player_wroom {
     margin-top: 52px;
 }
+
+.no_games_in_commun {
+    opacity: .4;
+    filter: grayscale(100%);
+}
