@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { AuthContext } from "../../../context/AuthProvider";
 import { RoomContext } from "../../../context/RoomProvider";
 import { WaitingAdmin } from "./WaitingAdmin";
+import { InCommonGames } from "./InCommonGames";
 
 const RoomInformationDiv = styled.div`
     cursor: default;
@@ -18,6 +19,7 @@ export const RoomInformations: React.FC = () => {
     <div className="text-center p-4 p-lg-5">
         <RoomInformationDiv>
             { auth.user.id !== room?.admin_id ? <WaitingAdmin /> : <></> }
+            <InCommonGames />
         </RoomInformationDiv>
     </div>);
 }
