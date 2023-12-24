@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import styled from "styled-components";
 
-import { RoomContext } from "../../../context/RoomProvider";
+import { Room } from "../../../context";
 
 const Paragraph = styled.p`
     margin-bottom: 0px;
 `;
 
 export const InCommonGames: React.FC = () => {
-    const { room } = useContext(RoomContext)!;
+    const { room } = useContext(Room.Context)!;
     if (!room) return (<></>);
 
     const calculateCommonGames = (): number => {

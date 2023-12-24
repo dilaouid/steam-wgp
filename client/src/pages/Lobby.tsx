@@ -9,17 +9,15 @@ import { getWaitlistInformations } from '../api/lobby';
 import FooterComponent from '../components/common/Footer/Footer';
 import SteamLoadingIcon from '../components/common/Home/Loading';
 
-import { RoomContext } from '../context/RoomProvider';
-import { AuthContext } from "../context/AuthProvider";
-import { LoadingContext } from '../context/LoadingProvider';
+import { Room, Auth, Loading } from '../context';
 
 import WaitingPage from './WaitingPage';
 
 export default function LobbyPage() {
     const { id } = useParams();
-    const { setAuth, auth } = useContext(AuthContext)!;
-    const { setLoadingComplete, loadingComplete } = useContext(LoadingContext)!;
-    const { setRoom } = useContext(RoomContext)!;
+    const { setAuth, auth } = useContext(Auth.Context)!;
+    const { setLoadingComplete, loadingComplete } = useContext(Loading.Context)!;
+    const { setRoom } = useContext(Room.Context)!;
 
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
 
@@ -46,7 +44,6 @@ export default function LobbyPage() {
             try {
                 const info = await getWaitlistInformations(id as string);
                 setRoom(info.data);
-                console.log(info.data);
             } catch (error) {
                 console.error('Erreur lors du chargement des informations de la room:', error);
                 navigate('/');

@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import styled from "styled-components";
 
-import { AuthContext } from "../../../context/AuthProvider";
-import { RoomContext } from "../../../context/RoomProvider";
+import { Auth, Room } from "../../../context";
+
 import { WaitingAdmin } from "./WaitingAdmin";
 import { InCommonGames } from "./InCommonGames";
 
@@ -12,8 +12,8 @@ const RoomInformationDiv = styled.div`
 `;
 
 export const RoomInformations: React.FC = () => {
-    const { room } = useContext(RoomContext)!;
-    const { auth } = useContext(AuthContext)!;
+    const { room } = useContext(Room.Context)!;
+    const { auth } = useContext(Auth.Context)!;
 
     return (
     <div className="text-center p-4 p-lg-5">

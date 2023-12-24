@@ -1,5 +1,5 @@
 import { APIResponse } from "../types/API";
-import { AuthState } from "../context/AuthProvider";
+import { Auth } from "../context";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -18,7 +18,7 @@ export const getWaitlistInformations = async (roomId: string): Promise<APIRespon
     }
 }
 
-export const joinOrLeaveRoom = async (roomId: string, setAuth: React.Dispatch<React.SetStateAction<AuthState>>): Promise<APIResponse> => {
+export const joinOrLeaveRoom = async (roomId: string, setAuth: React.Dispatch<React.SetStateAction<Auth.State>>): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId, {
             method: "PATCH",
@@ -42,7 +42,7 @@ export const joinOrLeaveRoom = async (roomId: string, setAuth: React.Dispatch<Re
     }
 };
 
-export const createRoom = async (setAuth: React.Dispatch<React.SetStateAction<AuthState>>): Promise<APIResponse> => {
+export const createRoom = async (setAuth: React.Dispatch<React.SetStateAction<Auth.State>>): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist", {
             credentials: "include",

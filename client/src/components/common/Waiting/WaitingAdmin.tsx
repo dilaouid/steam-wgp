@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import styled from "styled-components";
 
-import { RoomContext } from "../../../context/RoomProvider";
+import { Room } from "../../../context";
+
 import { Spinner } from "react-bootstrap";
 
 const Paragraph = styled.p`
@@ -9,7 +10,7 @@ const Paragraph = styled.p`
 `;
 
 export const WaitingAdmin: React.FC = () => {
-    const { room } = useContext(RoomContext)!;
+    const { room } = useContext(Room.Context)!;
 
     const roomAdmin = room?.players.find(p => p.player_id === room.admin_id);
 

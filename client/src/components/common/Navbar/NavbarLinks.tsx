@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthProvider";
+import { Auth } from "../../../context";
 import { useContext } from "react";
 import { useLocation } from 'react-router-dom';
 
 export default function NavbarLinksComponent() {
-    const { auth } = useContext(AuthContext)!;
+    const { auth } = useContext(Auth.Context)!;
     const location = useLocation();
     const currentPath = location.pathname;
 

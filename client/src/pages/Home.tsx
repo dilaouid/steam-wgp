@@ -3,13 +3,14 @@ import SteamLoadingIcon from "../components/common/Home/Loading";
 import { checkAuth } from "../api/auth";
 import LoginPage from "./Login";
 import LoadingPage from "./LoadingPage";
-import { AuthContext } from "../context/AuthProvider";
-import { LoadingContext } from "../context/LoadingProvider";
+
+import { Auth, Loading } from "../context";
+
 import FooterComponent from "../components/common/Footer/Footer";
 
 export default function HomePage () {
-    const { setAuth } = useContext(AuthContext)!;
-    const { loadingComplete } = useContext(LoadingContext)!;
+    const { setAuth } = useContext(Auth.Context)!;
+    const { loadingComplete } = useContext(Loading.Context)!;
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true);

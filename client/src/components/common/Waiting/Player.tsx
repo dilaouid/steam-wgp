@@ -11,8 +11,7 @@ import KickButton from "./KickButton";
 
 import { PlayerInfo } from "../../../types/Player";
 
-import { AuthContext } from "../../../context/AuthProvider";
-import { RoomContext } from "../../../context/RoomProvider";
+import { Auth, Room } from "../../../context";
 
 import './Player.css';
 
@@ -29,8 +28,8 @@ const printCommonGamesNumber = (count: number) => {
 };
 
 export default function Player({ player }: { player: PlayerInfo }) {
-    const { room } = useContext(RoomContext)!;
-    const { auth } = useContext(AuthContext)!;
+    const { room } = useContext(Room.Context)!;
+    const { auth } = useContext(Auth.Context)!;
 
     const loggedUserIsAdmin = auth.user?.id === room?.admin_id;
     const isLoggedUser = auth.user?.id === player.player_id;

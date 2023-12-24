@@ -4,22 +4,21 @@ import AOS from 'aos';      // AOS animations
 import 'bootswatch/dist/cyborg/bootstrap.min.css'; // Bootswatch theme
 import 'aos/dist/aos.css'; // AOS styles
 import 'animate.css';      // Animate.css styles
-import { AuthProvider } from './context/AuthProvider';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS
 
+import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from 'react-router-dom';
 
-import { useEffect } from 'react';
 import HomePage from './pages/Home';
-import { LoadingProvider } from './context/LoadingProvider';
 import LogoutPage from './pages/Logout';
 import LobbyPage from './pages/Lobby';
 import NavbarComponent from './components/common/Navbar/Navbar';
-import { RoomProvider } from './context/RoomProvider';
+
+import { Auth, Room, Loading } from './context';
 
 function App() {
   useEffect(() => {
@@ -27,9 +26,9 @@ function App() {
     AOS.refresh();
   }, []);
   return (
-    <AuthProvider>
-      <LoadingProvider>
-        <RoomProvider>
+    <Auth.Provider>
+      <Loading.Provider>
+        <Room.Provider>
           <Router>
               <NavbarComponent />
               <Routes>
@@ -40,9 +39,9 @@ function App() {
                 <Route path="/waitlist/:id" element={<LobbyPage />} />
               </Routes>
           </Router>
-        </RoomProvider>
-      </LoadingProvider>
-    </AuthProvider>
+        </Room.Provider>
+      </Loading.Provider>
+    </Auth.Provider>
   )
 }
 

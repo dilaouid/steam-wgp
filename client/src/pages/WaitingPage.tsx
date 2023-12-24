@@ -2,13 +2,15 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { Room } from "../context";
+
 import { ArrowRepeatIcon } from "../components/common/Icons/ArrowRepeatIcon";
-import { RoomContext } from "../context/RoomProvider";
-import Player from "../components/common/Waiting/Player";
+
 import { RoomInformations } from "../components/common/Waiting/RoomInformations";
 import { RoomActionButtons } from "../components/common/Waiting/RoomActionButtons";
 import { NotInCommonGames } from "../components/common/Waiting/NotInCommonGames";
 import { NotEnoughPlayers } from "../components/common/Waiting/NotEnoughPlayers";
+import Player from "../components/common/Waiting/Player";
 
 const RoomID = styled.span`
     font-weight: normal !important;
@@ -22,7 +24,7 @@ const WarningLabels = styled.div`
 `;
 
 export default function WaitingPage() {
-    const { room } = useContext(RoomContext)!;
+    const { room } = useContext(Room.Context)!;
     const navigate = useNavigate();
 
     if (!room) {

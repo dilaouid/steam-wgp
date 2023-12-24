@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 
-import { RoomContext } from "../../../context/RoomProvider";
+import { Room } from "../../../context";
 import { SmallExclamationIcon } from "../Icons/SmallExclamationIcon";
 
 const Paragraph = styled.p`
@@ -9,7 +9,7 @@ const Paragraph = styled.p`
 `;
 
 export const NotInCommonGames: React.FC = () => {
-    const { room } = useContext(RoomContext)!;
+    const { room } = useContext(Room.Context)!;
 
     if (!room) return (<></>);
 

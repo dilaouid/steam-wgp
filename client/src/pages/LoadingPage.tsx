@@ -6,13 +6,14 @@ import { IMessage } from "../types/API";
 
 import ProgressLoadingComponent from "../components/common/Home/ProgressLoading";
 import HomePageComponent from "../components/common/Home/HomePage";
-import { LoadingContext } from "../context/LoadingProvider";
+
+import { Loading } from "../context";
 
 export default function LoadingPage () {
     const [ messages, setMessages ] = useState<IMessage[]>([]);
     const [ showFirstDiv, setShowFirstDiv ] = useState(true);
     const [ animateFirstDiv, setAnimateFirstDiv ] = useState(false);
-    const { setLoadingComplete, loadingComplete } = useContext(LoadingContext)!;
+    const { setLoadingComplete, loadingComplete } = useContext(Loading.Context)!;
 
 
     useEffect(() => {

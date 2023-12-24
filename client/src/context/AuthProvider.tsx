@@ -6,17 +6,17 @@ interface Player {
   waitlist: string | null;
 }
 
-export interface AuthState {
+export interface State {
   isAuthenticated: boolean;
   user: Player;
 }
 
 interface AuthContextType {
-  auth: AuthState;
-  setAuth: React.Dispatch<React.SetStateAction<AuthState>>;
+  auth: State;
+  setAuth: React.Dispatch<React.SetStateAction<State>>;
 }
 
-const initialAuthState: AuthState = {
+const initialAuthState: State = {
   isAuthenticated: false,
   user: {
     id: '',
@@ -25,14 +25,14 @@ const initialAuthState: AuthState = {
   }
 };
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const Context = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  const [auth, setAuth] = useState<AuthState>(initialAuthState);
+export const Provider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+  const [auth, setAuth] = useState<State>(initialAuthState);
 
   return (
-    <AuthContext.Provider value={ { auth, setAuth } }>
+    <Context.Provider value={ { auth, setAuth } }>
       {children}
-    </AuthContext.Provider>
+    </Context.Provider>
   );
 };

@@ -1,12 +1,12 @@
 import { useContext } from "react";
 
-import { RoomContext } from "../../../context/RoomProvider";
-import { AuthContext } from "../../../context/AuthProvider";
+import { Auth, Room } from "../../../context";
+
 import { Col, Row, Button } from "react-bootstrap";
 
 export const RoomActionButtons: React.FC = () => {
-    const { room } = useContext(RoomContext)!;
-    const { auth } = useContext(AuthContext)!;
+    const { room } = useContext(Room.Context)!;
+    const { auth } = useContext(Auth.Context)!;
 
     if (!room) return (<></>);
     const isAdmin = auth.user?.id === room.admin_id;
