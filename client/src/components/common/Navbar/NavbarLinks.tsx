@@ -16,7 +16,7 @@ export default function NavbarLinksComponent() {
             </li>
             { auth.user.waitlist ?
                 <li className="nav-item">
-                    <Link to={"/waitlist/" + auth.user.waitlist} className={`nav-link ${currentPath.substring(0, 8) === "/waitlist" ? "active" : ""}`}>Room actuelle</Link>
+                    <Link to={"/waitlist/" + auth.user.waitlist} className={`nav-link ${currentPath.includes("/waitlist") ? "active" : ""}`}>Room actuelle</Link>
                 </li>
             : ''}
         </ul>
