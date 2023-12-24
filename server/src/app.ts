@@ -20,7 +20,7 @@ const initialize = async () => {
     await fastify.after();
 
     // ====================  Every plugins are loaded, we can now load the routes below
-    plugins.websocketPlugin(fastify).ready((err: Error) => {
+    plugins.websocketPlugin(fastify).ready((err: Error | null) => {
       if (err) fastify.log.error(err);
     });
 
@@ -28,7 +28,7 @@ const initialize = async () => {
       if (err) fastify.log.error(err);
     });
 
-    plugins.rateLimitPlugin(fastify).ready((err: Error) => {
+    plugins.rateLimitPlugin(fastify).ready((err: Error | null) => {
       if (err) fastify.log.error('Rate limit exceeded');
     });
 
