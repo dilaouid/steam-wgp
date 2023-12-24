@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import styled from "styled-components"
 
 import { Auth } from "../../../context";
@@ -91,11 +92,11 @@ export default function ModalJoinComponent() {
                             required
                         />
                         <button 
-                            className={`btn btn-primary ${!isValidUuid(uuid) || loading ? "disabled" : ""}`}
+                            className={`btn ${!isValidUuid(uuid) || loading ? "btn-secondary disabled" : "btn-primary"}`}
                             type="button"
                             onClick={handleSubmit}
                             disabled={!isValidUuid(uuid) || loading}
-                        >{ loading ? "" : "Rejoindre" }</button>
+                        >{ loading ? <Spinner animation="grow" variant="dark" size="sm" /> : "Rejoindre" }</button>
                     </div>
                 </ModalBody>
             </div>
