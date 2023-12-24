@@ -3,7 +3,7 @@ import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { isUserInWaitlist, joinWaitlist, leaveWaitlist } from "../../models/WaitlistsPlayers";
 import { isAuthenticated } from "../../auth/mw";
-import { getWaitlist } from "../../models/Waitlists";
+import { checkWaitlistExists } from "../../models/Waitlists";
 import { APIResponse } from "../../utils/response";
 
 export interface joinOrLeaveWaitlistParams {
@@ -32,7 +32,7 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
   const fastify = request.server as FastifyInstance;
 
   try {
-    const waitlist = await getWaitlist(fastify, id.trim(), BigInt(user.id));
+    const waitlist = await checkWaitlistExists(fastify, id.trim());
     if (!waitlist) {
       fastify.log.warn(`Waitlist ${id} not found`);
       return APIResponse(reply, null, "La room n'existe pas", 404);

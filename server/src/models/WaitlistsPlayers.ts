@@ -14,15 +14,24 @@ export const model = pgTable('waitlists_players', {
 });
 
 export async function isUserInWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<{ inWaitlist: boolean, waitlistId: string | null }> {
-  const result = await fastify.db.select().from(model).where(
+  fastify.log.info(userId);
+  const results = await fastify.db.select({
+    player_id: model.player_id,
+    waitlist_id: model.waitlist_id
+  }).from(model).where(
     eq(model.player_id, userId)
   ).execute();
 
-  if (result && result.waitlist_id !== waitlistId) {
-    return { inWaitlist: true, waitlistId: result.waitlist_id };
+  if (results.length === 0) {
+    return { inWaitlist: false, waitlistId: null };
   }
 
-  return { inWaitlist: false, waitlistId: null };
+  const isInTargetWaitlist = results.some((result: WaitlistPlayer) => result.waitlist_id === waitlistId);
+
+  return {
+    inWaitlist: isInTargetWaitlist,
+    waitlistId: isInTargetWaitlist ? waitlistId : null
+  };
 }
 
 export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<void> {
