@@ -19,6 +19,7 @@ import { LoadingProvider } from './context/LoadingProvider';
 import LogoutPage from './pages/Logout';
 import LobbyPage from './pages/Lobby';
 import NavbarComponent from './components/common/Navbar/Navbar';
+import { RoomProvider } from './context/RoomContext';
 
 function App() {
   useEffect(() => {
@@ -28,16 +29,18 @@ function App() {
   return (
     <AuthProvider>
       <LoadingProvider>
-        <Router>
-            <NavbarComponent />
-            <Routes>
-              <Route path="/" element={
-                  <HomePage />
-              } />
-              <Route path="/logout" element={<LogoutPage />} />
-              <Route path="/waitlist/:id" element={<LobbyPage />} />
-            </Routes>
-        </Router>
+        <RoomProvider>
+          <Router>
+              <NavbarComponent />
+              <Routes>
+                <Route path="/" element={
+                    <HomePage />
+                } />
+                <Route path="/logout" element={<LogoutPage />} />
+                <Route path="/waitlist/:id" element={<LobbyPage />} />
+              </Routes>
+          </Router>
+        </RoomProvider>
       </LoadingProvider>
     </AuthProvider>
   )
