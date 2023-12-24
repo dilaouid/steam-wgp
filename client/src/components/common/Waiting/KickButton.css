@@ -1,0 +1,7 @@
+.kick_player_btn {
+    z-index: 1;
+    border-radius: 19px !important;
+    position: absolute;
+    margin: 108px;
+    margin-top: 164px;
+}
