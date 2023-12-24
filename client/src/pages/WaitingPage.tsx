@@ -6,6 +6,7 @@ import { ArrowRepeatIcon } from "../components/common/Icons/ArrowRepeatIcon";
 import { RoomContext } from "../context/RoomProvider";
 import Player from "../components/common/Waiting/Player";
 import { RoomInformations } from "../components/common/Waiting/RoomInformations";
+import { RoomActionButtons } from "../components/common/Waiting/RoomActionButtons";
 
 const RoomID = styled.span`
     font-weight: normal !important;
@@ -36,6 +37,7 @@ export default function WaitingPage() {
                 }) }
             </div>
             <RoomInformations />
+            <RoomActionButtons />
         </div>
     );
 }
