@@ -9,7 +9,7 @@ import { getWaitlistInformations } from '../api/lobby';
 import FooterComponent from '../components/common/Footer/Footer';
 import SteamLoadingIcon from '../components/common/Home/Loading';
 
-import { RoomContext } from '../context/RoomContext';
+import { RoomContext } from '../context/RoomProvider';
 import { AuthContext } from "../context/AuthProvider";
 import { LoadingContext } from '../context/LoadingProvider';
 

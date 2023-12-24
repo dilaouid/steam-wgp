@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { ArrowRepeatIcon } from "../components/common/Icons/ArrowRepeatIcon";
-import { RoomContext } from "../context/RoomContext";
+import { RoomContext } from "../context/RoomProvider";
 
 const RoomID = styled.span`
     font-weight: normal !important;

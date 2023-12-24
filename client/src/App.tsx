@@ -19,7 +19,7 @@ import { LoadingProvider } from './context/LoadingProvider';
 import LogoutPage from './pages/Logout';
 import LobbyPage from './pages/Lobby';
 import NavbarComponent from './components/common/Navbar/Navbar';
-import { RoomProvider } from './context/RoomContext';
+import { RoomProvider } from './context/RoomProvider';
 
 function App() {
   useEffect(() => {
