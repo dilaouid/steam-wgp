@@ -43,13 +43,23 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
 }
 
 export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {
+
+  const isUserInWaitlist = await fastify.db.select().from(WaitlistsPlayers.model).where(
+    and(
+      eq(WaitlistsPlayers.model.waitlist_id, waitlistId),
+      eq(WaitlistsPlayers.model.player_id, userId)
+    )
+  ).execute();
+
+  if (isUserInWaitlist.length === 0) {
+    fastify.log.warn(`User ${userId} is not in waitlist ${waitlistId}`);
+    return null;
+  }
+
   const result = await fastify.db
     .select({ waitlist: model, players: Players.model, games: Games.model })
     .from(model)
-    .leftJoin(WaitlistsPlayers.model, and(
-      eq(model.id, WaitlistsPlayers.model.waitlist_id),
-      eq(WaitlistsPlayers.model.player_id, userId)
-    ))
+    .leftJoin(WaitlistsPlayers.model, eq(model.id, WaitlistsPlayers.model.waitlist_id))
     .leftJoin(Players.model, eq(WaitlistsPlayers.model.player_id, Players.model.id))
     .leftJoin(Libraries.model, eq(Players.model.id, Libraries.model.player_id))
     .leftJoin(Games.model, and(
