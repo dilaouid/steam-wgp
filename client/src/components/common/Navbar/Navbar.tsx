@@ -1,6 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../../../context/AuthProvider";
-import { LoadingContext } from "../../../context/LoadingProvider";
+import { Auth, Loading } from "../../../context";
 
 import NavbarBrand from "./NavbarBrand";
 import NavbarToggleComponent from "./NavbarToggle";
@@ -9,8 +8,8 @@ import NavbarLinksComponent from "./NavbarLinks";
 import './Navbar.css';
 
 export default function NavbarComponent() {
-    const { auth } = useContext(AuthContext)!;
-    const { loadingComplete } = useContext(LoadingContext)!;
+    const { auth } = useContext(Auth.Context)!;
+    const { loadingComplete } = useContext(Loading.Context)!;
 
     return (
         <div>
