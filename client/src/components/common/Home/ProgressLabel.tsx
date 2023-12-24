@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DangerIconComponent } from "../Icons/DangerIcon";
+import { DangerIcon } from "../Icons/DangerIcon";
 
 const ProgressLabel = styled.p`
     font-family: Abel, sans-serif;
@@ -14,7 +14,7 @@ interface ProgressLabelComponentProps {
 export const ProgressLabelComponent: React.FC<ProgressLabelComponentProps> = ({ type, message }) => {
     return (
         <ProgressLabel className={"text-center text-"+type+"-emphasis"} data-aos="fade-up" data-aos-duration="700" data-aos-once="true">
-            { type === "danger" ? <DangerIconComponent /> : null}
+            { type === "danger" ? <DangerIcon /> : null}
             { message }
         </ProgressLabel>
     )

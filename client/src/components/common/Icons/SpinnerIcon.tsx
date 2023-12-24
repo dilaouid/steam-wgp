@@ -26,7 +26,7 @@ const ThirdRectangle = styled(AnimatedRectangle)`
   animation-delay: -0.8s;
 `;
 
-export const SpinnerIconComponent: React.FC = () => {
+export const SpinnerIcon: React.FC = () => {
     return (
         <svg viewBox="-5 -6 30 30" xmlns="http://www.w3.org/2000/svg">
             <FirstRectangle x="1" y="1" rx="1" width={5} height={5} fill="#09202B" />

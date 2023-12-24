@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import './ActionButton.css';
 import styled from "styled-components";
-import { SpinnerIconComponent } from "../Icons/SpinnerIcon";
+import { SpinnerIcon } from "../Icons/SpinnerIcon";
 import { toast } from "react-toastify";
 import { APIResponse } from "../../../types/API";
 import { useNavigate } from "react-router-dom";
@@ -59,7 +59,7 @@ export default function ActionButtonComponent({ text, target, icon, delay, onCli
             disabled={isLoading}
 
         >
-            {isLoading ? <SpinnerIconComponent /> : icon}
+            {isLoading ? <SpinnerIcon /> : icon}
             <br />
             <TextButton>{ isLoading ? '' : text }</TextButton>
         </button>
