@@ -1,9 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import websocket from '@fastify/websocket'
 import jwt from 'jsonwebtoken';
-import { Games, Libraries, Players, WaitlistsPlayers } from '../models';
+import { Games, Libraries, WaitlistsPlayers } from '../models';
 import { eq, inArray } from 'drizzle-orm';
-import { PlayerInsert } from '../models/Players';
 import { Game } from '../models/Games';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
