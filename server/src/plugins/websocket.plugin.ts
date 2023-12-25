@@ -91,8 +91,11 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     const allPlayersPresent = waitlist.players.every((playerId: string) =>
       playersInDb.some((dbPlayer: any) => dbPlayer.player_id as string === playerId));
 
-    if (!allPlayersPresent) {
-      fastify.log.error(`Not all players are present in the room ${waitlistId}`);
+    const noExtraPlayersInDb = playersInDb.every((dbPlayer: any) =>
+      waitlist.players.includes(dbPlayer.player_id as string));
+
+    if (!allPlayersPresent || !noExtraPlayersInDb) {
+      fastify.log.error(`Mismatch in players present in the room ${waitlistId}`);
       return;
     }
 
