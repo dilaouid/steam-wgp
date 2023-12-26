@@ -81,9 +81,9 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     }
   };
 
-  const swipeGame = (waitlistId: string, playerId: string, gameId: number, positive: boolean): void => {
+  const swipeGame = (waitlistId: string, playerId: string, gameId: number): void => {
     const waitlist = waitlists.get(waitlistId);
-    if (waitlist && positive) {
+    if (waitlist && waitlist.started && !waitlist.ended) {
       // check if the game is in the common games
       if (!waitlist.commonGames.includes(gameId)) return;
 
