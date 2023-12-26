@@ -73,7 +73,7 @@ export default async function authRouter(fastify: FastifyInstance) {
         const user = request.user as Player & { username: string };
         const jwtToken = jwt.sign({ id: String(user.id), username: user.username }, fastify.config.SECRET_KEY, { expiresIn: '1h' });
         reply.setCookie('token', jwtToken, {
-          httpOnly: true,
+          httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
           path: '/',
           maxAge: 3600
