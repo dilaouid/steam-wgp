@@ -191,12 +191,14 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       const { waitlistId } = req.params as { waitlistId: string };
       const playerId = (req as any).user.id;
 
+      // join the waitlist
       const joined = await joinWaitlist(waitlistId, playerId, []);
       if (!joined) {
         connection.socket.close();
         return;
       }
 
+      // create the waitlist if it doesn't exist yet
       let waitlistEntry = waitlists.get(waitlistId);
       if (!waitlistEntry) {
         await createWaitlist(waitlistId, playerId);
@@ -207,12 +209,76 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         }
       }
 
+      // add the socket to the waitlist
       waitlistEntry.sockets.add(connection.socket);
 
       const waitlistClients = waitlists.get(waitlistId);
       if (!waitlistClients)
         throw new Error('waitlistClients is undefined');
       waitlistClients.add(connection.socket);
+
+      // inform every player that a new player joined the waitlist (except the new player)
+      waitlistClients.forEach((client: any) => {
+        if (client !== connection.socket) {
+          client.send(JSON.stringify({ action: 'join', player: playerId }));
+        }
+      });
+
+      connection.socket.on('message', async (message: RawData) => {
+        const messageAsString = message.toString();
+        const { action, payload } = JSON.parse(messageAsString);
+
+        switch (action) {
+
+        // when a player swipes a game
+        case 'swipe':
+          try {
+            if (payload.gameId) {
+              swipeGame(waitlistId, playerId, payload.gameId);
+            }
+            if (checkGameEnd(waitlistId)) {
+              // get the game that is swiped by all the players
+              waitlistClients.forEach((client: any) => {
+                const gameEnd = waitlistClients.commonGames.find((game: number) => {
+                  const swipedPlayers = waitlistClients.swipedGames[game];
+                  return swipedPlayers.length === waitlistClients.players.length;
+                });
+
+                client.send(JSON.stringify({ action: 'gameEnd', winner: gameEnd }));
+              });
+            }
+          } catch (error) {
+            fastify.log.error(`Error in 'swipe' action: ${error}`);
+          }
+          break;
+
+        // when the admin starts the waitlist
+        case 'start':
+          try {
+            if (waitlistClients.started || waitlistClients.ended) return;
+            await startWaitlist(waitlistId);
+            // send message to all players
+            waitlistClients.forEach((client: any) => {
+              client.send(JSON.stringify({ action: 'start' }));
+            });
+          } catch (error) {
+            fastify.log.error(`Error in 'start' action: ${error}`);
+          }
+          break;
+
+        // when a player leaves the waitlist
+        case 'leave':
+          if (waitlistClients.started || waitlistClients.ended) return;
+          leaveWaitlist(waitlistId, playerId);
+          // send message to all players
+          waitlistClients.forEach((client: any) => {
+            client.send(JSON.stringify({ action: 'leave', player: playerId }));
+          });
+          break;
+        default:
+          break;
+        }
+      });
 
       connection.socket.on('close', () => {
         waitlistClients.delete(connection.socket);
