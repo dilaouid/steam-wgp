@@ -40,7 +40,7 @@ export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, wai
     waitlist_id: waitlistId
   };
 
-  await fastify.db.insert(model).values(newWaitlistPlayer).execute();
+  await fastify.db.insert(model).values(newWaitlistPlayer);
 }
 
 export async function leaveWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<void> {

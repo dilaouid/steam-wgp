@@ -47,7 +47,6 @@ export default function LobbyPage() {
             try {
                 const info = await getWaitlistInformations(id as string);
                 setRoom(calculateCommonGames(info.data));
-                
             } catch (error) {
                 console.error('Erreur lors du chargement des informations de la room:', error);
                 navigate('/');
@@ -60,17 +59,47 @@ export default function LobbyPage() {
     }, [ id, navigate, setRoom ]);
 
     useEffect(() => {
-        // get jwt cookie token
         const token = getCookieValue('token');
-        if (!room || !token) return;
-
         const waitlistId = room?.id;
+
+        if (!waitlistId || !token) return;
+
         const socket = connectWebSocket(waitlistId, token);
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.action === "join") {
+                console.log('New player joined! Welcome to', data.player.username);
+                setRoom((prev) => {
+                    if (!prev) return prev;
+
+                    // don't add the player if he's already in the room
+                    const isPlayerAlreadyInRoom = prev.players.some(player => player.player_id === data.player.player_id);
+                    
+                    if (isPlayerAlreadyInRoom) {
+                        console.log('Player is already in the room');
+                        return prev;
+                    }
         
-        return () => {
-          socket.close();
+
+                    // Update the state with the new player and the new common games
+                    return { 
+                        ...prev, 
+                        players: [...prev.players, data.player],
+                        commonGames: calculateCommonGames({
+                            ...prev, 
+                            players: [...prev.players, data.player]
+                        })!.commonGames
+                    };
+                });
+            }
         };
-      }, [room]);    
+
+        return () => {
+            console.log('Closing socket');
+            socket.close();
+        };
+    }, [setRoom, room?.id]);
 
     return(
     <div>
