@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_WS_URL;
 
 export const connectWebSocket = (waitlistId: string, token: string): WebSocket => {
     const wsUrl = `${BASE_URL}/ws/${waitlistId}`;

@@ -19,6 +19,7 @@ interface Waitlist {
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
   const waitlists = new Map();
+  const userAuthMap = new Map();
 
   fastify.decorate('waitlists', waitlists);
 
@@ -176,8 +177,14 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       try {
         const token = info.req.headers['sec-websocket-protocol'];
         if (!token) throw new Error('No token provided');
+
         const decoded = jwt.verify(token, fastify.config.SECRET_KEY);
-        (info.req as any).user = decoded;
+        fastify.log.info('WebSockets Authentification success');
+
+        const clientId = info.req.socket.remoteAddress + ":" + info.req.socket.remotePort;
+        const userId = (decoded as { id: string }).id;
+        userAuthMap.set(clientId, userId);
+
         next(true);
       } catch (err) {
         fastify.log.error('WebSockets Authentification error', err);
@@ -189,7 +196,10 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     // websocket route for waitlist actions
     fastify.get('/ws/:waitlistId', { websocket: true }, async (connection, req) => {
       const { waitlistId } = req.params as { waitlistId: string };
-      const playerId = (req as any).user.id;
+      const clientId = req.socket.remoteAddress + ":" + req.socket.remotePort;
+      if (!clientId) throw new Error('No user provided');
+
+      const playerId = userAuthMap.get(clientId);
 
       // join the waitlist
       const joined = await joinWaitlist(waitlistId, playerId, []);

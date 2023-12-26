@@ -13,12 +13,14 @@ import { Room, Auth, Loading } from '../context';
 
 import WaitingPage from './WaitingPage';
 import { calculateCommonGames } from '../utils/getCommonGames';
+import { connectWebSocket } from '../api/websocket';
+import { getCookieValue } from '../utils/getCookie';
 
 export default function LobbyPage() {
     const { id } = useParams();
     const { setAuth, auth } = useContext(Auth.Context)!;
     const { setLoadingComplete, loadingComplete } = useContext(Loading.Context)!;
-    const { setRoom } = useContext(Room.Context)!;
+    const { room, setRoom } = useContext(Room.Context)!;
 
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
 
@@ -56,6 +58,19 @@ export default function LobbyPage() {
 
         loadRoomInfo();
     }, [ id, navigate, setRoom ]);
+
+    useEffect(() => {
+        // get jwt cookie token
+        const token = getCookieValue('token');
+        if (!room || !token) return;
+
+        const waitlistId = room?.id;
+        const socket = connectWebSocket(waitlistId, token);
+        
+        return () => {
+          socket.close();
+        };
+      }, [room]);    
 
     return(
     <div>
