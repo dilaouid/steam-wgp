@@ -39,7 +39,6 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
     }
 
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
-    const roomClients = fastify.waitlists.get(id);
     if (waitlistStatus.inWaitlist) {
       if (waitlistStatus.waitlistId && waitlistStatus.waitlistId !== id) {
         return APIResponse(reply, null, "Vous êtes déjà dans une room", 400);
@@ -47,19 +46,9 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
 
       await leaveWaitlist(fastify, user.id, id);
 
-      // Inform users in the room that the user left
-      roomClients?.forEach(client => {
-        client.send(JSON.stringify({ message: 'User left waitlist', user: user.id, waitlistId: id }));
-      });
-
       return APIResponse(reply, {action: 'leave'}, 'Vous avez quitté la room', 200);
     } else {
       await joinWaitlist(fastify, user.id, id);
-
-      // Inform users in the room that the user joined
-      roomClients?.forEach(client => {
-        client.send(JSON.stringify({ message: 'User joined waitlist', user: user.id, waitlistId: id }));
-      });
 
       return APIResponse(reply, {action: 'join'}, 'Vous avez rejoint la room', 200);
     }
