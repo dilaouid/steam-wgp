@@ -19,7 +19,7 @@ export const InCommonGames: React.FC = () => {
         room.players.forEach(player => {
             commonGames = commonGames.filter(game => player.games.includes(game));
         });
-    
+
         return commonGames.length;
     };
 

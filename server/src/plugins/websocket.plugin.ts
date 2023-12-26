@@ -4,6 +4,17 @@ import jwt from 'jsonwebtoken';
 import { Games, Libraries, Waitlists, WaitlistsPlayers } from '../models';
 import { and, eq, inArray } from 'drizzle-orm';
 import { Game } from '../models/Games';
+import { RawData } from 'ws';
+
+interface Waitlist {
+  adminId: string;
+  players: string[];
+  playerGames: Record<string, number[]>;
+  commonGames: number[];
+  swipedGames: Record<number, string[]>;
+  started: boolean;
+  ended: boolean;
+}
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -25,7 +36,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       return;
     }
 
-    const waitlist = {
+    const waitlist: Waitlist = {
       adminId,
       players: [],
       playerGames: {},
@@ -91,8 +102,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
   // check if a game is swiped by all the players
   const checkGameEnd = (waitlistId: string): boolean => {
-    const waitlist = waitlists.get(waitlistId);
-    if (waitlist) {
+    const waitlist: Waitlist = waitlists.get(waitlistId);
+    if (waitlist && waitlist.started && !waitlist.ended) {
       const swipedGames = waitlist.swipedGames;
       const commonGames = waitlist.commonGames;
       const players = waitlist.players;
@@ -110,7 +121,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
   };
 
   const startWaitlist = async (waitlistId: string): Promise<void> => {
-    const waitlist = waitlists.get(waitlistId);
+    const waitlist: Waitlist = waitlists.get(waitlistId);
     if (!waitlist) return;
 
     const playersInDb = await fastify.db.select()
