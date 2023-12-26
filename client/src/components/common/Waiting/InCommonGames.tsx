@@ -11,19 +11,5 @@ export const InCommonGames: React.FC = () => {
     const { room } = useContext(Room.Context)!;
     if (!room) return (<></>);
 
-    const calculateCommonGames = (): number => {
-        if (room.players.length === 0)
-            return 0;
-        let commonGames = room.players[0].games;
-    
-        room.players.forEach(player => {
-            commonGames = commonGames.filter(game => player.games.includes(game));
-        });
-
-        return commonGames.length;
-    };
-
-    const commonGames = calculateCommonGames();
-
-    return (<Paragraph className={`${commonGames > 0 ? 'text-primary' : 'text-danger'}`}><b>{ commonGames } jeu{ commonGames > 1 ? 'x' : '' }</b> dans la liste</Paragraph>);
+    return (<Paragraph className={`${room.commonGames.length > 0 ? 'text-primary' : 'text-danger'}`}><b>{ room.commonGames.length } jeu{ room.commonGames.length > 1 ? 'x' : '' }</b> dans la liste</Paragraph>);
 }
