@@ -18,7 +18,7 @@ export default async function authRouter(fastify: FastifyInstance) {
   fastifyPassport.use(new SteamStrategy({
     returnURL: `${host}/auth/steam/callback`,
     realm: host,
-    apiKey: fastify.config.STEAM_API_KEY
+    apiKey: fastify.config.STEAM_API_KEY as string
   }, async (identifier: string, profile: any, done: (err: Error | null, user: Player | null) => void) => {
     try {
       const player = profile._json;
