@@ -12,6 +12,7 @@ import SteamLoadingIcon from '../components/common/Home/Loading';
 import { Room, Auth, Loading } from '../context';
 
 import WaitingPage from './WaitingPage';
+import { calculateCommonGames } from '../utils/getCommonGames';
 
 export default function LobbyPage() {
     const { id } = useParams();
@@ -43,7 +44,8 @@ export default function LobbyPage() {
         const loadRoomInfo = async () => {
             try {
                 const info = await getWaitlistInformations(id as string);
-                setRoom(info.data);
+                setRoom(calculateCommonGames(info.data));
+                
             } catch (error) {
                 console.error('Erreur lors du chargement des informations de la room:', error);
                 navigate('/');
