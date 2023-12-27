@@ -331,7 +331,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             leaveWaitlist(waitlistId, playerId);
             // send message to all players
             waitlistClients.sockets.forEach((client: any) => {
-              client.send(JSON.stringify({ action: 'leave', player }));
+              const data = playerId === waitlistClients.adminId ? { action: 'end' } : { action: 'leave', player };
+              client.send(JSON.stringify(data));
             });
             break;
           default:

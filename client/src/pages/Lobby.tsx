@@ -108,13 +108,20 @@ export default function LobbyPage() {
                     };
                 });
             }
+
+            if (data.action === "end") {
+                console.log('Room has been closed');
+                setRoom(null);
+                socket.socket?.close();
+                navigate('/');
+            }
         };
 
         return () => {
             console.log('Closing socket');
             socket.socket?.close();
         };
-    }, [setRoom, room?.id, socket]);
+    }, [setRoom, room?.id, socket, navigate]);
 
     return(
     <div>
