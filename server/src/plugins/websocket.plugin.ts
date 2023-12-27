@@ -296,7 +296,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               }
               if (checkGameEnd(waitlistId)) {
               // get the game that is swiped by all the players
-                waitlistClients.forEach((client: any) => {
+                waitlistClients.sockets.forEach((client: any) => {
                   const gameEnd = waitlistClients.commonGames.find((game: number) => {
                     const swipedPlayers = waitlistClients.swipedGames[game];
                     return swipedPlayers.length === waitlistClients.players.length;
@@ -316,7 +316,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               if (waitlistClients.started || waitlistClients.ended) return;
               await startWaitlist(waitlistId);
               // send message to all players
-              waitlistClients.forEach((client: any) => {
+              waitlistClients.sockets.forEach((client: any) => {
                 client.send(JSON.stringify({ action: 'start' }));
               });
             } catch (error) {
@@ -329,8 +329,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             if (waitlistClients.started || waitlistClients.ended) return;
             leaveWaitlist(waitlistId, playerId);
             // send message to all players
-            waitlistClients.forEach((client: any) => {
-              client.send(JSON.stringify({ action: 'leave', player: playerId }));
+            waitlistClients.sockets.forEach((client: any) => {
+              client.send(JSON.stringify({ action: 'leave', player }));
             });
             break;
           default:
