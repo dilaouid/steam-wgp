@@ -18,6 +18,10 @@ import LogoutPage from './pages/Logout';
 import LobbyPage from './pages/Lobby';
 import NavbarComponent from './components/common/Navbar/Navbar';
 
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Auth, Room, Loading, WebSocket } from './context';
 
 function App() {
@@ -31,6 +35,16 @@ function App() {
         <Room.Provider>
           <WebSocket.Provider>
             <Router>
+            
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    newestOnTop={false}
+                    closeOnClick
+                    pauseOnFocusLoss
+                    closeButton={false}
+                    theme="colored"
+                />
                 <NavbarComponent />
                 <Routes>
                   <Route path="/" element={
