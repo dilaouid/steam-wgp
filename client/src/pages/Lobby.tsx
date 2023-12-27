@@ -158,6 +158,24 @@ export default function LobbyPage() {
                     });
                 }
             }
+
+            if (data.action === "start") {
+                toast.success("La partie a commencé", {
+                    position: "bottom-right",
+                    autoClose: 2500,
+                    closeOnClick: true,
+                    theme: "colored",
+                    hideProgressBar: true,
+                });
+                setRoom((prev) => {
+                    if (!prev) return prev;
+                    return { 
+                        ...prev, 
+                        started: true
+                    };
+                });
+            }
+
         };
 
         return () => {
@@ -169,7 +187,13 @@ export default function LobbyPage() {
     return(
     <div>
         <section className="py-4 py-xl-5">
-            { isLoading ? <SteamLoadingIcon /> : <WaitingPage /> }
+            {isLoading ? (
+                <SteamLoadingIcon />
+            ) : room?.started ? (
+                <p>Game Page</p>
+            ) : (
+                <WaitingPage />
+            )}
         </section>
         { !isLoading && loadingComplete ? <FooterComponent /> : '' }
     </div>)
