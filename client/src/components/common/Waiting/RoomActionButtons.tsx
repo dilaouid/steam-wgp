@@ -6,6 +6,8 @@ import { Col, Row, Button } from "react-bootstrap";
 import { joinOrLeaveRoom } from "../../../api/lobby";
 import { useNavigate } from "react-router-dom";
 import { WebSocket } from "../../../context";
+import { toast } from "react-toastify";
+import { APIResponse } from "../../../types/API";
 
 export const RoomActionButtons: React.FC = () => {
     const { room } = useContext(Room.Context)!;
@@ -25,8 +27,14 @@ export const RoomActionButtons: React.FC = () => {
                 }));
                 navigate('/');
             })
-            .catch((error) => {
-                console.error('Erreur lors de la sortie de la room:', error);
+            .catch((error: unknown) => {
+                toast.error((error as APIResponse).message, {
+                    position: "bottom-right",
+                    autoClose: 2500,
+                    closeOnClick: true,
+                    theme: "colored",
+                    hideProgressBar: false,
+                });
             });
     };
 

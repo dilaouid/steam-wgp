@@ -23,6 +23,13 @@ export default function KickButton({ playerId }: { playerId: string }) {
                 action: 'kick',
                 payload: { playerId: playerId }
             }));
+            toast.success('Joueur expulsé', {
+                position: "bottom-right",
+                autoClose: 2500,
+                closeOnClick: true,
+                theme: "colored",
+                hideProgressBar: true,
+            });
         }).catch((error) => {
             console.error('Erreur lors du kick du joueur:', error);
             toast.error(error.message, {

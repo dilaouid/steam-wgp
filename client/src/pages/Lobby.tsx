@@ -111,7 +111,6 @@ export default function LobbyPage() {
             }
 
             if (data.action === "end") {
-                console.log('Room has been closed');
                 setRoom(null);
                 socket.socket?.close();
                 navigate('/');
@@ -125,19 +124,27 @@ export default function LobbyPage() {
             }
 
             if (data.action === "kicked") {
-
                 if (data.playerId == auth.user?.id) {
-                    setRoom(null);
-                    socket.socket?.close();
-                    navigate('/');
-                    toast.warning("Vous avez été expulsé de la room", {
+                    toast.warn("Vous avez été expulsé de la room", {
                         position: "bottom-right",
                         autoClose: 2500,
                         closeOnClick: true,
                         theme: "colored",
                         hideProgressBar: true,
                     });
+                    setRoom(null);
+                    socket.socket?.close();
+                    navigate('/');
                 } else {
+                    if (room.admin_id !== auth.user?.id) {
+                        toast.info(`Un joueur a été expulsé de la room`, {
+                            position: "bottom-right",
+                            autoClose: 2500,
+                            closeOnClick: true,
+                            theme: "colored",
+                            hideProgressBar: true,
+                        });
+                    }
                     setRoom((prev) => {
                         if (!prev) return prev;
                         return { 
@@ -157,7 +164,7 @@ export default function LobbyPage() {
             console.log('Closing socket');
             socket.socket?.close();
         };
-    }, [setRoom, room?.id, socket, navigate, auth.user?.id]);
+    }, [setRoom, room?.id, socket, navigate, auth.user?.id, room?.admin_id]);
 
     return(
     <div>
