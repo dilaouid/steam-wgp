@@ -3,9 +3,9 @@ import { connectWebSocket } from '../api/websocket';
 import { getCookieValue } from '../utils/getCookie';
 import { Room } from '.';
 
-export const WebSocketContext = createContext<WebSocket | null>(null);
+export const Context = createContext<WebSocket | null>(null);
 
-export const WebSocketProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+export const Provider: React.FC<{children: React.ReactNode}> = ({ children }) => {
     const [ socket, setSocket ] = useState<WebSocket | null>(null);
     const { room } = useContext(Room.Context)!;
 
@@ -20,8 +20,8 @@ export const WebSocketProvider: React.FC<{children: React.ReactNode}> = ({ child
     }, [ room ]);
 
     return (
-        <WebSocketContext.Provider value={socket}>
+        <Context.Provider value={socket}>
             {children}
-        </WebSocketContext.Provider>
+        </Context.Provider>
     );
 };
