@@ -262,6 +262,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           waitlistEntry = waitlists.get(waitlistId);
           fastify.log.info(`---------Waitlist ${waitlistId} created`);
           if (!waitlistEntry) {
+            fastify.log.error(`Waitlist ${waitlistId} couldn't be created`);
             connection.socket.close();
             return;
           }
