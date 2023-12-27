@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
+import { toast } from "react-toastify";
 import { useParams } from 'react-router-dom';
 import { checkAuth } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
@@ -114,6 +115,13 @@ export default function LobbyPage() {
                 setRoom(null);
                 socket.socket?.close();
                 navigate('/');
+                toast.info("L'administrateur a fermé le salon", {
+                    position: "bottom-right",
+                    autoClose: 2500,
+                    closeOnClick: true,
+                    theme: "colored",
+                    hideProgressBar: true,
+                });
             }
         };
 
