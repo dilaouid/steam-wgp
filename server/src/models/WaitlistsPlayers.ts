@@ -55,6 +55,7 @@ export async function leaveWaitlist(fastify: FastifyInstance, userId: bigint, wa
     // if admin, delete waitlist and all waitlist players associated with it
     await fastify.db.delete(waitlists).where(eq(waitlists.id, waitlistId)).execute();
     await fastify.db.delete(model).where(eq(model.waitlist_id, waitlistId)).execute();
+    return;
   }
 
   await fastify.db.delete(model)

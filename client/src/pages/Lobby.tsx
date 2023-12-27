@@ -93,6 +93,21 @@ export default function LobbyPage() {
                     };
                 });
             }
+
+            if (data.action === "leave") {
+                console.log('Player left the room:', data.player.username);
+                setRoom((prev) => {
+                    if (!prev) return prev;
+                    return { 
+                        ...prev, 
+                        players: prev.players.filter(player => player.player_id !== data.player.player_id),
+                        commonGames: calculateCommonGames({
+                            ...prev, 
+                            players: prev.players.filter(player => player.player_id !== data.player.player_id)
+                        })!.commonGames
+                    };
+                });
+            }
         };
 
         return () => {
