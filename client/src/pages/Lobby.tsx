@@ -13,14 +13,15 @@ import { Room, Auth, Loading } from '../context';
 
 import WaitingPage from './WaitingPage';
 import { calculateCommonGames } from '../utils/getCommonGames';
-import { connectWebSocket } from '../api/websocket';
 import { getCookieValue } from '../utils/getCookie';
+import { useWebSocket } from '../context/useWebSocket';
 
 export default function LobbyPage() {
     const { id } = useParams();
     const { setAuth, auth } = useContext(Auth.Context)!;
     const { setLoadingComplete, loadingComplete } = useContext(Loading.Context)!;
     const { room, setRoom } = useContext(Room.Context)!;
+    const socket = useWebSocket();
 
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
 
@@ -59,14 +60,13 @@ export default function LobbyPage() {
     }, [ id, navigate, setRoom ]);
 
     useEffect(() => {
+        if (!socket?.socket) return;
         const token = getCookieValue('token');
         const waitlistId = room?.id;
 
         if (!waitlistId || !token) return;
 
-        const socket = connectWebSocket(waitlistId, token);
-
-        socket.onmessage = (event) => {
+        socket.socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             if (data.action === "join") {
                 console.log('New player joined! Welcome to', data.player.username);
@@ -97,9 +97,9 @@ export default function LobbyPage() {
 
         return () => {
             console.log('Closing socket');
-            socket.close();
+            socket.socket?.close();
         };
-    }, [setRoom, room?.id]);
+    }, [setRoom, room?.id, socket]);
 
     return(
     <div>

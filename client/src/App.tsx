@@ -18,7 +18,7 @@ import LogoutPage from './pages/Logout';
 import LobbyPage from './pages/Lobby';
 import NavbarComponent from './components/common/Navbar/Navbar';
 
-import { Auth, Room, Loading } from './context';
+import { Auth, Room, Loading, WebSocket } from './context';
 
 function App() {
   useEffect(() => {
@@ -29,16 +29,18 @@ function App() {
     <Auth.Provider>
       <Loading.Provider>
         <Room.Provider>
-          <Router>
-              <NavbarComponent />
-              <Routes>
-                <Route path="/" element={
-                    <HomePage />
-                } />
-                <Route path="/logout" element={<LogoutPage />} />
-                <Route path="/waitlist/:id" element={<LobbyPage />} />
-              </Routes>
-          </Router>
+          <WebSocket.Provider>
+            <Router>
+                <NavbarComponent />
+                <Routes>
+                  <Route path="/" element={
+                      <HomePage />
+                  } />
+                  <Route path="/logout" element={<LogoutPage />} />
+                  <Route path="/waitlist/:id" element={<LobbyPage />} />
+                </Routes>
+            </Router>
+          </WebSocket.Provider>
         </Room.Provider>
       </Loading.Provider>
     </Auth.Provider>
