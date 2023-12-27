@@ -198,6 +198,12 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       return;
     }
 
+    // update the waitlist in the database (start: true)
+    await fastify.db.update(Waitlists.model)
+      .set({ started: true })
+      .where(eq(Waitlists.model.id, waitlistId))
+      .execute();
+
     waitlist.commonGames = commonSelectableGames.map((game: Game) => game.id)
     waitlist.started = true;
     fastify.log.info(`Room ${waitlistId} started`);
