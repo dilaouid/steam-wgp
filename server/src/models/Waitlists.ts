@@ -42,7 +42,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   return { waitlist: insertWaitlist[0] };
 }
 
-export async function checkWaitlistExists(fastify: FastifyInstance, waitlistId: string, playerId: string): Promise<boolean> {
+export async function checkWaitlistExists(fastify: FastifyInstance, waitlistId: string, playerId: string): Promise<any> {
   const result = await fastify.db.select()
     .from(model)
     .leftJoin(WaitlistsPlayers.model, eq(WaitlistsPlayers.model.waitlist_id, model.id))
@@ -54,13 +54,13 @@ export async function checkWaitlistExists(fastify: FastifyInstance, waitlistId: 
 
   // If he's in the waitlist, return true
   if (isPlayerInWaitlist) {
-    return true;
+    return { data: result[0].waitlists, valid: true };
   }
 
   // Otherwise, check if the waitlist exists and is not started
   const isWaitlistNotStarted = result.some((row: any) => row.waitlists.started === false);
 
-  return isWaitlistNotStarted;
+  return { data: result[0].waitlists, valid: isWaitlistNotStarted };
 }
 
 export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {

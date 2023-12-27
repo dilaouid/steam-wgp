@@ -14,7 +14,6 @@ export const model = pgTable('waitlists_players', {
 });
 
 export async function isUserInWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<{ inWaitlist: boolean, waitlistId: string | null }> {
-  fastify.log.info(userId);
   const results = await fastify.db.select({
     player_id: model.player_id,
     waitlist_id: model.waitlist_id

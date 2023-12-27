@@ -33,9 +33,13 @@ async function joinOrLeaveWaitlist(request: FastifyRequest<{ Params: joinOrLeave
 
   try {
     const waitlist = await checkWaitlistExists(fastify, id.trim(), user.id.toString());
-    if (!waitlist) {
+    if (!waitlist.data) {
       fastify.log.warn(`Waitlist ${id} not found`);
       return APIResponse(reply, null, "La room n'existe pas", 404);
+    }
+
+    if (waitlist.data.started) {
+      return APIResponse(reply, null, "La room a déjà commencé", 400);
     }
 
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
