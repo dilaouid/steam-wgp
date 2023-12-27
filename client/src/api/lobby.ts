@@ -42,6 +42,22 @@ export const joinOrLeaveRoom = async (roomId: string, setAuth: React.Dispatch<Re
     }
 };
 
+export const kickPlayer = async (roomId: string, playerId: string): Promise<APIResponse> => {
+    try {
+        const response = await fetch(BASE_URL + "/waitlist/" + roomId + "/kick/" + playerId, {
+            method: "DELETE",
+            credentials: "include"
+        });
+        const res: APIResponse = await response.json();
+        if (!response.ok)
+            throw new Error(res.message || "Impossible de kick le joueur");
+        return res;
+    } catch(err) {
+        console.error("Une erreur est survenue lors du kick du joueur: " + err);
+        throw err;
+    }
+};
+
 export const createRoom = async (setAuth: React.Dispatch<React.SetStateAction<Auth.State>>): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist", {
