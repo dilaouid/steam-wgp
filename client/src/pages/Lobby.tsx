@@ -123,13 +123,41 @@ export default function LobbyPage() {
                     hideProgressBar: true,
                 });
             }
+
+            if (data.action === "kicked") {
+
+                if (data.playerId == auth.user?.id) {
+                    setRoom(null);
+                    socket.socket?.close();
+                    navigate('/');
+                    toast.warning("Vous avez été expulsé de la room", {
+                        position: "bottom-right",
+                        autoClose: 2500,
+                        closeOnClick: true,
+                        theme: "colored",
+                        hideProgressBar: true,
+                    });
+                } else {
+                    setRoom((prev) => {
+                        if (!prev) return prev;
+                        return { 
+                            ...prev, 
+                            players: prev.players.filter(player => player.player_id !== data.playerId),
+                            commonGames: calculateCommonGames({
+                                ...prev, 
+                                players: prev.players.filter(player => player.player_id !== data.playerId)
+                            })!.commonGames
+                        };
+                    });
+                }
+            }
         };
 
         return () => {
             console.log('Closing socket');
             socket.socket?.close();
         };
-    }, [setRoom, room?.id, socket, navigate]);
+    }, [setRoom, room?.id, socket, navigate, auth.user?.id]);
 
     return(
     <div>

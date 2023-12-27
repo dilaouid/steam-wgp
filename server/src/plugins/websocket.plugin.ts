@@ -335,6 +335,20 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               client.send(JSON.stringify(data));
             });
             break;
+
+          // when a player is kicked from the waitlist
+          case 'kick':
+            try {
+              if (waitlistClients.started || waitlistClients.ended) return;
+              leaveWaitlist(waitlistId, payload.playerId);
+              // send message to all players
+              waitlistClients.sockets.forEach((client: any) => {
+                client.send(JSON.stringify({ action: 'kicked', playerId: payload.playerId }));
+              });
+            } catch (error) {
+              fastify.log.error(`Error in 'kick' action: ${error}`);
+            }
+            break;
           default:
             break;
           }
