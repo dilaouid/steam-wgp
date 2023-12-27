@@ -42,9 +42,25 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   return { waitlist: insertWaitlist[0] };
 }
 
-export async function checkWaitlistExists(fastify: FastifyInstance, waitlistId: string): Promise<boolean> {
-  const waitlist = await fastify.db.select().from(model).where(eq(model.id, waitlistId)).execute();
-  return waitlist.length > 0;
+export async function checkWaitlistExists(fastify: FastifyInstance, waitlistId: string, playerId: string): Promise<boolean> {
+  const result = await fastify.db.select()
+    .from(model)
+    .leftJoin(WaitlistsPlayers.model, eq(WaitlistsPlayers.model.waitlist_id, model.id))
+    .where(eq(model.id, waitlistId))
+    .execute();
+
+  // Check if the player is in the waitlist
+  const isPlayerInWaitlist = result.some((row: any) => BigInt(row.waitlists_players.player_id) === BigInt(playerId));
+
+  // If he's in the waitlist, return true
+  if (isPlayerInWaitlist) {
+    return true;
+  }
+
+  // Otherwise, check if the waitlist exists and is not started
+  const isWaitlistNotStarted = result.some((row: any) => row.waitlists.started === false);
+
+  return isWaitlistNotStarted;
 }
 
 export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, userId: bigint): Promise<Waitlist | null> {
