@@ -35,11 +35,18 @@ export const RoomActionButtons: React.FC = () => {
 
     const disabled = !commonGames || playersInRoom <= 1;
 
+    const startRoom = () => {
+        if (!socket || disabled) return;
+        socket.send(JSON.stringify({
+            action: 'start'
+        }));
+    }
+
     return (
     <Row className="justify-content-center">
         { isAdmin ?
         <Col xs="auto">
-            <Button variant={disabled ? "outline-light" : "outline-primary"} size="lg" disabled={disabled}>Démarrer</Button>
+            <Button variant={disabled ? "outline-light" : "outline-primary"} size="lg" disabled={disabled} onClick={startRoom}>Démarrer</Button>
         </Col> : <></> }
         <Col xs="auto">
             <Button variant="outline-danger" size="lg" onClick={leaveRoom}>Quitter</Button>
