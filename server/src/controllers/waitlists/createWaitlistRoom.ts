@@ -23,6 +23,7 @@ async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
       return APIResponse(reply, null, insert.error, 400);
     if (!insert.waitlist)
       return APIResponse(reply, null, 'Une erreur interne est survenue', 500);
+    (insert.waitlist.admin_id as unknown | string) = insert?.waitlist?.admin_id?.toString() || "";
     return APIResponse(reply, insert.waitlist, 'Room créée avec succès', 201);
   } catch (err) {
     fastify.log.error(err);

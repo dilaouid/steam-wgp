@@ -27,7 +27,7 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): 
   }
 
   const newWaitlist: WaitlistInsert = {
-    admin_id: userId,
+    admin_id: BigInt(userId),
   } as WaitlistInsert;
 
   const insertWaitlist = await fastify.db.insert(model).values(newWaitlist).returning();
