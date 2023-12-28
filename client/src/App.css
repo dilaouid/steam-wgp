@@ -1,0 +1,35 @@
+.card {
+    user-select: none;
+    cursor: pointer;
+    border-radius: 10% !important;
+    height: 700px !important;
+    width: 400px;
+    opacity: .2;
+    filter: grayscale(1);
+    transition: .5s ease-in-out;
+
+}
+.game-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-stack {
+    position: relative;
+    width: 400px;
+    height: 700px;
+    transition: .5s ease-in-out;
+  }
+  
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+
+  .card.active{
+    opacity: 1;
+    filter: grayscale(0);
+  }

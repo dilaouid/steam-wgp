@@ -16,6 +16,7 @@ import WaitingPage from './WaitingPage';
 import { calculateCommonGames } from '../utils/getCommonGames';
 import { getCookieValue } from '../utils/getCookie';
 import { useWebSocket } from '../context/useWebSocket';
+import GamePage from './GamePage';
 
 export default function LobbyPage() {
     const { id } = useParams();
@@ -190,7 +191,7 @@ export default function LobbyPage() {
             {isLoading ? (
                 <SteamLoadingIcon />
             ) : room?.started ? (
-                <p>Game Page</p>
+                <GamePage />
             ) : (
                 <WaitingPage />
             )}

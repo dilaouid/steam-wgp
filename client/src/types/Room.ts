@@ -5,7 +5,7 @@ export interface RoomInfo {
     id: string;
     started: boolean;
     ended: boolean;
-    swipedGames: Record<number, string[]>;
+    swipedGames: number[];
     commonGames: number[];
     players: PlayerInfo[];
     updated_at: Date;
