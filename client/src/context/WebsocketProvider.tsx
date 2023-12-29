@@ -16,15 +16,16 @@ export const Provider: React.FC<{children: React.ReactNode}> = ({ children }) =>
 
     useEffect(() => {
         const token = getCookieValue('token');
-        if (!token || !room) return;
+        const roomId = room?.id;
+        if (!token || !roomId) return;
 
-        const newSocket = connectWebSocket(room.id, token);
+        const newSocket = connectWebSocket(roomId, token);
         setSocket(newSocket);
 
         return () => {
             if (newSocket) newSocket.close();
         };
-    }, [room]);
+    }, [room?.id]);
 
     return (
         <Context.Provider value={ { socket, setSocket } }>
