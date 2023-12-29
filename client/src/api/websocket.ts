@@ -24,9 +24,11 @@ export const connectWebSocket = (waitlistId: string, token: string): WebSocket =
     return socket;
 };
 
-export const swipeCard = (socket: WebSocket, gameId: string) => {
-    const message = JSON.stringify({ action: 'swipe', payload: { gameId } });
-    socket.send(message);
+export const swipeCard = (socket: WebSocket, gameId: number) => {
+    if (socket.readyState === WebSocket.OPEN) {
+        const message = JSON.stringify({ action: 'swipe', payload: { gameId } });
+        socket.send(message);
+    }
 };
 
 export const startWaitlist = (socket: WebSocket) => {
