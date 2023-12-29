@@ -10,11 +10,10 @@ import { getWaitlistInformations } from '../api/lobby';
 import FooterComponent from '../components/common/Footer/Footer';
 import SteamLoadingIcon from '../components/common/Home/Loading';
 
-import { Room, Auth, Loading } from '../context';
+import { Room, Auth, Loading, WebSocket } from '../context';
 
 import WaitingPage from './WaitingPage';
 import { calculateCommonGames } from '../utils/getCommonGames';
-import { useWebSocket } from '../context/useWebSocket';
 import GamePage from './GamePage';
 
 export default function LobbyPage() {
@@ -22,11 +21,13 @@ export default function LobbyPage() {
     const { setAuth, auth } = useContext(Auth.Context)!;
     const { setLoadingComplete, loadingComplete } = useContext(Loading.Context)!;
     const { room, setRoom } = useContext(Room.Context)!;
-    const socket = useWebSocket();
+    const { socket } = useContext(WebSocket.Context)!;
 
     const [ isLoading, setIsLoading ] = useState<boolean>(true);
 
     const navigate = useNavigate();
+    const waitlistId = room?.id;
+    const adminId = room?.admin_id;
 
     useEffect(() => {
         if (!auth.isAuthenticated) {
@@ -61,12 +62,10 @@ export default function LobbyPage() {
     }, [ id, navigate, setRoom ]);
 
     useEffect(() => {
-        if (!socket?.socket) return;
-        const waitlistId = room?.id;
-
+        if (!socket) return;
         if (!waitlistId) return;
 
-        socket.socket.onmessage = (event) => {
+        socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             if (data.action === "join") {
                 console.log('New player joined! Welcome to', data.player.username);
@@ -111,7 +110,7 @@ export default function LobbyPage() {
 
             if (data.action === "end") {
                 setRoom(null);
-                socket.socket?.close();
+                socket.close();
                 navigate('/');
                 toast.info("L'administrateur a fermé le salon", {
                     position: "bottom-right",
@@ -132,10 +131,10 @@ export default function LobbyPage() {
                         hideProgressBar: true,
                     });
                     setRoom(null);
-                    socket.socket?.close();
+                    socket.close();
                     navigate('/');
                 } else {
-                    if (room.admin_id !== auth.user?.id) {
+                    if (adminId !== auth.user?.id) {
                         toast.info(`Un joueur a été expulsé de la room`, {
                             position: "bottom-right",
                             autoClose: 2500,
@@ -175,13 +174,21 @@ export default function LobbyPage() {
                 });
             }
 
-        };
+            if (data.action === "gameEnd") {
+                toast.success(`La partie est terminée ! Le gagnant est ${data.winner}`, {
+                    position: "bottom-right",
+                    autoClose: 2500,
+                    closeOnClick: true,
+                    theme: "colored",
+                    hideProgressBar: true,
+                });
+            }
 
-        return () => {
-            console.log('Closing socket');
-            socket.socket?.close();
         };
-    }, [setRoom, room?.id, socket, navigate, auth.user?.id, room?.admin_id]);
+        return () => {
+            socket.close();
+        }
+    }, [setRoom, waitlistId, socket, navigate, auth.user?.id, adminId]);
 
     return(
     <div>
