@@ -21,6 +21,7 @@ interface Waitlist {
   swipedGames: Record<number, string[]>;
   started: boolean;
   ended: boolean;
+  winner?: number;
   sockets: Set<any>;
 }
 
@@ -47,7 +48,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     });
   }
 
-  const createWaitlist = async (waitlistId: string, playerId: string): Promise<void> => {
+  const createWaitlist = async (waitlistId: string, player: PlayerInfo): Promise<void> => {
     fastify.log.info(`---------Creating waitlist ${waitlistId}---------`);
     const existingWaitlist = await fastify.db.select()
       .from(Waitlists.model)
@@ -64,21 +65,21 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
     // check if player is in the waitlist
     const IsPlayerInWaitlist = existingWaitlist.some((row: any) => {
-      return row.waitlists_players.player_id === BigInt(playerId);
+      return row.waitlists_players.player_id === BigInt(player.player_id);
     });
     if (!IsPlayerInWaitlist) {
-      fastify.log.error(`Player ${playerId} is not in waitlist ${waitlistId}`);
+      fastify.log.error(`Player ${player.player_id} is not in waitlist ${waitlistId}`);
       return;
     }
 
     const adminId = existingWaitlist[0].waitlists.admin_id.toString();
     const waitlist: Waitlist = {
       adminId,
-      players: [],
+      players: [player],
       playerGames: {},
       commonGames: [],
       swipedGames: {},
-      started: false,
+      started: existingWaitlist[0].waitlists.started,
       ended: false,
       sockets: new Set()
     };
@@ -113,8 +114,18 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     if (existingPlayerIndex > -1) {
       waitlist.players[existingPlayerIndex] = player;
     } else {
+      fastify.log.info(`Player ${player.player_id} joined waitlist ${waitlistId}`);
       waitlist.players.push(player);
     }
+
+    fillPlayerGamesList();
+
+    const initialGames = waitlist.playerGames[waitlist.players[0].player_id] || [];
+    waitlist.commonGames = waitlist.players.reduce((commonGames, player) => {
+      const currentGames = waitlist.playerGames[player.player_id] || [];
+      if (commonGames.length === 0) return currentGames;
+      return commonGames.filter(game => currentGames.includes(game));
+    }, initialGames);
 
     return true;
   };
@@ -130,29 +141,27 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
   const swipeGame = (waitlistId: string, playerId: string, gameId: number): void => {
     const waitlist: Waitlist = waitlists.get(waitlistId);
     if (waitlist && waitlist.started && !waitlist.ended && waitlist.commonGames.includes(gameId)) {
-      waitlist.swipedGames[gameId] = waitlist.swipedGames[gameId] || [];
-      if (!waitlist.swipedGames[gameId].includes(playerId)) {
+      if (waitlist.swipedGames[gameId] && !waitlist.swipedGames[gameId].includes(playerId)) {
         waitlist.swipedGames[gameId].push(playerId);
+      } else {
+        waitlist.swipedGames[gameId] = [playerId];
       }
     }
   };
 
   // check if a game is swiped by all the players
-  const checkGameEnd = (waitlistId: string): boolean => {
+  const checkGameEnd = (waitlistId: string, gameId: number): boolean => {
     const waitlist: Waitlist = waitlists.get(waitlistId);
     if (waitlist && waitlist.started && !waitlist.ended) {
-      const swipedGames = waitlist.swipedGames;
-      const commonGames = waitlist.commonGames;
+      const swipedGames = waitlist.swipedGames[gameId];
       const players = waitlist.players;
 
-      const gameEnd = commonGames.find((game: number) => {
-        const swipedPlayers = swipedGames[game];
-        return swipedPlayers.length === players.length;
-      });
+      const gameEnd = swipedGames.length === players.length;
 
-      waitlist.ended = !!gameEnd;
-
-      return !!gameEnd;
+      waitlist.ended = gameEnd;
+      if (waitlist.ended)
+        waitlist.winner = gameId;
+      return gameEnd;
     }
     return false;
   };
@@ -206,7 +215,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
     waitlist.commonGames = commonSelectableGames.map((game: Game) => game.id)
     waitlist.started = true;
-    fastify.log.info(`Room ${waitlistId} started`);
   };
 
   return fastify.register(websocket, { options: {
@@ -218,7 +226,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         if (!token) throw new Error('No token provided');
 
         const decoded = jwt.verify(token, fastify.config.SECRET_KEY);
-        fastify.log.info('WebSockets Authentification success');
 
         const clientId = info.req.socket.remoteAddress + ":" + info.req.socket.remotePort;
         const userId = (decoded as { id: string }).id;
@@ -287,8 +294,9 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
         // create the waitlist if it doesn't exist yet
         let waitlistEntry = waitlists.get(waitlistId);
+
         if (!waitlistEntry) {
-          await createWaitlist(waitlistId, playerId);
+          await createWaitlist(waitlistId, player);
           waitlistEntry = waitlists.get(waitlistId);
           if (!waitlistEntry) {
             fastify.log.error(`Waitlist ${waitlistId} couldn't be created`);
@@ -296,7 +304,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             return;
           }
         } else {
-          const joined = await joinWaitlist(waitlistId, player);
+          const joined = await joinWaitlist(waitlistId, player); // push the add who join?
           if (!joined) {
             fastify.log.error(`Player ${playerId} couldn't join waitlist ${waitlistId}`);
             connection.socket.close();
@@ -332,18 +340,11 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           // when a player swipes a game
           case 'swipe':
             try {
-              if (payload.gameId) {
-                swipeGame(waitlistId, playerId, payload.gameId);
-              }
-              if (checkGameEnd(waitlistId)) {
-              // get the game that is swiped by all the players
+              swipeGame(waitlistId, playerId, payload.gameId);
+              if (checkGameEnd(waitlistId, payload.gameId)) {
+                // get the game that is swiped by all the players
                 waitlistEntry.sockets.forEach((client: any) => {
-                  const gameEnd = waitlistClients.commonGames.find((game: number) => {
-                    const swipedPlayers = waitlistClients.swipedGames[game];
-                    return swipedPlayers.length === waitlistClients.players.length;
-                  });
-
-                  client.send(JSON.stringify({ action: 'gameEnd', winner: gameEnd }));
+                  client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
                 });
               }
             } catch (error) {
