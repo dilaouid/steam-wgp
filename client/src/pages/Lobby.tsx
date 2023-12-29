@@ -14,7 +14,6 @@ import { Room, Auth, Loading } from '../context';
 
 import WaitingPage from './WaitingPage';
 import { calculateCommonGames } from '../utils/getCommonGames';
-import { getCookieValue } from '../utils/getCookie';
 import { useWebSocket } from '../context/useWebSocket';
 import GamePage from './GamePage';
 
@@ -63,10 +62,9 @@ export default function LobbyPage() {
 
     useEffect(() => {
         if (!socket?.socket) return;
-        const token = getCookieValue('token');
         const waitlistId = room?.id;
 
-        if (!waitlistId || !token) return;
+        if (!waitlistId) return;
 
         socket.socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
