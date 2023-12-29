@@ -1,55 +1,36 @@
 import { useContext, useState } from "react";
 
-import { Room } from "../context";
-import { useWebSocket } from "../context/useWebSocket";
+import { Room, WebSocket } from "../context";
 import { HeartIcon } from "../components/common/Icons/HeartIcon";
-type Swipe = 'up' | 'left' | 'right' | 'down';
+import { swipeCard } from "../api/websocket";
 
 export default function GamePage () {
     const { room, setRoom } = useContext(Room.Context)!;
     const [ index, setIndex ] = useState<number>(0);
-    const socket = useWebSocket();
+    const socket = useContext(WebSocket.Context)!;
 
     if (!room || !socket) return <></>;
 
-    const swiped = (direction: Swipe, game: number) => {
+    const swipe = (like: boolean, game: number) => {
         if (!socket.socket || !room || !game) return;
-        if (direction === 'up') {
-            socket?.socket.send(JSON.stringify({ action: 'swipe', gameId: game }));
-            // Update room state to remove swiped game
+        if (like) {
+            swipeCard(socket.socket, game);
             setRoom(prevRoom => {
-                // Si prevRoom est null, on retourne null.
                 if (!prevRoom) return null;
                 
-                // Autrement, on retourne un nouvel objet avec les propriétés mises à jour.
                 return {
                     ...prevRoom,
                     commonGames: prevRoom.commonGames.filter(g => g !== game),
                     swipedGames: prevRoom.swipedGames ? [...prevRoom.swipedGames, game] : [game]
                 };
             });
-              
-        } else if (direction === 'left') {
-            // Reorder the commonGames array to move swiped game to the end
-            /* setRoom(prevRoom => {
-                if (!prevRoom) return null;
-
-                return {
-                    ...prevRoom,
-                    commonGames: prevRoom.commonGames.filter(g => g !== game).concat(game)
-                }
-            }); */
+            if (index === room.commonGames.length - 1) {
+                setIndex(0);
+            }
+        } else {
+            setIndex(prevIndex => (prevIndex + 1) % room.commonGames.length);
         }
-        setIndex(prevIndex => prevIndex + 1);
     }
-
-    const swipeLeft = (game: number) => {
-        swiped('left', game);
-    };
-
-    const swipeUp = (game: number) => {
-        swiped('up', game);
-    };
 
     const getGameIndex = (game: number) => {
         return room.commonGames.indexOf(game);
@@ -60,7 +41,7 @@ export default function GamePage () {
             <div className="card-stack" style={{
                         transform: `translateY(${index * -700}px)`,
                     }}>
-                {room.commonGames.map((game:number, idx:number) => (
+                {room.commonGames.map((game:number) => (
                     <div key={game} >
                         <div
                             className={`card ${index === getGameIndex(game) ? 'active' : ''}`}
@@ -77,12 +58,13 @@ export default function GamePage () {
                 ))}
             </div>
             <div className="action-buttons">
-                <button className="btn btn-success btn-lg" onClick={() => swipeUp(room.commonGames[0])} style={{width:250+'px', margin: 10+'px'}}>
+                <button className="btn btn-danger btn-lg" onClick={() => swipe(true, room.commonGames[index])}>
                     <HeartIcon /> J'aime !
                 </button>
-                <button className="btn btn-outline-danger btn-lg" onClick={() => swipeLeft(room.commonGames[0])} style={{width:250+'px', margin: 10+'px'}}>
+                <button className="btn btn-outline-warning btn-lg" onClick={() => swipe(false, room.commonGames[index])}>
                     Pas intéressé
                 </button>
+                <p className="text-light">Aimez ou ignorez les jeux affichés. Le premier jeu qui aura été aimé par tout les joueurs de la room sera affiché, et vous saurez comment gaspiller les prochaines heures de votre précieuse vie.</p>
             </div>
         </div>
     );

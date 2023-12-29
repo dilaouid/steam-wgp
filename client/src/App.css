@@ -1,6 +1,5 @@
 .card {
     user-select: none;
-    cursor: pointer;
     border-radius: 10% !important;
     height: 700px !important;
     width: 400px;
@@ -27,6 +26,16 @@
     flex-direction: column;
     align-items: flex-start;
     margin-left: 20px;
+  }
+
+  .action-buttons .btn {
+    width:250px;
+    margin: 10px;
+  }
+
+  .action-buttons p {
+    width:250px;
+    margin-left: 10px;
   }
 
   .card.active{
