@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 
 import { Room } from "../context";
 import { useWebSocket } from "../context/useWebSocket";
-
+import { HeartIcon } from "../components/common/Icons/HeartIcon";
 type Swipe = 'up' | 'left' | 'right' | 'down';
 
 export default function GamePage () {
@@ -78,7 +78,7 @@ export default function GamePage () {
             </div>
             <div className="action-buttons">
                 <button className="btn btn-success btn-lg" onClick={() => swipeUp(room.commonGames[0])} style={{width:250+'px', margin: 10+'px'}}>
-                    J'aime !
+                    <HeartIcon /> J'aime !
                 </button>
                 <button className="btn btn-outline-danger btn-lg" onClick={() => swipeLeft(room.commonGames[0])} style={{width:250+'px', margin: 10+'px'}}>
                     Pas intéressé
