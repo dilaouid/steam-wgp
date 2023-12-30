@@ -85,10 +85,10 @@ export default function GamePage () {
             ))}
         </div>
         <div className="action-buttons">
-            <button className="btn btn-danger btn-lg" onClick={() => swipe(true, room.commonGames[index])}>
+            <button className={`btn btn-${room.commonGames.length === 0 ? 'disabled' : 'danger'} btn-lg`} onClick={() => swipe(true, room.commonGames[index])} disabled={room.commonGames.length === 0}>
                 <HeartIcon /> J'aime !
             </button>
-            <button className="btn btn-outline-warning btn-lg" onClick={() => swipe(false, room.commonGames[index])}>
+            <button className={`btn btn-outline-${room.commonGames.length === 0 ? 'disabled' : 'warning'} btn-lg`} onClick={() => swipe(false, room.commonGames[index])} disabled={room.commonGames.length === 0}>
                 Pas intéressé
             </button>
             <p className="text-light">Aimez ou ignorez les jeux affichés. Le premier jeu qui aura été aimé par tout les joueurs de la room sera affiché, et vous saurez comment gaspiller les prochaines heures de votre précieuse vie.</p>
