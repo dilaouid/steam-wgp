@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { APIResponse } from "../../../types/API";
 
 export const RoomActionButtons: React.FC = () => {
-    const { room } = useContext(Room.Context)!;
+    const { room, setRoom } = useContext(Room.Context)!;
     const { socket } = useContext(WebSocket.Context)!;
     const { setAuth, auth } = useContext(Auth.Context)!;
     const navigate = useNavigate();
@@ -25,6 +25,8 @@ export const RoomActionButtons: React.FC = () => {
                 socket.send(JSON.stringify({
                     action: 'leave'
                 }));
+                setRoom(null);
+                socket.close();
                 navigate('/');
             })
             .catch((error: unknown) => {
