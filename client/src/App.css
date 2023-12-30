@@ -42,3 +42,27 @@
     opacity: 1;
     filter: grayscale(0);
   }
+
+  .game-page-background-container {
+    height: 70vh;
+    margin-left: 10px;
+    width: 500px;
+  }
+
+  .game-page-background-container img {
+    z-index: 1;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    border-radius: 20px;
+    filter: sepia(1);
+    opacity: .2;
+    cursor: pointer;
+  }
+
+  .game-page-background-container img:hover {
+    opacity: 1;
+    filter: grayscale(0);
+    transition: .5s;
+  }
