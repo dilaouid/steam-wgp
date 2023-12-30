@@ -31,6 +31,13 @@ export const swipeCard = (socket: WebSocket, gameId: number) => {
     }
 };
 
+export const unswipeCard = (socket: WebSocket, gameId: number) => {
+    if (socket.readyState === WebSocket.OPEN) {
+        const message = JSON.stringify({ action: 'unswipe', payload: { gameId } });
+        socket.send(message);
+    }
+};
+
 export const startWaitlist = (socket: WebSocket) => {
     const message = JSON.stringify({ action: 'start' });
     socket.send(message);

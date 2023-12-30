@@ -425,6 +425,19 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               fastify.log.error(`Error in 'kick' action: ${error}`);
             }
             break;
+
+          // when a player unswipes a game
+          case 'unswipe':
+            try {
+              if (!waitlistClients.started || waitlistClients.ended) return;
+              const swipedGames = waitlistClients.swipedGames[payload.gameId];
+              if (swipedGames) {
+                waitlistClients.swipedGames[payload.gameId] = swipedGames.filter((playerId: string) => playerId !== playerId);
+              }
+            } catch (error) {
+              fastify.log.error(`Error in 'unswipe' action: ${error}`);
+            }
+            break;
           default:
             break;
           }

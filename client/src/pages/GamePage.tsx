@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { Room, WebSocket } from "../context";
 import { HeartIcon } from "../components/common/Icons/HeartIcon";
-import { swipeCard } from "../api/websocket";
+import { swipeCard, unswipeCard } from "../api/websocket";
 import { Spinner } from "react-bootstrap";
 
 export default function GamePage () {
@@ -55,6 +55,7 @@ export default function GamePage () {
                 swipedGames: prevRoom.swipedGames?.filter(g => g !== game)
             };
         });
+        unswipeCard(socket.socket, game);
     }
 
     const getGameIndex = (game: number) => {
