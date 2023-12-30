@@ -10,4 +10,5 @@ export interface RoomInfo {
     players: PlayerInfo[];
     updated_at: Date;
     created_at: Date;
+    winner?: number;
 }

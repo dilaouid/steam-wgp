@@ -175,6 +175,24 @@ export default function LobbyPage() {
             }
 
             if (data.action === "gameEnd") {
+                setRoom((prev) => {
+                    if (!prev) return prev;
+                    return { 
+                        ...prev, 
+                        ended: true,
+                        winner: data.winner
+                    };
+                });
+                setAuth((prev) => {
+                    if (!prev) return prev;
+                    return { 
+                        ...prev, 
+                        user: {
+                            ...prev.user,
+                            waitlist: null
+                        }
+                    };
+                });
                 toast.success(`La partie est terminée ! Le gagnant est ${data.winner}`, {
                     position: "bottom-right",
                     autoClose: 2500,
@@ -188,7 +206,7 @@ export default function LobbyPage() {
         return () => {
             socket.close();
         }
-    }, [setRoom, waitlistId, socket, navigate, auth.user?.id, adminId]);
+    }, [setAuth, setRoom, waitlistId, socket, navigate, auth.user?.id, adminId]);
 
     return(
     <div>
