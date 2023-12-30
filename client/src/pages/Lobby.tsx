@@ -46,6 +46,7 @@ export default function LobbyPage() {
     }, [ auth.isAuthenticated, setLoadingComplete, setAuth, navigate ]);
 
     useEffect(() => {
+        if (!id) return;
         const loadRoomInfo = async () => {
             try {
                 const info = await getWaitlistInformations(id as string);
@@ -196,9 +197,9 @@ export default function LobbyPage() {
             }
 
         };
-        return () => {
+        /* return () => {
             socket.close();
-        }
+        } */
     }, [setAuth, setRoom, waitlistId, socket, navigate, auth.user?.id, adminId]);
 
     return(
