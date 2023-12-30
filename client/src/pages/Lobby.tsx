@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { toast } from "react-toastify";
 import { useParams } from 'react-router-dom';
 import { checkAuth } from '../api/auth';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +14,7 @@ import { Room, Auth, Loading, WebSocket } from '../context';
 import WaitingPage from './WaitingPage';
 import { calculateCommonGames } from '../utils/getCommonGames';
 import GamePage from './GamePage';
+import * as actions from '../actions';
 
 export default function LobbyPage() {
     const { id } = useParams();
@@ -68,138 +68,20 @@ export default function LobbyPage() {
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            if (data.action === "join") {
-                console.log('New player joined! Welcome to', data.player.username);
-                setRoom((prev) => {
-                    if (!prev) return prev;
-
-                    // don't add the player if he's already in the room
-                    const isPlayerAlreadyInRoom = prev.players.some(player => player.player_id === data.player.player_id);
-                    
-                    if (isPlayerAlreadyInRoom) {
-                        console.log('Player is already in the room');
-                        return prev;
-                    }
-        
-
-                    // Update the state with the new player and the new common games
-                    return { 
-                        ...prev, 
-                        players: [...prev.players, data.player],
-                        commonGames: calculateCommonGames({
-                            ...prev, 
-                            players: [...prev.players, data.player]
-                        })!.commonGames
-                    };
-                });
-            }
-
-            if (data.action === "leave") {
-                console.log('Player left the room:', data.player.username);
-                setRoom((prev) => {
-                    if (!prev) return prev;
-                    return { 
-                        ...prev, 
-                        players: prev.players.filter(player => player.player_id !== data.player.player_id),
-                        commonGames: calculateCommonGames({
-                            ...prev, 
-                            players: prev.players.filter(player => player.player_id !== data.player.player_id)
-                        })!.commonGames
-                    };
-                });
-            }
-
-            if (data.action === "end") {
-                setRoom(null);
-                socket.close();
-                navigate('/');
-                toast.info("L'administrateur a fermé le salon", {
-                    position: "bottom-right",
-                    autoClose: 2500,
-                    closeOnClick: true,
-                    theme: "colored",
-                    hideProgressBar: true,
-                });
-            }
-
-            if (data.action === "kicked") {
-                if (data.playerId == auth.user?.id) {
-                    toast.warn("Vous avez été expulsé de la room", {
-                        position: "bottom-right",
-                        autoClose: 2500,
-                        closeOnClick: true,
-                        theme: "colored",
-                        hideProgressBar: true,
-                    });
-                    setRoom(null);
-                    socket.close();
-                    navigate('/');
-                } else {
-                    if (adminId !== auth.user?.id) {
-                        toast.info(`Un joueur a été expulsé de la room`, {
-                            position: "bottom-right",
-                            autoClose: 2500,
-                            closeOnClick: true,
-                            theme: "colored",
-                            hideProgressBar: true,
-                        });
-                    }
-                    setRoom((prev) => {
-                        if (!prev) return prev;
-                        return { 
-                            ...prev, 
-                            players: prev.players.filter(player => player.player_id !== data.playerId),
-                            commonGames: calculateCommonGames({
-                                ...prev, 
-                                players: prev.players.filter(player => player.player_id !== data.playerId)
-                            })!.commonGames
-                        };
-                    });
-                }
-            }
-
-            if (data.action === "start") {
-                toast.success("La partie a commencé", {
-                    position: "bottom-right",
-                    autoClose: 2500,
-                    closeOnClick: true,
-                    theme: "colored",
-                    hideProgressBar: true,
-                });
-                setRoom((prev) => {
-                    if (!prev) return prev;
-                    return { 
-                        ...prev, 
-                        started: true
-                    };
-                });
-            }
-
-            if (data.action === "gameEnd") {
-                setRoom((prev) => {
-                    if (!prev) return prev;
-                    return { 
-                        ...prev, 
-                        ended: true,
-                        winner: data.winner
-                    };
-                });
-                setAuth((prev) => {
-                    if (!prev) return prev;
-                    return { 
-                        ...prev, 
-                        user: {
-                            ...prev.user,
-                            waitlist: null
-                        }
-                    };
-                });
-            }
-
+            if (data.action === "join")
+                actions.join(setRoom, data.player);
+            else if (data.action === "leave")
+                actions.leave(setRoom, data.player)
+            else if (data.action === "end")
+                actions.end(socket, setRoom, false, navigate);
+            else if (data.action === "kicked")
+                actions.kicked(socket, data.playerId, auth.user?.id, adminId ?? '', setRoom, navigate, setAuth);
+            else if (data.action === "start")
+                actions.start(setRoom);
+            else if (data.action === "gameEnd")
+                actions.gameEnd(setRoom, setAuth, data.winner);
         };
-        /* return () => {
-            socket.close();
-        } */
+
     }, [setAuth, setRoom, waitlistId, socket, navigate, auth.user?.id, adminId]);
 
     return(
