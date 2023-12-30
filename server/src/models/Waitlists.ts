@@ -49,6 +49,10 @@ export async function checkWaitlistExists(fastify: FastifyInstance, waitlistId: 
     .where(eq(model.id, waitlistId))
     .execute();
 
+  if (result.length === 0) {
+    return { valid: false };
+  }
+
   // Check if the player is in the waitlist
   const isPlayerInWaitlist = result.some((row: any) => BigInt(row.waitlists_players.player_id) === BigInt(playerId));
 
