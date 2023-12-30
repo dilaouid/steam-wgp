@@ -48,6 +48,19 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     });
   }
 
+  const deleteWaitlist = async (waitlistId: string): Promise<void> => {
+    const waitlist: Waitlist = waitlists.get(waitlistId);
+    if (!waitlist) return;
+
+    // delete the waitlist in the database
+    await fastify.db.delete(Waitlists.model)
+      .where(eq(Waitlists.model.id, waitlistId))
+      .execute();
+
+    // delete the waitlist in the memory
+    waitlists.delete(waitlistId);
+  };
+
   const createWaitlist = async (waitlistId: string, player: PlayerInfo): Promise<void> => {
     fastify.log.info(`---------Creating waitlist ${waitlistId}---------`);
     const existingWaitlist = await fastify.db.select()
@@ -346,6 +359,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                 waitlistEntry.sockets.forEach((client: any) => {
                   client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
                 });
+                deleteWaitlist(waitlistId);
               }
             } catch (error) {
               fastify.log.error(`Error in 'swipe' action: ${error}`);
