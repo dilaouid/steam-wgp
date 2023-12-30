@@ -193,13 +193,6 @@ export default function LobbyPage() {
                         }
                     };
                 });
-                toast.success(`La partie est terminée ! Le gagnant est ${data.winner}`, {
-                    position: "bottom-right",
-                    autoClose: 2500,
-                    closeOnClick: true,
-                    theme: "colored",
-                    hideProgressBar: true,
-                });
             }
 
         };
