@@ -378,6 +378,24 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               waitlistEntry.sockets.forEach((client: any) => {
                 client.send(JSON.stringify({ action: 'start' }));
               });
+
+              // wait for 5 minutes before ending the waitlist
+              setTimeout(() => {
+                if (!waitlistClients || !waitlistClients.started || waitlistClients.ended) return;
+                waitlistClients.ended = true;
+
+                // pick a random game from the common games as the winner, prioritizing the games existing in swipedGames
+                const swipedGames = Object.keys(waitlistClients.swipedGames);
+                const commonGames = waitlistClients.commonGames.filter((game:number) => swipedGames.includes(game.toString()));
+                const winner = commonGames[Math.floor(Math.random() * commonGames.length)];
+                waitlistClients.winner = winner;
+
+                waitlistEntry.sockets.forEach((client: any) => {
+                  client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
+                });
+                deleteWaitlist(waitlistId);
+              }, 300000);
+
             } catch (error) {
               fastify.log.error(`Error in 'start' action: ${error}`);
             }
