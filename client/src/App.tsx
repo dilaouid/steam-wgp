@@ -16,6 +16,8 @@ import {
 import HomePage from './pages/Home';
 import LogoutPage from './pages/Logout';
 import LobbyPage from './pages/Lobby';
+import NotFoundPage from './pages/NotFoundPage';
+
 import NavbarComponent from './components/common/Navbar/Navbar';
 
 
@@ -46,11 +48,10 @@ function App() {
                 />
                 <NavbarComponent />
                 <Routes>
-                  <Route path="/" element={
-                      <HomePage />
-                  } />
+                  <Route path="/" element={<HomePage />} />
                   <Route path="/logout" element={<LogoutPage />} />
                   <Route path="/waitlist/:id" element={<LobbyPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Router>
           </WebSocket.Provider>
