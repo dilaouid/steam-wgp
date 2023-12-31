@@ -36,7 +36,7 @@ const initialize = async () => {
     await fastify.register(fastifyCookie);
     await fastify.register(fastifySession, { secret: fastify.config.SECRET_KEY });
 
-    await fastify.register(plugins.drizzlePlugin, { databaseUrl: fastify.config.DATABASE_URL });
+    await fastify.register(plugins.drizzlePlugin, { env: fastify.config });
     // ==================== End of plugins loading
 
     // ==================== Routes loading below

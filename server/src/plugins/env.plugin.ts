@@ -42,6 +42,26 @@ const schema = {
     STEAM_GetOwnedGames: {
       type: 'string',
       default: 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001',
+    },
+    PGHOST: {
+      type: 'string',
+      default: 'localhost'
+    },
+    PGDATABASE:{
+      type: 'string',
+      default: 'steamwgp'
+    },
+    PGUSER:{
+      type: 'string',
+      default: 'postgres'
+    },
+    PGPASSWORD:{
+      type: 'string',
+      default: 'postgres'
+    },
+    ENDPOINT_ID:{
+      type: 'string',
+      default: 'steamwgp'
     }
   }
 };
