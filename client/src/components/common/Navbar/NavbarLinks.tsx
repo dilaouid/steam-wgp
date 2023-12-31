@@ -12,7 +12,7 @@ export default function NavbarLinksComponent() {
     <div className="collapse navbar-collapse" id="navcol-1">
         <ul className="navbar-nav me-auto">
             <li className="nav-item">
-                <a className="nav-link" href="#">Faire un don</a>
+                <a className="nav-link" href="https://ko-fi.com/dilaouid" target="_blank">Faire un don</a>
             </li>
             { auth.user.waitlist ?
                 <li className="nav-item">
