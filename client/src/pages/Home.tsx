@@ -5,7 +5,6 @@ import LoginPage from "./Login";
 import LoadingPage from "./LoadingPage";
 
 import { Auth, Loading, Room, WebSocket } from "../context";
-import { State } from "../context/AuthProvider";
 
 import FooterComponent from "../components/common/Footer/Footer";
 import { useNavigate } from "react-router-dom";
@@ -26,16 +25,13 @@ export default function HomePage () {
 
     if (waitlistId && room.winner) {
       setRoom(null);
-      setAuth(prev => {
-        if (!prev) return null;
-        return {
-          ...prev,
-          user: {
-            ...prev.user,
-            waitlist: null
-          }
+      setAuth(prev => ({
+        ...prev,
+        user: {
+          ...prev.user,
+          waitlist: null
         }
-      });
+      }));
     }
 
     useEffect(() => {
