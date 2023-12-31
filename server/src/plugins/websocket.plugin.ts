@@ -232,7 +232,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
   return fastify.register(websocket, { options: {
     maxPayload: 1048576,
     server: fastify.server,
-    verifyClient: function (info, next) {
+    verifyClient: function (info: any, next: any) {
       try {
         const token = info.req.headers['sec-websocket-protocol'];
         if (!token) throw new Error('No token provided');
