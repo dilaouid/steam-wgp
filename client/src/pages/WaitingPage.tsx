@@ -4,8 +4,6 @@ import styled from "styled-components";
 
 import { Room } from "../context";
 
-import { ArrowRepeatIcon } from "../components/common/Icons/ArrowRepeatIcon";
-
 import { RoomInformations } from "../components/common/Waiting/RoomInformations";
 import { RoomActionButtons } from "../components/common/Waiting/RoomActionButtons";
 import { NotInCommonGames } from "../components/common/Waiting/NotInCommonGames";
@@ -37,7 +35,6 @@ export default function WaitingPage() {
             <div className="text-center p-4 p-lg-5">
                 <div>
                     <p className="fw-bold text-primary mb-2">
-                        <ArrowRepeatIcon /> Room <i>Swipe2Choose</i> <br />
                         Room ID: <RoomID>{ room.id }</RoomID>
                     </p>
                 </div>
