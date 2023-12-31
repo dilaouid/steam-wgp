@@ -49,13 +49,11 @@ export const kicked = (
             }
             setRoom((prev) => {
                 if (!prev) return prev;
+                const common = calculateCommonGames({ ...prev, players: prev.players.filter(player => player.player_id !== playerId) }) || [];
                 return { 
                     ...prev, 
                     players: prev.players.filter(player => player.player_id !== playerId),
-                    commonGames: calculateCommonGames({
-                        ...prev, 
-                        players: prev.players.filter(player => player.player_id !== playerId)
-                    })!.commonGames
+                    commonGames: common
                 };
             });
         }

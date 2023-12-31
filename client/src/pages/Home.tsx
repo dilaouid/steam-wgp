@@ -5,6 +5,7 @@ import LoginPage from "./Login";
 import LoadingPage from "./LoadingPage";
 
 import { Auth, Loading, Room, WebSocket } from "../context";
+import { State } from "../context/AuthProvider";
 
 import FooterComponent from "../components/common/Footer/Footer";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +23,20 @@ export default function HomePage () {
 
     const waitlistId = room?.id;
     const adminId = room?.admin_id;
+
+    if (waitlistId && room.winner) {
+      setRoom(null);
+      setAuth(prev => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          user: {
+            ...prev.user,
+            waitlist: null
+          }
+        }
+      });
+    }
 
     useEffect(() => {
         setIsLoading(true);
@@ -56,6 +71,8 @@ export default function HomePage () {
             actions.kicked(socket, data.playerId, auth.user?.id, adminId ?? '', setRoom, undefined, setAuth);
           else if (data.action === "start")
             actions.start(setRoom, waitlistId, navigate);
+          else if (data.action === "retrieve")
+              actions.retrieve(setRoom, data.swipedGames);
       }
     }, [ socket, waitlistId, adminId, setRoom, auth.user?.id, navigate, setAuth ]);
 

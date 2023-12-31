@@ -12,15 +12,12 @@ export const join = (setRoom: React.Dispatch<React.SetStateAction<RoomInfo | nul
         if (isPlayerAlreadyInRoom)
             return prev;
 
-
+        const common = calculateCommonGames({ ...prev, players: [...prev.players, player] }) || [];
         // Update the state with the new player and the new common games
         return { 
             ...prev, 
             players: [...prev.players, player],
-            commonGames: calculateCommonGames({
-                ...prev, 
-                players: [...prev.players, player]
-            })!.commonGames
+            commonGames: common
         };
     });
 }
