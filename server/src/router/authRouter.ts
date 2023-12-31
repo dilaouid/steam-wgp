@@ -13,7 +13,7 @@ export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());
   fastify.register(fastifyPassport.secureSession());
 
-  const host = `http://${fastify.config.HOST}:${fastify.config.PORT}`;
+  const host = `http://${fastify.config.HOST}`;
 
   fastifyPassport.use(new SteamStrategy({
     returnURL: `${host}/auth/steam/callback`,
