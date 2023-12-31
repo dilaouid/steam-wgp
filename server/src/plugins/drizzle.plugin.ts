@@ -5,7 +5,7 @@ import { FastifyInstance } from 'fastify';
 
 export const drizzlePlugin = fp(async (fastify: FastifyInstance, opts: { databaseUrl: string }) => {
   // Create a database client and configure drizzle-orm for postgres
-  const queryClient = postgres(opts.databaseUrl);
+  const queryClient = postgres(opts.databaseUrl, { ssl: 'require' });
   const db = drizzle(queryClient);
 
   // Decorate fastify with the database client
