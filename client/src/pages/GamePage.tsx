@@ -5,6 +5,8 @@ import { HeartIcon } from "../components/common/Icons/HeartIcon";
 import { swipeCard, unswipeCard } from "../api/websocket";
 import { Spinner } from "react-bootstrap";
 
+import './GamePage.css';
+
 export default function GamePage () {
     const { room, setRoom } = useContext(Room.Context)!;
     const [ index, setIndex ] = useState<number>(0);
