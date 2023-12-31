@@ -5,7 +5,7 @@ import { Spinner } from "react-bootstrap";
 import styled from "styled-components"
 
 import { Auth } from "../../../context";
-import { joinOrLeaveRoom } from "../../../api/lobby";
+import { joinRoom } from "../../../api/lobby";
 
 const ModalBody = styled.div`
     background: url('assets/img/dots.png');
@@ -43,25 +43,14 @@ export default function ModalJoinComponent() {
         }
         
         try {
-            const joinOrLeave = await joinOrLeaveRoom(uuid, setAuth);
-            if (joinOrLeave.data.action === 'leave') {
-                toast.success('Vous avez quitté la room!', {
-                    position: "bottom-right",
-                    autoClose: 2500,
-                    closeOnClick: true,
-                    theme: "colored",
-                    hideProgressBar: false,
+            await joinRoom(uuid, setAuth);
+            setTimeout(() => {
+                const modals = document.querySelectorAll('.modal-backdrop');
+                modals.forEach((modal) => {
+                    modal.remove();
                 });
-            } else {
-                setTimeout(() => {
-                    const modals = document.querySelectorAll('.modal-backdrop');
-                    modals.forEach((modal) => {
-                        modal.remove();
-                    });
-                    navigate('/waitlist/' + uuid);
-                }, 500);
-
-            }
+                navigate('/waitlist/' + uuid);
+            }, 500);
             setLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

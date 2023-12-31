@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Auth, Room } from "../../../context";
 
 import { Col, Row, Button } from "react-bootstrap";
-import { joinOrLeaveRoom } from "../../../api/lobby";
+import { leaveRoom as leave } from "../../../api/lobby";
 import { useNavigate } from "react-router-dom";
 import { WebSocket } from "../../../context";
 import { toast } from "react-toastify";
@@ -20,7 +20,7 @@ export const RoomActionButtons: React.FC = () => {
 
     const leaveRoom = () => {
         if (!socket) return;
-        joinOrLeaveRoom(room.id, setAuth)
+        leave(room.id, setAuth)
             .then(() => {
                 socket.send(JSON.stringify({
                     action: 'leave'

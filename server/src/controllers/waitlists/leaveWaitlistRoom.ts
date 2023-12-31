@@ -1,19 +1,19 @@
 import { FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
-import { isUserInWaitlist, joinWaitlist } from "../../models/WaitlistsPlayers";
+import { isUserInWaitlist, leaveWaitlist } from "../../models/WaitlistsPlayers";
 import { isAuthenticated } from "../../auth/mw";
 import { checkWaitlistExists } from "../../models/Waitlists";
 import { APIResponse } from "../../utils/response";
 
-export interface joinWaitlistParams {
+export interface leaveWaitlistParams {
   id: string;
 }
 
-export const joinWaitlistOpts = {
-  method: 'PATCH' as HTTPMethods,
+export const leaveWaitlistOpts = {
+  method: 'DELETE' as HTTPMethods,
   url: '/:id',
-  handler: joinWaitlistController,
+  handler: leaveWaitlistController,
   preValidation: [isAuthenticated],
   schema: {
     params: {
@@ -26,7 +26,7 @@ export const joinWaitlistOpts = {
   }
 };
 
-async function joinWaitlistController(request: FastifyRequest<{ Params: joinWaitlistParams }>, reply: FastifyReply) {
+async function leaveWaitlistController(request: FastifyRequest<{ Params: leaveWaitlistParams }>, reply: FastifyReply) {
   const { id } = request.params;
   const user = (request.user as Player);
   const fastify = request.server as FastifyInstance;
@@ -44,10 +44,13 @@ async function joinWaitlistController(request: FastifyRequest<{ Params: joinWait
 
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
     if (waitlistStatus.inWaitlist) {
-      return APIResponse(reply, null, "Vous êtes déjà dans une room", 400);
-    } else {
-      await joinWaitlist(fastify, user.id, id);
-      return APIResponse(reply, null, 'Vous avez rejoint la room', 200);
+      if (waitlistStatus.waitlistId && waitlistStatus.waitlistId !== id) {
+        return APIResponse(reply, null, "Vous n'êtes pas dans cette room", 400);
+      }
+
+      await leaveWaitlist(fastify, user.id, id);
+
+      return APIResponse(reply, null, 'Vous avez quitté la room', 200);
     }
   } catch (err) {
     fastify.log.error(err);
