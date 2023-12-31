@@ -79,14 +79,20 @@ async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
       const steamLibraryRequest = await fetch(`${fastify.config.STEAM_GetOwnedGames}/?key=${fastify.config.STEAM_API_KEY}&steamid=${id}&include_appinfo=true&include_played_free_games=true&format=json`);
       if (steamLibraryRequest == null || steamLibraryRequest.status !== 200) {
         fastify.log.warn(`Steam API is not responding...`);
-        yield { data: JSON.stringify({ message: 'La bibliothèque Steam n\'est pas accessible pour le moment', type: 'error', complete: true }) };
+        yield { data: JSON.stringify({ message: 'La bibliothèque Steam n\'est pas accessible pour le moment', type: 'danger', complete: true }) };
         return;
       }
       const steamLibrary = await steamLibraryRequest.json() as ISteamResponse;
+
+      if (steamLibrary.response && !steamLibrary.response?.games) {
+        yield { data: JSON.stringify({ message: 'Votre bibliothèque Steam n\'est pas accessible pour le moment. Votre compte est peut-être privé, ou alors vous n\'avez pas de jeu.', type: 'danger', complete: false }) };
+        return;
+      }
+
       fastify.log.info('Steam library fetched successfully !');
       if (!steamLibrary.response) {
         fastify.log.warn(`Steam API is not responding...`);
-        yield { data: JSON.stringify({ message: 'La bibliothèque Steam n\'est pas accessible pour le moment', type: 'error', complete: true }) };
+        yield { data: JSON.stringify({ message: 'La bibliothèque Steam n\'est pas accessible pour le moment', type: 'danger', complete: true }) };
         return;
       }
 
