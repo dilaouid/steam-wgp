@@ -94,7 +94,7 @@ export default function GamePage () {
                 Pas intéressé
             </button>
             <p className="text-light">Aimez ou ignorez les jeux affichés. Le premier jeu qui aura été aimé par tout les joueurs de la room sera affiché, et vous saurez comment gaspiller les prochaines heures de votre précieuse vie.</p>
-            <p className="text-info-emphasis"><Spinner color={"info"} size="sm" /> La room sélectionnera un jeu aléatoire 5 minutes après sa création si aucun choix n'a pas été fait ...</p>
+            <p className="text-info-emphasis"><Spinner color={"info"} size="sm" /> La room sélectionnera un jeu aléatoire 10 minutes après sa création si aucun choix n'a pas été fait ...</p>
         </div>
         <div className="game-page-background-container">
             { room.swipedGames?.length > 0 ? <h5 className="text-warning-emphasis">Cliquez sur un jeu pour le retirer de vos J'aimes</h5> : <> </> }

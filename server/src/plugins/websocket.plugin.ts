@@ -379,7 +379,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                 client.send(JSON.stringify({ action: 'start' }));
               });
 
-              // wait for 5 minutes before ending the waitlist
+              // wait for 10 minutes before ending the waitlist
               setTimeout(() => {
                 if (!waitlistClients || !waitlistClients.started || waitlistClients.ended) return;
                 waitlistClients.ended = true;
@@ -397,7 +397,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                   client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
                 });
                 deleteWaitlist(waitlistId);
-              }, 300000);
+              }, 600000);
 
             } catch (error) {
               fastify.log.error(`Error in 'start' action: ${error}`);
