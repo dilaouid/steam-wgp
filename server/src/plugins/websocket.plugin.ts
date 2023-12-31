@@ -384,11 +384,14 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                 if (!waitlistClients || !waitlistClients.started || waitlistClients.ended) return;
                 waitlistClients.ended = true;
 
-                // pick a random game from the common games as the winner, prioritizing the games existing in swipedGames
                 const swipedGames = Object.keys(waitlistClients.swipedGames);
-                const commonGames = waitlistClients.commonGames.filter((game:number) => swipedGames.includes(game.toString()));
-                const winner = commonGames[Math.floor(Math.random() * commonGames.length)];
-                waitlistClients.winner = winner;
+                // pick the most swiped game, if there is one
+                if (swipedGames.length > 0) {
+                  const mostSwipedGame = swipedGames.reduce((a, b) => waitlistClients.swipedGames[a].length > waitlistClients.swipedGames[b].length ? a : b);
+                  waitlistClients.winner = parseInt(mostSwipedGame);
+                } else {
+                  waitlistClients.winner = waitlistClients.commonGames[Math.floor(Math.random() * waitlistClients.commonGames.length)];
+                }
 
                 waitlistEntry.sockets.forEach((client: any) => {
                   client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
