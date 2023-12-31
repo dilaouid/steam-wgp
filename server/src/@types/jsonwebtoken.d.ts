@@ -258,3 +258,4 @@ export function verify(
 export function decode(token: string, options: DecodeOptions & { complete: true }): null | Jwt;
 export function decode(token: string, options: DecodeOptions & { json: true }): null | JwtPayload;
 export function decode(token: string, options?: DecodeOptions): null | JwtPayload | string;
+declare module 'jsonwebtoken';

@@ -53,3 +53,4 @@ interface SteamProfile {
 }
 
 export = SteamStrategy;
+declare module 'passport-steam';

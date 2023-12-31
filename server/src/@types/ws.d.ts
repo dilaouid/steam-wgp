@@ -408,3 +408,4 @@ declare namespace WebSocket {
 }
 
 export = WebSocket;
+declare module 'ws';
