@@ -23,7 +23,6 @@ export default function GamePage () {
 
     if (!room || !socket) return <></>;
 
-
     const swipe = (like: boolean, game: number) => {
         if (!socket.socket || !room || !game) return;
         if (like) {
@@ -98,7 +97,7 @@ export default function GamePage () {
         </div>
         <div className="game-page-background-container">
             { room.swipedGames?.length > 0 ? <h5 className="text-warning-emphasis">Cliquez sur un jeu pour le retirer de vos J'aimes</h5> : <> </> }
-            {room.swipedGames?.map((game: number) => (
+            { room.swipedGames?.map((game: number) => (
                 <img key={game} src={`https://steamcdn-a.akamaihd.net/steam/apps/${game}/header.jpg?t=1628007606`} alt="Swipped game" className="game-page-background" onClick={() => unlike(game)} />
             ))}
         </div>
