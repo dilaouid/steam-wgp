@@ -8,6 +8,10 @@ const schema = {
       type: 'string',
       default: 'localhost'
     },
+    PROTOCOL: {
+      type: 'string',
+      default: 'http'
+    },
     PORT: {
       type: 'string',
       default: '8080'
