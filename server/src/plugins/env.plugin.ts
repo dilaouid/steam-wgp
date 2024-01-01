@@ -12,6 +12,10 @@ const schema = {
       type: 'string',
       default: '8080'
     },
+    SERVER_HOST: {
+      type: 'string',
+      default: 'localhost'
+    },
     ORIGIN: {
       type: 'string',
       default: 'http://localhost:3000'
