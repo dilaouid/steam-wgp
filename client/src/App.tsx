@@ -36,24 +36,22 @@ function App() {
       <Loading.Provider>
         <Room.Provider>
           <WebSocket.Provider>
-            <HashRouter>
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={5000}
-                    newestOnTop={false}
-                    closeOnClick
-                    pauseOnFocusLoss
-                    closeButton={false}
-                    theme="colored"
-                />
-                <NavbarComponent />
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/logout" element={<LogoutPage />} />
-                  <Route path="/waitlist/:id" element={<LobbyPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-            </HashRouter>
+              <ToastContainer
+                  position="bottom-right"
+                  autoClose={5000}
+                  newestOnTop={false}
+                  closeOnClick
+                  pauseOnFocusLoss
+                  closeButton={false}
+                  theme="colored"
+              />
+              <NavbarComponent />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/logout" element={<LogoutPage />} />
+                <Route path="/waitlist/:id" element={<LobbyPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
           </WebSocket.Provider>
         </Room.Provider>
       </Loading.Provider>
