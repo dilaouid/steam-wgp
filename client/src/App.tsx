@@ -8,7 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS
 
 import { useEffect } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Routes,
   Route
 } from 'react-router-dom';
@@ -36,7 +36,7 @@ function App() {
       <Loading.Provider>
         <Room.Provider>
           <WebSocket.Provider>
-            <Router>
+            <HashRouter>
                 <ToastContainer
                     position="bottom-right"
                     autoClose={5000}
@@ -53,7 +53,7 @@ function App() {
                   <Route path="/waitlist/:id" element={<LobbyPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
-            </Router>
+            </HashRouter>
           </WebSocket.Provider>
         </Room.Provider>
       </Loading.Provider>
