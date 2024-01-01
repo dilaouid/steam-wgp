@@ -19,6 +19,7 @@ export declare module 'fastify' {
       PGUSER?: string;
       PGPASSWORD?: string;
       ENDPOINT_ID?: string;
+      SERVER_HOST?: string;
     },
     db: PostgresJsDatabase<Record<string, never>>,
     websocket: FastifyWebsocket;

@@ -36,7 +36,7 @@ const initialize = async () => {
     await fastify.register(fastifyCookie);
     await fastify.register(fastifySession, { secret: fastify.config.SECRET_KEY });
 
-    await fastify.register(plugins.drizzlePlugin, { env: fastify.config });
+    await fastify.register(plugins.drizzlePlugin, fastify.config);
     // ==================== End of plugins loading
 
     // ==================== Routes loading below
@@ -49,7 +49,7 @@ const initialize = async () => {
 
     // ==================== Server boot and listen
     const port = parseInt(fastify.config.PORT) || 8000;
-    await fastify.listen({ port, host: fastify.config.HOST, listenTextResolver: (address: string) => {
+    await fastify.listen({ port, host: fastify.config.SERVER_HOST, listenTextResolver: (address: string) => {
       return `Server listening on ${address}`
     }}, (error: any) => {
       if (error) throw error;
