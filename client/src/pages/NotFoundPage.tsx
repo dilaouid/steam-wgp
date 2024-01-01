@@ -40,7 +40,7 @@ export default function NotFoundPage() {
         </div>
         <div className="row justify-content-center">
             <div className="col-auto" data-aos="zoom-out">
-                <Image src="/assets/img/404.png" />
+                <Image src="./assets/img/404.png" />
             </div>
             <div className="col-12" data-aos="zoom-in">
                 <BottomHeading className="display-1 text-center text-primary">404</BottomHeading>
