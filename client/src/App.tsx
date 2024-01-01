@@ -8,7 +8,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Bootstrap JS
 
 import { useEffect } from 'react';
 import {
-  HashRouter,
   Routes,
   Route
 } from 'react-router-dom';
