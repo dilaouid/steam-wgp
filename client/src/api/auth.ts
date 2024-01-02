@@ -5,6 +5,19 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 // Check if the user is authenticated
 export const checkAuth = async () => {
   try {
+
+    // check if the user has no token cookie formatted like a jwt token
+    if (!document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
+      // check if the user has a token in the query string
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      if (token) {
+        // set the token cookie
+        document.cookie = `token=${token}; path=/;`;
+      }
+    }
+    window.history.replaceState({}, document.title, window.location.pathname);
+
     const response = await fetch(`${BASE_URL}/auth/me`, {
       headers: {
         'Content-Type': 'application/json'

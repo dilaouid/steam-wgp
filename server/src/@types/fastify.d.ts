@@ -7,6 +7,7 @@ export declare module 'fastify' {
       PROTOCOL?: 'http' | 'https';
       HOST?: string;
       PORT?: number;
+      NOT_SAME_ORIGIN?: boolean;
       ORIGIN?: string;
       STEAM_API_KEY?: string;
       STEAM_REDIRECT_URI?: string;
