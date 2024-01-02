@@ -1,6 +1,8 @@
 import { APIResponse } from "../types/API";
+import { getCookieValue } from "../utils/getCookie";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+const token = getCookieValue('token');
 
 // Check if the user is authenticated
 export const checkAuth = async () => {
@@ -20,7 +22,7 @@ export const checkAuth = async () => {
 
     const response = await fetch(`${BASE_URL}/auth/me`, {
       headers: {
-        'Content-Type': 'application/json'
+        'Authorization': 'Bearer ' + token
       },
       credentials: "include"
     });
@@ -44,7 +46,7 @@ export const logOut = async (): Promise<APIResponse> => {
       credentials: "include",
       method: "GET",
       headers: {
-        "Content-type": "application/json"
+        'Authorization': 'Bearer ' + token
       }
     });
     if (!response.ok)

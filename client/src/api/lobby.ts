@@ -1,11 +1,16 @@
 import { APIResponse } from "../types/API";
 import { Auth } from "../context";
+import { getCookieValue } from "../utils/getCookie";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+const token = getCookieValue('token');
 
 export const getWaitlistInformations = async (roomId: string): Promise<APIResponse> => {
     try {
         const response = await  fetch(BASE_URL + "/waitlist/" + roomId, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
             credentials: "include"
         });
         const res: APIResponse = await response.json();
@@ -21,6 +26,9 @@ export const getWaitlistInformations = async (roomId: string): Promise<APIRespon
 export const joinRoom = async (roomId: string, setAuth: React.Dispatch<React.SetStateAction<Auth.State>>): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
             method: "PATCH",
             credentials: "include"
         });
@@ -45,6 +53,9 @@ export const joinRoom = async (roomId: string, setAuth: React.Dispatch<React.Set
 export const leaveRoom = async (roomId: string, setAuth: React.Dispatch<React.SetStateAction<Auth.State>>): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
             method: "DELETE",
             credentials: "include"
         });
@@ -69,6 +80,9 @@ export const leaveRoom = async (roomId: string, setAuth: React.Dispatch<React.Se
 export const kickPlayer = async (roomId: string, playerId: string): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId + "/kick/" + playerId, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
             method: "DELETE",
             credentials: "include"
         });
@@ -85,6 +99,9 @@ export const kickPlayer = async (roomId: string, playerId: string): Promise<APIR
 export const createRoom = async (setAuth: React.Dispatch<React.SetStateAction<Auth.State>>): Promise<APIResponse> => {
     try {
         const response = await fetch(BASE_URL + "/waitlist", {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
             credentials: "include",
             method: "POST"
         });

@@ -20,11 +20,11 @@ const initialize = async () => {
     await fastify.after();
 
     // ====================  Every plugins are loaded, we can now load the routes below
-    plugins.websocketPlugin(fastify).ready((err: Error | null) => {
+    plugins.corsPlugin(fastify).ready((err: Error) => {
       if (err) fastify.log.error(err);
     });
 
-    plugins.corsPlugin(fastify).ready((err: Error) => {
+    plugins.websocketPlugin(fastify).ready((err: Error | null) => {
       if (err) fastify.log.error(err);
     });
 
