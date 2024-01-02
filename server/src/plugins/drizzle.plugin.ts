@@ -7,7 +7,7 @@ export const drizzlePlugin = fp(async (fastify: FastifyInstance, opts: any) => {
   // Create a database client and configure drizzle-orm for postgres
   const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = opts;
 
-  const queryClient = postgres({
+  const queryClient = postgres(opts.NODE_ENV === 'development' ? opts.DATABASE_URL : {
     host: PGHOST,
     database: PGDATABASE,
     username: PGUSER,
