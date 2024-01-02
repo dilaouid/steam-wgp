@@ -22,6 +22,9 @@ export default function HomePage () {
 
     const waitlistId = room?.id;
     const adminId = room?.admin_id;
+    
+    if (!auth.isAuthenticated)
+        navigate('/login');
 
     if (waitlistId && room.winner) {
       setRoom(null);

@@ -24,6 +24,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Auth, Room, Loading, WebSocket } from './context';
+import LoginPage from './pages/Login';
 
 function App() {
   useEffect(() => {
@@ -47,6 +48,7 @@ function App() {
               <NavbarComponent />
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
                 <Route path="/waitlist/:id" element={<LobbyPage />} />
                 <Route path="*" element={<NotFoundPage />} />
