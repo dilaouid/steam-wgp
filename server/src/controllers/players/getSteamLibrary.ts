@@ -65,12 +65,19 @@ async function insertGamesIntoLibrary(fastify: FastifyInstance, player_id: bigin
 async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
   const { id } = request.user as Player;
   const fastify = request.server as FastifyInstance;
+  const headers = {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+    'Access-Control-Allow-Origin': fastify.config.ORIGIN,
+    'Access-Control-Allow-Credentials': 'true'
+  };
+
+  reply.raw.writeHead(200, headers);
 
   if (!id)
     return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
-  reply.header('Content-Type', 'text/event-stream');
-  reply.header('Cache-Control', 'no-cache');
-  reply.header('Connection', 'keep-alive');
+  // reply.raw.flushHeaders()
   reply.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
     try {
       yield { data: JSON.stringify({ message: 'Chargement de ta bibliothèque Steam ...', type: 'info', complete: false }) }

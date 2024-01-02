@@ -15,6 +15,7 @@ export default function LogoutPage() {
                     username: '',
                     waitlist: null
                 }, isAuthenticated: false });
+                localStorage.removeItem('animationPlayed');
             } catch (err) {
                 console.error("Impossible de déconnecter l'utilisateur: " + err);
             }
