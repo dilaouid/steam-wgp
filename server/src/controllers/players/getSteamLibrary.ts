@@ -68,7 +68,9 @@ async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
 
   if (!id)
     return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
-
+  reply.header('Content-Type', 'text/event-stream');
+  reply.header('Cache-Control', 'no-cache');
+  reply.header('Connection', 'keep-alive');
   reply.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
     try {
       yield { data: JSON.stringify({ message: 'Chargement de ta bibliothèque Steam ...', type: 'info', complete: false }) }
