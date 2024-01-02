@@ -20,6 +20,6 @@ export default function NavbarLinksComponent() {
                 </li>
             : ''}
         </ul>
-        <a className="btn btn-outline-primary" role="button" href="/logout">Déconnexion</a>
+        <Link to="/logout" className="btn btn-outline-primary" role="button">Déconnexion</Link>
     </div>);
 }
