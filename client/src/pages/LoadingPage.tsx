@@ -8,6 +8,7 @@ import ProgressLoadingComponent from "../components/common/Home/ProgressLoading"
 import HomePageComponent from "../components/common/Home/HomePage";
 
 import { Loading } from "../context";
+import { getCookieValue } from "../utils/getCookie";
 
 export default function LoadingPage () {
     const [ messages, setMessages ] = useState<IMessage[]>([]);
@@ -24,7 +25,7 @@ export default function LoadingPage () {
             return;
         }
 
-        const eventSource = new EventSource(`${BASE_URL}/players/library-checker`, {
+        const eventSource = new EventSource(`${BASE_URL}/players/library-checker?token=${getCookieValue('token')}`, {
             withCredentials: true
         });
       

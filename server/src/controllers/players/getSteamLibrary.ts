@@ -4,16 +4,22 @@ import { eq, inArray } from 'drizzle-orm';
 import { isAuthenticated } from "../../auth/mw";
 import { Player } from "../../models/Players";
 import { APIResponse } from "../../utils/response";
+import jwt from 'jsonwebtoken';
 
 interface IGamesToAdd { game_id: number; is_selectable: boolean; id?: number; }
 interface ISteamResponse { response: { games: { appid: number; }[]; } }
 interface ILibrary { appid: number; game_id?: number }
+interface IQS { token: string; }
 
 export const getSteamLibraryOpts = {
   method: 'GET' as HTTPMethods,
   url: '/library-checker',
   handler: getSteamLibrary,
-  preValidation: [isAuthenticated]
+  schema : {
+    querystring: {
+      token: { type: 'string' }
+    }
+  }
 };
 
 // Fetch the game details from the steam api (is multiplayer or not, essentially)
@@ -62,9 +68,20 @@ async function insertGamesIntoLibrary(fastify: FastifyInstance, player_id: bigin
   }
 }
 
-async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
-  const { id } = request.user as Player;
+async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, reply: FastifyReply) {
   const fastify = request.server as FastifyInstance;
+
+  const token = request.query.token as string;
+
+  const secretKey = fastify.config.SECRET_KEY;
+  const decoded = jwt.verify(token, secretKey);
+
+  if (!decoded) {
+    return APIResponse(reply, null, 'Accès interdit', 401);
+  }
+
+  const { id } = decoded as Player;
+
   const headers = {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
@@ -77,7 +94,6 @@ async function getSteamLibrary(request: FastifyRequest, reply: FastifyReply) {
 
   if (!id)
     return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
-  // reply.raw.flushHeaders()
   reply.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
     try {
       yield { data: JSON.stringify({ message: 'Chargement de ta bibliothèque Steam ...', type: 'info', complete: false }) }
