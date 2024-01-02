@@ -12,6 +12,10 @@ const schema = {
       type: 'string',
       default: 'http'
     },
+    NOT_SAME_ORIGIN: {
+      type: 'boolean',
+      default: false
+    },
     PORT: {
       type: 'string',
       default: '8080'
