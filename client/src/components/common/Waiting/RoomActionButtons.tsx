@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { Auth, Room } from "../../../context";
 
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row, Button, Spinner } from "react-bootstrap";
 import { leaveRoom as leave } from "../../../api/lobby";
 import { useNavigate } from "react-router-dom";
 import { WebSocket } from "../../../context";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { APIResponse } from "../../../types/API";
 
 export const RoomActionButtons: React.FC = () => {
+    const [ loading, setLoading ] = useState(false);
     const { room, setRoom } = useContext(Room.Context)!;
     const { socket } = useContext(WebSocket.Context)!;
     const { setAuth, auth } = useContext(Auth.Context)!;
@@ -19,13 +20,15 @@ export const RoomActionButtons: React.FC = () => {
     const isAdmin = auth.user?.id === room.admin_id;
 
     const leaveRoom = () => {
-        if (!socket) return;
+        if (!socket || loading) return;
+        setLoading(true);
         leave(room.id, setAuth)
             .then(() => {
                 socket.send(JSON.stringify({
                     action: 'leave'
                 }));
                 setRoom(null);
+                setLoading(false);
                 socket.close();
                 navigate('/');
             })
@@ -37,6 +40,7 @@ export const RoomActionButtons: React.FC = () => {
                     theme: "colored",
                     hideProgressBar: false,
                 });
+                setLoading(false);
             });
     };
 
@@ -46,20 +50,22 @@ export const RoomActionButtons: React.FC = () => {
     const disabled = !commonGames || playersInRoom <= 1;
 
     const startRoom = () => {
-        if (!socket || disabled) return;
+        if (!socket || disabled || loading) return;
+        setLoading(true);
         socket.send(JSON.stringify({
             action: 'start'
         }));
+        setLoading(false);
     }
 
     return (
     <Row className="justify-content-center">
         { isAdmin ?
         <Col xs="auto">
-            <Button variant={disabled ? "outline-light" : "outline-primary"} size="lg" disabled={disabled} onClick={startRoom}>Démarrer</Button>
+            <Button variant={disabled || loading ? "outline-light" : "outline-primary"} size="lg" disabled={disabled || loading} onClick={startRoom}>{ loading ? <Spinner size="sm" /> : 'Démarrer' }</Button>
         </Col> : <></> }
         <Col xs="auto">
-            <Button variant="outline-danger" size="lg" onClick={leaveRoom}>Quitter</Button>
+            <Button variant={loading ? "outline-light" : "outline-danger"} size="lg" disabled={loading} onClick={leaveRoom}>{ loading ? <Spinner size="sm" /> : 'Quitter' }</Button>
         </Col>
     </Row>
     );
