@@ -5,7 +5,7 @@ import { getCookieValue } from "../utils/getCookie";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const token = getCookieValue('token');
 
-export const getWaitlistInformations = async (roomId: string): Promise<APIResponse> => {
+export const getWaitlistInformations = async (roomId: string, setAuth: React.Dispatch<React.SetStateAction<Auth.State>>): Promise<APIResponse> => {
     try {
         const response = await  fetch(BASE_URL + "/waitlist/" + roomId, {
             headers: {
@@ -19,7 +19,18 @@ export const getWaitlistInformations = async (roomId: string): Promise<APIRespon
         return res;
     } catch(err) {
         console.error("Une erreur est survenue lors de la récupération des informations de la room: " + err);
-        throw err;
+        return joinRoom(roomId, setAuth).then( () => {
+            setAuth(prevAuth => ({
+                ...prevAuth,
+                user: {
+                    ...prevAuth.user,
+                    waitlist: roomId
+                }
+            }));
+            return getWaitlistInformations(roomId, setAuth);
+        }).catch(err => {
+            throw err;
+        });
     }
 }
 

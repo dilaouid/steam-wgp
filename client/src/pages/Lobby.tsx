@@ -49,7 +49,7 @@ export default function LobbyPage() {
         if (!id) return;
         const loadRoomInfo = async () => {
             try {
-                const info = await getWaitlistInformations(id as string);
+                const info = await getWaitlistInformations(id as string, setAuth);
                 setRoom(prev => {
                     const common = calculateCommonGames(info.data);
                     return {
@@ -60,14 +60,15 @@ export default function LobbyPage() {
                 });
             } catch (error) {
                 console.error('Erreur lors du chargement des informations de la room:', error);
-                navigate('/');
+                if (auth.user.waitlist !== id)
+                    navigate('/');
             } finally {
                 setIsLoading(false);
             }
         };
 
         loadRoomInfo();
-    }, [ id, navigate, setRoom, room?.started ]);
+    }, [ id, navigate, setRoom, room?.started, setAuth, auth ]);
 
     useEffect(() => {
         if (!socket) return;

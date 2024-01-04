@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { Room } from "../context";
 
+import { CopyIcon } from "../components/common/Icons/CopyIcon";
+
 import { RoomInformations } from "../components/common/Waiting/RoomInformations";
 import { RoomActionButtons } from "../components/common/Waiting/RoomActionButtons";
 import { NotInCommonGames } from "../components/common/Waiting/NotInCommonGames";
@@ -35,7 +37,7 @@ export default function WaitingPage() {
             <div className="text-center p-4 p-lg-5">
                 <div>
                     <p className="fw-bold text-primary mb-2">
-                        Room ID: <RoomID>{ room.id }</RoomID>
+                        Room ID: <RoomID>{ room.id } <CopyIcon /></RoomID>
                     </p>
                 </div>
             </div>
