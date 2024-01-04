@@ -7,7 +7,7 @@ import { IMessage } from "../types/API";
 import ProgressLoadingComponent from "../components/common/Home/ProgressLoading";
 import HomePageComponent from "../components/common/Home/HomePage";
 
-import { Loading } from "../context";
+import { Auth, Loading } from "../context";
 import { getCookieValue } from "../utils/getCookie";
 
 export default function LoadingPage () {
@@ -15,9 +15,13 @@ export default function LoadingPage () {
     const [ showFirstDiv, setShowFirstDiv ] = useState(true);
     const [ animateFirstDiv, setAnimateFirstDiv ] = useState(false);
     const { setLoadingComplete, loadingComplete } = useContext(Loading.Context)!;
+    const { auth } = useContext(Auth.Context)!;
 
 
     useEffect(() => {
+        if (!auth.isAuthenticated)
+            return;
+
         const animationPlayed = localStorage.getItem('animationPlayed') === 'true';
         if (animationPlayed) {
             setShowFirstDiv(false);
@@ -53,7 +57,7 @@ export default function LoadingPage () {
         return () => {
           eventSource.close();
         };
-    }, [setLoadingComplete]);
+    }, [auth, setLoadingComplete]);
 
     return (
         <section className="py-4 py-xl-5">
