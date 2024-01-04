@@ -71,12 +71,12 @@ export default async function authRouter(fastify: FastifyInstance) {
       async (request, reply) => {
         if (!request.user) throw new Error('Missing user object in request');
         const user = request.user as Player & { username: string };
-        const jwtToken = jwt.sign({ id: String(user.id), username: user.username }, fastify.config.SECRET_KEY, { expiresIn: '1h' });
+        const jwtToken = jwt.sign({ id: String(user.id), username: user.username }, fastify.config.SECRET_KEY, { expiresIn: '5h' });
         reply.setCookie('token', jwtToken, {
           httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
           path: '/',
-          maxAge: 3600,
+          maxAge: 18000,
           sameSite: process.env.NODE_ENV === 'production' ? 'none' : true
         });
 
