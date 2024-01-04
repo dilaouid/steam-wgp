@@ -6,7 +6,9 @@ export const calculateCommonGames = (room: RoomInfo): number[] | null => {
     let commonGames = room.players[0].games;
 
     room.players.forEach(player => {
-        commonGames = commonGames.filter(game => player.games.includes(game));
+        const filtered = commonGames.filter(game => player.games.includes(game));
+        // shuffling the array to make it more random
+        commonGames = filtered.sort(() => Math.random() - 0.5);
     });
 
     return commonGames;

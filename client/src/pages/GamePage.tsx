@@ -10,7 +10,7 @@ import './GamePage.css';
 export default function GamePage () {
     const { room, setRoom } = useContext(Room.Context)!;
     const [ index, setIndex ] = useState<number>(0);
-    const [animate, setAnimate] = useState(false);
+    const [ animate, setAnimate ] = useState(false);
     const socket = useContext(WebSocket.Context)!;
 
     useEffect(() => {

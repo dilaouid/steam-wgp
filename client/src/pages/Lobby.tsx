@@ -60,15 +60,14 @@ export default function LobbyPage() {
                 });
             } catch (error) {
                 console.error('Erreur lors du chargement des informations de la room:', error);
-                if (auth.user.waitlist !== id)
-                    navigate('/');
+                navigate('/');
             } finally {
                 setIsLoading(false);
             }
         };
 
         loadRoomInfo();
-    }, [ id, navigate, setRoom, room?.started, setAuth, auth ]);
+    }, [ id, navigate, setRoom, room?.started, setAuth ]);
 
     useEffect(() => {
         if (!socket) return;
