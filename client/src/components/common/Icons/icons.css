@@ -1,0 +1,12 @@
+.copy {
+    cursor: pointer;
+    font-size: 23px;
+    margin-left: 10px;
+    color: rgba(42,159,214,0.5);
+}
+  
+.copy:hover {
+    transition: .5s;
+    color: rgb(42,159,214);
+}
+  
