@@ -3,7 +3,7 @@ import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { isUserInWaitlist, joinWaitlist } from "../../models/WaitlistsPlayers";
 import { isAuthenticated } from "../../auth/mw";
-import { checkWaitlistExists } from "../../models/Waitlists";
+import { checkWaitlistExists, getWaitlist } from "../../models/Waitlists";
 import { APIResponse } from "../../utils/response";
 
 export interface joinWaitlistParams {
@@ -47,7 +47,8 @@ async function joinWaitlistController(request: FastifyRequest<{ Params: joinWait
       return APIResponse(reply, null, "Vous êtes déjà dans une room", 400);
     } else {
       await joinWaitlist(fastify, user.id, id);
-      return APIResponse(reply, null, 'Vous avez rejoint la room', 200);
+      const waitlist = await getWaitlist(fastify, id.trim(), BigInt(user.id));
+      return APIResponse(reply, waitlist, 'Vous avez rejoint la room', 200);
     }
   } catch (err) {
     fastify.log.error(err);

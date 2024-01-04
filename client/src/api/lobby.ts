@@ -19,7 +19,7 @@ export const getWaitlistInformations = async (roomId: string, setAuth: React.Dis
         return res;
     } catch(err) {
         console.error("Une erreur est survenue lors de la récupération des informations de la room: " + err);
-        return joinRoom(roomId, setAuth).then( () => {
+        return joinRoom(roomId, setAuth).then( (data) => {
             setAuth(prevAuth => ({
                 ...prevAuth,
                 user: {
@@ -27,7 +27,7 @@ export const getWaitlistInformations = async (roomId: string, setAuth: React.Dis
                     waitlist: roomId
                 }
             }));
-            return getWaitlistInformations(roomId, setAuth);
+            return data;
         }).catch(err => {
             throw err;
         });
