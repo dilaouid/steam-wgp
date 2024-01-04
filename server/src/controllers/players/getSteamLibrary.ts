@@ -109,7 +109,8 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
         const steamLibrary = await steamLibraryRequest.json() as ISteamResponse;
 
         if (steamLibrary.response && !steamLibrary.response?.games) {
-          yield { data: JSON.stringify({ message: 'Votre bibliothèque Steam n\'est pas accessible pour le moment. Votre compte est peut-être privé, ou alors vous n\'avez pas de jeu.', type: 'danger', complete: false }) };
+          const complete = playerLibraryIds.size > 0;
+          yield { data: JSON.stringify({ message: 'Votre bibliothèque Steam n\'est pas accessible pour le moment. Votre compte est peut-être privé, ou alors vous n\'avez pas de jeu.', type: 'danger', complete }) };
           return;
         }
 
