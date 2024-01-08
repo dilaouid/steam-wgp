@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Auth } from "../../../context";
 import { useContext } from "react";
 import { useLocation } from 'react-router-dom';
+import { HeartIcon } from "../Icons/HeartIcon";
 
 export default function NavbarLinksComponent() {
     const { auth } = useContext(Auth.Context)!;
@@ -12,7 +13,7 @@ export default function NavbarLinksComponent() {
     <div className="collapse navbar-collapse" id="navcol-1">
         <ul className="navbar-nav me-auto">
             <li className="nav-item">
-                <a className="nav-link" href="https://ko-fi.com/dilaouid" target="_blank">Faire un don</a>
+                <a className="nav-link" href="https://ko-fi.com/dilaouid" target="_blank"><HeartIcon /> Faire un don</a>
             </li>
             { auth.user.waitlist ?
                 <li className="nav-item">
