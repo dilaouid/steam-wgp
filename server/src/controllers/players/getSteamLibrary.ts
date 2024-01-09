@@ -9,7 +9,7 @@ import i18next from "../../plugins/i18n.plugin";
 interface IGamesToAdd { game_id: number; is_selectable: boolean; id?: number; }
 interface ISteamResponse { response: { games: { appid: number; }[]; } }
 interface ILibrary { appid: number; game_id?: number }
-interface IQS { token: string; }
+interface IQS { token: string; lang: string; }
 
 export const getSteamLibraryOpts = {
   method: 'GET' as HTTPMethods,
@@ -17,7 +17,8 @@ export const getSteamLibraryOpts = {
   handler: getSteamLibrary,
   schema : {
     querystring: {
-      token: { type: 'string' }
+      token: { type: 'string' },
+      lang: { type: 'string' }
     }
   }
 };
@@ -72,13 +73,14 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
   const fastify = request.server as FastifyInstance;
 
   const token = request.query.token as string;
+  const language = request.query.lang as string;
 
   try {
     const secretKey = fastify.config.SECRET_KEY;
     const decoded = jwt.verify(token, secretKey);
 
     if (!decoded) {
-      return APIResponse(reply, null, i18next.t('forbidden_access', { lng: request.userLanguage }), 401);
+      return APIResponse(reply, null, i18next.t('forbidden_access', { lng: language }), 401);
     }
 
     const { id } = decoded as Player;
@@ -93,10 +95,10 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
     reply.raw.writeHead(200, headers);
 
     if (!id)
-      return APIResponse(reply, null, i18next.t('need_to_be_logged_in', { lng: request.userLanguage }), 401);
+      return APIResponse(reply, null, i18next.t('need_to_be_logged_in', { lng: language }), 401);
     reply.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
       try {
-        yield { data: JSON.stringify({ message: i18next.t('load_steam_library', { lng: request.userLanguage }), type: 'info', complete: false }) }
+        yield { data: JSON.stringify({ message: i18next.t('load_steam_library', { lng: language }), type: 'info', complete: false }) }
         const library = await fastify.db.select({ game_id: Libraries.model.game_id }).from(Libraries.model).where(eq(Libraries.model.player_id, id));
         const playerLibraryIds = new Set(library.map((game: ILibrary) => game.game_id));
 
@@ -104,25 +106,25 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
         const steamLibraryRequest = await fetch(`${fastify.config.STEAM_GetOwnedGames}/?key=${fastify.config.STEAM_API_KEY}&steamid=${id}&include_appinfo=true&include_played_free_games=true&format=json`);
         if (steamLibraryRequest == null || steamLibraryRequest.status !== 200) {
           fastify.log.warn(`Steam API is not responding...`);
-          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible_yet", { lng: request.userLanguage }), type: 'danger', complete: true }) };
+          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible_yet", { lng: language }), type: 'danger', complete: true }) };
           return;
         }
         const steamLibrary = await steamLibraryRequest.json() as ISteamResponse;
 
         if (steamLibrary.response && !steamLibrary.response?.games) {
           const complete = playerLibraryIds.size > 0;
-          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible", { lng: request.userLanguage }), type: 'danger', complete }) };
+          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible", { lng: language }), type: 'danger', complete }) };
           return;
         }
 
         fastify.log.info('Steam library fetched successfully !');
         if (!steamLibrary.response) {
           fastify.log.warn(`Steam API is not responding...`);
-          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible_yet", { lng: request.userLanguage }), type: 'danger', complete: true }) };
+          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible_yet", { lng: language }), type: 'danger', complete: true }) };
           return;
         }
 
-        yield { data: JSON.stringify({ message: i18next.t("adding_games_to_library", { lng: request.userLanguage }), type: 'info', complete: false }) };
+        yield { data: JSON.stringify({ message: i18next.t("adding_games_to_library", { lng: language }), type: 'info', complete: false }) };
         const steamAppIds = steamLibrary.response.games.map((game: ILibrary) => game.appid);
         const gamesToAddToLibrary = steamAppIds.filter((gameId: number) => !playerLibraryIds.has(gameId));
 
@@ -143,31 +145,31 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
 
         // insert the games in the Libraries table if they are not already in the database
         fastify.log.info(`Inserting games into the library...`);
-        yield { data: JSON.stringify({ message: i18next.t("adding_games_to_collection", { lng: request.userLanguage }), type: 'info', complete: false }) };
+        yield { data: JSON.stringify({ message: i18next.t("adding_games_to_collection", { lng: language }), type: 'info', complete: false }) };
 
         await insertGamesIntoLibrary(fastify, BigInt(id), gamesToAddToLibrary);
 
         // if added games in db is less than gamesToAddToLibrary, then warn the user
         if (gamesToAddToLibrary.length > 0 && gamesToAddToLibrary.length < gamesToAdd.length) {
           const messageKey = gamesToAddToLibrary.length <= 1 ? 'game_cannot_add_singular' : 'game_cannot_add_plural';
-          const message = i18next.t(messageKey, { lng: request.userLanguage, count: gamesToAddToLibrary.length });
+          const message = i18next.t(messageKey, { lng: language, count: gamesToAddToLibrary.length });
 
           yield { data: JSON.stringify({ message, type: 'danger' }) };
           fastify.log.warn(`Only ${gamesToAdd.length} out of ${gamesToAddToLibrary.length} games were added to the database`);
         }
-        yield { data: JSON.stringify({ message: i18next.t('loading_library_complete', { lng: request.userLanguage }), type: 'success', complete: true }) }
+        yield { data: JSON.stringify({ message: i18next.t('loading_library_complete', { lng: language }), type: 'success', complete: true }) }
       } catch (err) {
         fastify.log.error(err);
-        yield { data: JSON.stringify({ message: i18next.t('error_occured_in_loading_library', { lng: request.userLanguage }), type: 'danger', complete: true }) };
+        yield { data: JSON.stringify({ message: i18next.t('error_occured_in_loading_library', { lng: language }), type: 'danger', complete: true }) };
       }
     })());
   } catch (error: any) {
     // if the error is due to an expired token
     if (error.type === 'TokenExpiredError') {
       reply.clearCookie('token');
-      return APIResponse(reply, null, i18next.t('session_expired', { lng: request.userLanguage }), 401);
+      return APIResponse(reply, null, i18next.t('session_expired', { lng: language }), 401);
     }
-    return APIResponse(reply, null, i18next.t('forbidden_access', { lng: request.userLanguage }), 401);
+    return APIResponse(reply, null, i18next.t('forbidden_access', { lng: language }), 401);
   }
 
 }
