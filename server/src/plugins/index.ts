@@ -4,6 +4,7 @@ import { websocketPlugin } from "./websocket.plugin";
 import { envPlugin } from "./env.plugin";
 import { drizzlePlugin } from "./drizzle.plugin";
 import { rateLimitPlugin } from "./ratelimit.plugin";
+import { languageHookPlugin } from "./language.plugin";
 
 export {
   logger,
@@ -11,5 +12,6 @@ export {
   envPlugin,
   websocketPlugin,
   drizzlePlugin,
-  rateLimitPlugin
+  rateLimitPlugin,
+  languageHookPlugin
 };
