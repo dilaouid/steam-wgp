@@ -9,6 +9,9 @@ const Heading = styled.div`
 
 const Title = styled.h4`
     margin-bottom: 37px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
 `;
 
 export default function HomePageHeadingComponent() {
@@ -20,7 +23,7 @@ export default function HomePageHeadingComponent() {
             <p className="text-primary mb-2">
                 <span>Bienvenue <strong>{ auth.user.username } </strong>!</span>
             </p>
-            <Title className="text-center text-primary-emphasis">Organisez-vous et choisissez des jeux<br />avec vos amis !</Title>
+            <Title className="text-center text-primary-emphasis">Organisez-vous et choisissez des jeux avec vos amis !</Title>
         </Heading>
     </div>);
 }
