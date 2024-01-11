@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Spinner } from "react-bootstrap";
 import styled from "styled-components"
 
@@ -19,6 +20,7 @@ const Modal = styled.div`
 
 export default function ModalJoinComponent() {
     const { setAuth } = useContext(Auth.Context)!;
+    const { t } = useTranslation();
     const [ uuid, setUuid ] = useState('');
     const [ loading, setLoading ] = useState(false);
 
@@ -70,7 +72,7 @@ export default function ModalJoinComponent() {
         <div className="modal-dialog" role="document">
             <div className="modal-content">
                 <ModalBody className="modal-body">
-                    <label className="form-label">ID de la room</label>
+                    <label className="form-label">{t('room_id')}</label>
                     <div className="input-group">
                         <input 
                             className="form-control"
@@ -85,7 +87,7 @@ export default function ModalJoinComponent() {
                             type="button"
                             onClick={handleSubmit}
                             disabled={!isValidUuid(uuid) || loading}
-                        >{ loading ? <Spinner animation="grow" variant="dark" size="sm" /> : "Rejoindre" }</button>
+                        >{ loading ? <Spinner animation="grow" variant="dark" size="sm" /> : t('join') }</button>
                     </div>
                 </ModalBody>
             </div>

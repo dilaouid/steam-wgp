@@ -5,6 +5,7 @@ import { KickIcon } from "../Icons/KickIcon";
 
 import './KickButton.css';
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Room, WebSocket } from "../../../context";
 import { kickPlayer } from "../../../api/lobby";
 
@@ -12,6 +13,7 @@ export default function KickButton({ playerId }: { playerId: string }) {
     const [ loading, setLoading ] = useState<boolean>(false);
     const { room } = useContext(Room.Context)!;
     const { socket } = useContext(WebSocket.Context)!;
+    const { t } = useTranslation();
 
     if (!room || !socket) return (<></>);
 
@@ -23,7 +25,7 @@ export default function KickButton({ playerId }: { playerId: string }) {
                 action: 'kick',
                 payload: { playerId: playerId }
             }));
-            toast.success('Joueur expulsé', {
+            toast.success(t('kicked_player'), {
                 position: "bottom-right",
                 autoClose: 2500,
                 closeOnClick: true,
@@ -31,7 +33,6 @@ export default function KickButton({ playerId }: { playerId: string }) {
                 hideProgressBar: true,
             });
         }).catch((error) => {
-            console.error('Erreur lors du kick du joueur:', error);
             toast.error(error.message, {
                 position: "bottom-right",
                 autoClose: 2500,

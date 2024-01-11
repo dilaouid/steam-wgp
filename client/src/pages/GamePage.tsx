@@ -4,6 +4,7 @@ import { Room, WebSocket } from "../context";
 import { HeartIcon } from "../components/common/Icons/HeartIcon";
 import { swipeCard, unswipeCard } from "../api/websocket";
 import { Spinner } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 import './GamePage.css';
 
@@ -12,6 +13,8 @@ export default function GamePage () {
     const [ index, setIndex ] = useState<number>(0);
     const [ animate, setAnimate ] = useState(false);
     const socket = useContext(WebSocket.Context)!;
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (room?.winner) {
@@ -87,16 +90,16 @@ export default function GamePage () {
         </div>
         <div className="action-buttons">
             <button className={`btn btn-${room.commonGames.length === 0 ? 'disabled' : 'danger'} btn-lg`} onClick={() => swipe(true, room.commonGames[index])} disabled={room.commonGames.length === 0}>
-                <HeartIcon /> J'aime !
+                <HeartIcon /> {t('i_like')}
             </button>
             <button className={`btn btn-outline-${room.commonGames.length === 0 ? 'disabled' : 'warning'} btn-lg`} onClick={() => swipe(false, room.commonGames[index])} disabled={room.commonGames.length === 0}>
-                Pas intéressé
+                {t('not_interesting')}
             </button>
-            <p className="text-light">Aimez ou ignorez les jeux affichés. Le premier jeu qui aura été aimé par tout les joueurs de la room sera affiché, et vous saurez comment gaspiller les prochaines heures de votre précieuse vie.</p>
-            <p className="text-info-emphasis"><Spinner color={"info"} size="sm" /> La room sélectionnera un jeu aléatoire 10 minutes après sa création si aucun choix n'a pas été fait ...</p>
+            <p className="text-light">{t('game_instructions')}</p>
+            <p className="text-info-emphasis"><Spinner color={"info"} size="sm" /> {t('game_countdown')}</p>
         </div>
         <div className="game-page-background-container">
-            { room.swipedGames?.length > 0 ? <h5 className="text-warning-emphasis">Cliquez sur un jeu pour le retirer de vos J'aimes</h5> : <> </> }
+            { room.swipedGames?.length > 0 ? <h5 className="text-warning-emphasis">{t('click_to_remove_like')}</h5> : <> </> }
             { room.swipedGames?.map((game: number) => (
                 <img key={game} src={`https://steamcdn-a.akamaihd.net/steam/apps/${game}/header.jpg?t=1628007606`} alt="Swipped game" className="game-page-background" onClick={() => unlike(game)} />
             ))}

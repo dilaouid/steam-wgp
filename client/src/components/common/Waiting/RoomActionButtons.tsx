@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Auth, Room } from "../../../context";
 
@@ -14,6 +15,7 @@ export const RoomActionButtons: React.FC = () => {
     const { room, setRoom } = useContext(Room.Context)!;
     const { socket } = useContext(WebSocket.Context)!;
     const { setAuth, auth } = useContext(Auth.Context)!;
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     if (!room) return (<></>);
@@ -62,10 +64,10 @@ export const RoomActionButtons: React.FC = () => {
     <Row className="justify-content-center">
         { isAdmin ?
         <Col xs="auto">
-            <Button variant={disabled || loading ? "outline-light" : "outline-primary"} size="lg" disabled={disabled || loading} onClick={startRoom}>{ loading ? <Spinner size="sm" /> : 'Démarrer' }</Button>
+            <Button variant={disabled || loading ? "outline-light" : "outline-primary"} size="lg" disabled={disabled || loading} onClick={startRoom}>{ loading ? <Spinner size="sm" /> : t('start') }</Button>
         </Col> : <></> }
         <Col xs="auto">
-            <Button variant={loading ? "outline-light" : "outline-danger"} size="lg" disabled={loading} onClick={leaveRoom}>{ loading ? <Spinner size="sm" /> : 'Quitter' }</Button>
+            <Button variant={loading ? "outline-light" : "outline-danger"} size="lg" disabled={loading} onClick={leaveRoom}>{ loading ? <Spinner size="sm" /> : t('leave') }</Button>
         </Col>
     </Row>
     );

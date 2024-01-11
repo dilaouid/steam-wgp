@@ -9,6 +9,7 @@ import HomePageComponent from "../components/common/Home/HomePage";
 
 import { Auth, Loading } from "../context";
 import { getCookieValue } from "../utils/getCookie";
+import { getBrowserLanguage } from "../utils/getLanguage";
 
 export default function LoadingPage () {
     const [ messages, setMessages ] = useState<IMessage[]>([]);
@@ -29,8 +30,10 @@ export default function LoadingPage () {
             return;
         }
 
-        const eventSource = new EventSource(`${BASE_URL}/players/library-checker?token=${getCookieValue('token')}`, {
-            withCredentials: true
+        const language = getBrowserLanguage();
+
+        const eventSource = new EventSource(`${BASE_URL}/players/library-checker?token=${getCookieValue('token')}&lang=${language}`, {
+            withCredentials: true,
         });
       
         eventSource.onmessage = (event) => {

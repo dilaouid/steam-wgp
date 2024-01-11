@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Trans } from "react-i18next";
 import styled from "styled-components";
 
 import { Room } from "../../../context";
@@ -15,6 +16,6 @@ export const WaitingAdmin: React.FC = () => {
     const roomAdmin = room?.players.find(p => p.player_id === room.admin_id);
 
     return (<Paragraph className="text-primary-emphasis">
-        <Spinner size="sm" animation="border" variant="primary" role="status" />&nbsp; &nbsp;En attente de <b>{ roomAdmin?.username }</b> pour démarrer la room ...
+        <Spinner size="sm" animation="border" variant="primary" role="status" />&nbsp; &nbsp;<Trans i18nKey="waiting_for_admin" values={{username: roomAdmin?.username}} components={[<strong key="0" />]} />
     </Paragraph>);
 }

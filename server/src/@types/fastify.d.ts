@@ -26,4 +26,7 @@ export declare module 'fastify' {
     websocket: FastifyWebsocket;
     waitlists: Map<string, Set<WebSocket>>;
   }
+  interface FastifyRequest {
+    userLanguage?: string;
+  }
 }

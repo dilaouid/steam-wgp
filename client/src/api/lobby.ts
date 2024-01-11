@@ -1,6 +1,8 @@
 import { APIResponse } from "../types/API";
 import { Auth } from "../context";
 import { getCookieValue } from "../utils/getCookie";
+import { getBrowserLanguage } from "../utils/getLanguage";
+const language = getBrowserLanguage();
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const token = getCookieValue('token');
@@ -9,7 +11,8 @@ export const getWaitlistInformations = async (roomId: string, setAuth: React.Dis
     try {
         const response = await  fetch(BASE_URL + "/waitlist/" + roomId, {
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'Accept-Language': language
             },
             credentials: "include"
         });
@@ -38,7 +41,8 @@ export const joinRoom = async (roomId: string, setAuth: React.Dispatch<React.Set
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId, {
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'Accept-Language': language
             },
             method: "PATCH",
             credentials: "include"
@@ -65,7 +69,8 @@ export const leaveRoom = async (roomId: string, setAuth: React.Dispatch<React.Se
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId, {
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'Accept-Language': language
             },
             method: "DELETE",
             credentials: "include"
@@ -92,7 +97,8 @@ export const kickPlayer = async (roomId: string, playerId: string): Promise<APIR
     try {
         const response = await fetch(BASE_URL + "/waitlist/" + roomId + "/kick/" + playerId, {
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'Accept-Language': language
             },
             method: "DELETE",
             credentials: "include"
@@ -111,7 +117,8 @@ export const createRoom = async (setAuth: React.Dispatch<React.SetStateAction<Au
     try {
         const response = await fetch(BASE_URL + "/waitlist", {
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'Accept-Language': language
             },
             credentials: "include",
             method: "POST"

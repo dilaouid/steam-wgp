@@ -8,6 +8,7 @@ import { Player } from '../models/Players';
 import { eq } from 'drizzle-orm';
 import { isAuthenticated } from '../auth/mw';
 import { APIResponse } from '../utils/response';
+import i18next from '../plugins/i18n.plugin';
 
 export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());
@@ -62,8 +63,8 @@ export default async function authRouter(fastify: FastifyInstance) {
     // Route pour initier l'authentification Steam
     fastify.get('/steam', { preValidation: fastifyPassport.authenticate('steam', { session: false }) }, async (request, reply) => {
       if (!request.user)
-        return APIResponse(reply, null, 'Vous devez être connecté pour accéder à votre profil', 401);
-      return APIResponse(reply, request.user, 'Vous êtes connecté', 200);
+        return APIResponse(reply, null, i18next.t('logged_in_to_view_profile', { lng: request.userLanguage }), 401);
+      return APIResponse(reply, request.user, i18next.t('logged_in', { lng: request.userLanguage }), 200);
     });
 
     // Route de callback après l'authentification Steam
@@ -88,18 +89,18 @@ export default async function authRouter(fastify: FastifyInstance) {
     fastify.get('/logout', async (request, reply) => {
       request.logOut();
       reply.clearCookie("token")
-      return APIResponse(reply, null, 'Vous êtes déconnecté', 200);
+      return APIResponse(reply, null, i18next.t('logged_out', { lng: request.userLanguage }), 200);
     });
 
     fastify.get('/me', { preValidation: isAuthenticated }, async (request, reply) => {
       if (!request.user)
-        return APIResponse(reply, null, 'Vous devez être connecté pour accéder à votre profil', 401);
+        return APIResponse(reply, null, i18next.t('logged_in_to_view_profile', { lng: request.userLanguage }), 401);
       const user = request.user as Player & { username: string };
       const findRoom = await fastify.db.select({
         waitlist: WaitlistsPlayers.model.waitlist_id
       }).from(WaitlistsPlayers.model).where(eq(WaitlistsPlayers.model.player_id, user.id))
       const { waitlist } = findRoom?.length > 0 ? findRoom[0] : '';
-      return APIResponse(reply, { id: user.id, username: user.username, waitlist }, "Vous êtes connecté", 200);
+      return APIResponse(reply, { id: user.id, username: user.username, waitlist }, i18next.t('logged_in', { lng: request.userLanguage }), 200);
     });
 
   });

@@ -1,4 +1,5 @@
 import './Footer.css'
+import { Trans } from 'react-i18next';
 
 export default function FooterComponent() {
     return(
@@ -6,7 +7,10 @@ export default function FooterComponent() {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 text-primary-emphasis align-self-center">
-                        <p className="d-inline">Ce site <strong>n'est pas associé</strong> à Valve Corp.</p>
+                        <Trans
+                            i18nKey='footer'
+                            components={[<strong key="0" />]}
+                        />
                     </div>
                 </div>
             </div>

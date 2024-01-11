@@ -18,7 +18,7 @@ async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
   if (!id)
     return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
   try {
-    const insert = await insertWaitlist(fastify, BigInt(id));
+    const insert = await insertWaitlist(fastify, BigInt(id), request.userLanguage as string);
     if (insert.error)
       return APIResponse(reply, null, insert.error, 400);
     if (!insert.waitlist)

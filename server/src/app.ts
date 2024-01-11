@@ -24,6 +24,10 @@ const initialize = async () => {
       if (err) fastify.log.error(err);
     });
 
+    plugins.languageHookPlugin(fastify).ready((err: Error | null) => {
+      if (err) fastify.log.error(err);
+    });
+
     plugins.websocketPlugin(fastify).ready((err: Error | null) => {
       if (err) fastify.log.error(err);
     });
@@ -48,7 +52,7 @@ const initialize = async () => {
     // ==================== End of routes loading
 
     // ==================== Server boot and listen
-    const port = parseInt(fastify.config.PORT) || 8000;
+    const port = fastify.config.PORT || 3000;
     await fastify.listen({ port, host: fastify.config.SERVER_HOST, listenTextResolver: (address: string) => {
       return `Server listening on ${address}`
     }}, (error: any) => {

@@ -1,8 +1,10 @@
 import { APIResponse } from "../types/API";
 import { getCookieValue } from "../utils/getCookie";
+import { getBrowserLanguage } from "../utils/getLanguage";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const token = getCookieValue('token');
+const language = getBrowserLanguage();
 
 // Check if the user is authenticated
 export const checkAuth = async () => {
@@ -22,7 +24,8 @@ export const checkAuth = async () => {
 
     const response = await fetch(`${BASE_URL}/auth/me`, {
       headers: {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'Accept-Language': language
       },
       credentials: "include"
     });
@@ -46,7 +49,8 @@ export const logOut = async (): Promise<APIResponse> => {
       credentials: "include",
       method: "GET",
       headers: {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + token,
+        'Accept-Language': language
       }
     });
     if (!response.ok)

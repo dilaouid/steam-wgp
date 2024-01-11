@@ -2,6 +2,7 @@ import { pgTable, bigint, boolean, timestamp, uuid } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { Games, Libraries, Players, WaitlistsPlayers } from ".";
+import i18next from "../plugins/i18n.plugin";
 
 export const model = pgTable('waitlists', {
   id: uuid('id').primaryKey(),
@@ -16,14 +17,14 @@ interface InsertedWaitlist {
   waitlist?: Waitlist;
 }
 
-export async function insertWaitlist(fastify: FastifyInstance, userId: bigint): Promise<InsertedWaitlist> {
+export async function insertWaitlist(fastify: FastifyInstance, userId: bigint, language: string): Promise<InsertedWaitlist> {
   const alreadyInWaitlist = await fastify.db.select().from(WaitlistsPlayers.model).where(
     eq(WaitlistsPlayers.model.player_id, userId)
   ).execute();
 
   if (alreadyInWaitlist.length > 0) {
     fastify.log.warn(`User ${userId} is already in a waitlist`);
-    return { error: 'Vous êtes déjà dans une room' };
+    return { error: i18next.t('already_in_a_room', { lng: language }) };
   }
 
   const newWaitlist: WaitlistInsert = {

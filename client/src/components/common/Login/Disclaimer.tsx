@@ -1,11 +1,13 @@
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const Disclaimer = styled.p`
     font-size: 9px;
 `;
 
 export default function DisclaimerComponent() {
+    const { t } = useTranslation(); 
     return (
-        <Disclaimer>This site is not associated with Valve Corp.</Disclaimer>
+        <Disclaimer>{t('disclaimer')}</Disclaimer>
     );
 }
