@@ -27,7 +27,7 @@
     "@types/ws": "^8.5.10",
     "drizzle-orm": "^0.29.3",
     "fastify": "^4.25.2",
-    "fastify-env": "^3.0.0",
+    "fastify-env": "2.0.0",
     "fastify-plugin": "^4.5.1",
     "fastify-sse-v2": "^3.1.2",
     "i18next": "^23.7.16",
