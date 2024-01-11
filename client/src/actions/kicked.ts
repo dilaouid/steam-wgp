@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import i18n from 'i18next';
 import { State } from "../context/AuthProvider";
 import { RoomInfo } from "../types/Room";
 import { NavigateFunction } from "react-router-dom";
@@ -14,7 +15,7 @@ export const kicked = (
     setAuth?: React.Dispatch<React.SetStateAction<State>>,
     ) => {
         if (playerId === loggedUserId) {
-            toast.warn("Vous avez été expulsé de la room", {
+            toast.warn(i18n.t('you_have_been_kicked'), {
                 position: "bottom-right",
                 autoClose: 2500,
                 closeOnClick: true,
@@ -39,7 +40,7 @@ export const kicked = (
                 navigate('/');
         } else {
             if (adminId !== loggedUserId) {
-                toast.warn("Un joueur a été expulsé de la room", {
+                toast.warn(i18n.t('player_has_been_kicked'), {
                     position: "bottom-right",
                     autoClose: 2500,
                     closeOnClick: true,

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const HeadingDiv = styled.div`
     cursor: default;
@@ -26,6 +27,7 @@ const Button = styled.button`
 export default function NotFoundPage() {
 
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
     <section className="py-4 py-xl-5" data-aos="zoom-in" data-aos-duration="600" >
@@ -33,8 +35,8 @@ export default function NotFoundPage() {
         <div className="text-center p-4 p-lg-5">
             <HeadingDiv>
                 <p className="fw-bold text-primary mb-2">
-                    <HeadingLabel>La page que vous recherchez n'existe pas ...</HeadingLabel><br />
-                    <HeadingLabel>Mais pas grave, un jour ça existera peut-être.</HeadingLabel>
+                    <HeadingLabel>{t('not_found_page_title')}<br />
+                    {t('not_found_page_subtitle')}</HeadingLabel>
                 </p>
             </HeadingDiv>
         </div>
@@ -46,7 +48,7 @@ export default function NotFoundPage() {
                 <BottomHeading className="display-1 text-center text-primary">404</BottomHeading>
             </div>
             <div className="col-auto">
-                <Button className="btn btn-primary" type="button" onClick={() => navigate('/')}>Retourner à l'accueil</Button>
+                <Button className="btn btn-primary" type="button" onClick={() => navigate('/')}>{t('back_homepage')}</Button>
             </div>
         </div>
     </div>

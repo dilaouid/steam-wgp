@@ -1,4 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
+import i18n from "../locales/i18n";
 import { RoomInfo } from "../types/Room";
 import { State } from "../context/AuthProvider";
 import { toast } from "react-toastify";
@@ -27,7 +28,7 @@ export const end = (
             });
         }
         socket.close();
-        toast.info("L'administrateur a fermé le salon", {
+        toast.info(i18n.t('admin_closed_room'), {
             position: "bottom-right",
             autoClose: 2500,
             closeOnClick: true,

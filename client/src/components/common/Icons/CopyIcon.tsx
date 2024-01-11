@@ -1,14 +1,16 @@
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import './icons.css';
 
 
 export const CopyIcon: React.FC = () => {
+    const { t } = useTranslation();
 
     const copyToClipboard = () => {
         const url = window.location.href;
         navigator.clipboard.writeText(url);
 
-        toast.info('Adresse de la room copiée !', {
+        toast.info(t('copied_to_clipboard'), {
             position: "bottom-right",
             autoClose: 2500,
             closeOnClick: true,
