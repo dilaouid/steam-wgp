@@ -1,4 +1,4 @@
-const availableLanguages = ['fr', 'en'];
+const availableLanguages = ['en', 'fr', 'jp', 'es', 'de', 'kr'];
 
 export const getBrowserLanguage = () => {
     const language = localStorage.getItem('i18nextLng');

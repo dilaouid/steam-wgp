@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 
-const availableLanguages = ['en', 'fr'];
+const availableLanguages = ['en', 'fr', 'jp', 'es', 'de', 'kr'];
 
 export const languageHookPlugin = (fastify: FastifyInstance) => {
   return fastify.addHook('onRequest', (request, reply, done) => {

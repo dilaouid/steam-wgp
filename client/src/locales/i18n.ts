@@ -122,6 +122,246 @@ const resources = {
       // Toast
       "kicked_player": "Joueur expulsé",
     }
+  },
+  kr: {
+    translation: {
+      // Game
+      "x_games_in_list_one": "<0>{{count}}</0> 게임 목록",
+      "x_games_in_list_other": "<0>{{count}}</0> 게임 목록",
+      "x_games_in_list_zero": "게임 목록 없음",
+      "i_like": "좋아요 !",
+      "not_interesting": "관심 없음",
+      "click_to_remove_like": "게임을 클릭하여 좋아요에서 제거하십시오.",
+      "game_instructions": "표시된 게임을 좋아하거나 무시하십시오. 방의 모든 플레이어가 좋아하는 첫 번째 게임이 표시되고 귀중한 생명의 다음 몇 시간을 어떻게 낭비할지 알 수 있습니다.",
+      "game_countdown": "10 분 후에 랜덤 게임을 선택합니다 ...",
+      "not_enough_players": "시작하려면 방에 최소한 두 명의 플레이어가 있어야합니다.",
+      "start": "시작",
+      "leave": "나가기",
+      "not_in_common_games": "<0>{{player1}}</0>과 <0>{{player2}}</0>의 게임이 일치하지 않습니다!",
+      "x_games_in_common_one": "{{count}} 공통 게임",
+      "x_games_in_common_other": "{{count}} 공통 게임",
+      "x_games_in_common_zero": "공통 게임 없음 :(",
+      "waiting_for_admin": "<0>{{username}}</0>을 기다리는 중 ...",
+      "copied_to_clipboard": "방 링크가 클립 보드에 복사되었습니다!",
+      "you_have_been_kicked": "방에서 추방되었습니다.",
+      "player_has_been_kicked": "플레이어가 방에서 추방되었습니다.",
+      "room_begins": "게임이 시작되었습니다.",
+      "admin_closed_room": "관리자가 방을 닫았습니다.",
+
+      // Login
+      "disclaimer": "이 사이트는 Valve Corp.와 관련이 없습니다.",
+      "motto": "함께 놀아요 !",
+      "subtitle": "무엇을 할까요?",
+
+      // Loading
+      "hello_username": "안녕하세요 <0>{{username}}</0> !",
+      "preparing_library": "모든 준비가 끝나면 알려드리겠습니다.",
+
+      // Homepage
+      "homepage_subtitle": "친구들과 함께 게임을 선택하고 조직하세요!",
+      "create": "생성",
+      "welcome_username": "환영합니다 <0>{{username}}</0> !",
+
+      // Modal join
+      "room_id": "방 ID",
+      "join": "참여",
+
+      // 404
+      "not_found_page_title": "찾고있는 페이지가 없습니다 ...",
+      "not_found_page_subtitle": "하지만 괜찮아요, 언젠가는 있을지도 모릅니다.",
+      "back_homepage": "홈으로 돌아 가기",
+
+      // Footer
+      "footer": "이 사이트는 Valve Corp.와 관련이 없습니다.",
+
+      // Navbar
+      "donate": "기부",
+      "actual_room": "현재 방",
+      "logout": "로그 아웃",
+
+      // Toast
+      "kicked_player": "플레이어 추방"
+    }
+  },
+  es: {
+    translation: {
+      // Game
+      "x_games_in_list_one": "<0>{{count}}</0> juego en la lista",
+      "x_games_in_list_other": "<0>{{count}}</0> juegos en la lista",
+      "x_games_in_list_zero": "No hay juegos en la lista",
+      "i_like": "¡Me gusta!",
+      "not_interesting": "No interesante",
+      "click_to_remove_like": "Haga clic en un juego para eliminarlo de sus Me gusta",
+      "game_instructions": "Me gusta o ignora los juegos que se muestran. El primer juego que haya sido gustado por todos los jugadores de la sala se mostrará, y sabrás cómo desperdiciar las próximas horas de tu preciosa vida.",
+      "game_countdown": "La sala seleccionará un juego aleatorio 10 minutos después de su creación si no se ha hecho ninguna elección ...",
+      "not_enough_players": "Debe haber al menos dos jugadores en la sala para comenzar",
+      "start": "Comienzo",
+      "leave": "Dejar",
+      "not_in_common_games": "¡Los juegos de <0>{{player1}}</0> y <0>{{player2}}</0> no coinciden!",
+      "x_games_in_common_one": "{{count}} juego en común",
+      "x_games_in_common_other": "{{count}} juegos en común",
+      "x_games_in_common_zero": "No hay juegos en común :(",
+      "waiting_for_admin": "Esperando a <0>{{username}}</0> para iniciar la sala ...",
+      "copied_to_clipboard": "¡Enlace de sala copiado al portapapeles!",
+      "you_have_been_kicked": "Has sido expulsado de la sala",
+      "player_has_been_kicked": "El jugador ha sido expulsado de la sala",
+      "room_begins": "El juego ha comenzado",
+      "admin_closed_room": "El administrador ha cerrado la sala",
+
+      // Login
+      "disclaimer": "Este sitio no está asociado con Valve Corp.",
+      "motto": "¡Juguemos juntos!",
+      "subtitle": "¿A qué vamos a jugar?",
+
+      // Loading
+      "hello_username": "¡Hola <0>{{username}}</0>!",
+      "preparing_library": "Estamos preparando todo lo que necesita, espere un momento, ¡no debería tardar mucho!",
+
+      // Homepage
+      "homepage_subtitle": "¡Organízate y elige juegos con tus amigos!",
+      "create": "Crear",
+      "welcome_username": "¡Bienvenido <0>{{username}}</0>!",
+
+      // Modal join
+      "room_id": "ID de sala",
+      "join": "Unirse",
+
+      // 404
+      "not_found_page_title": "La página que está buscando no existe ...",
+      "not_found_page_subtitle": "Pero no importa, algún día puede que exista.",
+      "back_homepage": "Volver a la página de inicio",
+
+      // Footer
+      "footer": "Este sitio no está asociado con Valve Corp.",
+
+      // Navbar
+      "donate": "Donar",
+      "actual_room": "Sala actual",
+      "logout": "Cerrar sesión",
+
+      // Toast
+      "kicked_player": "Jugador expulsado"
+    }
+  },
+  jp: {
+    translation: {
+      // Game
+      "x_games_in_list_one": "<0>{{count}}</0>ゲームリスト",
+      "x_games_in_list_other": "<0>{{count}}</0>ゲームリスト",
+      "x_games_in_list_zero": "ゲームリストなし",
+      "i_like": "好き！",
+      "not_interesting": "興味なし",
+      "click_to_remove_like": "ゲームをクリックして、好きなものから削除します。",
+      "game_instructions": "表示されるゲームを好きになるか無視します。部屋のすべてのプレイヤーが好きになった最初のゲームが表示され、貴重な生涯の次の数時間をどのように無駄にするかがわかります。",
+      "game_countdown": "10分後にランダムなゲームが選択されます...",
+      "not_enough_players": "開始するには部屋に少なくとも2人のプレイヤーがいる必要があります",
+      "start": "開始",
+      "leave": "去る",
+      "not_in_common_games": "<0>{{player1}}</0>と<0>{{player2}}</0>のゲームが一致しません！",
+      "x_games_in_common_one": "{{count}}共通ゲーム",
+      "x_games_in_common_other": "{{count}}共通ゲーム",
+      "x_games_in_common_zero": "共通のゲームはありません :(",
+      "waiting_for_admin": "<0>{{username}}</0>がルームを開始するのを待っています...",
+      "copied_to_clipboard": "ルームリンクがクリップボードにコピーされました！",
+      "you_have_been_kicked": "あなたは部屋から追放されました",
+      "player_has_been_kicked": "プレイヤーが部屋から追放されました",
+      "room_begins": "ゲームが始まった",
+      "admin_closed_room": "管理者が部屋を閉じました",
+
+      // Login
+      "disclaimer": "このサイトはValve Corp.と関係ありません。",
+      "motto": "一緒に遊ぼう！",
+      "subtitle": "何をする？",
+
+      // Loading
+      "hello_username": "こんにちは<0>{{username}}</0>！",
+      "preparing_library": "必要なすべてのものを準備しています。しばらくお待ちください。",
+
+      // Homepage
+      "homepage_subtitle": "友達と一緒にゲームを選んで組織してください！",
+      "create": "作成",
+      "welcome_username": "ようこそ<0>{{username}}</0>！",
+
+      // Modal join
+      "room_id": "部屋ID",
+      "join": "参加する",
+
+      // 404
+      "not_found_page_title": "お探しのページは存在しません...",
+      "not_found_page_subtitle": "でも心配しないでください、いつかは存在するかもしれません。",
+      "back_homepage": "ホームページに戻る",
+
+      // Footer
+      "footer": "このサイトはValve Corp.と関係ありません。",
+
+      // Navbar
+      "donate": "寄付する",
+      "actual_room": "現在の部屋",
+      "logout": "ログアウト",
+
+      // Toast
+      "kicked_player": "プレイヤーが追放されました"
+    }
+  },
+  de: {
+    translation: {
+      // Game
+      "x_games_in_list_one": "<0>{{count}}</0> Spiel in der Liste",
+      "x_games_in_list_other": "<0>{{count}}</0> Spiele in der Liste",
+      "x_games_in_list_zero": "Kein Spiel in der Liste",
+      "i_like": "Gefällt mir!",
+      "not_interesting": "Nicht interessant",
+      "click_to_remove_like": "Klicken Sie auf ein Spiel, um es aus Ihren Likes zu entfernen",
+      "game_instructions": "Gefällt oder ignoriert die angezeigten Spiele. Das erste Spiel, das von allen Spielern des Raums gemocht wurde, wird angezeigt, und Sie wissen, wie Sie die nächsten Stunden Ihres kostbaren Lebens verschwenden können.",
+      "game_countdown": "Der Raum wählt 10 Minuten nach seiner Erstellung ein zufälliges Spiel aus, wenn keine Auswahl getroffen wurde ...",
+      "not_enough_players": "Es müssen mindestens zwei Spieler im Raum sein, um zu beginnen",
+      "start": "Start",
+      "leave": "Verlassen",
+      "not_in_common_games": "Die Spiele von <0>{{player1}}</0> und <0>{{player2}}</0> passen nicht zusammen!",
+      "x_games_in_common_one": "{{count}} gemeinsames Spiel",
+      "x_games_in_common_other": "{{count}} gemeinsame Spiele",
+      "x_games_in_common_zero": "Kein gemeinsames Spiel :(",
+      "waiting_for_admin": "Warten auf <0>{{username}}</0>, um den Raum zu starten ...",
+      "copied_to_clipboard": "Raumlink in die Zwischenablage kopiert!",
+      "you_have_been_kicked": "Du wurdest aus dem Raum geworfen",
+      "player_has_been_kicked": "Der Spieler wurde aus dem Raum geworfen",
+      "room_begins": "Das Spiel hat begonnen",
+      "admin_closed_room": "Der Administrator hat den Raum geschlossen",
+
+      // Login
+      "disclaimer": "Diese Seite ist nicht mit Valve Corp. verbunden.",
+      "motto": "Lass uns zusammen spielen!",
+      "subtitle": "Was werden wir spielen?",
+
+      // Loading
+      "hello_username": "Hallo <0>{{username}}</0>!",
+      "preparing_library": "Wir bereiten alles vor, was Sie brauchen. Bitte warten Sie einen Moment, es sollte nicht lange dauern!",
+
+      // Homepage
+      "homepage_subtitle": "Organisieren Sie sich und wählen Sie Spiele mit Ihren Freunden aus!",
+      "create": "Erstellen",
+      "welcome_username": "Willkommen <0>{{username}}</0>!",
+
+      // Modal join
+      "room_id": "Raum-ID",
+      "join": "Beitreten",
+
+      // 404
+      "not_found_page_title": "Die von Ihnen gesuchte Seite existiert nicht ...",
+      "not_found_page_subtitle": "Aber egal, irgendwann könnte es existieren.",
+      "back_homepage": "Zurück zur Startseite",
+
+      // Footer
+      "footer": "Diese Seite ist nicht mit Valve Corp. verbunden.",
+
+      // Navbar
+      "donate": "Spenden",
+      "actual_room": "Aktueller Raum",
+      "logout": "Ausloggen",
+
+      // Toast
+      "kicked_player": "Spieler gekickt"
+    }
   }
 };
 
