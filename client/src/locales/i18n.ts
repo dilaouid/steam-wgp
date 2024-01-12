@@ -257,11 +257,11 @@ const resources = {
       "not_enough_players": "開始するには部屋に少なくとも2人のプレイヤーがいる必要があります",
       "start": "開始",
       "leave": "去る",
-      "not_in_common_games": "<0>{{player1}}</0>と<0>{{player2}}</0>のゲームが一致しません！",
+      "not_in_common_games": "<0>{{player1}}</0>さんと<0>{{player2}}</0>さんのゲームが一致しません！",
       "x_games_in_common_one": "{{count}}共通ゲーム",
       "x_games_in_common_other": "{{count}}共通ゲーム",
       "x_games_in_common_zero": "共通のゲームはありません :(",
-      "waiting_for_admin": "<0>{{username}}</0>がルームを開始するのを待っています...",
+      "waiting_for_admin": "<0>{{username}}</0>さんがルームを開始するのを待っています...",
       "copied_to_clipboard": "ルームリンクがクリップボードにコピーされました！",
       "you_have_been_kicked": "あなたは部屋から追放されました",
       "player_has_been_kicked": "プレイヤーが部屋から追放されました",
@@ -274,13 +274,13 @@ const resources = {
       "subtitle": "何をする？",
 
       // Loading
-      "hello_username": "こんにちは<0>{{username}}</0>！",
+      "hello_username": "こんにちは<0>{{username}}さん</0>！",
       "preparing_library": "必要なすべてのものを準備しています。しばらくお待ちください。",
 
       // Homepage
       "homepage_subtitle": "友達と一緒にゲームを選んで組織してください！",
       "create": "作成",
-      "welcome_username": "ようこそ<0>{{username}}</0>！",
+      "welcome_username": "ようこそ<0>{{username}}さん</0>！",
 
       // Modal join
       "room_id": "部屋ID",
