@@ -184,7 +184,12 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
     const playersAndGamesInfo = await fastify.db.select().from(WaitlistsPlayers.model)
       .leftJoin(Libraries.model, eq(WaitlistsPlayers.model.player_id, Libraries.model.player_id))
-      .where(eq(WaitlistsPlayers.model.waitlist_id, waitlistId))
+      .where(
+        and(
+          eq(WaitlistsPlayers.model.waitlist_id, waitlistId),
+          eq(Libraries.model.hidden, false)
+        )
+      )
       .execute();
 
     // check if all players are in the waitlist

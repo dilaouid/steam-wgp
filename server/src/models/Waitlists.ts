@@ -90,7 +90,8 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
     .leftJoin(Libraries.model, eq(Players.model.id, Libraries.model.player_id))
     .leftJoin(Games.model, and(
       eq(Libraries.model.game_id, Games.model.id),
-      eq(Games.model.is_selectable, true)
+      eq(Games.model.is_selectable, true),
+      eq(Libraries.model.hidden, false)
     ))
     .where(eq(model.id, waitlistId))
 
