@@ -58,6 +58,7 @@ const resources = {
       "donate": "Donate",
       "actual_room": "Actual room",
       "logout": "Logout",
+      "my_library": "My library",
 
       // Toast
       "kicked_player": "Player kicked",
@@ -118,6 +119,7 @@ const resources = {
       "donate": "Faire un don",
       "actual_room": "Room actuelle",
       "logout": "Déconnexion",
+      "my_library": "Ma bibliothèque",
 
       // Toast
       "kicked_player": "Joueur expulsé",
@@ -178,6 +180,7 @@ const resources = {
       "donate": "기부",
       "actual_room": "현재 방",
       "logout": "로그 아웃",
+      "my_library": "내 도서관",
 
       // Toast
       "kicked_player": "플레이어 추방"
@@ -238,6 +241,7 @@ const resources = {
       "donate": "Donar",
       "actual_room": "Sala actual",
       "logout": "Cerrar sesión",
+      "my_library": "Mi biblioteca",
 
       // Toast
       "kicked_player": "Jugador expulsado"
@@ -298,6 +302,7 @@ const resources = {
       "donate": "寄付する",
       "actual_room": "現在の部屋",
       "logout": "ログアウト",
+      "my_library": "私の図書館",
 
       // Toast
       "kicked_player": "プレイヤーが追放されました"
@@ -358,6 +363,7 @@ const resources = {
       "donate": "Spenden",
       "actual_room": "Aktueller Raum",
       "logout": "Ausloggen",
+      "my_library": "Meine Bibliothek",
 
       // Toast
       "kicked_player": "Spieler gekickt"
