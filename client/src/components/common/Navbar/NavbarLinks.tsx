@@ -12,7 +12,7 @@ export default function NavbarLinksComponent() {
     const currentPath = location.pathname;
 
     return(
-        <div className="collapse navbar-collapse" id="navcol-1">
+        <div className="collapse navbar-collapse" id="navcol">
             <ul className="navbar-nav me-auto">
                 <li className="nav-item">
                     <a className="nav-link" href="https://ko-fi.com/dilaouid" target="_blank"><HeartIcon /> {t('donate')}</a>
