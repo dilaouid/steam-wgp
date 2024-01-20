@@ -1,9 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { getPlayerAllLibrary } from "../../models/Libraries";
 import { APIResponse } from "../../utils/response";
 import i18next from "../../plugins/i18n.plugin";
+import { isAuthenticated } from "../../auth/mw";
 
 type Library = ILibraryGame[]
 
@@ -12,11 +13,32 @@ interface ILibraryGame {
     hidden: boolean | null;
 }
 
-export interface updateHiddenGamesParams {
+interface updateHiddenGamesParams {
   id: [string];
 }
 
-export async function toggleHiddenGames(fastify: FastifyInstance, userId: bigint, gameIds: string[], library: Library): Promise<void> {
+export const updateHiddenGamesOpts = {
+  method: 'PATCH' as HTTPMethods,
+  url: '/',
+  handler: updateHiddenGames,
+  schema: {
+    body: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: {
+          type: 'array',
+          items: {
+            type: 'string'
+          }
+        }
+      }
+    }
+  },
+  preValidation: [isAuthenticated]
+};
+
+async function toggleHiddenGames(fastify: FastifyInstance, userId: bigint, gameIds: string[], library: Library): Promise<void> {
   // split games into hidden and visible
   const { hiddenGames, visibleGames } = library.reduce((acc, game) => {
     if (gameIds.includes(game.game_id.toString())) {
@@ -56,8 +78,7 @@ const checkGamesInLibrary = async (fastify: FastifyInstance, userId: bigint, gam
 
   return library;
 };
-
-export async function updateHiddenGames(request: FastifyRequest<{ Params: updateHiddenGamesParams }>, reply: FastifyReply) {
+async function updateHiddenGames(request: FastifyRequest<{ Params: updateHiddenGamesParams }>, reply: FastifyReply) {
   try {
     if (!request.user)
       throw new Error('logged_in_to_access_library');
