@@ -31,7 +31,9 @@ i18next.init({
         "joined_the_room": "You joined the room",
         "left_the_room": "You left the room",
         "not_room_admin": "You are not the room admin",
-        "kicked_player": "The player has been kicked"
+        "kicked_player": "The player has been kicked",
+        "invalid_id": "Invalid id",
+        "updated_library": "Library successfully updated",
       }
     },
     fr: {
@@ -63,7 +65,9 @@ i18next.init({
         "joined_the_room": "Vous avez rejoint la room",
         "left_the_room": "Vous avez quitté la room",
         "not_room_admin": "Vous n'êtes pas admin de la room",
-        "kicked_player": "Le joueur a été kické"
+        "kicked_player": "Le joueur a été kické",
+        "invalid_id": "Id invalide",
+        "updated_library": "Bibliothèque mise à jour avec succès",
       }
     },
     kr: {
@@ -95,7 +99,9 @@ i18next.init({
         "joined_the_room": "방에 참여했습니다",
         "left_the_room": "방을 나갔습니다",
         "not_room_admin": "방 관리자가 아닙니다",
-        "kicked_player": "플레이어가 킥되었습니다"
+        "kicked_player": "플레이어가 킥되었습니다",
+        "invalid_id": "잘못된 ID",
+        "updated_library": "라이브러리가 성공적으로 업데이트되었습니다",
       }
     },
     es: {
@@ -127,7 +133,9 @@ i18next.init({
         "joined_the_room": "Te uniste a la habitación",
         "left_the_room": "Dejaste la habitación",
         "not_room_admin": "No eres el administrador de la habitación",
-        "kicked_player": "El jugador ha sido expulsado"
+        "kicked_player": "El jugador ha sido expulsado",
+        "invalid_id": "ID inválido",
+        "updated_library": "Biblioteca actualizada correctamente",
       }
     },
     jp: {
@@ -159,7 +167,9 @@ i18next.init({
         "joined_the_room": "部屋に参加しました",
         "left_the_room": "部屋を出ました",
         "not_room_admin": "部屋の管理者ではありません",
-        "kicked_player": "プレイヤーはキックされました"
+        "kicked_player": "プレイヤーはキックされました",
+        "invalid_id": "無効なID",
+        "updated_library": "ライブラリが正常に更新されました",
       }
     },
     de: {
@@ -191,7 +201,9 @@ i18next.init({
         "joined_the_room": "Sie sind dem Raum beigetreten",
         "left_the_room": "Sie haben den Raum verlassen",
         "not_room_admin": "Sie sind nicht der Raumadministrator",
-        "kicked_player": "Der Spieler wurde gekickt"
+        "kicked_player": "Der Spieler wurde gekickt",
+        "invalid_id": "Ungültige ID",
+        "updated_library": "Bibliothek erfolgreich aktualisiert",
       }
     }
   },
