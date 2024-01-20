@@ -12,17 +12,21 @@ export default function NavbarLinksComponent() {
     const currentPath = location.pathname;
 
     return(
-    <div className="collapse navbar-collapse" id="navcol-1">
-        <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-                <a className="nav-link" href="https://ko-fi.com/dilaouid" target="_blank"><HeartIcon /> {t('donate')}</a>
-            </li>
-            { auth.user.waitlist ?
+        <div className="collapse navbar-collapse" id="navcol-1">
+            <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                    <Link to={"/waitlist/" + auth.user.waitlist} className={`nav-link ${currentPath.includes("/waitlist") ? "active" : ""}`}>{t('actual_room')}</Link>
+                    <a className="nav-link" href="https://ko-fi.com/dilaouid" target="_blank"><HeartIcon /> {t('donate')}</a>
                 </li>
-            : ''}
-        </ul>
-        <Link to="/logout" className="btn btn-outline-primary" role="button">{t('logout')}</Link>
-    </div>);
+                <li className="nav-item">
+                    <Link to="/library" className={`nav-link ${currentPath.includes("/library") ? "active" : ""}`}>{t('my_library')}</Link>
+                </li>
+                { auth.user.waitlist ?
+                    <li className="nav-item">
+                        <Link to={"/waitlist/" + auth.user.waitlist} className={`nav-link ${currentPath.includes("/waitlist") ? "active" : ""}`}>{t('actual_room')}</Link>
+                    </li>
+                : ''}
+            </ul>
+            <Link to="/logout" className="btn btn-outline-primary" role="button">{t('logout')}</Link>
+        </div>
+    );
 }
