@@ -16,6 +16,8 @@ import HomePage from './pages/Home';
 import LogoutPage from './pages/Logout';
 import LobbyPage from './pages/Lobby';
 import NotFoundPage from './pages/NotFoundPage';
+import LoginPage from './pages/Login';
+import LibraryPage from './pages/Library';
 
 import NavbarComponent from './components/common/Navbar/Navbar';
 
@@ -24,7 +26,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Auth, Room, Loading, WebSocket } from './context';
-import LoginPage from './pages/Login';
 
 function App() {
   useEffect(() => {
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/logout" element={<LogoutPage />} />
                 <Route path="/waitlist/:id" element={<LobbyPage />} />
+                <Route path="/library" element={<LibraryPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
           </WebSocket.Provider>
