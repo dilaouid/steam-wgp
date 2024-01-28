@@ -25,16 +25,19 @@ export const getLibraryOpts = {
 };
 
 async function getLibrary(request: FastifyRequest<{ Params: getLibraryParams }>, reply: FastifyReply) {
+
+  const fastify = request.server as FastifyInstance;
   try {
     if (!request.user)
       throw new Error('logged_in_to_access_library');
 
     const { id: userId } = (request.user as Player);
-    const fastify = request.server as FastifyInstance;
 
-    const library = await getPlayerAllLibrary(fastify, BigInt(userId));
-    const replyData: Library = library.map((game) => ({
-      game_id: game.game_id ? game.game_id.toString() : '0',
+    const libraryObject = await getPlayerAllLibrary(fastify, BigInt(userId));
+    const libraryArray = Object.values(libraryObject);
+
+    const replyData: Library = libraryArray.map(game => ({
+      game_id: game.id.toString(),
       hidden: game.hidden
     }));
 
@@ -44,6 +47,7 @@ async function getLibrary(request: FastifyRequest<{ Params: getLibraryParams }>,
       ? error.message
       : 'internal_server_error';
     const statusCode = ['logged_in_to_access_library', 'invalid_id'].includes(error.message) ? 401 : 500;
+    fastify.log.error(error);
     return APIResponse(reply, null, i18next.t(messageKey, { lng: request.userLanguage }), statusCode);
   }
 }

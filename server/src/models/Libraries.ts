@@ -13,7 +13,10 @@ export const model = pgTable("libraries", {
 });
 
 export async function getPlayerAllLibrary(fastify: FastifyInstance, playerId: bigint): Promise<Library[]> {
-  const result = fastify.db.select().from(model)
+  const result = fastify.db.select({
+    id: model.game_id,
+    hidden: model.hidden
+  }).from(model)
     .leftJoin(Players.model, eq(model.player_id, Players.model.id))
     .leftJoin(Games.model, eq(model.game_id, Games.model.id))
     .where(
