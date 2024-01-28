@@ -93,7 +93,6 @@ async function updateHiddenGames(request: FastifyRequest<{ Params: updateHiddenG
     await toggleHiddenGames(fastify, userId, gameIds, library);
     return APIResponse(reply, null, i18next.t('updated_library', { lng: request.userLanguage }), 200);
   } catch (error: any) {
-    // map specific errors to user-friendly messages and status codes
     const messageKey = ['logged_in_to_access_library', 'invalid_id'].includes(error.message)
       ? error.message
       : 'internal_server_error';
