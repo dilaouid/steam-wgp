@@ -25,7 +25,7 @@ import NavbarComponent from './components/common/Navbar/Navbar';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Auth, Room, Loading, WebSocket } from './context';
+import { Auth, Room, Loading, WebSocket, Library } from './context';
 
 function App() {
   useEffect(() => {
@@ -36,26 +36,28 @@ function App() {
     <Auth.Provider>
       <Loading.Provider>
         <Room.Provider>
-          <WebSocket.Provider>
-              <ToastContainer
-                  position="bottom-right"
-                  autoClose={5000}
-                  newestOnTop={false}
-                  closeOnClick
-                  pauseOnFocusLoss
-                  closeButton={false}
-                  theme="colored"
-              />
-              <NavbarComponent />
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/logout" element={<LogoutPage />} />
-                <Route path="/waitlist/:id" element={<LobbyPage />} />
-                <Route path="/library" element={<LibraryPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-          </WebSocket.Provider>
+          <Library.Provider>
+            <WebSocket.Provider>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    newestOnTop={false}
+                    closeOnClick
+                    pauseOnFocusLoss
+                    closeButton={false}
+                    theme="colored"
+                />
+                <NavbarComponent />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/logout" element={<LogoutPage />} />
+                  <Route path="/waitlist/:id" element={<LobbyPage />} />
+                  <Route path="/library" element={<LibraryPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+            </WebSocket.Provider>
+          </Library.Provider>
         </Room.Provider>
       </Loading.Provider>
     </Auth.Provider>
