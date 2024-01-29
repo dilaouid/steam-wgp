@@ -4,6 +4,6 @@ interface IGame {
 }
 
 export interface ILibrary {
-    library: IGame[];
+    games: IGame[];
     selected?: string[];
 }
