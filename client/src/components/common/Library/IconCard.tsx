@@ -3,14 +3,14 @@ import { HiddenIcon } from "../Icons/HiddenIcon";
 
 interface IconCardComponentProps {
     hidden: boolean;
-    selected: boolean;
+    isSelected: boolean;
 }
 
-export default function IconCardComponent({ hidden, selected }: IconCardComponentProps) {
+export default function IconCardComponent({ hidden, isSelected }: IconCardComponentProps) {
     return (
         <div>
-            {selected && <SelectedIcon />}
-            {hidden && <HiddenIcon selected={selected} />}
+            {isSelected && <SelectedIcon />}
+            {hidden && <HiddenIcon selected={isSelected} />}
         </div>
     );
 }
