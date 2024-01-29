@@ -1,4 +1,4 @@
-interface IGame {
+export interface IGame {
     game_id: string;
     hidden: boolean;
 }
