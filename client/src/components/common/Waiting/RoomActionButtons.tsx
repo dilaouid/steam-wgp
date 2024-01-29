@@ -32,7 +32,7 @@ export const RoomActionButtons: React.FC = () => {
                 setRoom(null);
                 setLoading(false);
                 socket.close();
-                navigate('/');
+                navigate('/steam-wgp/');
             })
             .catch((error: unknown) => {
                 toast.error((error as APIResponse).message, {

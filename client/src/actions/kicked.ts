@@ -37,7 +37,7 @@ export const kicked = (
             }
             socket.close();
             if (navigate)
-                navigate('/');
+                navigate('/steam-wgp/');
         } else {
             if (adminId !== loggedUserId) {
                 toast.warn(i18n.t('player_has_been_kicked'), {

@@ -11,7 +11,7 @@ export default function LoginPage() {
         window.history.replaceState(null, '', '/');
         window.history.pushState(null, '', '/');
         window.history.go(0);
-        navigate('/');
+        navigate('/steam-wgp/');
     }
     return (
         <div className="container">

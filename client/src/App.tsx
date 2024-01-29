@@ -49,11 +49,11 @@ function App() {
                 />
                 <NavbarComponent />
                 <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/logout" element={<LogoutPage />} />
-                  <Route path="/waitlist/:id" element={<LobbyPage />} />
-                  <Route path="/library" element={<LibraryPage />} />
+                  <Route path="/steam-wgp/" element={<HomePage />} />
+                  <Route path="/steam-wgp/login" element={<LoginPage />} />
+                  <Route path="/steam-wgp/logout" element={<LogoutPage />} />
+                  <Route path="/steam-wgp/waitlist/:id" element={<LobbyPage />} />
+                  <Route path="/steam-wgp/library" element={<LibraryPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </WebSocket.Provider>

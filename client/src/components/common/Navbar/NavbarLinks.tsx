@@ -18,15 +18,15 @@ export default function NavbarLinksComponent() {
                     <a className="nav-link" href="https://ko-fi.com/dilaouid" target="_blank"><HeartIcon /> {t('donate')}</a>
                 </li>
                 <li className="nav-item">
-                    <Link to="/library" className={`nav-link ${currentPath.includes("/library") ? "active" : ""}`}>{t('my_library')}</Link>
+                    <Link to="/steam-wgp/library" className={`nav-link ${currentPath.includes("/library") ? "active" : ""}`}>{t('my_library')}</Link>
                 </li>
                 { auth.user.waitlist ?
                     <li className="nav-item">
-                        <Link to={"/waitlist/" + auth.user.waitlist} className={`nav-link ${currentPath.includes("/waitlist") ? "active" : ""}`}>{t('actual_room')}</Link>
+                        <Link to={"/steam-wgp/waitlist/" + auth.user.waitlist} className={`nav-link ${currentPath.includes("/waitlist") ? "active" : ""}`}>{t('actual_room')}</Link>
                     </li>
                 : ''}
             </ul>
-            <Link to="/logout" className="btn btn-outline-primary" role="button">{t('logout')}</Link>
+            <Link to="/steam-wgp/logout" className="btn btn-outline-primary" role="button">{t('logout')}</Link>
         </div>
     );
 }

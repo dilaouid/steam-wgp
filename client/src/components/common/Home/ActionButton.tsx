@@ -32,7 +32,7 @@ export default function ActionButtonComponent({ text, target, icon, delay, onCli
         if (onClick) {
             try {
                 const waitlist = await onClick();
-                navigate(`/waitlist/${waitlist.data.id}`);
+                navigate(`/steam-wgp/waitlist/${waitlist.data.id}`);
                 setIsLoading(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {

@@ -51,7 +51,7 @@ export default function ModalJoinComponent() {
                 modals.forEach((modal) => {
                     modal.remove();
                 });
-                navigate('/waitlist/' + uuid);
+                navigate('/steam-wgp/waitlist/' + uuid);
             }, 500);
             setLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

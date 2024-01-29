@@ -22,7 +22,7 @@ export default function LogoutPage() {
         };
 
         performLogout().then(() => {
-            navigate('/login');
+            navigate('/steam-wgp/login');
         }).catch((err) => {
             console.error("Impossible de déconnecter l'utilisateur: " + err);
         });

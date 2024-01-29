@@ -14,7 +14,7 @@ export const end = (
         setRoom(null);
         socket.close();
         if (!inHomepage && navigate) {
-            navigate('/');
+            navigate('/steam-wgp/');
         } else if (setAuth && inHomepage) {
             setAuth((prev) => {
                 if (!prev) return prev;
