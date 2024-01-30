@@ -11,13 +11,20 @@ const StyledGameCover = styled.img.attrs<StyledGameCoverProps>(props => ({
     style: {
         width: props.isSelected ? '155px' : 'auto',
         filter: props.hidden ? 'blur(1px) grayscale(100%)' : 'none',
-        opacity: props.hidden ? '0.36' : '1',
-        transition: 'all 0.2s ease-in-out',
-        cursor: 'pointer',
-        margin: 6+'px',
-        borderRadius: 10+'%',
+        opacity: props.hidden ? '0.36' : '1'
     },
-}))<StyledGameCoverProps>``;
+}))<StyledGameCoverProps>`
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    margin: 6px;
+    border-radius: 10%;
+
+    &:hover {
+        opacity: 0.5 !important;
+        transform: scale(0.9);
+
+    }
+`;
 
 interface GameCoverComponentProps {
     id: string;

@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import GameCardComponent from "./GameCard";
 import { Library } from "../../../context";
 import { IGame } from "../../../types/Library";
