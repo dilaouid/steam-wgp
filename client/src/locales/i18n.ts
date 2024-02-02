@@ -28,6 +28,10 @@ const resources = {
       "room_begins": "The game has begun",
       "admin_closed_room": "The administrator has closed the room",
 
+      // Library
+      "selected_info": "{{count}} selected game(s) ({{hiddenCount}} hidden(s), {{publicCount}} public(s))",
+      "selected_info_zero": "No selected game",
+
       // Login page
       "disclaimer": "This site is not associated with Valve Corp.",
       "motto": "Let's play together !",
@@ -88,6 +92,10 @@ const resources = {
       "player_has_been_kicked": "Un joueur a été expulsé de la room",
       "room_begins": "La partie a commencé",
       "admin_closed_room": "L'administrateur a fermé la room",
+
+      // Library
+      "selected_info": "{{count}} jeu(x) sélectionné(s) ({{hiddenCount}} caché(s), {{publicCount}} public(s))",
+      "selected_info_zero": "Aucun jeu sélectionné",
 
       // Login
       "disclaimer": "Ce site n'est pas associé à Valve Corp.",
@@ -150,6 +158,11 @@ const resources = {
       "room_begins": "게임이 시작되었습니다.",
       "admin_closed_room": "관리자가 방을 닫았습니다.",
 
+      // Library
+      "selected_info": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
+      "selected_info_plural": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
+      "selected_info_zero": "선택된 게임 없음",
+
       // Login
       "disclaimer": "이 사이트는 Valve Corp.와 관련이 없습니다.",
       "motto": "함께 놀아요 !",
@@ -210,6 +223,11 @@ const resources = {
       "player_has_been_kicked": "El jugador ha sido expulsado de la sala",
       "room_begins": "El juego ha comenzado",
       "admin_closed_room": "El administrador ha cerrado la sala",
+
+      // Library
+      "selected_info": "{{count}} juego seleccionado ({{hiddenCount}} oculto, {{publicCount}} público)",
+      "selected_info_plural": "{{count}} juegos seleccionados ({{hiddenCount}} ocultos, {{publicCount}} públicos)",
+      "selected_info_zero": "No hay juegos seleccionados",
 
       // Login
       "disclaimer": "Este sitio no está asociado con Valve Corp.",
@@ -272,6 +290,11 @@ const resources = {
       "room_begins": "ゲームが始まった",
       "admin_closed_room": "管理者が部屋を閉じました",
 
+      // Library
+      "selected_info": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
+      "selected_info_plural": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
+      "selected_info_zero": "選択されたゲームはありません",
+
       // Login
       "disclaimer": "このサイトはValve Corp.と関係ありません。",
       "motto": "一緒に遊ぼう！",
@@ -333,6 +356,11 @@ const resources = {
       "room_begins": "Das Spiel hat begonnen",
       "admin_closed_room": "Der Administrator hat den Raum geschlossen",
 
+      // Library
+      "selected_info": "{{count}} ausgewähltes Spiel ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
+      "selected_info_plural": "{{count}} ausgewählte Spiele ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
+      "selected_info_zero": "Kein ausgewähltes Spiel",
+
       // Login
       "disclaimer": "Diese Seite ist nicht mit Valve Corp. verbunden.",
       "motto": "Lass uns zusammen spielen!",
@@ -386,7 +414,7 @@ i18n
       lookupCookie: 'i18next',
       lookupLocalStorage: 'i18nextLng',
       caches: ['localStorage'],
-    },
+    }
   }).then(() => {
     const detectedLng = i18n.language;
     const splitLng = detectedLng.split('-')[0];
