@@ -9,7 +9,7 @@ type StyledGameCoverProps = GameCoverProps & React.ImgHTMLAttributes<HTMLImageEl
 const StyledGameCover = styled.img.attrs<StyledGameCoverProps>(props => ({
     ...props,
     style: {
-        width: props.isSelected ? '155px' : '204px',
+        width: props.isSelected ? '185px' : '204px',
         filter: props.hide ? 'blur(1px) grayscale(100%)' : 'none',
         opacity: props.hide ? '0.36' : '1'
     },
