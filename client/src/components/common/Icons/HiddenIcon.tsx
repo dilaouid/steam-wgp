@@ -7,8 +7,8 @@ interface IconProps extends SVGProps<SVGSVGElement> {
 
 const Icon = styled.svg<IconProps>`
   position: absolute;
-  margin: 52px;
-  ${props => props.selected && css`
+  font-size: 127px;
+  ${props => !props.selected && css`
     margin-top: 97px;
     margin-left: 51px;
   `}

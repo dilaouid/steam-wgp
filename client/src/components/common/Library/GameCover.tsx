@@ -2,16 +2,16 @@ import styled from "styled-components";
 
 interface GameCoverProps {
     isSelected: boolean;
-    hidden: boolean;
+    hide: boolean;
 }
 type StyledGameCoverProps = GameCoverProps & React.ImgHTMLAttributes<HTMLImageElement>;
 
 const StyledGameCover = styled.img.attrs<StyledGameCoverProps>(props => ({
     ...props,
     style: {
-        width: props.isSelected ? '155px' : 'auto',
-        filter: props.hidden ? 'blur(1px) grayscale(100%)' : 'none',
-        opacity: props.hidden ? '0.36' : '1'
+        width: props.isSelected ? '155px' : '204px',
+        filter: props.hide ? 'blur(1px) grayscale(100%)' : 'none',
+        opacity: props.hide ? '0.36' : '1'
     },
 }))<StyledGameCoverProps>`
     transition: all 0.2s ease-in-out;
@@ -28,16 +28,16 @@ const StyledGameCover = styled.img.attrs<StyledGameCoverProps>(props => ({
 
 interface GameCoverComponentProps {
     id: string;
-    hidden: boolean;
+    hide: boolean;
     isSelected: boolean;
 }
 
-export default function GameCoverComponent({ id, hidden, isSelected }: GameCoverComponentProps) {
+export default function GameCoverComponent({ id, hide, isSelected }: GameCoverComponentProps) {
     return (
         <StyledGameCover
             src={`https://steamcdn-a.akamaihd.net/steam/apps/${id}/library_600x900.jpg`}
             isSelected={isSelected}
-            hidden={hidden}
+            hide={hide}
             alt={`Game cover for ${id}`}
         />
     );
