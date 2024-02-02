@@ -31,6 +31,8 @@ const resources = {
       // Library
       "selected_info": "{{count}} selected game(s) ({{hiddenCount}} hidden(s), {{publicCount}} public(s))",
       "selected_info_zero": "No selected game",
+      "confirm_library_changes": "Confirm changes",
+      "no_changes_library": "No game selected",
 
       // Login page
       "disclaimer": "This site is not associated with Valve Corp.",
@@ -96,6 +98,8 @@ const resources = {
       // Library
       "selected_info": "{{count}} jeu(x) sélectionné(s) ({{hiddenCount}} caché(s), {{publicCount}} public(s))",
       "selected_info_zero": "Aucun jeu sélectionné",
+      "confirm_library_changes": "Confirmer les changements",
+      "no_changes_library": "Aucun jeu sélectionné",
 
       // Login
       "disclaimer": "Ce site n'est pas associé à Valve Corp.",
@@ -162,6 +166,8 @@ const resources = {
       "selected_info": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
       "selected_info_plural": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
       "selected_info_zero": "선택된 게임 없음",
+      "confirm_library_changes": "변경 사항 확인",
+      "no_changes_library": "선택된 게임 없음",
 
       // Login
       "disclaimer": "이 사이트는 Valve Corp.와 관련이 없습니다.",
@@ -228,6 +234,8 @@ const resources = {
       "selected_info": "{{count}} juego seleccionado ({{hiddenCount}} oculto, {{publicCount}} público)",
       "selected_info_plural": "{{count}} juegos seleccionados ({{hiddenCount}} ocultos, {{publicCount}} públicos)",
       "selected_info_zero": "No hay juegos seleccionados",
+      "confirm_library_changes": "Confirmar cambios",
+      "no_changes_library": "No hay juegos seleccionados",
 
       // Login
       "disclaimer": "Este sitio no está asociado con Valve Corp.",
@@ -294,6 +302,8 @@ const resources = {
       "selected_info": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
       "selected_info_plural": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
       "selected_info_zero": "選択されたゲームはありません",
+      "confirm_library_changes": "変更を確認",
+      "no_changes_library": "選択されたゲームはありません",
 
       // Login
       "disclaimer": "このサイトはValve Corp.と関係ありません。",
@@ -360,6 +370,8 @@ const resources = {
       "selected_info": "{{count}} ausgewähltes Spiel ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
       "selected_info_plural": "{{count}} ausgewählte Spiele ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
       "selected_info_zero": "Kein ausgewähltes Spiel",
+      "confirm_library_changes": "Änderungen bestätigen",
+      "no_changes_library": "Kein Spiel ausgewählt",
 
       // Login
       "disclaimer": "Diese Seite ist nicht mit Valve Corp. verbunden.",
