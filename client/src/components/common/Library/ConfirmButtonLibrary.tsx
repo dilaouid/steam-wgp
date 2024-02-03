@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useContext, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { Library } from "../../../context";
@@ -30,9 +31,23 @@ export default function ConfirmButtonLibraryComponent() {
                     return game;
                 });
                 setLibrary({ ...library, games: updatedLibrary, selected: [] });
+                toast.success(t('library_updated'), {
+                    position: "bottom-right",
+                    autoClose: 2500,
+                    closeOnClick: true,
+                    theme: "colored",
+                    hideProgressBar: true,
+                });
             }
         } catch (error) {
             console.error('Error updating hidden games', error);
+            toast.error(t('error_library_update'), {
+                position: "bottom-right",
+                autoClose: 2500,
+                closeOnClick: true,
+                theme: "colored",
+                hideProgressBar: true,
+            });
         }
         setLoading(false);
     };

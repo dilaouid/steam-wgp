@@ -33,6 +33,8 @@ const resources = {
       "selected_info_zero": "No selected game",
       "confirm_library_changes": "Confirm changes",
       "no_changes_library": "No game selected",
+      "library_updated": "Library updated !",
+      "error_library_update": "An error occurred while updating the library ...",
 
       // Login page
       "disclaimer": "This site is not associated with Valve Corp.",
@@ -100,6 +102,8 @@ const resources = {
       "selected_info_zero": "Aucun jeu sélectionné",
       "confirm_library_changes": "Confirmer les changements",
       "no_changes_library": "Aucun jeu sélectionné",
+      "library_updated": "Bibliothèque mise à jour !",
+      "error_library_update": "Une erreur est survenue lors de la mise à jour de la bibliothèque ...",
 
       // Login
       "disclaimer": "Ce site n'est pas associé à Valve Corp.",
@@ -168,6 +172,8 @@ const resources = {
       "selected_info_zero": "선택된 게임 없음",
       "confirm_library_changes": "변경 사항 확인",
       "no_changes_library": "선택된 게임 없음",
+      "library_updated": "도서관이 업데이트되었습니다 !",
+      "error_library_update": "도서관을 업데이트하는 동안 오류가 발생했습니다 ...",
 
       // Login
       "disclaimer": "이 사이트는 Valve Corp.와 관련이 없습니다.",
@@ -236,6 +242,8 @@ const resources = {
       "selected_info_zero": "No hay juegos seleccionados",
       "confirm_library_changes": "Confirmar cambios",
       "no_changes_library": "No hay juegos seleccionados",
+      "library_updated": "¡Biblioteca actualizada!",
+      "error_library_update": "Se produjo un error al actualizar la biblioteca ...",
 
       // Login
       "disclaimer": "Este sitio no está asociado con Valve Corp.",
@@ -304,6 +312,8 @@ const resources = {
       "selected_info_zero": "選択されたゲームはありません",
       "confirm_library_changes": "変更を確認",
       "no_changes_library": "選択されたゲームはありません",
+      "library_updated": "ライブラリが更新されました！",
+      "error_library_update": "ライブラリを更新する際にエラーが発生しました...",
 
       // Login
       "disclaimer": "このサイトはValve Corp.と関係ありません。",
@@ -372,6 +382,8 @@ const resources = {
       "selected_info_zero": "Kein ausgewähltes Spiel",
       "confirm_library_changes": "Änderungen bestätigen",
       "no_changes_library": "Kein Spiel ausgewählt",
+      "library_updated": "Bibliothek aktualisiert!",
+      "error_library_update": "Beim Aktualisieren der Bibliothek ist ein Fehler aufgetreten ...",
 
       // Login
       "disclaimer": "Diese Seite ist nicht mit Valve Corp. verbunden.",
