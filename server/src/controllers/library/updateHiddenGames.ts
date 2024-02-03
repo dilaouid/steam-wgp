@@ -5,16 +5,18 @@ import { getPlayerAllLibrary } from "../../models/Libraries";
 import { APIResponse } from "../../utils/response";
 import i18next from "../../plugins/i18n.plugin";
 import { isAuthenticated } from "../../auth/mw";
+import { and, eq, inArray } from "drizzle-orm";
+import { Libraries } from "../../models";
 
 type Library = ILibraryGame[]
 
 interface ILibraryGame {
-    game_id: string;
+    id: string;
     hidden: boolean | null;
 }
 
-interface updateHiddenGamesParams {
-  id: [string];
+interface IBody {
+    games: string[];
 }
 
 export const updateHiddenGamesOpts = {
@@ -24,13 +26,11 @@ export const updateHiddenGamesOpts = {
   schema: {
     body: {
       type: 'object',
-      required: ['id'],
+      required: ['games'],
       properties: {
-        id: {
+        games: {
           type: 'array',
-          items: {
-            type: 'string'
-          }
+          items: { type: 'string' }
         }
       }
     }
@@ -41,35 +41,41 @@ export const updateHiddenGamesOpts = {
 async function toggleHiddenGames(fastify: FastifyInstance, userId: bigint, gameIds: string[], library: Library): Promise<void> {
   // split games into hidden and visible
   const { hiddenGames, visibleGames } = library.reduce((acc, game) => {
-    if (gameIds.includes(game.game_id.toString())) {
+    if (gameIds.includes(game.id.toString())) {
       game.hidden = !game.hidden; // bascule l'état caché
-      acc.hiddenGames.push(game);
-    } else {
-      acc.visibleGames.push(game);
+      if (game.hidden) {
+        acc.hiddenGames.push(game);
+      } else {
+        acc.visibleGames.push(game);
+      }
     }
     return acc;
   }, { hiddenGames: [] as ILibraryGame[], visibleGames: [] as ILibraryGame[] });
 
   // update hidden games
   if (hiddenGames.length) {
-    await fastify.db.update().table('libraries').set({ hidden: true }).where({
-      player_id: userId,
-      game_id: hiddenGames.map(game => game.game_id)
-    }).execute();
+    await fastify.db.update(Libraries.model).set({ hidden: true }).where(
+      and(
+        eq(Libraries.model.player_id, userId),
+        inArray(Libraries.model.game_id, hiddenGames.map(game => parseInt(game.id)))
+      )
+    ).execute();
   }
 
   // update visible games
   if (visibleGames.length) {
-    await fastify.db.update().table('libraries').set({ hidden: false }).where({
-      player_id: userId,
-      game_id: visibleGames.map(game => game.game_id)
-    }).execute();
+    await fastify.db.update(Libraries.model).set({ hidden: false }).where(
+      and(
+        eq(Libraries.model.player_id, userId),
+        inArray(Libraries.model.game_id, visibleGames.map(game => parseInt(game.id)))
+      )
+    ).execute();
   }
 }
 
 const checkGamesInLibrary = async (fastify: FastifyInstance, userId: bigint, gameIds: string[]) => {
   const library = await getPlayerAllLibrary(fastify, userId) as unknown as Library;
-  const libraryIds = library.map((game) => game.game_id.toString());
+  const libraryIds = library.map((game) => game.id.toString());
   const isAllIdInLibrary = gameIds.every((id) => libraryIds.includes(id));
 
   if (!isAllIdInLibrary) {
@@ -78,14 +84,14 @@ const checkGamesInLibrary = async (fastify: FastifyInstance, userId: bigint, gam
 
   return library;
 };
-async function updateHiddenGames(request: FastifyRequest<{ Params: updateHiddenGamesParams }>, reply: FastifyReply) {
+async function updateHiddenGames(request: FastifyRequest<{ Body: IBody }>, reply: FastifyReply) {
+  const fastify = request.server as FastifyInstance;
   try {
     if (!request.user)
       throw new Error('logged_in_to_access_library');
 
     const { id: userId } = (request.user as Player);
-    const fastify = request.server as FastifyInstance;
-    const gameIds: string[] = request.params.id || [];
+    const gameIds: string[] = request.body.games;
 
     const library = await checkGamesInLibrary(fastify, userId, gameIds);
 
@@ -97,6 +103,7 @@ async function updateHiddenGames(request: FastifyRequest<{ Params: updateHiddenG
       ? error.message
       : 'internal_server_error';
     const statusCode = ['logged_in_to_access_library', 'invalid_id'].includes(error.message) ? 401 : 500;
+    fastify.log.error(error);
     return APIResponse(reply, null, i18next.t(messageKey, { lng: request.userLanguage }), statusCode);
   }
 }
