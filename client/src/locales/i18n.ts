@@ -28,6 +28,15 @@ const resources = {
       "room_begins": "The game has begun",
       "admin_closed_room": "The administrator has closed the room",
 
+      // Library
+      "library_heading": "Select the games that want to hide from other players when you enters a room.",
+      "selected_info": "{{count}} selected game(s) ({{hiddenCount}} hidden(s), {{publicCount}} public(s))",
+      "selected_info_zero": "No selected game",
+      "confirm_library_changes": "Confirm changes",
+      "no_changes_library": "No game selected",
+      "library_updated": "Library updated !",
+      "error_library_update": "An error occurred while updating the library ...",
+
       // Login page
       "disclaimer": "This site is not associated with Valve Corp.",
       "motto": "Let's play together !",
@@ -58,6 +67,7 @@ const resources = {
       "donate": "Donate",
       "actual_room": "Actual room",
       "logout": "Logout",
+      "my_library": "My library",
 
       // Toast
       "kicked_player": "Player kicked",
@@ -87,6 +97,15 @@ const resources = {
       "player_has_been_kicked": "Un joueur a été expulsé de la room",
       "room_begins": "La partie a commencé",
       "admin_closed_room": "L'administrateur a fermé la room",
+
+      // Library
+      "library_heading": "Sélectionnez les jeux que vous souhaitez cacher des autres joueurs lorsque vous entrez dans une room.",
+      "selected_info": "{{count}} jeu(x) sélectionné(s) ({{hiddenCount}} caché(s), {{publicCount}} public(s))",
+      "selected_info_zero": "Aucun jeu sélectionné",
+      "confirm_library_changes": "Confirmer les changements",
+      "no_changes_library": "Aucun jeu sélectionné",
+      "library_updated": "Bibliothèque mise à jour !",
+      "error_library_update": "Une erreur est survenue lors de la mise à jour de la bibliothèque ...",
 
       // Login
       "disclaimer": "Ce site n'est pas associé à Valve Corp.",
@@ -118,6 +137,7 @@ const resources = {
       "donate": "Faire un don",
       "actual_room": "Room actuelle",
       "logout": "Déconnexion",
+      "my_library": "Ma bibliothèque",
 
       // Toast
       "kicked_player": "Joueur expulsé",
@@ -147,6 +167,16 @@ const resources = {
       "player_has_been_kicked": "플레이어가 방에서 추방되었습니다.",
       "room_begins": "게임이 시작되었습니다.",
       "admin_closed_room": "관리자가 방을 닫았습니다.",
+
+      // Library
+      "library_heading": "방에 들어갈 때 다른 플레이어에게 숨기고 싶은 게임을 선택하십시오.",
+      "selected_info": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
+      "selected_info_plural": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
+      "selected_info_zero": "선택된 게임 없음",
+      "confirm_library_changes": "변경 사항 확인",
+      "no_changes_library": "선택된 게임 없음",
+      "library_updated": "도서관이 업데이트되었습니다 !",
+      "error_library_update": "도서관을 업데이트하는 동안 오류가 발생했습니다 ...",
 
       // Login
       "disclaimer": "이 사이트는 Valve Corp.와 관련이 없습니다.",
@@ -178,6 +208,7 @@ const resources = {
       "donate": "기부",
       "actual_room": "현재 방",
       "logout": "로그 아웃",
+      "my_library": "내 도서관",
 
       // Toast
       "kicked_player": "플레이어 추방"
@@ -207,6 +238,16 @@ const resources = {
       "player_has_been_kicked": "El jugador ha sido expulsado de la sala",
       "room_begins": "El juego ha comenzado",
       "admin_closed_room": "El administrador ha cerrado la sala",
+
+      // Library
+      "library_heading": "Seleccione los juegos que desea ocultar a otros jugadores cuando ingrese a una sala.",
+      "selected_info": "{{count}} juego seleccionado ({{hiddenCount}} oculto, {{publicCount}} público)",
+      "selected_info_plural": "{{count}} juegos seleccionados ({{hiddenCount}} ocultos, {{publicCount}} públicos)",
+      "selected_info_zero": "No hay juegos seleccionados",
+      "confirm_library_changes": "Confirmar cambios",
+      "no_changes_library": "No hay juegos seleccionados",
+      "library_updated": "¡Biblioteca actualizada!",
+      "error_library_update": "Se produjo un error al actualizar la biblioteca ...",
 
       // Login
       "disclaimer": "Este sitio no está asociado con Valve Corp.",
@@ -238,6 +279,7 @@ const resources = {
       "donate": "Donar",
       "actual_room": "Sala actual",
       "logout": "Cerrar sesión",
+      "my_library": "Mi biblioteca",
 
       // Toast
       "kicked_player": "Jugador expulsado"
@@ -267,6 +309,16 @@ const resources = {
       "player_has_been_kicked": "プレイヤーが部屋から追放されました",
       "room_begins": "ゲームが始まった",
       "admin_closed_room": "管理者が部屋を閉じました",
+
+      // Library
+      "library_heading": "部屋に入るときに他のプレイヤーに非表示にしたいゲームを選択してください。",
+      "selected_info": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
+      "selected_info_plural": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
+      "selected_info_zero": "選択されたゲームはありません",
+      "confirm_library_changes": "変更を確認",
+      "no_changes_library": "選択されたゲームはありません",
+      "library_updated": "ライブラリが更新されました！",
+      "error_library_update": "ライブラリを更新する際にエラーが発生しました...",
 
       // Login
       "disclaimer": "このサイトはValve Corp.と関係ありません。",
@@ -298,6 +350,7 @@ const resources = {
       "donate": "寄付する",
       "actual_room": "現在の部屋",
       "logout": "ログアウト",
+      "my_library": "私の図書館",
 
       // Toast
       "kicked_player": "プレイヤーが追放されました"
@@ -327,6 +380,16 @@ const resources = {
       "player_has_been_kicked": "Der Spieler wurde aus dem Raum geworfen",
       "room_begins": "Das Spiel hat begonnen",
       "admin_closed_room": "Der Administrator hat den Raum geschlossen",
+
+      // Library
+      "library_heading": "Wählen Sie die Spiele aus, die Sie verstecken möchten, wenn Sie einen Raum betreten.",
+      "selected_info": "{{count}} ausgewähltes Spiel ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
+      "selected_info_plural": "{{count}} ausgewählte Spiele ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
+      "selected_info_zero": "Kein ausgewähltes Spiel",
+      "confirm_library_changes": "Änderungen bestätigen",
+      "no_changes_library": "Kein Spiel ausgewählt",
+      "library_updated": "Bibliothek aktualisiert!",
+      "error_library_update": "Beim Aktualisieren der Bibliothek ist ein Fehler aufgetreten ...",
 
       // Login
       "disclaimer": "Diese Seite ist nicht mit Valve Corp. verbunden.",
@@ -358,6 +421,7 @@ const resources = {
       "donate": "Spenden",
       "actual_room": "Aktueller Raum",
       "logout": "Ausloggen",
+      "my_library": "Meine Bibliothek",
 
       // Toast
       "kicked_player": "Spieler gekickt"
@@ -380,7 +444,7 @@ i18n
       lookupCookie: 'i18next',
       lookupLocalStorage: 'i18nextLng',
       caches: ['localStorage'],
-    },
+    }
   }).then(() => {
     const detectedLng = i18n.language;
     const splitLng = detectedLng.split('-')[0];

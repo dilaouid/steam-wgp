@@ -15,7 +15,8 @@ CREATE TABLE players (
 CREATE TABLE libraries (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(), -- Assurez-vous que l'extension pgcrypto est installée pour gen_random_uuid()
     player_id BIGINT REFERENCES players(id) ON DELETE CASCADE,
-    game_id INT REFERENCES games(id) ON DELETE CASCADE
+    game_id INT REFERENCES games(id) ON DELETE CASCADE,
+    hidden BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 -- Création de la table waitlists

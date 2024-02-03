@@ -24,7 +24,7 @@ export default function HomePage () {
     const adminId = room?.admin_id;
     
     if (!auth.isAuthenticated)
-        navigate('/login');
+        navigate('/steam-wgp/login');
 
     if (waitlistId && room.winner) {
       setRoom(null);

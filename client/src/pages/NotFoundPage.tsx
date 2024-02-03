@@ -48,7 +48,7 @@ export default function NotFoundPage() {
                 <BottomHeading className="display-1 text-center text-primary">404</BottomHeading>
             </div>
             <div className="col-auto">
-                <Button className="btn btn-primary" type="button" onClick={() => navigate('/')}>{t('back_homepage')}</Button>
+                <Button className="btn btn-primary" type="button" onClick={() => navigate('/steam-wgp/')}>{t('back_homepage')}</Button>
             </div>
         </div>
     </div>

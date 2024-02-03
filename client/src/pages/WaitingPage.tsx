@@ -28,7 +28,7 @@ export default function WaitingPage() {
     const navigate = useNavigate();
 
     if (!room) {
-        navigate('/')
+        navigate('/steam-wgp/')
         return <></>
     }
 

@@ -19,5 +19,5 @@ export const start = (setRoom: React.Dispatch<React.SetStateAction<RoomInfo | nu
         };
     });
     if (id && navigate)
-        navigate(`/waitlist/${id}`);
+        navigate(`/steam-wgp/waitlist/${id}`);
 };

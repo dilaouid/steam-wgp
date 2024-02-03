@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { checkAuth } from '../api/auth';
-import { useNavigate } from 'react-router-dom';
 
 import { getWaitlistInformations } from '../api/lobby';
 
@@ -38,7 +37,7 @@ export default function LobbyPage() {
                     setLoadingComplete(true);
                 } catch (error) {
                     console.error('Utilisateur non authentifié');
-                    navigate('/');
+                    navigate('/steam-wgp/');
                 }
             };
             verifyUser();
@@ -60,7 +59,7 @@ export default function LobbyPage() {
                 });
             } catch (error) {
                 console.error('Erreur lors du chargement des informations de la room:', error);
-                navigate('/');
+                navigate('/steam-wgp/');
             } finally {
                 setIsLoading(false);
             }
@@ -89,6 +88,8 @@ export default function LobbyPage() {
                 actions.gameEnd(setRoom, setAuth, data.winner);
             else if (data.action === "retrieve")
                 actions.retrieve(setRoom, data.swipedGames);
+            else if (data.action === "update")
+                actions.update(setRoom, data.player, data.commonGames);
         };
 
     }, [setAuth, setRoom, waitlistId, socket, navigate, auth.user?.id, adminId]);
