@@ -462,6 +462,29 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               fastify.log.error(`Error in 'unswipe' action: ${error}`);
             }
             break;
+
+          // when a player updates his library
+          case 'update':
+            try {
+              if (waitlistClients.started || waitlistClients.ended) return;
+              const playerGames = payload.library.map(Number);
+              waitlistClients.playerGames[playerId] = playerGames;
+              const allPlayerGameArrays: number[][] = Object.values(waitlistClients.playerGames);
+              const commonGames = allPlayerGameArrays.reduce<number[] | null>((common, games) => {
+                if (!common) return games;
+                return common.filter(game => games.includes(game));
+              }, null);
+
+              waitlistClients.commonGames = commonGames || [];
+
+              waitlistEntry.sockets.forEach((client: any) => {
+                client.send(JSON.stringify({ action: 'update', player: { player_id: playerId, games: playerGames }, commonGames: waitlistClients.commonGames }));
+              });
+            } catch (error) {
+              fastify.log.error(`Error in 'update' action: ${error}`);
+            }
+            break;
+
           default:
             break;
           }
