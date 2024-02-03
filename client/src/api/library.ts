@@ -28,3 +28,27 @@ export const getLibrary = async (): Promise<APIResponse> => {
     throw err;
   }
 };
+
+// Update the hidden games of the user
+export const updateHiddenGames = async (games: string[]): Promise<APIResponse> => {
+  try {
+    const response = await fetch(BASE_URL, {
+      credentials: "include",
+      method: "PATCH",
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Accept-Language': language,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ games })
+    });
+    if (!response.ok)
+      throw new Error("Impossible de mettre à jour les jeux cachés de l'utilisateur")
+    const res = await response.json();
+    return res;
+  } catch (err) {
+    console.error("Une erreur est survenue lors de la mise à jour des jeux cachés de l'utilisateur");
+    console.error(err);
+    throw err;
+  }
+};
