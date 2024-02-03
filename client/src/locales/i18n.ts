@@ -29,6 +29,7 @@ const resources = {
       "admin_closed_room": "The administrator has closed the room",
 
       // Library
+      "library_heading": "Select the games that want to hide from other players when you enters a room.",
       "selected_info": "{{count}} selected game(s) ({{hiddenCount}} hidden(s), {{publicCount}} public(s))",
       "selected_info_zero": "No selected game",
       "confirm_library_changes": "Confirm changes",
@@ -98,6 +99,7 @@ const resources = {
       "admin_closed_room": "L'administrateur a fermé la room",
 
       // Library
+      "library_heading": "Sélectionnez les jeux que vous souhaitez cacher des autres joueurs lorsque vous entrez dans une room.",
       "selected_info": "{{count}} jeu(x) sélectionné(s) ({{hiddenCount}} caché(s), {{publicCount}} public(s))",
       "selected_info_zero": "Aucun jeu sélectionné",
       "confirm_library_changes": "Confirmer les changements",
@@ -167,6 +169,7 @@ const resources = {
       "admin_closed_room": "관리자가 방을 닫았습니다.",
 
       // Library
+      "library_heading": "방에 들어갈 때 다른 플레이어에게 숨기고 싶은 게임을 선택하십시오.",
       "selected_info": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
       "selected_info_plural": "{{count}} 선택된 게임 ({{hiddenCount}} 숨겨진, {{publicCount}} 공개)",
       "selected_info_zero": "선택된 게임 없음",
@@ -237,6 +240,7 @@ const resources = {
       "admin_closed_room": "El administrador ha cerrado la sala",
 
       // Library
+      "library_heading": "Seleccione los juegos que desea ocultar a otros jugadores cuando ingrese a una sala.",
       "selected_info": "{{count}} juego seleccionado ({{hiddenCount}} oculto, {{publicCount}} público)",
       "selected_info_plural": "{{count}} juegos seleccionados ({{hiddenCount}} ocultos, {{publicCount}} públicos)",
       "selected_info_zero": "No hay juegos seleccionados",
@@ -307,6 +311,7 @@ const resources = {
       "admin_closed_room": "管理者が部屋を閉じました",
 
       // Library
+      "library_heading": "部屋に入るときに他のプレイヤーに非表示にしたいゲームを選択してください。",
       "selected_info": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
       "selected_info_plural": "{{count}}選択されたゲーム（{{hiddenCount}}非表示、{{publicCount}}公開）",
       "selected_info_zero": "選択されたゲームはありません",
@@ -377,6 +382,7 @@ const resources = {
       "admin_closed_room": "Der Administrator hat den Raum geschlossen",
 
       // Library
+      "library_heading": "Wählen Sie die Spiele aus, die Sie verstecken möchten, wenn Sie einen Raum betreten.",
       "selected_info": "{{count}} ausgewähltes Spiel ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
       "selected_info_plural": "{{count}} ausgewählte Spiele ({{hiddenCount}} versteckt, {{publicCount}} öffentlich)",
       "selected_info_zero": "Kein ausgewähltes Spiel",
