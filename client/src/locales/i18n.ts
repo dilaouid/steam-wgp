@@ -36,6 +36,10 @@ const resources = {
       "no_changes_library": "No game selected",
       "library_updated": "Library updated !",
       "error_library_update": "An error occurred while updating the library ...",
+      "all_games": "All games",
+      "hidden_games": "Hidden games",
+      "public_games": "Public games",
+      "selected_games": "Selected games",
 
       // Login page
       "disclaimer": "This site is not associated with Valve Corp.",
@@ -106,6 +110,10 @@ const resources = {
       "no_changes_library": "Aucun jeu sélectionné",
       "library_updated": "Bibliothèque mise à jour !",
       "error_library_update": "Une erreur est survenue lors de la mise à jour de la bibliothèque ...",
+      "all_games": "Tous les jeux",
+      "hidden_games": "Jeux cachés",
+      "public_games": "Jeux publics",
+      "selected_games": "Jeux sélectionnés",
 
       // Login
       "disclaimer": "Ce site n'est pas associé à Valve Corp.",
@@ -177,6 +185,10 @@ const resources = {
       "no_changes_library": "선택된 게임 없음",
       "library_updated": "도서관이 업데이트되었습니다 !",
       "error_library_update": "도서관을 업데이트하는 동안 오류가 발생했습니다 ...",
+      "all_games": "모든 게임",
+      "hidden_games": "숨겨진 게임",
+      "public_games": "공개 게임",
+      "selected_games": "선택된 게임",
 
       // Login
       "disclaimer": "이 사이트는 Valve Corp.와 관련이 없습니다.",
@@ -248,6 +260,10 @@ const resources = {
       "no_changes_library": "No hay juegos seleccionados",
       "library_updated": "¡Biblioteca actualizada!",
       "error_library_update": "Se produjo un error al actualizar la biblioteca ...",
+      "all_games": "Todos los juegos",
+      "hidden_games": "Juegos ocultos",
+      "public_games": "Juegos públicos",
+      "selected_games": "Juegos seleccionados",
 
       // Login
       "disclaimer": "Este sitio no está asociado con Valve Corp.",
@@ -319,6 +335,10 @@ const resources = {
       "no_changes_library": "選択されたゲームはありません",
       "library_updated": "ライブラリが更新されました！",
       "error_library_update": "ライブラリを更新する際にエラーが発生しました...",
+      "all_games": "すべてのゲーム",
+      "hidden_games": "非表示のゲーム",
+      "public_games": "公開ゲーム",
+      "selected_games": "選択されたゲーム",
 
       // Login
       "disclaimer": "このサイトはValve Corp.と関係ありません。",
@@ -390,6 +410,10 @@ const resources = {
       "no_changes_library": "Kein Spiel ausgewählt",
       "library_updated": "Bibliothek aktualisiert!",
       "error_library_update": "Beim Aktualisieren der Bibliothek ist ein Fehler aufgetreten ...",
+      "all_games": "Alle Spiele",
+      "hidden_games": "Versteckte Spiele",
+      "public_games": "Öffentliche Spiele",
+      "selected_games": "Ausgewählte Spiele",
 
       // Login
       "disclaimer": "Diese Seite ist nicht mit Valve Corp. verbunden.",
