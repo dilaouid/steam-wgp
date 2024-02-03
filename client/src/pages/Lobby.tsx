@@ -88,6 +88,8 @@ export default function LobbyPage() {
                 actions.gameEnd(setRoom, setAuth, data.winner);
             else if (data.action === "retrieve")
                 actions.retrieve(setRoom, data.swipedGames);
+            else if (data.action === "update")
+                actions.update(setRoom, data.player, data.commonGames);
         };
 
     }, [setAuth, setRoom, waitlistId, socket, navigate, auth.user?.id, adminId]);

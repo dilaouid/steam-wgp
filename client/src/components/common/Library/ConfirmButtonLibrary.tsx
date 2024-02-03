@@ -1,9 +1,11 @@
 import { toast } from "react-toastify";
 import { useContext, useState } from "react";
+import { WebSocket } from "../../../context";
 import { useTranslation } from 'react-i18next';
 import { Library } from "../../../context";
 import styled from "styled-components";
 import { updateHiddenGames } from "../../../api/library";
+import { updateLibrary } from "../../../api/websocket";
 
 const ConfirmButton = styled.button`
     z-index: 3;
@@ -16,7 +18,9 @@ const ConfirmButton = styled.button`
 export default function ConfirmButtonLibraryComponent() {
     const [ loading, setLoading ] = useState(false);
     const { library, setLibrary } = useContext(Library.Context)!;
+    const socket = useContext(WebSocket.Context)!;
     const { t } = useTranslation();
+    
 
     const selectedLength = library?.selected?.length || 0;
 
@@ -38,6 +42,9 @@ export default function ConfirmButtonLibraryComponent() {
                     theme: "colored",
                     hideProgressBar: true,
                 });
+                const publicGames = updatedLibrary.filter(game => !game.hidden).map(game => game.game_id);
+                if (socket.socket)
+                    updateLibrary(socket.socket, publicGames)
             }
         } catch (error) {
             console.error('Error updating hidden games', error);
