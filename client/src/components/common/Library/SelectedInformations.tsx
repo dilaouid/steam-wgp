@@ -10,7 +10,7 @@ const AlertInfos = styled.div`
     margin-left: 25px;
     height: 33px;
     padding: 4px;
-    width: 247.3646px;
+    width: 290px;
 `;
 
 const Bold = styled.strong`
