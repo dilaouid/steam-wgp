@@ -1,6 +1,5 @@
 {
-  "name": "vite-project",
-  "private": true,
+  "name": "steamwgp-client",
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://dilaouid.github.io/steam-wgp",
