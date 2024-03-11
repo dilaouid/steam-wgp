@@ -1,4 +1,4 @@
-import { pgTable, bigint, boolean, timestamp, uuid } from "drizzle-orm/pg-core";
+import { pgTable, bigint, boolean, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { Games, Libraries, Players, WaitlistsPlayers } from ".";
@@ -8,6 +8,8 @@ export const model = pgTable('waitlists', {
   id: uuid('id').primaryKey(),
   admin_id: bigint('admin_id', { mode: 'bigint' }).references(() => Players.model.id),
   started: boolean('started').default(false),
+  private: boolean('private').default(false),
+  name: varchar('name', { length: 255 }).default('Steamder'),
   created_at: timestamp('created_at').notNull().defaultNow(),
   updated_at: timestamp('updated_at').notNull().defaultNow()
 });
