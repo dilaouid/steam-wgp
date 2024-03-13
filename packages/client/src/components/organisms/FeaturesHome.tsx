@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Col, Row } from "react-bootstrap"
 import { FeatureHome } from "../atoms/homepage/Feature";
-import { ClockHistoryIcon } from "../atoms/icons/ClockHistoryIcon";
-import { ControllerIcon } from "../atoms/icons/ControllerIcon";
-import { PeopleIcon } from "../atoms/icons/PeopleIcon";
+import { ClockHistoryIcon } from "../atoms/icons/features/ClockHistoryIcon";
+import { ControllerIcon } from "../atoms/icons/features/ControllerIcon";
+import { PeopleIcon } from "../atoms/icons/features/PeopleIcon";
 import { Trans, useTranslation } from "react-i18next";
 
 import FeaturesImage from '../../assets/images/homepage/features.png';
