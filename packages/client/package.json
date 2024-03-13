@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.26.3",
+    "@tanstack/react-router": "^1.19.12",
     "animate.css": "^4.1.1",
     "aos": "^2.3.4",
     "bootstrap": "5",
