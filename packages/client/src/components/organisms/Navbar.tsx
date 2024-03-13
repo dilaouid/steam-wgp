@@ -6,8 +6,8 @@ import { useAuthStore } from '../../store/authStore';
 
 import { Container, Navbar as RBNavbar, Nav, Button } from 'react-bootstrap';
 import NavItem from '../atoms/NavItem';
+import { SteamIconLogin } from '../atoms/icons/SteamLoginIcon';
 import NavbarLogo from '../../assets/images/navbar/logo.png';
-import { SteamIconLogin } from '../atoms/SteamIconLogin';
 
 import 'animate.css';
 
