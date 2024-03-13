@@ -25,7 +25,7 @@ const StyledNavTitle = styled.span`
 
 const Navbar: React.FC = () => {
   const { isAuthenticated, toggleAuth } = useAuthStore();
-  const { t } = useTranslation();
+  const { t } = useTranslation('global/navbar');
 
     const handleAuthClick = () => {
         toggleAuth(!isAuthenticated);
@@ -50,14 +50,14 @@ const Navbar: React.FC = () => {
         <RBNavbar.Toggle aria-controls="responsive-navbar-nav" />
         <RBNavbar.Collapse id="responsive-navbar-nav">
           <StyledNav className="ms-auto">
-            <NavItem eventKey="1" to="/">{t('navbar__homepage')}</NavItem>
-            { isAuthenticated && <NavItem eventKey="2" to="/library">{t('navbar__library')}</NavItem> }
-            { isAuthenticated && <NavItem eventKey="3" to="/steamder/:id">{t('navbar__my_steamder')}</NavItem> }
-            { isAuthenticated && <NavItem eventKey="4" to="/steamders">{t('navbar__steamders')}</NavItem> }
-            <NavItem eventKey="5" to="/steamders" flashy={true}>{t('navbar__donate')}</NavItem>
+            <NavItem eventKey="1" to="/">{t('homepage')}</NavItem>
+            { isAuthenticated && <NavItem eventKey="2" to="/library">{t('library')}</NavItem> }
+            { isAuthenticated && <NavItem eventKey="3" to="/steamder/:id">{t('my_steamder')}</NavItem> }
+            { isAuthenticated && <NavItem eventKey="4" to="/steamders">{t('steamders')}</NavItem> }
+            <NavItem eventKey="5" to="/steamders" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
-          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick} href="/"> { t('navbar__logout') } </Button> }
-          { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href="/login"><SteamIconLogin /> | {t('navbar__login')}</Button> }
+          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick} href="/"> { t('logout') } </Button> }
+          { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href="/login"><SteamIconLogin /> | {t('login')}</Button> }
         </RBNavbar.Collapse>
       </Container>
     </RBNavbar>
