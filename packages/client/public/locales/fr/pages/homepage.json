@@ -18,5 +18,11 @@
             "title": "Faites vous des amis !",
             "subtitle": "Rejoignez des salons (aussi appelés <1>Steamder</1>) publiques pour rencontrer d'autres joueurs avec qui passer un bon moment !"
         }
+    },
+    "stats": {
+        "registered": "Gamers inscrits",
+        "repertoried": "Jeux répertoriés",
+        "matches": "Matches réalisés",
+        "actives": "Steamders actives"
     }
 }
