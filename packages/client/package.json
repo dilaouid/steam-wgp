@@ -25,12 +25,13 @@
     "react-bootstrap": "^2.9.2",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.0",
-    "react-router-dom": "^6.21.1",
     "styled-components": "^6.1.3",
     "yup": "^1.4.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@tanstack/router-devtools": "^1.19.12",
+    "@tanstack/router-vite-plugin": "^1.19.6",
     "@types/aos": "^3.0.7",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
