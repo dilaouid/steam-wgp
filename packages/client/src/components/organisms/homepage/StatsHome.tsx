@@ -1,11 +1,11 @@
 import { Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
-import { PersonWorkspaceIcon } from "../atoms/icons/stats/PersonWorkspaceIcon";
-import { ControllerIcon } from "../atoms/icons/stats/ControllerIcon";
-import { PersonHeartsIcon } from "../atoms/icons/stats/PersonHeartsIcon";
-import { DiagramIcon } from "../atoms/icons/stats/DiagramIcon";
+import { PersonWorkspaceIcon } from "../../atoms/icons/stats/PersonWorkspaceIcon";
+import { ControllerIcon } from "../../atoms/icons/stats/ControllerIcon";
+import { PersonHeartsIcon } from "../../atoms/icons/stats/PersonHeartsIcon";
+import { DiagramIcon } from "../../atoms/icons/stats/DiagramIcon";
 
-import LogoImage from '../../assets/images/homepage/logo.png';
+import LogoImage from '../../../assets/images/homepage/logo.png';
 import { useTranslation } from "react-i18next";
 
 const StyledLogoSeparator = styled.img`
