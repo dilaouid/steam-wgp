@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { ParallaxBackgroundHome } from '../components/organisms/ParallaxBackgroundHome'
+import { FeaturesHome } from '../components/organisms/FeaturesHome';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -18,6 +19,7 @@ function Home() {
   return (
     <>
       <ParallaxBackgroundHome />
+      <FeaturesHome />
     </>
   )
 }

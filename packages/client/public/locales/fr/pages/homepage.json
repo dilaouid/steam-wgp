@@ -4,5 +4,19 @@
         "paragraph": "Créez ou rejoignez un salon <1>Steamder</1>, et choisissez le jeu qui vous tient à cœur ! Avec la magie de <1>SteamWGP</1>, vous arriverez à vous mettre d'accord sur le choix du jeu beaucoup plus efficacement !",
         "login": "Se connecter",
         "steamders": "Liste des <1>Steamders</1>"
+    },
+    "features": {
+        "1": {
+            "title": "Fini les débats interminables",
+            "subtitle": "<1>SteamWGP</1> est là pour clore le débat ! Fini les discussions à rallonge avec vos amis sur Discord pour décider du jeu auquel vous allez jouer !"
+        },
+        "2": {
+            "title": "Vous n'avez rien à faire !",
+            "subtitle": "<1>SteamWGP</1> s'occupe de synchroniser votre bibliothèque de jeux Steam ! Pas besoin d'aller chercher vos jeux pendant 5 heures et les rajouter à la main !"
+        },
+        "3": {
+            "title": "Faites vous des amis !",
+            "subtitle": "Rejoignez des salons (aussi appelés <1>Steamder</1>) publiques pour rencontrer d'autres joueurs avec qui passer un bon moment !"
+        }
     }
 }
