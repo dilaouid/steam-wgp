@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
             <NavItem eventKey="1" to="/">{t('homepage')}</NavItem>
             { isAuthenticated && <NavItem eventKey="2" to="/library">{t('library')}</NavItem> }
             { isAuthenticated && <NavItem eventKey="3" to="/steamder/:id">{t('my_steamder')}</NavItem> }
-            { isAuthenticated && <NavItem eventKey="4" to="/steamders">{t('steamders')}</NavItem> }
+            <NavItem eventKey="4" to="/steamders">{t('steamders')}</NavItem>
             <NavItem eventKey="5" to="/steamders" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
           { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick} href="/"> { t('logout') } </Button> }
