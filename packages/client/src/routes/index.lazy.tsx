@@ -7,6 +7,7 @@ import { StatsHome } from '../components/organisms/homepage/StatsHome';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { HowTo } from '../components/organisms/homepage/HowTo';
 
 export const Route = createLazyFileRoute("/")({
   component: Home,
@@ -22,6 +23,7 @@ function Home() {
       <ParallaxBackgroundHome />
       <FeaturesHome />
       <StatsHome />
+      <HowTo />
     </>
   )
 }
