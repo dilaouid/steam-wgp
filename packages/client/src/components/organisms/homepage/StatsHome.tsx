@@ -12,7 +12,7 @@ const StyledLogoSeparator = styled.img`
     user-select: none;
     z-index: 0;
     position: absolute;
-    margin-left: 50%;
+    margin-left: 46.5%;
     margin-top: -4%;
     width: 7%;
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Nav } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useMatch } from '@tanstack/react-router';
 
 import 'animate.css';
 
@@ -18,6 +19,9 @@ const StyledNavItem = styled(Nav.Link)`
 
 const NavItem: React.FC<NavItemProps> = ({ eventKey, to, children, flashy }) => {
   const { t } = useTranslation();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const match = useMatch(to as any);
+
   if (!children) {
     return null;
   }
@@ -44,7 +48,7 @@ const NavItem: React.FC<NavItemProps> = ({ eventKey, to, children, flashy }) => 
       eventKey={eventKey}
       href={to}
       onMouseEnter={(event) => { toggleTadaAnimation(event) }}
-      className={flashy ? 'fw-bolder link-warning animate__animated animate__zoomIn' : ''}
+      className={flashy ? 'fw-bolder link-warning animate__animated animate__zoomIn' : '' + match.pathname === to ? 'active' : ''}
     >
       { t(children.toString()) }
     </StyledNavItem>
