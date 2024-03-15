@@ -1,12 +1,16 @@
-import { Col, Container, Row } from "react-bootstrap";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
+import CountUp from 'react-countup';
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import { PersonWorkspaceIcon } from "../../atoms/icons/stats/PersonWorkspaceIcon";
 import { ControllerIcon } from "../../atoms/icons/stats/ControllerIcon";
 import { PersonHeartsIcon } from "../../atoms/icons/stats/PersonHeartsIcon";
 import { DiagramIcon } from "../../atoms/icons/stats/DiagramIcon";
 
 import LogoImage from '../../../assets/images/homepage/logo.png';
-import { useTranslation } from "react-i18next";
+import { useStats } from "../../../services/api/global/stats/useStatsApi";
+
 
 const StyledLogoSeparator = styled.img`
     user-select: none;
@@ -22,6 +26,7 @@ const StyledContainer = styled(Container)`
 
 export const StatsHome: React.FC = () => {
     const { t } = useTranslation('pages/homepage');
+    const { data, isPending } = useStats();
 
     return(
     <div data-aos="flip-down">
@@ -34,7 +39,10 @@ export const StatsHome: React.FC = () => {
                     <div className="text-center d-flex flex-column justify-content-center align-items-center py-3">
                         <PersonWorkspaceIcon />
                         <div className="px-3">
-                            <h2 className="fw-bold mb-0">74</h2>
+                            <h2 className="fw-bold mb-0">
+                                { isPending && <Spinner animation="border" /> }
+                                { !isPending && <CountUp start={ 0 } end={ data.players } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250} /> }
+                            </h2>
                             <p className="mb-0">{ t('stats.registered') }</p>
                         </div>
                     </div>
@@ -44,7 +52,10 @@ export const StatsHome: React.FC = () => {
                     <div className="text-center d-flex flex-column justify-content-center align-items-center py-3">
                         <ControllerIcon />
                         <div className="px-3">
-                            <h2 className="fw-bold mb-0">987</h2>
+                            <h2 className="fw-bold mb-0">
+                                { isPending && <Spinner animation="border" /> }
+                                { !isPending && <CountUp start={ 0 } end={ data.games } duration={ 3 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250} /> }
+                            </h2>
                             <p className="mb-0">{ t('stats.repertoried') }</p>
                         </div>
                     </div>
@@ -56,7 +67,10 @@ export const StatsHome: React.FC = () => {
                     <div className="text-center d-flex flex-column justify-content-center align-items-center py-3">
                         <PersonHeartsIcon />
                         <div className="px-3">
-                            <h2 className="fw-bold mb-0">76</h2>
+                            <h2 className="fw-bold mb-0">
+                                { isPending && <Spinner animation="border" /> }
+                                { !isPending && <CountUp start={ 0 } end={ data.matches } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250} /> }
+                            </h2>
                             <p className="mb-0">{ t('stats.matches') }</p>
                         </div>
                     </div>
@@ -66,7 +80,10 @@ export const StatsHome: React.FC = () => {
                     <div className="text-center d-flex flex-column justify-content-center align-items-center py-3">
                         <DiagramIcon />
                         <div className="px-3">
-                            <h2 className="fw-bold mb-0">21</h2>
+                            <h2 className="fw-bold mb-0">
+                                { isPending && <Spinner animation="border" /> }
+                                { !isPending && <CountUp start={ 0 } end={ data.waitlists } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250} /> }
+                            </h2>
                             <p className="mb-0">{ t('stats.actives') }</p>
                         </div>
                     </div>
