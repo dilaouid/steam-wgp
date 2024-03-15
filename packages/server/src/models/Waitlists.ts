@@ -9,6 +9,7 @@ export const model = pgTable('waitlists', {
   admin_id: bigint('admin_id', { mode: 'bigint' }).references(() => Players.model.id),
   started: boolean('started').default(false),
   private: boolean('private').default(false),
+  complete: boolean('complete').default(false),
   name: varchar('name', { length: 255 }).default('Steamder'),
   created_at: timestamp('created_at').notNull().defaultNow(),
   updated_at: timestamp('updated_at').notNull().defaultNow()
