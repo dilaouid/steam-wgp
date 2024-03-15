@@ -6,6 +6,7 @@ import { PeopleIcon } from "../../atoms/icons/howto/PeopleIcon";
 import { ControllerIcon } from "../../atoms/icons/howto/ControllerIcon";
 
 import { Trans, useTranslation } from "react-i18next";
+import { Link } from "@tanstack/react-router";
 
 const StyledTitle = styled.h2`
     font-family: 'Archivo Narrow', sans-serif;
@@ -36,7 +37,7 @@ export const HowTo: React.FC = () => {
                             <div className="px-2">
                                 <h5 className="mb-0 mt-1">{ t(`howto.${index + 1}.title`) }</h5>
                                 <p>
-                                    <Trans t={t} i18nKey={`howto.${index + 1}.subtitle`} components={{ 1: <strong /> }} />
+                                    <Trans t={t} i18nKey={`howto.${index + 1}.subtitle`} components={{ 1: <strong />, 2: <Link to={'/'} /> }} />
                                 </p>
                             </div>
                         </div>

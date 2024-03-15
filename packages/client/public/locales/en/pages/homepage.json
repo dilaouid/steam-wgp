@@ -24,5 +24,25 @@
         "repertoried": "Games catalogued",
         "matches": "Matches made",
         "actives": "Actives Steamders"
+    },
+    "howto": {
+        "title": "How does it work?",
+        "subtitle": "Using <1>SteamWGP</1> is a breeze and accessible to all! Just follow these simple steps to swiftly decide on the perfect game for a fantastic gaming session with your pals!",
+        "1": {
+            "title": "1. Log in",
+            "subtitle": "No need to sign up, simply log in with your Steam account through <2>this link</2>, and your library will be synchronized with <1>SteamWGP</1>! Of course, only multiplayer games will be automatically added to your <1>SteamWGP</1> library!"
+        },
+        "2": {
+            "title": "2. Create or join a Steamder",
+            "subtitle": "None of your friends created a <1>Steamder</1>? Create one!\nYour friend wants to invite you to their <1>Steamder</1>? They share the link with you, you access it, and congratulations!"
+        },
+        "3": {
+            "title": "3. Let's roll, team!",
+            "subtitle": "The <1>Steamder</1> admin has kicked off the session! Just pick your favorites from the list, and the first game to get unanimous votes from all <1>Steamder</1> members wins the selection!"
+        },
+        "4": {
+            "title": "4. Let's play!",
+            "subtitle": "And just like that, you've quickly agreed on the perfect multiplayer game to enjoy without any fuss!"
+        }
     }
 }
