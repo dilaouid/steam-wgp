@@ -5,9 +5,11 @@ import authRouter from './router/authRouter';
 import fastifySession from '@fastify/session';
 import fastifyCookie from '@fastify/cookie';
 import playerRouter from './router/playersRouter';
-import { FastifySSEPlugin } from "fastify-sse-v2";
 import waitlistRouter from './router/waitlistRouter';
 import libraryRouter from './router/libraryRouter';
+import globalRouter from './router/globalRouter';
+
+import { FastifySSEPlugin } from "fastify-sse-v2";
 
 const fastify: any = Fastify({
   logger: plugins.logger,
@@ -51,6 +53,7 @@ const initialize = async () => {
     await fastify.register(playerRouter, { prefix: '/players' });
     await fastify.register(waitlistRouter, { prefix: '/waitlist' });
     await fastify.register(libraryRouter, { prefix: '/library' });
+    await fastify.register(globalRouter, { prefix: '/' });
     // ==================== End of routes loading
 
     // ==================== Server boot and listen
