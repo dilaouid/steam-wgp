@@ -12,6 +12,8 @@ const StyledTitle = styled.h2`
     font-family: 'Archivo Narrow', sans-serif;
 `;
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export const HowTo: React.FC = () => {
     const { t } = useTranslation('pages/homepage');
     const icons = [ <SteamIcon />, <PeopleIcon />, <RocketIcon />, <ControllerIcon /> ];
@@ -37,7 +39,7 @@ export const HowTo: React.FC = () => {
                             <div className="px-2">
                                 <h5 className="mb-0 mt-1">{ t(`howto.${index + 1}.title`) }</h5>
                                 <p>
-                                    <Trans t={t} i18nKey={`howto.${index + 1}.subtitle`} components={{ 1: <strong />, 2: <Link to={'/'} /> }} />
+                                    <Trans t={t} i18nKey={`howto.${index + 1}.subtitle`} components={{ 1: <strong />, 2: <Link to={ BASE_URL + "/auth/steam" } /> }} />
                                 </p>
                             </div>
                         </div>

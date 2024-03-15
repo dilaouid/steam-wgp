@@ -23,6 +23,8 @@ const StyledNavTitle = styled.span`
     font-family: 'Archivo Narrow', sans-serif;
 `;
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const Navbar: React.FC = () => {
   const { isAuthenticated, toggleAuth } = useAuthStore();
   const { t } = useTranslation('global/navbar');
@@ -57,7 +59,7 @@ const Navbar: React.FC = () => {
             <NavItem eventKey="5" to="/steamders" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
           { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick} href="/"> { t('logout') } </Button> }
-          { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href="/login"><SteamIconLogin /> | {t('login')}</Button> }
+          { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href={ BASE_URL + "/auth/steam" }><SteamIconLogin /> | {t('login')}</Button> }
         </RBNavbar.Collapse>
       </Container>
     </RBNavbar>
