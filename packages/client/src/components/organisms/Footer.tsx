@@ -7,7 +7,7 @@ const flags = {
     fr: 'https://flagicons.lipis.dev/flags/4x3/fr.svg',
     en: 'https://flagicons.lipis.dev/flags/4x3/gb.svg',
     es: 'https://flagicons.lipis.dev/flags/4x3/es.svg',
-    ja: 'https://flagicons.lipis.dev/flags/4x3/jp.svg',
+    jp: 'https://flagicons.lipis.dev/flags/4x3/jp.svg',
     de: 'https://flagicons.lipis.dev/flags/4x3/de.svg',
 };
 
