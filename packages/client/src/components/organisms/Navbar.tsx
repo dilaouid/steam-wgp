@@ -26,11 +26,13 @@ const StyledNavTitle = styled.span`
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Navbar: React.FC = () => {
-  const { isAuthenticated, toggleAuth } = useAuthStore();
+  const { isAuthenticated, steamderId, toggleAuth, setUsername, setSteamderId } = useAuthStore();
   const { t } = useTranslation('global/navbar');
 
     const handleAuthClick = () => {
         toggleAuth(!isAuthenticated);
+        setUsername(null);
+        setSteamderId(null);
     }
 
   return (
@@ -54,7 +56,7 @@ const Navbar: React.FC = () => {
           <StyledNav className="ms-auto">
             <NavItem eventKey="1" to="/">{t('homepage')}</NavItem>
             { isAuthenticated && <NavItem eventKey="2" to="/library">{t('library')}</NavItem> }
-            { isAuthenticated && <NavItem eventKey="3" to="/steamder/:id">{t('my_steamder')}</NavItem> }
+            { isAuthenticated && steamderId && <NavItem eventKey="3" to={`/steamder/${steamderId}`}>{t('my_steamder')}</NavItem> }
             <NavItem eventKey="4" to="/steamders">{t('steamders')}</NavItem>
             <NavItem eventKey="5" to="/steamders" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
