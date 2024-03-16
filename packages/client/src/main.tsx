@@ -1,5 +1,3 @@
-
-
 import {
   QueryClient,
   QueryClientProvider,
