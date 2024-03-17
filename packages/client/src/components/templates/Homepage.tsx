@@ -9,5 +9,6 @@ export const Homepage = () => {
         <FeaturesHome />
         <StatsHome />
         <HowTo />
+        <hr />
     </>)
 }

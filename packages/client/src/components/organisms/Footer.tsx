@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
         i18n.changeLanguage(languageCode);
     };
 
-    return(<><hr />
+    return(<>
         <footer className="text-center">
             <div className="container text-muted py-4 py-lg-5">
                 <ul className="list-inline">
