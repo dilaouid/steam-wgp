@@ -21,6 +21,10 @@ const Hello = styled.p`
     font-size: 20px;
 `;
 
+const ActorFont = styled.p`
+    font-family: Actor, sans-serif;
+`;
+
 export const LeftColumnLogin: React.FC = () => {
     const { t } = useTranslation('pages/login');
     const { user } = useAuthStore();
@@ -36,15 +40,15 @@ export const LeftColumnLogin: React.FC = () => {
             <Trans t={t} i18nKey="greeting" components={{ 1: <span className="fw-bold text-info" /> }} values={{ username: user.username }} />
         </Hello>
 
-        <p className="text-body actor-font">
-            <Trans className="text-body actor-font" t={t} i18nKey="what_is_happening" components={{ 1: <strong /> }} />
-        </p>
+        <ActorFont className="text-body">
+            <Trans t={t} i18nKey="what_is_happening" components={{ 1: <strong /> }} />
+        </ActorFont>
 
-        <p className="text-danger actor-font" data-aos="zoom-in" data-aos-once="true" data-aos-delay="600" data-aos-duration="1000">
+        <ActorFont className="text-danger" data-aos="zoom-in" data-aos-once="true" data-aos-delay="600" data-aos-duration="1000">
             <BsFillExclamationDiamondFill size={34} /><br />
             <Trans t={t} i18nKey="warning" components={{ 1: <strong /> }} /><br />
             <a href="https://help.steampowered.com/fr/faqs/view/588C-C67D-0251-C276" target="_blank" className="text-success text-decoration-none">{ t('know_more') }</a>
-        </p>
+        </ActorFont>
 
     </ColumnLeft>
     );
