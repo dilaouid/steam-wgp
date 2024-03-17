@@ -2,5 +2,6 @@
     "greeting": "👋 Bonjour <1>{{username}}</1> !",
     "what_is_happening": "Nous nous apprêtons à synchroniser votre compte Steam avec <1>SteamWGP</1> : en gros, on ajoute vos jeux Steam dans votre bibliothèque <1>SteamWGP</1>.",
     "warning": "À savoir, si votre bibliothèque Steam est privée, <1>nous ne pourront pas ajouter vos jeux à votre bibliothèque SteamWGP</1>. Une première synchronisation avec votre bibliothèque Steam publique est nécessaire.",
-    "know_more": "En savoir plus"
+    "know_more": "En savoir plus",
+    "syncing": "Synchronisation en cours ..."
 }

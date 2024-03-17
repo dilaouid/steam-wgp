@@ -3,6 +3,7 @@ import { Container, Row } from 'react-bootstrap';
 
 import BackgroundImage from '../../assets/images/loginpage/bg.png'
 import { LeftColumnLogin } from '../organisms/login/LeftColumnLogin';
+import { RightColumnLogin } from '../organisms/login/RightColumnLogin';
 
 const LoginSection = styled.section`
     background: url(${BackgroundImage}) right / cover;
@@ -20,6 +21,7 @@ export const Loginpage = () => {
         <LoginContainer>
             <Row>
                 <LeftColumnLogin />
+                <RightColumnLogin />
             </Row>
         </LoginContainer>
     </LoginSection>)
