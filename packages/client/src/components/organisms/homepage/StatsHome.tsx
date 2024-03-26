@@ -9,7 +9,7 @@ import { PersonHeartsIcon } from "../../atoms/icons/stats/PersonHeartsIcon";
 import { DiagramIcon } from "../../atoms/icons/stats/DiagramIcon";
 
 import LogoImage from '../../../assets/images/homepage/logo.png';
-import { useStats } from "../../../services/api/global/stats/useStatsApi";
+import { useStats } from "../../../hooks/useStatsApi";
 
 
 const StyledLogoSeparator = styled.img`
