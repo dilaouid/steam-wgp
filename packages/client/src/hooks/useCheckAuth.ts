@@ -6,6 +6,7 @@ export const useCheckAuth = () => {
     queryKey: ['auth', 'user'],
     queryFn: checkAuth,
     select: (data) => data.data,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    retry: false
   });
 };

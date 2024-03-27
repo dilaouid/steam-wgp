@@ -1,4 +1,4 @@
-import { getCookieValue, setCookieValue } from "../../../../utils/cookieUtils";
+import { deleteCookie, getCookieValue, setCookieValue } from "../../../../utils/cookieUtils";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const SAME_SITE = import.meta.env.VITE_SAME_SITE;
@@ -15,19 +15,24 @@ export const checkAuth = async () => {
     }
   }
 
-  if (!token) throw new Error('Aucun token d\'authentification trouvé');
+  if (!token)
+    throw new Error('Aucun token d\'authentification trouvé');
 
-  const response = await fetch(`${BASE_URL}/auth/me`, {
-    headers: {
-      'Authorization': 'Bearer ' + token
-    },
-    credentials: "include"
-  });
+  try {
+    const response = await fetch(`${BASE_URL}/auth/me`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      credentials: "include"
+    });
 
-  if (!response.ok) {
-    throw new Error('Authentification non vérifiée');
+    if (!response.ok) throw new Error('Authentification non vérifiée');
+
+    const res = await response.json();
+    return res.data;
+  } catch (err) {
+    deleteCookie('token');
+    console.error("Erreur lors de la vérification de l'authentification :", err);
+    throw new Error(err as string);
   }
-
-  const res = await response.json();
-  return res.data;
 };
