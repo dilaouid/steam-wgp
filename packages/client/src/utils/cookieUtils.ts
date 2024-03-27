@@ -10,3 +10,7 @@ export const setCookieValue = (name: string, value: string, options: { path: str
     const updatedCookie = `${name}=${encodeURIComponent(value)}; path=${options.path}`;
     document.cookie = updatedCookie;
 };
+
+export const deleteCookie = (name: string): void => {
+    setCookieValue(name, '', { path: '/' });
+};
