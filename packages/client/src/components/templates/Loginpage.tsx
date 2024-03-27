@@ -4,6 +4,8 @@ import { Container, Row } from 'react-bootstrap';
 import BackgroundImage from '../../assets/images/loginpage/bg.png'
 import { LeftColumnLogin } from '../organisms/login/LeftColumnLogin';
 import { RightColumnLogin } from '../organisms/login/RightColumnLogin';
+import { useAuthStore } from '../../store/authStore';
+import { useNavigate } from '@tanstack/react-router';
 
 const LoginSection = styled.section`
     background: url(${BackgroundImage}) right / cover;
@@ -16,6 +18,14 @@ const LoginContainer = styled(Container)`
 `;
 
 export const Loginpage = () => {
+
+    const { user } = useAuthStore();
+    const navigate = useNavigate();
+
+    if (!user) {
+        navigate({ to: '/' });
+    }
+
     return (
     <LoginSection>
         <LoginContainer>
