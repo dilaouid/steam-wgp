@@ -28,8 +28,7 @@ export const checkAuth = async () => {
 
     if (!response.ok) throw new Error('Authentification non vérifiée');
 
-    const res = await response.json();
-    return res.data;
+    return response.json();
   } catch (err) {
     deleteCookie('token');
     console.error("Erreur lors de la vérification de l'authentification :", err);

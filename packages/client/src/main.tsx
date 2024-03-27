@@ -10,15 +10,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 
 import { AuthWrapper } from './components/wrappers/AuthWrapper.tsx'
-const router = createRouter({ routeTree, Wrap: ({ children }) => {
-  return <AuthWrapper>{children}</AuthWrapper>
-} })
-
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
-}
+const router = createRouter({ routeTree })
 
 const queryClient = new QueryClient()
 const rootElement = document.getElementById('root')!
@@ -27,7 +19,10 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
+      <AuthWrapper> 
         <RouterProvider router={router} />
+
+      </AuthWrapper>
       </QueryClientProvider>
     </StrictMode>,
   )

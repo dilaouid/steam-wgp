@@ -7,21 +7,20 @@ type AuthWrapperProps = {
 };
 
 export const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
-    const { data: user, isError, error, isSuccess, isLoading } = useCheckAuth();
+    const { data, isError, error, isSuccess, isFetched } = useCheckAuth();
     const { setUser, toggleAuth } = useAuthStore();
 
     useEffect(() => {
         if (isError) {
-            console.error(error);
             setUser(null);
             toggleAuth(false);
-        } else if (isSuccess) {
-            setUser(user);
+        } else {
+            setUser(data);
             toggleAuth(true);
         }
-    }, [isError, isSuccess, user, setUser, toggleAuth, error]);
+    }, [isError, data, isSuccess, setUser, toggleAuth, error]);
 
-    if (isLoading)
+    if (!isFetched)
         return <div>Chargement...</div>;
 
     return <>{children}</>;
