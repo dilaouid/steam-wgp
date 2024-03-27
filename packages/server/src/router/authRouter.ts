@@ -80,8 +80,7 @@ export default async function authRouter(fastify: FastifyInstance) {
           maxAge: 18000,
           sameSite: process.env.NODE_ENV === 'production' ? 'none' : true
         });
-
-        return reply.redirect(`${fastify.config.FRONT}${fastify.config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
+        return reply.redirect(`${fastify.config.FRONT}/login${fastify.config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
       }
     );
 
