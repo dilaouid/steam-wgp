@@ -42,7 +42,7 @@ export const StatsHome: React.FC = () => {
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
                                 { !isPending &&
-                                    <CountUp start={ 0 } end={ data.players } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
+                                    <CountUp separator=" " start={ 0 } end={ data.players } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>
                                 }
@@ -59,7 +59,7 @@ export const StatsHome: React.FC = () => {
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
                                 { !isPending &&
-                                    <CountUp start={ 0 } end={ data.games } duration={ 3 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
+                                    <CountUp separator=" " start={ 0 } end={ data.games } duration={ 3 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>
                                 }
@@ -78,7 +78,7 @@ export const StatsHome: React.FC = () => {
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
                                 { !isPending &&
-                                    <CountUp start={ 0 } end={ data.matches } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
+                                    <CountUp separator=" " start={ 0 } end={ data.matches } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>
                                 }
@@ -95,7 +95,7 @@ export const StatsHome: React.FC = () => {
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
                                 { !isPending &&
-                                    <CountUp start={ 0 } end={ data.waitlists } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
+                                    <CountUp separator=" " start={ 0 } end={ data.waitlists } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>
                                 }
