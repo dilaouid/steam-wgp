@@ -27,11 +27,14 @@ export const RightColumnLogin: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (data[data.length - 1]?.complete && data[data.length - 1]?.type === 'success') {
-            // wait 3000ms before navigating to the home page
-            setTimeout(() => {
-                navigate({ to: '/' });
-            }, 3000);
+        if (data[data.length - 1]?.complete) {
+            localStorage.setItem('loadingLoginComplete', 'true');
+            if (data[data.length - 1]?.type === 'success') {
+                // wait 3000ms before navigating to the home page
+                setTimeout(() => {
+                    navigate({ to: '/' });
+                }, 3000);
+            }
         }
     }, [data, navigate]);
 

@@ -22,7 +22,9 @@ export const Loginpage = () => {
     const { user } = useAuthStore();
     const navigate = useNavigate();
 
-    if (!user) {
+    const loadingLoginComplete = localStorage.getItem('loadingLoginComplete');
+
+    if (!user || loadingLoginComplete) {
         navigate({ to: '/' });
     }
 
