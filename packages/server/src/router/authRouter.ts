@@ -72,7 +72,7 @@ export default async function authRouter(fastify: FastifyInstance) {
       async (request, reply) => {
         if (!request.user) throw new Error('Missing user object in request');
         const user = request.user as Player & { username: string };
-        const jwtToken = jwt.sign({ id: String(user.id), username: user.username }, fastify.config.SECRET_KEY, { expiresIn: '5h' });
+        const jwtToken = jwt.sign({ id: String(user.id), username: user.username, avatar_hash: user.avatar_hash }, fastify.config.SECRET_KEY, { expiresIn: '5h' });
         reply.setCookie('token', jwtToken, {
           httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
@@ -99,7 +99,7 @@ export default async function authRouter(fastify: FastifyInstance) {
         waitlist: WaitlistsPlayers.model.waitlist_id
       }).from(WaitlistsPlayers.model).where(eq(WaitlistsPlayers.model.player_id, user.id))
       const { waitlist } = findRoom?.length > 0 ? findRoom[0] : '';
-      return APIResponse(reply, { id: user.id, username: user.username, waitlist }, i18next.t('logged_in', { lng: request.userLanguage }), 200);
+      return APIResponse(reply, { id: user.id, username: user.username, waitlist, avatar_hash: user.avatar_hash }, i18next.t('logged_in', { lng: request.userLanguage }), 200);
     });
 
   });
