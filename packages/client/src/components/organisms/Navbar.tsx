@@ -6,7 +6,9 @@ import { useAuthStore } from '../../store/authStore';
 
 import { Container, Navbar as RBNavbar, Nav, Button } from 'react-bootstrap';
 import NavItem from '../atoms/NavItem';
-import { SteamIconLogin } from '../atoms/icons/SteamLoginIcon';
+import { FaPowerOff, FaSteam } from "react-icons/fa";
+
+
 import NavbarLogo from '../../assets/images/navbar/logo.png';
 
 import 'animate.css';
@@ -21,6 +23,13 @@ const StyledNavImg = styled.img`
 
 const StyledNavTitle = styled.span`
     font-family: 'Archivo Narrow', sans-serif;
+`;
+
+const LogoutIcon = styled(FaPowerOff)`
+    margin-right: 10px;
+`;
+const SteamIcon = styled(FaSteam)`
+    margin-right: 10px;
 `;
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -59,8 +68,8 @@ const Navbar: React.FC = () => {
             <NavItem eventKey="4" to="/steamders">{t('steamders')}</NavItem>
             <NavItem eventKey="5" to="/steamders" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
-          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick} href="/"> { t('logout') } </Button> }
-          { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href={ BASE_URL + "/auth/steam" }><SteamIconLogin /> | {t('login')}</Button> }
+          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick} href="/"><LogoutIcon /> | { t('logout') } </Button> }
+          { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href={ BASE_URL + "/auth/steam" }><SteamIcon /> | {t('login')}</Button> }
         </RBNavbar.Collapse>
       </Container>
     </RBNavbar>
