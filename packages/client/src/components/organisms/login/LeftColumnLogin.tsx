@@ -29,15 +29,11 @@ export const LeftColumnLogin: React.FC = () => {
     const { t } = useTranslation('pages/login');
     const { user } = useAuthStore();
 
-    if (!user) {
-        return (<></>);
-    }
-
     return (
     <ColumnLeft lg={4} className="col-9 text-center order-last m-auto order-lg-first" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="250">
-        <ProfilePicture src={`https://avatars.akamai.steamstatic.com/${user.avatar_hash}_full.jpg`} />
+        <ProfilePicture src={`https://avatars.akamai.steamstatic.com/${user?.avatar_hash}_full.jpg`} />
         <Hello>
-            <Trans t={t} i18nKey="greeting" components={{ 1: <span className="fw-bold text-info" /> }} values={{ username: user.username }} />
+            <Trans t={t} i18nKey="greeting" components={{ 1: <span className="fw-bold text-info" /> }} values={{ username: user?.username }} />
         </Hello>
 
         <ActorFont className="text-body">

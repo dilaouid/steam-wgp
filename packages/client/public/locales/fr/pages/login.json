@@ -3,5 +3,17 @@
     "what_is_happening": "Nous nous apprêtons à synchroniser votre compte Steam avec <1>SteamWGP</1> : en gros, on ajoute vos jeux Steam dans votre bibliothèque <1>SteamWGP</1>.",
     "warning": "À savoir, si votre bibliothèque Steam est privée, <1>nous ne pourront pas ajouter vos jeux à votre bibliothèque SteamWGP</1>. Une première synchronisation avec votre bibliothèque Steam publique est nécessaire.",
     "know_more": "En savoir plus",
-    "syncing": "Synchronisation en cours ..."
+    "syncing": "Synchronisation en cours ...",
+    "loading": {
+        "load_steam_library": "Chargement de votre bibliothèque Steam...",
+        "steam_library_not_accessible": "Votre bibliothèque Steam n'est pas accessible pour le moment. Votre compte est peut-être privé, ou alors vous n'avez pas de jeu.",
+        "steam_library_not_accessible_yet": "Votre bibliothèque Steam n'est pas accessible pour le moment.",
+        "adding_games_to_library": "Ajout des jeux à la bibliothèque ...",
+        "adding_games_to_collection": "Ajout des jeux à la collection ...",
+        "game_cannot_add_one": "{{count}} jeu n'a pas pu être ajouté à votre bibliothèque",
+        "game_cannot_add_other": "{{count}} jeux n'ont pas pu être ajoutés à votre bibliothèque",
+        "error_occured_in_loading_library": "Une erreur est survenue lors du chargement de votre bibliothèque, veuillez réessayer plus tard",
+        "loading_library_complete": "Chargement de la bibliothèque terminé, vous allez maintenant être redirigé",
+        "retrieved_library": "Bibliothèque récupérée"
+    }
 }

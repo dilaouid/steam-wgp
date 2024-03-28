@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Col, ProgressBar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import useSSEQuery from "../../../services/sse/loginSSE";
+import { ProgressLabelComponent } from "../../atoms/login/ProgressLabel";
 
 const RightBlock = styled.div`
     background: #060606d2;
@@ -19,14 +21,17 @@ const Progress = styled(ProgressBar)`
 
 export const RightColumnLogin: React.FC = () => {
     const { t } = useTranslation('pages/login');
+    const { data } = useSSEQuery();
 
-    return(
+    return (
         <Col className="col-12 col-lg-8 text-center" data-aos="zoom-out" data-aos-duration="600">
             <RightBlock>
                 <Title className="text-warning text-opacity-75">{ t('syncing') }</Title>
-                <Progress variant="info" striped animated now={37} />
+                <Progress variant={data[data.length - 1]?.type ?? 'info'} striped animated now={ data[data.length - 1]?.progress ?? 0 } />
                 <ul className="list-unstyled">
-                    
+                {data && data.map((msg, index) => (
+                    <ProgressLabelComponent key={index} message={msg.message} type={msg.type} last={index === data.length - 1} complete={msg.complete} count={msg?.count} />
+                ))}
                 </ul>
             </RightBlock>
         </Col>
