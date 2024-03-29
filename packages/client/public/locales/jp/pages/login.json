@@ -1,0 +1,19 @@
+{
+    "greeting": "👋 こんにちは、<1>{{username}}</1>さん！",
+    "what_is_happening": "<1>SteamWGP</1>にあなたのSteamアカウントを同期しようとしています：基本的に、あなたのSteamゲームを<1>SteamWGP</1>のライブラリに追加しています。",
+    "warning": "ご注意ください。Steamライブラリが非公開の場合、<1>SteamWGPライブラリにあなたのゲームを追加することはできません</1>。最初に公開Steamライブラリとの同期が必要です。",
+    "know_more": "詳しくは",
+    "syncing": "同期中...",
+    "loading": {
+        "load_steam_library": "Steamライブラリを読み込み中...",
+        "steam_library_not_accessible": "現在、Steamライブラリにアクセスできません。アカウントが非公開か、ゲームがない可能性があります。",
+        "steam_library_not_accessible_yet": "現在、Steamライブラリにアクセスできません。",
+        "adding_games_to_library": "ライブラリにゲームを追加中...",
+        "adding_games_to_collection": "コレクションにゲームを追加中...",
+        "game_cannot_add_one": "{{count}}個のゲームをライブラリに追加できませんでした",
+        "game_cannot_add_other": "{{count}}個のゲームをライブラリに追加できませんでした",
+        "error_occured_in_loading_library": "ライブラリの読み込み中にエラーが発生しました。後ほど再度お試しください",
+        "loading_library_complete": "ライブラリの読み込み完了、これからリダイレクトされます",
+        "retrieved_library": "ライブラリを取得しました"
+    }
+}

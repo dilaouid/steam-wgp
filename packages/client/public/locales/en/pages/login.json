@@ -1,0 +1,20 @@
+{
+    "greeting": "👋 Hello <1>{{username}}</1>!",
+    "what_is_happening": "We're about to sync your Steam account with <1>SteamWGP</1>: essentially, we're adding your Steam games to your <1>SteamWGP</1> library.",
+    "warning": "Just so you know, if your Steam library is private, <1>we won't be able to add your games to your SteamWGP library</1>. An initial sync with your public Steam library is required.",
+    "know_more": "Learn more",
+    "syncing": "Syncing in progress...",
+    "loading": {
+        "load_steam_library": "Loading your Steam library...",
+        "steam_library_not_accessible": "Your Steam library is not accessible at the moment. Your account may be private, or you don't have any game.",
+        "steam_library_not_accessible_yet": "Your Steam library is not accessible at the moment.",
+        "adding_games_to_library": "Adding games to library...",
+        "adding_games_to_collection": "Adding games to collection...",
+        "game_cannot_add_one": "{{count}} game could not be added to your library",
+        "game_cannot_add_other": "{{count}} games could not be added to your library",
+        "error_occured_in_loading_library": "An error occured while loading your library, please try again later",
+        "loading_library_complete": "Loading library complete, you will now be redirected",
+        "session_expired": "Your session has expired, please log in again",
+        "retrieved_library": "Retrieved library"
+    }
+}

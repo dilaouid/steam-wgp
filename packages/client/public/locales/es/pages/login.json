@@ -1,0 +1,19 @@
+{
+    "greeting": "👋 ¡Hola <1>{{username}}</1>!",
+    "what_is_happening": "Estamos a punto de sincronizar tu cuenta de Steam con <1>SteamWGP</1>: en esencia, estamos agregando tus juegos de Steam a tu biblioteca de <1>SteamWGP</1>.",
+    "warning": "Para que lo sepas, si tu biblioteca de Steam es privada, <1>no podremos añadir tus juegos a tu biblioteca de SteamWGP</1>. Se requiere una sincronización inicial con tu biblioteca de Steam pública.",
+    "know_more": "Saber más",
+    "syncing": "Sincronización en curso...",
+    "loading": {
+        "load_steam_library": "Cargando tu biblioteca de Steam...",
+        "steam_library_not_accessible": "Tu biblioteca de Steam no está accesible en este momento. Tal vez tu cuenta sea privada, o quizás no tengas juegos.",
+        "steam_library_not_accessible_yet": "Tu biblioteca de Steam no está accesible ahora mismo.",
+        "adding_games_to_library": "Añadiendo juegos a la biblioteca...",
+        "adding_games_to_collection": "Añadiendo juegos a la colección...",
+        "game_cannot_add_one": "{{count}} juego no pudo ser añadido a tu biblioteca",
+        "game_cannot_add_other": "{{count}} juegos no pudieron ser añadidos a tu biblioteca",
+        "error_occured_in_loading_library": "Ocurrió un error al cargar tu biblioteca, por favor intenta de nuevo más tarde",
+        "loading_library_complete": "Carga de la biblioteca completa, ahora serás redirigido",
+        "retrieved_library": "Biblioteca recuperada"
+    }
+}
