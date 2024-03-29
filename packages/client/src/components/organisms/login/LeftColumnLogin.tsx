@@ -13,6 +13,7 @@ const ColumnLeft = styled(Col)`
 const ProfilePicture = styled.img`
     width: 181px;
     border-radius: 21px;
+    user-select: none;
 `;
 
 const Hello = styled.p`
