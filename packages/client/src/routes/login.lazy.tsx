@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router'
+import { createLazyFileRoute } from '@tanstack/react-router'
 import { Loginpage } from '../components/templates/Loginpage';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-export const Route = createFileRoute("/login")({
+export const Route = createLazyFileRoute("/login")({
   component: Login
 })
 
