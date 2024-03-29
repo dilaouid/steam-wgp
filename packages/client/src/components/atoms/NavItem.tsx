@@ -1,32 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Nav } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useMatch } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 import 'animate.css';
 
 interface NavItemProps {
-  eventKey: string;
   to: string;
   children: React.ReactNode;
   flashy?: boolean;
 }
 
-const StyledNavItem = styled(Nav.Link)`
+const StyledNavItem = styled(Link)`
   margin-right: 30px;
 `;
 
-const NavItem: React.FC<NavItemProps> = ({ eventKey, to, children, flashy }) => {
+const NavItem: React.FC<NavItemProps> = ({ to, children, flashy }) => {
   const { t } = useTranslation();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const match = useMatch(to as any);
-
   if (!children) {
     return null;
   }
 
-  const toggleTadaAnimation = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const toggleTadaAnimation = (event: React.MouseEvent<any>) => {
     const targetClasslist = event.currentTarget.classList;
     if (!flashy) return;
     
@@ -44,14 +40,16 @@ const NavItem: React.FC<NavItemProps> = ({ eventKey, to, children, flashy }) => 
   }
 
   return (
-    <StyledNavItem 
-      eventKey={eventKey}
-      href={to}
-      onMouseEnter={(event) => { toggleTadaAnimation(event) }}
-      className={flashy ? 'fw-bolder link-warning animate__animated animate__zoomIn' : '' + match.pathname === to ? 'active' : ''}
-    >
-      { t(children.toString()) }
-    </StyledNavItem>
+    <li className='nav-item'>
+      <StyledNavItem 
+        to={to}
+        className={flashy ? 'nav-link fw-bolder link-warning animate__animated animate__zoomIn' : 'nav-link'}
+        activeProps={{ className: 'active' }}
+        onMouseEnter={(event) => toggleTadaAnimation(event)}
+      >
+        { t(children.toString()) }
+      </StyledNavItem>
+    </li>
   );
 };
 
