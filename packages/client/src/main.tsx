@@ -29,7 +29,6 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
       <AuthWrapper> 
         <RouterProvider router={router} />
-
       </AuthWrapper>
       </QueryClientProvider>
     </StrictMode>,
