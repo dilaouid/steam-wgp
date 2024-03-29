@@ -9,7 +9,6 @@ import { Trans, useTranslation } from "react-i18next";
 import FeaturesImage from '../../../assets/images/homepage/features.png';
 
 const StyledFeaturesImage = styled.img`
-    user-select: none;
     z-index: 10;
     min-height: 300px !important;
     margin-top: -130px;
@@ -24,7 +23,7 @@ export const FeaturesHome: React.FC = () => {
     <div className="container-sm py-4 py-xl-5">
         <Row className="row-cols-1 row-cols-md-2">
             <Col style={{ zIndex: 2 }}>
-                <StyledFeaturesImage className="img-fluid w-100 h-100 fit-cover" data-aos="fade-up" data-aos-duration="500" id="features_image" src={FeaturesImage} />
+                <StyledFeaturesImage className="img-fluid w-100 h-100 fit-cover user-select-none" data-aos="fade-up" data-aos-duration="500" id="features_image" src={FeaturesImage} />
             </Col>
             <Col className="col-auto text-muted d-flex flex-column justify-content-center p-4">
                 <FeatureHome>

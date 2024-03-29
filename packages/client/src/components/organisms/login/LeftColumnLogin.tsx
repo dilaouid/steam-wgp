@@ -13,7 +13,6 @@ const ColumnLeft = styled(Col)`
 const ProfilePicture = styled.img`
     width: 181px;
     border-radius: 21px;
-    user-select: none;
 `;
 
 const Hello = styled.p`
@@ -32,7 +31,7 @@ export const LeftColumnLogin: React.FC = () => {
 
     return (
     <ColumnLeft lg={4} className="col-9 text-center order-last m-auto order-lg-first" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="250">
-        <ProfilePicture src={`https://avatars.akamai.steamstatic.com/${user?.avatar_hash}_full.jpg`} />
+        <ProfilePicture className="user-select-none" src={`https://avatars.akamai.steamstatic.com/${user?.avatar_hash}_full.jpg`} />
         <Hello>
             <Trans t={t} i18nKey="greeting" components={{ 1: <span className="fw-bold text-info" /> }} values={{ username: user?.username }} />
         </Hello>

@@ -13,7 +13,6 @@ import { useStats } from "../../../hooks/useStatsApi";
 
 
 const StyledLogoSeparator = styled.img`
-    user-select: none;
     z-index: 0;
     position: absolute;
     margin-left: 46.5%;
@@ -31,7 +30,7 @@ export const StatsHome: React.FC = () => {
     return(
     <div data-aos="flip-down">
         <hr />
-        <StyledLogoSeparator className="img-fluid" data-aos="flip-down" src={LogoImage} loading="lazy" />
+        <StyledLogoSeparator className="img-fluid user-select-none" data-aos="flip-down" src={LogoImage} loading="lazy" />
         <StyledContainer className="py-4 py-xl-5">
             <Row className="gy-4 row-cols-2 row-cols-md-4">
 

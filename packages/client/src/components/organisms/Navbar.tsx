@@ -18,13 +18,11 @@ const StyledNav = styled(Nav)`
 
 const StyledNavImg = styled.img`
     width: 37px;
-    user-select: none;
     margin-right: 10px;
 `;
 
 const StyledNavTitle = styled.span`
     font-family: 'Archivo Narrow', sans-serif;
-    user-select: none;
 `;
 
 const LogoutIcon = styled(FaPowerOff)`
@@ -57,7 +55,7 @@ const Navbar: React.FC = () => {
     <RBNavbar expand="md" variant="dark" bg="black" sticky="top" className="bg-opacity-75 py-3">
       <Container>
 
-        <RBNavbar.Brand href="/">
+        <RBNavbar.Brand href="/" className='user-select-none'>
           <StyledNavImg 
             src={NavbarLogo}
             alt="Logo SteamWGP"
