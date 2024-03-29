@@ -12,7 +12,9 @@ export const Route = createLazyFileRoute("/library")({
 
 function Home() {
   useEffect(() => {
-    AOS.init();
+    AOS.init({
+      once: true
+    });
     AOS.refresh();
   }, []);
   return <Librarypage />

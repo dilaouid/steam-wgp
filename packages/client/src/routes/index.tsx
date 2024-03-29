@@ -12,7 +12,9 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   useEffect(() => {
-    AOS.init();
+    AOS.init({
+      once: true
+    });
     AOS.refresh();
   }, []);
   return <Homepage />
