@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from '@tanstack/react-router';
 
 import { useAuthStore } from '../../store/authStore';
 
@@ -8,10 +9,8 @@ import { Container, Navbar as RBNavbar, Nav, Button } from 'react-bootstrap';
 import NavItem from '../atoms/NavItem';
 import { FaPowerOff, FaSteam } from "react-icons/fa";
 
-
 import NavbarLogo from '../../assets/images/navbar/logo.png';
-
-import 'animate.css';
+import { logout } from '../../services/api/global/auth/logoutApi';
 
 const StyledNav = styled(Nav)`
     font-family: 'Abel', sans-serif;
@@ -19,10 +18,13 @@ const StyledNav = styled(Nav)`
 
 const StyledNavImg = styled.img`
     width: 37px;
+    user-select: none;
+    margin-right: 10px;
 `;
 
 const StyledNavTitle = styled.span`
     font-family: 'Archivo Narrow', sans-serif;
+    user-select: none;
 `;
 
 const LogoutIcon = styled(FaPowerOff)`
@@ -36,11 +38,19 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Navbar: React.FC = () => {
   const { isAuthenticated, toggleAuth, setUser, user } = useAuthStore();
+  const navigate = useNavigate();
   const { t } = useTranslation('global/navbar');
 
     const handleAuthClick = () => {
-        toggleAuth(!isAuthenticated);
+      logout().then(() => {
+        toggleAuth(false);
         setUser(null);
+        navigate({to: '/'}).then(() => {
+          localStorage.removeItem('animationPlayed');
+        })
+      }).catch((err) => {
+        console.error("Impossible de déconnecter l'utilisateur: " + err);
+      });
     }
 
   return (
@@ -55,7 +65,7 @@ const Navbar: React.FC = () => {
             width={37}
             onMouseEnter={(e) => e.currentTarget.classList.add('animate__rubberBand')}
             onMouseLeave={(e) => e.currentTarget.classList.remove('animate__rubberBand')}
-          /> {' '}
+          />
           <StyledNavTitle>SteamWGP</StyledNavTitle>
         </RBNavbar.Brand>
 
