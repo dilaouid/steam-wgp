@@ -12,7 +12,15 @@ import { routeTree } from './routeTree.gen'
 import { AuthWrapper } from './components/wrappers/AuthWrapper.tsx'
 const router = createRouter({ routeTree })
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+      retry: false
+    },
+  },
+})
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
