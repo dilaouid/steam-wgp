@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 import { useAuthStore } from '../../store/authStore';
 
@@ -55,16 +55,18 @@ const Navbar: React.FC = () => {
     <RBNavbar expand="md" variant="dark" bg="black" sticky="top" className="bg-opacity-75 py-3">
       <Container>
 
-        <RBNavbar.Brand href="/" className='user-select-none'>
-          <StyledNavImg 
-            src={NavbarLogo}
-            alt="Logo SteamWGP"
-            className="d-inline-block align-top animate__animated"
-            width={37}
-            onMouseEnter={(e) => e.currentTarget.classList.add('animate__rubberBand')}
-            onMouseLeave={(e) => e.currentTarget.classList.remove('animate__rubberBand')}
-          />
-          <StyledNavTitle>SteamWGP</StyledNavTitle>
+        <RBNavbar.Brand className='user-select-none'>
+          <Link to="/" className='text-decoration-none text-white'>
+            <StyledNavImg 
+              src={NavbarLogo}
+              alt="Logo SteamWGP"
+              className="d-inline-block align-top animate__animated"
+              width={37}
+              onMouseEnter={(e) => e.currentTarget.classList.add('animate__rubberBand')}
+              onMouseLeave={(e) => e.currentTarget.classList.remove('animate__rubberBand')}
+            />
+            <StyledNavTitle>SteamWGP</StyledNavTitle>
+          </Link>
         </RBNavbar.Brand>
 
         <RBNavbar.Toggle aria-controls="responsive-navbar-nav" />
