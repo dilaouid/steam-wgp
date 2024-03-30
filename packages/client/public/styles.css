@@ -1,0 +1,8 @@
+.nav-pills .nav-link.active, .nav-tabs .nav-link.active {
+    background: var(--bs-cyan);
+    user-select: none;
+}
+
+.nav-item {
+    margin-right: 30px;
+}
