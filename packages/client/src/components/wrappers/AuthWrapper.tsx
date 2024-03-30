@@ -1,6 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { useCheckAuth } from "../../hooks/useCheckAuth";
 import { useAuthStore } from "../../store/authStore";
+import { Loader } from "../atoms/Loader";
 
 type AuthWrapperProps = {
     children: ReactNode;
@@ -21,7 +22,7 @@ export const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
     }, [isError, data, isSuccess, setUser, toggleAuth, error]);
 
     if (!isFetched)
-        return <div>Chargement...</div>;
+        return <Loader />;
 
     return <>{children}</>;
 };
