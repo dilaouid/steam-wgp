@@ -1,10 +1,14 @@
 import styled from 'styled-components';
-import { useAuthStore } from '../../store/authStore';
+import { useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { Container, Row } from 'react-bootstrap';
 
 import CoverImage from '../../assets/images/librarypage/cover.png';
 import { LeftColumnLibrary } from '../organisms/library/LeftColumnLibrary';
+import { RightColumnLibrary } from '../organisms/library/RightColumnLibrary';
+import { useLibraryStore } from '../../store/libraryStore';
+import { useAuthStore } from '../../store/authStore';
+import { useGetLibrary } from '../../hooks/useLibrary';
 
 const LibrarySection = styled.section`
     padding-top: 9px;
@@ -17,20 +21,27 @@ const LibraryContainer = styled(Container)`
 `;
 
 export const Librarypage = () => {
-
+    const { setLibrary } = useLibraryStore();
     const { isAuthenticated } = useAuthStore();
+    const { data, isLoading, isError } = useGetLibrary();
 
     const navigate = useNavigate();
     if (!isAuthenticated) {
         navigate({ to: '/' });
     }
 
+    useEffect(() => {
+        if (data && !isError)
+            setLibrary(data);
+    }, [data, setLibrary, isError]);
+
     return (
     <LibrarySection>
         <LibraryContainer>
-            <Row className='g-0'>
+            { !isLoading && <Row className='g-0'>
                 <LeftColumnLibrary />
-            </Row>
+                <RightColumnLibrary />
+            </Row> }
         </LibraryContainer>
     </LibrarySection>)
 }
