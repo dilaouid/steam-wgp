@@ -29,7 +29,7 @@ export const RightColumnLibrary: React.FC = () => {
                 justify
             >
                 <Tab eventKey="all_games" title={t('tabs_title.all_games', { count: library.length })}>
-                    <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
+                    <TabRow className="g-0">
                         {library.map(game => (
                             <GameColumn game={game} key={game.game_id} />
                         ))}
@@ -37,7 +37,7 @@ export const RightColumnLibrary: React.FC = () => {
                 </Tab>
 
                 <Tab eventKey="public_games" title={t('tabs_title.public_games', { count: publics.length })}>
-                    <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
+                    <TabRow className="g-0">
 
                         { publics.length === 0 && <EmptyTab>{t('no_public_games')}</EmptyTab> }
 
@@ -48,7 +48,7 @@ export const RightColumnLibrary: React.FC = () => {
                 </Tab>
 
                 <Tab eventKey="private_games" title={t('tabs_title.private_games', { count: privates.length })}>
-                    <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
+                    <TabRow className="g-0">
 
                         { privates.length === 0 && <EmptyTab>{t('no_private_games')}</EmptyTab> }
 
@@ -59,7 +59,7 @@ export const RightColumnLibrary: React.FC = () => {
                 </Tab>
 
                 <Tab eventKey="selected_games" title={t('tabs_title.selected_games', { count: selected.length })}>
-                    <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
+                    <TabRow className="g-0">
 
                         { selected.length === 0 && <EmptyTab>{t('no_selected_games')}</EmptyTab> }
 
