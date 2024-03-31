@@ -11,6 +11,7 @@ import { routeTree } from './routeTree.gen'
 
 import { AuthWrapper } from './components/wrappers/AuthWrapper.tsx'
 const router = createRouter({ routeTree })
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const queryClient = new QueryClient({
   defaultOptions: {
