@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import { useLibraryStore } from "../../../store/libraryStore";
-import { GameContainer } from "../../molecules/library/GameContainer";
+import { useTranslation } from "react-i18next";
+import { EmptyTab } from "../../molecules/library/EmptyTab";
+import { GameColumn } from "../../molecules/library/GameColumn";
 
 const StyledTabs = styled(Tabs)`
     font-family: 'Archivo Narrow', sans-serif;
@@ -12,11 +14,8 @@ const TabRow = styled(Row)`
     padding: 14px;
 `;
 
-const GameColumn = styled(Col)`
-    margin-bottom: 20px;
-`;
-
 export const RightColumnLibrary: React.FC = () => {
+    const { t } = useTranslation('pages/library', { keyPrefix: 'right_column' });
     const { library, selected } = useLibraryStore();
     const publics = library.filter(game => !game.hidden);
     const privates = library.filter(game => game.hidden);
@@ -29,42 +28,43 @@ export const RightColumnLibrary: React.FC = () => {
                 className="mb-3 user-select-none"
                 justify
             >
-                <Tab eventKey="all_games" title={`Tous vos jeux (${library.length})`}>
+                <Tab eventKey="all_games" title={t('tabs_title.all_games', { count: library.length })}>
                     <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
                         {library.map(game => (
-                            <GameColumn sm={6} md={6} lg={3} className="col-6 text-center align-self-center" key={game.game_id}>
-                                <GameContainer isselected={selected.includes(game.game_id)} game_id={game.game_id} hidden={game.hidden} />
-                            </GameColumn>
+                            <GameColumn game={game} key={game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>
 
-                <Tab eventKey="public_games" title={`Jeux publiques (${publics.length})`}>
+                <Tab eventKey="public_games" title={t('tabs_title.public_games', { count: publics.length })}>
                     <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
+
+                        { publics.length === 0 && <EmptyTab>{t('no_public_games')}</EmptyTab> }
+
                         {publics.map(game => (
-                            <GameColumn sm={6} md={6} lg={3} className="col-6 text-center align-self-center" key={game.game_id}>
-                                <GameContainer isselected={selected.includes(game.game_id)} game_id={game.game_id} hidden={game.hidden} />
-                            </GameColumn>
+                            <GameColumn game={game} key={game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>
 
-                <Tab eventKey="private_games" title={`Jeux privés (${privates.length})`}>
+                <Tab eventKey="private_games" title={t('tabs_title.private_games', { count: privates.length })}>
                     <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
+
+                        { privates.length === 0 && <EmptyTab>{t('no_private_games')}</EmptyTab> }
+
                         {privates.map(game => (
-                            <GameColumn sm={6} md={6} lg={3} className="col-6 text-center align-self-center" key={game.game_id}>
-                                <GameContainer isselected={selected.includes(game.game_id)} game_id={game.game_id} hidden={game.hidden} />
-                            </GameColumn>
+                            <GameColumn game={game} key={game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>
 
-                <Tab eventKey="selected_games" title={`Jeux sélectionnés (${selected.length})`}>
+                <Tab eventKey="selected_games" title={t('tabs_title.selected_games', { count: selected.length })}>
                     <TabRow className="g-0" data-aos="zoom-in" data-aos-delay="200">
+
+                        { selected.length === 0 && <EmptyTab>{t('no_selected_games')}</EmptyTab> }
+
                         {library.filter(game => selected.includes(game.game_id)).map(game => (
-                            <GameColumn sm={6} md={6} lg={3} className="col-6 text-center align-self-center" key={game.game_id}>
-                                <GameContainer isselected={selected.includes(game.game_id)} game_id={game.game_id} hidden={game.hidden} />
-                            </GameColumn>
+                            <GameColumn game={game} key={game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>

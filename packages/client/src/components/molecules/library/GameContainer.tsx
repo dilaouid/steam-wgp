@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { BsShieldLockFill } from "react-icons/bs";
 import { GameCover } from "../../atoms/library/GameCover";
+import { useLibraryStore } from "../../../store/libraryStore";
 
 const Container = styled.div<{ isselected: boolean }>`
     position: relative;
@@ -37,14 +38,15 @@ const LockIcon = styled(BsShieldLockFill)`
 `;
 
 interface GameContainerProps {
-    isselected: boolean;
     game_id: string;
     hidden: boolean;
 }
 
-export const GameContainer: React.FC<GameContainerProps> = ({ isselected, game_id, hidden }) => {
+export const GameContainer: React.FC<GameContainerProps> = ({ game_id, hidden }) => {
+    const { selected } = useLibraryStore();
+
     return(
-        <Container isselected={isselected}>
+        <Container isselected={selected.includes(game_id)}>
             { hidden && <LockIcon /> }
             <GameCover game_id={game_id} hidden={hidden} />
         </Container>
