@@ -16,7 +16,8 @@
         },
         "submit_selected_button": {
             "disabled": "Aucun jeu sélectionné",
-            "enabled": " | Confirmer les changements"
+            "enabled": " | Confirmer les changements",
+            "loading": "Chargement ..."
         }
     },
     "right_column": {

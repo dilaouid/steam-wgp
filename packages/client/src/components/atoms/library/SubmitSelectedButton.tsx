@@ -12,7 +12,7 @@ interface SubmitSelectedButtonProps {
 export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ count }) => {
     const { t } = useTranslation('pages/library', { keyPrefix: 'left_column.submit_selected_button' });
     const { library, setLibrary, selected, setSelected } = useLibraryStore();
-    const updateMutation = useMutation({ mutationFn: updateLibrary });
+    const updateMutation = useMutation({ mutationFn: updateLibrary, mutationKey: ['update', 'library'] });
     const message = count === 0 ? t('disabled') : t('enabled');
     
     const handleUpdateLibrary = async () => {
@@ -27,14 +27,16 @@ export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ coun
         }
     };
 
+    const isDisabled = count === 0 || updateMutation.isPending;
+
     return (
         <Button
-            variant={count === 0 ? 'secondary' : 'info'}
-            disabled={count === 0}
+            variant={isDisabled ? 'secondary' : 'info'}
+            disabled={isDisabled}
             onClick={handleUpdateLibrary}
         >
             { count > 0 && <BsCheckAll /> }
-            { message }
+            { updateMutation.isPending ? t('loading') : message }
         </Button>
     );
 };
