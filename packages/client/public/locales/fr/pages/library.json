@@ -18,5 +18,19 @@
             "disabled": "Aucun jeu sélectionné",
             "enabled": " | Confirmer les changements"
         }
+    },
+    "right_column": {
+        "tabs_title": {
+            "all_games": "Tous les jeux ({{count}})",
+            "selected_games": "Jeu sélectionné ({{count}})",
+            "selected_games_other": "Jeux sélectionnés ({{count}})",
+            "public_games": "Jeu publique ({{count}})",
+            "public_games_other": "Jeux publiques ({{count}})",
+            "private_games": "Jeu privé ({{count}})",
+            "private_games_other": "Jeux privés ({{count}})"
+        },
+        "no_selected_games": "Aucun jeu sélectionné",
+        "no_public_games": "Aucun jeu publique",
+        "no_private_games": "Aucun jeu privé"
     }
 }
