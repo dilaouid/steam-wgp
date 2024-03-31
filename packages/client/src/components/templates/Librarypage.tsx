@@ -14,6 +14,7 @@ const LibrarySection = styled.section`
     padding-top: 9px;
     padding-bottom: 27px;
     background: url(${CoverImage}) right / cover;
+    background-attachment: fixed;
 `;
 
 const LibraryContainer = styled(Container)`
@@ -38,7 +39,7 @@ export const Librarypage = () => {
     return (
     <LibrarySection>
         <LibraryContainer>
-            { !isLoading && <Row className='g-0'>
+            { !isLoading && <Row className='g-3'>
                 <LeftColumnLibrary />
                 <RightColumnLibrary />
             </Row> }

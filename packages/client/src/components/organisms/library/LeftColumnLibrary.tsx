@@ -13,6 +13,15 @@ const StyledCol = styled(Col)`
     background: #060606c5;
     padding: 22px;
     border-radius: 27px;
+    position: sticky;
+    top: 15vh;
+    z-index: 1;
+    @media (max-width: 990px) {
+        position: static;
+        top: auto;
+        height: auto;
+        margin-top: 20px;
+    }
 `;
 
 const ButtonCol = styled(Col)`
