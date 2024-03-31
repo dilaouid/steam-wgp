@@ -9,6 +9,7 @@ import { RightColumnLibrary } from '../organisms/library/RightColumnLibrary';
 import { useLibraryStore } from '../../store/libraryStore';
 import { useAuthStore } from '../../store/authStore';
 import { useGetLibrary } from '../../hooks/useLibrary';
+import { TGameLibrary } from '../../types/TGameLibrary';
 
 const LibrarySection = styled.section`
     padding-top: 9px;
@@ -32,8 +33,12 @@ export const Librarypage = () => {
     }
 
     useEffect(() => {
-        if (data && !isError)
+        if (data && !isError) {
+            // filter data library by asc order (game_id)
+            data.sort((a: TGameLibrary, b: TGameLibrary) => a.game_id.localeCompare(b.game_id));
+
             setLibrary(data);
+        }
     }, [data, setLibrary, isError]);
 
     return (
