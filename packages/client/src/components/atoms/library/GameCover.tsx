@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useLibraryStore } from "../../../store/libraryStore";
 import { useIsMutating } from "@tanstack/react-query";
 
-const Cover = styled.img<{ private?: boolean }>`
+const Cover = styled.img<{ $private: boolean }>`
     user-select: none;
     transition: .4s;
     cursor: pointer;
@@ -12,8 +12,8 @@ const Cover = styled.img<{ private?: boolean }>`
     border-radius: 20px;
     position: relative;
     z-index: 1;
-    filter: ${props => props.private ? 'blur(0px) brightness(79%) contrast(113%) grayscale(100%)' : 'none'};
-    opacity: ${props => props.private ? '0.6' : '1'};
+    filter: ${props => props.$private ? 'blur(0px) brightness(79%) contrast(113%) grayscale(100%)' : 'none'};
+    opacity: ${props => props.$private ? '0.6' : '1'};
     &:hover {
         opacity: .6;
         transform: scale(0.9);
@@ -39,7 +39,7 @@ export const GameCover: React.FC<GameCoverProps> = ({ game_id, hidden }) => {
     };
 
     if (isMutating)
-        return <GoodSizedSkeleton enableAnimation height={215} highlightColor="#444" baseColor="#333" borderRadius={20+'px'} inline={false} />;
+        return <GoodSizedSkeleton enableAnimation height={215} highlightColor="#444" baseColor="#333" borderRadius={20+'px'} inline={false} />;    
 
-    return <Cover onClick={handleClick} private={hidden} src={`https://steamcdn-a.akamaihd.net/steam/apps/${game_id}/library_600x900.jpg`} alt={`Game cover for ${game_id}`} />;
+    return <Cover onClick={handleClick} $private={hidden} src={`https://steamcdn-a.akamaihd.net/steam/apps/${game_id}/library_600x900.jpg`} alt={`Game cover for ${game_id}`} />;
 };
