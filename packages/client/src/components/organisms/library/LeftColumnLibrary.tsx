@@ -51,7 +51,7 @@ export const LeftColumnLibrary: React.FC = () => {
     return (
         <StyledCol sm={12} lg={4} data-aos="fade-right" data-aos-duration="600">
             <StyledTitle className="text-info">{ t('your_library') }</StyledTitle>
-            <p>Retrouvez votre bibliothèque de jeux multijoueurs <strong>Steam</strong> ici.</p>
+            <p><Trans t={t} i18nKey="find_your_library" components={{ 1: <strong /> }} /></p>
             <Question>{ t('not_finding_a_game') }</Question>
             <p><Trans t={t} i18nKey="not_multiplayer" components={{ 1: <strong /> }} /></p>
             <p><Trans t={t} i18nKey="select_games" components={{ 1: <strong className="text-info" /> }} /></p>

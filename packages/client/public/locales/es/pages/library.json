@@ -1,0 +1,37 @@
+{
+    "left_column": {
+        "your_library": "🎮 Tu Biblioteca",
+        "find_your_library": "Encuentra aquí tu biblioteca de juegos multijugador de <1>Steam</1>.",
+        "not_finding_a_game": "¿No encuentras uno de tus juegos?",
+        "not_multiplayer": "Significa que <1>SteamWGP</1> ha determinado que no es un juego multijugador y por eso no aparece aquí.",
+        "select_games": "Aquí puedes elegir qué juegos hacer públicos o privados en <1>Steamders</1>. Si hay un juego que realmente no te gusta o te avergüenza, ¡esta página es para ti!",
+        "how_to": "¿Cómo hacerlo?",
+        "click": "Simplemente haciendo clic en el juego en cuestión y confirmando tu acción. ¿Fácil, verdad? 😉",
+        "explanations": "Al unirte a un <1>Steamder</1>, tus juegos privados no serán añadidos a la lista de juegos comunes entre los jugadores en la sala.",
+        "selected_count": {
+            "public": "{{count}} juego público",
+            "public_other": "{{count}} juegos públicos",
+            "private": "{{count}} juego privado",
+            "private_other": "{{count}} juegos privados"
+        },
+        "submit_selected_button": {
+            "disabled": "No hay juegos seleccionados",
+            "enabled": " | Confirmar Cambios",
+            "loading": "Cargando ..."
+        }
+    },
+    "right_column": {
+        "tabs_title": {
+            "all_games": "Todos los Juegos ({{count}})",
+            "selected_games": "Juego Seleccionado ({{count}})",
+            "selected_games_other": "Juegos Seleccionados ({{count}})",
+            "public_games": "Juego Público ({{count}})",
+            "public_games_other": "Juegos Públicos ({{count}})",
+            "private_games": "Juego Privado ({{count}})",
+            "private_games_other": "Juegos Privados ({{count}})"
+        },
+        "no_selected_games": "No hay juegos seleccionados",
+        "no_public_games": "No hay juegos públicos",
+        "no_private_games": "No hay juegos privados"
+    }
+}

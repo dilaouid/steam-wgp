@@ -1,7 +1,7 @@
 {
     "left_column": {
         "your_library": "🎮 Votre bibliothèque",
-        "find_your_library": "Retrouvez votre bibliothèque de jeux multijoueurs Steam ici.",
+        "find_your_library": "Retrouvez votre bibliothèque de jeux multijoueurs <1>Steam</1> ici.",
         "not_finding_a_game": "Vous ne retrouvez pas un de vos jeux ?",
         "not_multiplayer": "C'est que <1>SteamWGP</1> a considéré qu'il n'est pas un jeu multijoueur et qu'il n'a donc pas sa place ici !",
         "select_games": "Ici, vous pouvez décidez des jeux que vous souhaitez rendre publiques ou privés dans les <1>Steamders</1>. Si jamais vous voulez cacher un jeu que vous n'aimez vraiment pas ou que vous trouvez gênant, cette page est pour vous !",
