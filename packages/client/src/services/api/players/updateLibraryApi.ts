@@ -4,6 +4,8 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const updateLibrary = async (games: string[]) => {
     try {
         const token = getCookieValue('token');
+        // wait 5 seconds for demonstration purposes
+        // await new Promise(resolve => setTimeout(resolve, 5000));
         return fetch(`${BASE_URL}/library`, {
             headers: {
                 'Authorization': 'Bearer ' + token,

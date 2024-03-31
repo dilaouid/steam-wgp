@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { BsShieldLockFill } from "react-icons/bs";
 import { GameCover } from "../../atoms/library/GameCover";
 import { useLibraryStore } from "../../../store/libraryStore";
+import { useIsMutating } from "@tanstack/react-query";
 
 const Container = styled.div<{ isselected: boolean }>`
     position: relative;
@@ -44,10 +45,11 @@ interface GameContainerProps {
 
 export const GameContainer: React.FC<GameContainerProps> = ({ game_id, hidden }) => {
     const { selected } = useLibraryStore();
+    const isMutating = useIsMutating({ mutationKey: ['update', 'library'] });
 
     return(
         <Container isselected={selected.includes(game_id)}>
-            { hidden && <LockIcon /> }
+            { !isMutating && hidden && <LockIcon /> }
             <GameCover game_id={game_id} hidden={hidden} />
         </Container>
     )
