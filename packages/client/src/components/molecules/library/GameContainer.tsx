@@ -47,7 +47,7 @@ export const GameContainer: React.FC<GameContainerProps> = ({ game_id, hidden })
     return(
         <Container $selected={selected.includes(game_id)}>
             { !isMutating && hidden && <LockIcon /> }
-            <GameCover game_id={game_id} private={hidden} />
+            <GameCover game_id={game_id} hidden={hidden} />
         </Container>
     )
 };

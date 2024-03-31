@@ -23,7 +23,7 @@ const LibraryContainer = styled(Container)`
 `;
 
 export const Librarypage = () => {
-    const { setLibrary } = useLibraryStore();
+    const { library, setLibrary } = useLibraryStore();
     const { isAuthenticated } = useAuthStore();
     const { data, isLoading, isError } = useGetLibrary();
 
@@ -33,13 +33,15 @@ export const Librarypage = () => {
     }
 
     useEffect(() => {
+        if (library.length > 0) return;
+        
         if (data && !isError) {
             // filter data library by asc order (game_id)
             data.sort((a: TGameLibrary, b: TGameLibrary) => a.game_id.localeCompare(b.game_id));
-
             setLibrary(data);
         }
-    }, [data, setLibrary, isError]);
+
+    }, [data, library, setLibrary, isError]);
 
     return (
     <LibrarySection>
