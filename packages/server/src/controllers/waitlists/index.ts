@@ -4,6 +4,7 @@ import { joinWaitlistOpts } from "./joinWaitlistRoom";
 import { leaveWaitlistOpts } from "./leaveWaitlistRoom";
 import { kickFromWaitlistOpts } from "./kickFromWaitlistRoom";
 import { getWaitlistsOpts } from "./getWaitlists";
+import { countWaitlistsOpts } from "./countWaitlists";
 
 export {
   createWaitlistOpts,
@@ -11,5 +12,6 @@ export {
   getWaitlistWithPlayersOpts,
   kickFromWaitlistOpts,
   leaveWaitlistOpts,
-  getWaitlistsOpts
+  getWaitlistsOpts,
+  countWaitlistsOpts
 }

@@ -164,5 +164,20 @@ export const getWaitlistsPaginated = async (fastify: FastifyInstance, offset: nu
   }
 }
 
+export const count = async (fastify: FastifyInstance): Promise<number> => {
+  try {
+    const count = await fastify.db.select().from(model).where(
+      and(
+        eq(model.private, false),
+        eq(model.started, false)
+      )
+    ).count();
+    return count;
+  } catch (err) {
+    fastify.log.error(err);
+    throw new Error('Une erreur interne est survenue');
+  }
+}
+
 export type Waitlist = InferSelectModel<typeof model>;
 export type WaitlistInsert = InferInsertModel<typeof model>;
