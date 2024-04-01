@@ -1,5 +1,5 @@
 import { pgTable, bigint, boolean, timestamp, uuid, varchar, integer } from "drizzle-orm/pg-core";
-import { InferInsertModel, InferSelectModel, and, eq, sql } from "drizzle-orm";
+import { InferInsertModel, InferSelectModel, and, count, eq, sql } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { Games, Libraries, Players, WaitlistsPlayers } from ".";
 import i18next from "../plugins/i18n.plugin";
@@ -164,15 +164,21 @@ export const getWaitlistsPaginated = async (fastify: FastifyInstance, offset: nu
   }
 }
 
-export const count = async (fastify: FastifyInstance): Promise<number> => {
+export const countAvailableSteamders = async (fastify: FastifyInstance): Promise<number> => {
   try {
-    const count = await fastify.db.select().from(model).where(
-      and(
-        eq(model.private, false),
-        eq(model.started, false)
+    const numberOfWaitlists = await fastify.db
+      .select({
+        count: count()
+      })
+      .from(model)
+      .where(
+        and(
+          eq(model.private, false),
+          eq(model.started, false)
+        )
       )
-    ).count();
-    return count;
+      .execute();
+    return numberOfWaitlists;
   } catch (err) {
     fastify.log.error(err);
     throw new Error('Une erreur interne est survenue');

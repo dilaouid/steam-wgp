@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
-import { count } from "../../models/Waitlists";
+import { countAvailableSteamders } from "../../models/Waitlists";
 import { APIResponse } from "../../utils/response";
 
 export const countWaitlistsOpts = {
@@ -12,7 +12,7 @@ export async function countWaitlists(request: FastifyRequest, reply: FastifyRepl
   const fastify = request.server as FastifyInstance;
 
   try {
-    const numberOfWaitlists = await count(fastify);
+    const numberOfWaitlists = await countAvailableSteamders(fastify);
     return APIResponse(reply, { count: numberOfWaitlists }, 'OK', 200);
   } catch (err) {
     fastify.log.error(err);
