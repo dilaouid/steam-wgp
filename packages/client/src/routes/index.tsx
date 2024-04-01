@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { createFileRoute } from '@tanstack/react-router'
-import { Homepage } from '../components/templates/Homepage';
+import { Homepage } from '../components/templates/Home_page';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';

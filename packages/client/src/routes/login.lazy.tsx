@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { Loginpage } from '../components/templates/Loginpage';
+import { Loginpage } from '../components/templates/Login_page';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
