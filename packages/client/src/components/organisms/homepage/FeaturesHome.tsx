@@ -25,7 +25,7 @@ export const FeaturesHome: React.FC = () => {
             <Col style={{ zIndex: 2 }}>
                 <StyledFeaturesImage className="img-fluid w-100 h-100 fit-cover user-select-none" data-aos="fade-up" data-aos-duration="500" id="features_image" src={FeaturesImage} />
             </Col>
-            <Col className="col-auto text-muted d-flex flex-column justify-content-center p-4">
+            <Col sm={'auto'} className="text-muted d-flex flex-column justify-content-center p-4">
                 <FeatureHome>
                     <ClockHistoryIcon />
                     <div>

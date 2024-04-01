@@ -63,7 +63,7 @@ export const LeftColumnLibrary: React.FC = () => {
             <StyledRow className="text-center" data-aos="zoom-out" data-aos-duration="450" data-aos-delay="300">
                 <SelectedCount count={getPublicGames().length} type="public" />
                 <SelectedCount count={getPrivateGames().length} type="private" />
-                <ButtonCol className="col-12">
+                <ButtonCol sm={12}>
                     <SubmitSelectedButton count={selected.length} />
                 </ButtonCol>
             </StyledRow>

@@ -30,7 +30,7 @@ export const LeftColumnLogin: React.FC = () => {
     const { user } = useAuthStore();
 
     return (
-    <ColumnLeft lg={4} className="col-9 text-center order-last m-auto order-lg-first" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="250">
+    <ColumnLeft lg={{ span: 4, order: 'first' }} sm={{ span: 9, order: 'last' }} className="text-center m-auto" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="250">
         <ProfilePicture className="user-select-none" src={`https://avatars.akamai.steamstatic.com/${user?.avatar_hash}_full.jpg`} />
         <Hello>
             <Trans t={t} i18nKey="greeting" components={{ 1: <span className="fw-bold text-info" /> }} values={{ username: user?.username }} />

@@ -39,7 +39,7 @@ export const RightColumnLogin: React.FC = () => {
     }, [data, navigate]);
 
     return (
-        <Col className="col-12 col-lg-8 text-center" data-aos="zoom-out" data-aos-duration="600">
+        <Col sm={12} lg={8} className="text-center" data-aos="zoom-out" data-aos-duration="600">
             <RightBlock>
                 <Title className="text-warning text-opacity-75">{ t('syncing') }</Title>
                 <Progress variant={data[data.length - 1]?.type ?? 'info'} striped animated now={ data[data.length - 1]?.progress ?? 0 } />
