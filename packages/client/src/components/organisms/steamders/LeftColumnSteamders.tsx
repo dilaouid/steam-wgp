@@ -1,8 +1,13 @@
 import styled from "styled-components";
+import { useTranslation, Trans } from "react-i18next";
+
 import { Col } from "react-bootstrap";
 import { BsDpad, BsInfoCircleFill } from "react-icons/bs";
+
+import { useAuthStore } from "../../../store/authStore";
+
 import { CreateSteamderForm } from "../../molecules/steamders/CreateSteamderForm";
-import { useTranslation, Trans } from "react-i18next";
+import { CannotCreateSteamder } from "../../atoms/steamders/CannotCreateSteamder";
 
 const StyledCol = styled(Col)`
     padding: 19px;
@@ -21,6 +26,7 @@ const StyledText = styled.p`
 `;
 
 export const LeftColumnSteamders: React.FC = () => {
+    const { user } = useAuthStore();
     const { t } = useTranslation('pages/steamders', { keyPrefix: 'left_column' });
 
     return (
@@ -35,7 +41,9 @@ export const LeftColumnSteamders: React.FC = () => {
                 <Trans t={t} i18nKey="explain_part_2" components={{ 1: <strong /> }} />
             </StyledText>
             <hr />
-            <CreateSteamderForm />
+            { !user && <CannotCreateSteamder>{ t('not_logged') }</CannotCreateSteamder> }
+            { user && user.waitlist && <CannotCreateSteamder>{ t('already_in') }</CannotCreateSteamder> }
+            { user && !user.waitlist && <CreateSteamderForm /> }
         </StyledCol>
     );
 };
