@@ -26,7 +26,7 @@ export const getWaitlistsOpts = {
   }
 };
 
-export async function getWaitlists(request: FastifyRequest< { Querystring: getWaitlistsQS } >, reply: FastifyReply) {
+export async function getWaitlists(request: FastifyRequest< { Querystring: getWaitlistsQS } >, reply: FastifyReply): Promise<void> {
   const { offset, limit } = request.query;
   const fastify = request.server as FastifyInstance;
   const player = request.user as Player;
