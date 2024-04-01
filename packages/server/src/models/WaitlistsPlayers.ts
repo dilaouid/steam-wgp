@@ -2,7 +2,11 @@ import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
 import { pgTable, primaryKey, bigint, varchar } from "drizzle-orm/pg-core";
 import { model as players } from "./Players";
 import { model as waitlists } from "./Waitlists";
+import { model as waitlists_players } from "./WaitlistsPlayers";
+import { model as libraries } from "./Libraries";
+import { model as games } from "./Games";
 import { FastifyInstance } from "fastify";
+import { getCommonGames, removeDuplicates } from "../utils/gamesUtils";
 
 export const model = pgTable('waitlists_players', {
   player_id: bigint('player_id', { mode: 'bigint'}).references(() => players.id),
@@ -12,6 +16,41 @@ export const model = pgTable('waitlists_players', {
     pk: primaryKey({columns: [waitlist_player.player_id, waitlist_player.waitlist_id]})
   }
 });
+
+export async function getWaitlistPlayers(fastify: FastifyInstance, waitlistId: string): Promise<WaitlistPlayer[]> {
+  return fastify.db
+    .select({ game_id: games.id })
+    .from(waitlists_players)
+    .leftJoin(libraries,
+      eq(waitlists_players.player_id, libraries.player_id)
+    )
+    .leftJoin(games,
+      eq(libraries.game_id, games.id)
+    )
+    .where(
+      and(
+        eq(waitlists_players.waitlist_id, waitlistId),
+        eq(games.is_selectable, true),
+        eq(libraries.hidden, false)
+      )
+    )
+    .execute();
+}
+
+export async function getPlayerGames(fastify: FastifyInstance, userId: bigint): Promise<WaitlistPlayer[]> {
+  return fastify.db
+    .select()
+    .from(libraries)
+    .where(
+      eq(libraries.player_id, userId)
+    )
+    .leftJoin(games, and(
+      eq(libraries.game_id, games.id),
+      eq(games.is_selectable, true),
+      eq(libraries.hidden, false)
+    ))
+    .execute();
+}
 
 export async function isUserInWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<{ inWaitlist: boolean, waitlistId: string | null }> {
   const results = await fastify.db.select({
@@ -39,6 +78,32 @@ export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, wai
     waitlist_id: waitlistId
   };
 
+  // get all the selectable and public games of each players in the room
+  const allWaitlistGames = await getWaitlistPlayers(fastify, waitlistId);
+
+  // add the games of the new player to the list
+  const newPlayerGames = await getPlayerGames(fastify, userId);
+
+  allWaitlistGames.push(...newPlayerGames);
+
+  // remove duplicates and save in a new array
+  const allWaitlistGamesIds = removeDuplicates(allWaitlistGames);
+
+  // get only the games in common between all players
+  const commonGames = getCommonGames(allWaitlistGamesIds);
+
+  // update the waitlist with the common games and all games count
+  await fastify.db
+    .update(waitlists)
+    .set({
+      all_games: allWaitlistGamesIds.length,
+      common_games: commonGames.length
+    })
+    .where(
+      eq(waitlists.id, waitlistId)
+    )
+    .execute();
+
   await fastify.db.insert(model).values(newWaitlistPlayer);
 }
 
@@ -64,6 +129,20 @@ export async function leaveWaitlist(fastify: FastifyInstance, userId: bigint, wa
         eq(model.waitlist_id, waitlistId)
       )
     ).execute();
+
+  const allWaitlistGames = await getWaitlistPlayers(fastify, waitlistId);
+
+  const allGamesIds = removeDuplicates(allWaitlistGames);
+  const commonGamesIds = getCommonGames(allWaitlistGames);
+
+  await fastify.db
+    .update(waitlists)
+    .set({
+      all_games: allGamesIds.length,
+      common_games: commonGamesIds.length
+    })
+    .where(eq(waitlists.id, waitlistId))
+    .execute();
 }
 
 export async function kickPlayer(fastify: FastifyInstance, userId: bigint, waitlistId: string, playerId: bigint): Promise<void> {
@@ -84,6 +163,20 @@ export async function kickPlayer(fastify: FastifyInstance, userId: bigint, waitl
         eq(model.waitlist_id, waitlistId)
       )
     ).execute();
+
+  const allWaitlistGames = await getWaitlistPlayers(fastify, waitlistId);
+
+  const allGamesIds = removeDuplicates(allWaitlistGames);
+  const commonGamesIds = getCommonGames(allWaitlistGames);
+
+  await fastify.db
+    .update(waitlists)
+    .set({
+      all_games: allGamesIds.length,
+      common_games: commonGamesIds.length
+    })
+    .where(eq(waitlists.id, waitlistId))
+    .execute();
 }
 
 export type WaitlistPlayer = InferSelectModel<typeof model>;
