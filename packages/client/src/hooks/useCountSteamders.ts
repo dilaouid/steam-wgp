@@ -5,6 +5,6 @@ export const useCountSteamders = () => {
     return useQuery({
         queryKey: ["steamders", "count"],
         queryFn: countSteamders,
-        select: (data) => data.data
+        select: (data) => data.data.count[0].count
     });
 };

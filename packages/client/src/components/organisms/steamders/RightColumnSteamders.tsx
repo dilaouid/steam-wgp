@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { Col, Row, Table, Spinner } from "react-bootstrap";
-import { LoadingTable } from "../../molecules/steamders/LoadingTable";
-import { useGetSteamders } from "../../../hooks/useGetSteamders";
 import { BsPeople, BsController } from "react-icons/bs";
-import { ISteamderSearch } from "../../../types/ISteamderSearch";
+
 import { useAuthStore } from "../../../store/authStore";
+import { useGetSteamders } from "../../../hooks/useGetSteamders";
+import { useCountSteamders } from "../../../hooks/useCountSteamders";
+
+import { ISteamderSearch } from "../../../types/ISteamderSearch";
+
+import { LoadingTable } from "../../molecules/steamders/LoadingTable";
 import { UnjoinableButton } from "../../molecules/steamders/UnjoinableButton";
 import { JoinButton } from "../../molecules/steamders/JoinButton";
 import { MySteamderButtons } from "../../molecules/steamders/MySteamderButtons";
@@ -18,10 +22,11 @@ const StyledTRow = styled.tr`
 `;
 
 export const RightColumnSteamders = () => {
-    const { user } = useAuthStore();
     const page = new URLSearchParams(window.location.search).get('page');
-    const { data, isFetching } = useGetSteamders(page ? parseInt(page) : 1);
 
+    const { user } = useAuthStore();
+    const { data: steamders, isFetching: fetchingSteamders } = useGetSteamders(page ? parseInt(page) : 1);
+    const { data: count, isFetching: fetchingCount } = useCountSteamders();
 
     return (
         <Col sm={12} md={7} lg={8}>
@@ -29,8 +34,8 @@ export const RightColumnSteamders = () => {
             <p>Retrouvez ici les <strong className="text-info">Steamders</strong> accessibles à tout le monde. Le moyen idéal de se faire de nouveaux amis ! Mais n'oubliez pas, <strong>vous ne pouvez être que dans une seule <span className="text-info">Steamder</span></strong> à la fois ! N'abusons pas des bonnes choses ...</p>
             <Table striped bordered hover>
                 <caption>
-                    <Spinner animation="border" variant="secondary" className="me-2" size="sm" />
-                     Steamders actives
+                    <Spinner animation="border" variant="secondary" className="me-2" size="sm" hidden={!fetchingCount} />
+                    { !fetchingCount && <span>{ count }</span> } Steamders actives
                 </caption>
                 <thead className="user-select-none">
                     <StyledTRow className="table-warning">
@@ -42,15 +47,15 @@ export const RightColumnSteamders = () => {
                 </thead>
                 <tbody>
                     
-                    { isFetching && <LoadingTable /> }
+                    { fetchingSteamders && <LoadingTable /> }
 
-                    { !isFetching && data && data.length === 0 && (
+                    { !fetchingSteamders && steamders && steamders.length === 0 && (
                         <StyledTRow>
                             <td colSpan={4} className="text-center">Aucune Steamder n'a été trouvée</td>
                         </StyledTRow>
                     )}
 
-                    { data && data.map((steamder: ISteamderSearch) => (
+                    { steamders && steamders.map((steamder: ISteamderSearch) => (
                         <StyledTRow key={steamder.id}>
                             <td>{steamder.name}</td>
                             <td><BsPeople /> {steamder.player_count}</td>
