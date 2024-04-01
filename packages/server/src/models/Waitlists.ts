@@ -10,7 +10,7 @@ export const model = pgTable('waitlists', {
   started: boolean('started').default(false),
   private: boolean('private').default(false),
   complete: boolean('complete').default(false),
-  display_all_games: boolean('all_games').default(false),
+  display_all_games: boolean('display_all_games').default(false),
   common_games: integer('common_games').default(0),
   all_games: integer('all_games').default(0),
   name: varchar('name', { length: 255 }).default('Steamder'),
@@ -140,6 +140,7 @@ export const getWaitlistsPaginated = async (fastify: FastifyInstance, offset: nu
       .select({
         id: model.id,
         name: model.name,
+        games: sql`CASE WHEN ${model.display_all_games} THEN ${model.all_games} ELSE ${model.common_games} END`,
         created_at: model.created_at,
         player_count: sql`COUNT(${WaitlistsPlayers.model.player_id})`,
         is_user_in_waitlist: userId ? sql<boolean>`EXISTS (
