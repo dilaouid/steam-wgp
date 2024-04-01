@@ -8,17 +8,40 @@ export const createWaitlistOpts = {
   method: 'POST' as HTTPMethods,
   url: '/',
   handler: createWaitlist,
-  preValidation: [isAuthenticated]
+  preValidation: [isAuthenticated],
+  body: {
+    type: 'object',
+    required: ['private'],
+    properties: {
+      name: {
+        type: 'string',
+        default: 'Steamder',
+        minLength: 3,
+        maxLength: 40
+      },
+      private: { type: 'boolean' }
+    }
+  }
 };
 
 async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
   const { id } = (request.user as Player);
+  const { private: isPrivate, name } = request.body as { private: boolean; name: string };
+  if (typeof isPrivate !== 'boolean')
+    return APIResponse(reply, null, 'Vous devez spécifier si la room est privée ou non', 400);
+
+  if (typeof name !== 'string')
+    return APIResponse(reply, null, 'Le nom de la room doit être une chaîne de caractères', 400);
+
+  if ((name?.trim().length > 0 && name?.trim().length < 3) || name?.trim().length > 40)
+    return APIResponse(reply, null, 'Le nom de la room doit faire entre 3 et 40 caractères', 400);
+
   const fastify = request.server as FastifyInstance;
 
   if (!id)
     return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
   try {
-    const insert = await insertWaitlist(fastify, BigInt(id), request.userLanguage as string);
+    const insert = await insertWaitlist(fastify, BigInt(id), isPrivate, name?.trim() || 'Steamder');
     if (insert.error)
       return APIResponse(reply, null, insert.error, 400);
     if (!insert.waitlist)
