@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import CoverImage from '../../assets/images/librarypage/cover.png';
 import { Container, Row } from 'react-bootstrap';
+import { LeftColumnSteamders } from '../organisms/steamders/LeftColumnSteamders';
 
 const SteamdersSection = styled.section`
     padding-top: 9px;
@@ -17,8 +18,8 @@ export const SteamdersPage = () => {
     return (
         <SteamdersSection>
             <SteamdersContainer>
-                <Row className='g-3'>
-                    
+                <Row className='gx-5'>
+                    <LeftColumnSteamders />
                 </Row>
             </SteamdersContainer>
         </SteamdersSection>
