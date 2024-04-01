@@ -1,4 +1,4 @@
-import { pgTable, bigint, boolean, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { pgTable, bigint, boolean, timestamp, uuid, varchar, integer } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, and, eq, sql } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { Games, Libraries, Players, WaitlistsPlayers } from ".";
@@ -10,6 +10,9 @@ export const model = pgTable('waitlists', {
   started: boolean('started').default(false),
   private: boolean('private').default(false),
   complete: boolean('complete').default(false),
+  display_all_games: boolean('all_games').default(false),
+  common_games: integer('common_games').default(0),
+  all_games: integer('all_games').default(0),
   name: varchar('name', { length: 255 }).default('Steamder'),
   created_at: timestamp('created_at').notNull().defaultNow(),
   updated_at: timestamp('updated_at').notNull().defaultNow()
