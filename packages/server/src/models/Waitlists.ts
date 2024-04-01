@@ -1,5 +1,5 @@
 import { pgTable, bigint, boolean, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { InferInsertModel, InferSelectModel, and, eq } from "drizzle-orm";
+import { InferInsertModel, InferSelectModel, and, eq, sql } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { Games, Libraries, Players, WaitlistsPlayers } from ".";
 import i18next from "../plugins/i18n.plugin";
@@ -129,6 +129,40 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
   };
 
   return waitlist;
+}
+
+export const getWaitlistsPaginated = async (fastify: FastifyInstance, offset: number, limit: number, userId: bigint): Promise<Waitlist[]> => {
+  try {
+    const waitlists = await fastify.db
+      .select({
+        id: model.id,
+        name: model.name,
+        created_at: model.created_at,
+        player_count: sql`COUNT(${WaitlistsPlayers.model.player_id})`,
+        is_user_in_waitlist: userId ? sql<boolean>`EXISTS (
+          SELECT 1 FROM waitlists_players AS wp
+          WHERE wp.waitlist_id = waitlists.id
+          AND wp.player_id = ${userId}
+        )` : sql<boolean>`FALSE`
+      })
+      .from(model)
+      .leftJoin(WaitlistsPlayers.model, eq(model.id, WaitlistsPlayers.model.waitlist_id))
+      .where(
+        and(
+          eq(model.private, false),
+          eq(model.started, false)
+        )
+      )
+      .groupBy(model.id)
+      .orderBy(model.created_at, 'desc')
+      .limit(limit)
+      .offset(offset)
+      .execute();
+    return waitlists;
+  } catch (err) {
+    fastify.log.error(err);
+    throw new Error('Une erreur interne est survenue');
+  }
 }
 
 export type Waitlist = InferSelectModel<typeof model>;
