@@ -134,7 +134,7 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
   return waitlist;
 }
 
-export const getWaitlistsPaginated = async (fastify: FastifyInstance, offset: number, limit: number, userId: bigint): Promise<Waitlist[]> => {
+export const getWaitlistsPaginated = async (fastify: FastifyInstance, offset: number, limit: number): Promise<Waitlist[]> => {
   try {
     const waitlists = await fastify.db
       .select({
@@ -142,12 +142,7 @@ export const getWaitlistsPaginated = async (fastify: FastifyInstance, offset: nu
         name: model.name,
         games: sql`CASE WHEN ${model.display_all_games} THEN ${model.all_games} ELSE ${model.common_games} END`,
         created_at: model.created_at,
-        player_count: sql`COUNT(${WaitlistsPlayers.model.player_id})`,
-        is_user_in_waitlist: userId ? sql<boolean>`EXISTS (
-          SELECT 1 FROM waitlists_players AS wp
-          WHERE wp.waitlist_id = waitlists.id
-          AND wp.player_id = ${userId}
-        )` : sql<boolean>`FALSE`
+        player_count: sql`COUNT(${WaitlistsPlayers.model.player_id})`
       })
       .from(model)
       .leftJoin(WaitlistsPlayers.model, eq(model.id, WaitlistsPlayers.model.waitlist_id))
