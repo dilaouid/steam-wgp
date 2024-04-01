@@ -1,5 +1,7 @@
+import { Link } from '@tanstack/react-router';
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Button } from 'react-bootstrap';
 import { useAuthStore } from '../../store/authStore';
 
 const Section = styled.div`
@@ -28,11 +30,17 @@ export const HeroSection = () => {
         <p className="my-3">
             <Trans t={t} i18nKey="hero.paragraph" components={{ 1: <PinkText /> }} />
         </p>
-        { !isAuthenticated && <a className="btn btn-info btn-lg me-2" role="button" href={ BASE_URL + "/auth/steam" }>
-            {t('hero.login')}
-        </a> }
-        <a className={`btn ${isAuthenticated ? 'btn-info' : 'btn-outline-info'} btn-lg`} role="button" href="/steamders">
-            <Trans t={t} i18nKey="hero.steamders" components={{ 1: <strong /> }} />
-        </a>
+        { !isAuthenticated &&
+            <Link to={ BASE_URL + "/auth/steam" }>
+                <Button variant='info' size='lg' className='me-2'>
+                    { t('hero.login') }
+                </Button>
+            </Link>
+        }
+        <Link to={"/steamders"}>
+            <Button variant={!isAuthenticated ? 'outline-info' : 'info'} size='lg'>
+                <Trans t={t} i18nKey="hero.steamders" components={{ 1: <strong /> }} />
+            </Button>
+        </Link>
     </Section>);
 }

@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
             <NavItem to="/steamders">{t('steamders')}</NavItem>
             <NavItem to="/steamders" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
-          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick} href="/"><LogoutIcon /> | { t('logout') } </Button> }
+          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick}><LogoutIcon /> | { t('logout') } </Button> }
           { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href={ BASE_URL + "/auth/steam" }><SteamIcon /> | {t('login')}</Button> }
         </RBNavbar.Collapse>
       </Container>
