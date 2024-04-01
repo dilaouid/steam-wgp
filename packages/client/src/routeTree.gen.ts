@@ -17,10 +17,16 @@ import { Route as IndexImport } from './routes/index'
 
 // Create Virtual Routes
 
+const SteamdersLazyImport = createFileRoute('/steamders')()
 const LoginLazyImport = createFileRoute('/login')()
 const LibraryLazyImport = createFileRoute('/library')()
 
 // Create/Update Routes
+
+const SteamdersLazyRoute = SteamdersLazyImport.update({
+  path: '/steamders',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/steamders.lazy').then((d) => d.Route))
 
 const LoginLazyRoute = LoginLazyImport.update({
   path: '/login',
@@ -53,6 +59,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginLazyImport
       parentRoute: typeof rootRoute
     }
+    '/steamders': {
+      preLoaderRoute: typeof SteamdersLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -62,6 +72,7 @@ export const routeTree = rootRoute.addChildren([
   IndexRoute,
   LibraryLazyRoute,
   LoginLazyRoute,
+  SteamdersLazyRoute,
 ])
 
 /* prettier-ignore-end */
