@@ -1,0 +1,36 @@
+{
+    "left_column": {
+        "create": "Erstelle einen <1>Steamder</1>",
+        "explain_part_1": "Ein <1>Steamder</1> ist ein Raum, in den du andere Spieler einlädst (oder sie sich selbst beitreten). Eure Multiplayer-Spiele werden zusammengelegt, und sobald das Spiel startet, werden euch alle Spiele präsentiert.",
+        "explain_part_2": "Es liegt an euch, die verschiedenen Spiele zu mögen oder nicht. Das erste Spiel, das von allen Spielern gemocht wird, wird für alle ausgewählt, und damit ist die Debatte endgültig beendet! <1>Debatte geklärt!</1>",
+        "form": {
+            "name": "Steamder-Name",
+            "placeholder": "Z.B.: Freundeabend",
+            "label": "Privater Steamder",
+            "tooltip": "Wenn du dieses Kästchen ankreuzt, wird dein Steamder für andere Spieler nicht sichtbar sein und kann nur über einen Einladungslink beigetreten werden.",
+            "submit": "Steamder erstellen"
+        }
+    },
+    "right_column": {
+        "heading": "Öffentliche Steamders",
+        "subtitle": "Hier findest du <1>Steamders</1>, die für alle offen sind. Die perfekte Möglichkeit, neue Freunde zu finden! Aber denkt daran, <2>ihr könnt jeweils nur in einem <1>Steamder</1> sein!</2> Lasst uns das Gute nicht übertreiben...",
+        "table": {
+            "heading": {
+                "name": "Steamder-Name",
+                "players_count": "Anzahl der Spieler",
+                "available_games": "Verfügbare Spiele",
+                "actions": "Aktionen"
+            },
+            "buttons": {
+                "join": "Beitreten",
+                "leave": "Verlassen",
+                "unavailable": "Nicht verfügbar",
+                "open": "Öffnen"
+            },
+            "tooltip": "Du kannst jeweils nur in einem Steamder sein! Verlasse deinen aktuellen Steamder, um einem anderen beizutreten.",
+            "empty": "Im Moment sind keine öffentlichen Steamders verfügbar. Erstelle einen!"
+        },
+        "actives": "{{ count }} Aktiver Steamder",
+        "actives_other": "{{ count }} Aktive Steamders"
+    }
+}

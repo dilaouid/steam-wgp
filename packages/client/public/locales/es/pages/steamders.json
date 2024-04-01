@@ -1,0 +1,36 @@
+{
+    "left_column": {
+        "create": "Crear un <1>Steamder</1>",
+        "explain_part_1": "Un <1>Steamder</1> es una sala donde invitas a otros jugadores (o se unen por sí mismos). Tus juegos multijugador se juntan y, una vez que comienza el juego, se presentan todos los juegos.",
+        "explain_part_2": "Depende de ti darle me gusta o no a los distintos juegos que aparecen. El primer juego que a todos los jugadores les gusta será seleccionado para todos, ¡y con eso se cierra el debate de una vez por todas! <1>¡Debate resuelto!</1>",
+        "form": {
+            "name": "Nombre del Steamder",
+            "placeholder": "Ej.: Noche entre amigos",
+            "label": "Steamder privado",
+            "tooltip": "Si marcas esta casilla, tu Steamder no será visible para otros jugadores y solo se podrá unir mediante un enlace de invitación.",
+            "submit": "Crear Steamder"
+        }
+    },
+    "right_column": {
+        "heading": "Steamders públicos",
+        "subtitle": "Aquí encontrarás <1>Steamders</1> abiertos a todos. ¡La forma perfecta de hacer nuevos amigos! Pero recuerda, <2>solo puedes estar en un <1>Steamder</1> a la vez.</2> No abusamos de las cosas buenas...",
+        "table": {
+            "heading": {
+                "name": "Nombre del Steamder",
+                "players_count": "Número de jugadores",
+                "available_games": "Juegos disponibles",
+                "actions": "Acciones"
+            },
+            "buttons": {
+                "join": "Unirse",
+                "leave": "Salir",
+                "unavailable": "Inaccesible",
+                "open": "Abrir"
+            },
+            "tooltip": "¡Solo puedes estar en un Steamder a la vez! Sal de tu Steamder actual para unirte a otro.",
+            "empty": "No hay Steamders públicos disponibles en este momento. ¡Crea uno!"
+        },
+        "actives": "{{ count }} Steamder activo",
+        "actives_other": "{{ count }} Steamders activos"
+    }
+}
