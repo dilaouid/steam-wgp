@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Form, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { BsController, BsPersonHeart } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 
 const StyledForm = styled(Form)`
     font-family: 'Archivo Narrow', sans-serif;
@@ -24,22 +25,23 @@ const StyledSwitch = styled(Form.Check)`
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const LabelTooltip = (props: any) => 
-    <Tooltip id="switch-tooltip" {...props}>
-        Une Steamder privée ne sera joignable qu'en partageant un lien
+const LabelTooltip = (message: string) => 
+    <Tooltip id="switch-tooltip">
+        { message }
     </Tooltip>;
 
 export const CreateSteamderForm = () => {
+    const { t } = useTranslation('pages/steamders', { keyPrefix: 'left_column.form' });
 
     return (
         <StyledForm className="text-muted">
-            <StyledLabel><BsController /> | Nom de la Steamder</StyledLabel>
-            <StyledInput type="text" placeholder="Shrek is forbidden" aria-label="Nom de la Steamder" />
-            <OverlayTrigger placement="left" overlay={LabelTooltip} trigger={['hover', 'focus']}>
-                <StyledSwitch type="switch" id="private-switch" label="Steamder privée" />
+            <StyledLabel><BsController /> | { t('name') }</StyledLabel>
+            <StyledInput type="text" placeholder={ t('placeholder') } aria-label={ t('placeholder') } />
+            <OverlayTrigger placement="left" overlay={LabelTooltip(t('tooltip'))} trigger={['hover', 'focus']}>
+                <StyledSwitch type="switch" id="private-switch" label={ t('label') } />
             </OverlayTrigger>
             <Button variant="info">
-                <BsPersonHeart /> | Créer la Steamder
+                <BsPersonHeart /> | { t('submit') }
             </Button>
         </StyledForm>
     )

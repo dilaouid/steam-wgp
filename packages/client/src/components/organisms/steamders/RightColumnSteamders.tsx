@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Col, Row, Table, Spinner } from "react-bootstrap";
 import { BsPeople, BsController } from "react-icons/bs";
+import { useTranslation, Trans } from "react-i18next";
 
 import { useAuthStore } from "../../../store/authStore";
 import { useGetSteamders } from "../../../hooks/useGetSteamders";
@@ -22,6 +23,7 @@ const StyledTRow = styled.tr`
 `;
 
 export const RightColumnSteamders = () => {
+    const { t } = useTranslation('pages/steamders', { keyPrefix: 'right_column' });
     const page = new URLSearchParams(window.location.search).get('page');
 
     const { user } = useAuthStore();
@@ -30,19 +32,21 @@ export const RightColumnSteamders = () => {
 
     return (
         <Col sm={12} md={7} lg={8}>
-            <StyledTitle className="text-warning">Steamders publiques</StyledTitle>
-            <p>Retrouvez ici les <strong className="text-info">Steamders</strong> accessibles à tout le monde. Le moyen idéal de se faire de nouveaux amis ! Mais n'oubliez pas, <strong>vous ne pouvez être que dans une seule <span className="text-info">Steamder</span></strong> à la fois ! N'abusons pas des bonnes choses ...</p>
+            <StyledTitle className="text-warning">{ t('heading') }</StyledTitle>
+            <p>
+                <Trans t={t} i18nKey="subtitle" components={{ 1: <strong className="text-info" />, 2: <strong /> }} />
+            </p>
             <Table striped bordered hover>
                 <caption>
                     <Spinner animation="border" variant="secondary" className="me-2" size="sm" hidden={!fetchingCount} />
-                    { !fetchingCount && <span>{ count }</span> } Steamders actives
+                    { !fetchingCount && t('actives', { count: count }) }
                 </caption>
                 <thead className="user-select-none">
                     <StyledTRow className="table-warning">
-                        <th style={{width: '30%'}}>Nom de la Steamder</th>
-                        <th style={{width: '23%'}}>Nombre de joueurs</th>
-                        <th style={{width: '20%'}}>Jeux disponibles</th>
-                        <th style={{width: '25%'}}>Actions</th>
+                        <th style={{width: '30%'}}>{ t('table.heading.name') }</th>
+                        <th style={{width: '23%'}}>{ t('table.heading.players_count') }</th>
+                        <th style={{width: '20%'}}>{ t('table.heading.available_games') }</th>
+                        <th style={{width: '25%'}}>{ t('table.heading.actions') }</th>
                     </StyledTRow>
                 </thead>
                 <tbody>
@@ -51,7 +55,7 @@ export const RightColumnSteamders = () => {
 
                     { !fetchingSteamders && steamders && steamders.length === 0 && (
                         <StyledTRow>
-                            <td colSpan={4} className="text-center">Aucune Steamder n'a été trouvée</td>
+                            <td colSpan={4} className="text-center">{ t('table.empty') }</td>
                         </StyledTRow>
                     )}
 
