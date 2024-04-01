@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import CoverImage from '../../assets/images/librarypage/cover.png';
 import { Container, Row } from 'react-bootstrap';
 import { LeftColumnSteamders } from '../organisms/steamders/LeftColumnSteamders';
+import { RightColumnSteamders } from '../organisms/steamders/RightColumnSteamders';
 
 const SteamdersSection = styled.section`
     padding-top: 9px;
@@ -20,6 +21,7 @@ export const SteamdersPage = () => {
             <SteamdersContainer>
                 <Row className='gx-5'>
                     <LeftColumnSteamders />
+                    <RightColumnSteamders />
                 </Row>
             </SteamdersContainer>
         </SteamdersSection>
