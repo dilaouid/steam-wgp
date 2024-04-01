@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
           <StyledNav className="ms-auto">
             <NavItem to="/">{t('homepage')}</NavItem>
             { isAuthenticated && <NavItem to="/library">{t('library')}</NavItem> }
-            { isAuthenticated && user?.steamderId && <NavItem to={`/steamder/${user.steamderId}`}>{t('my_steamder')}</NavItem> }
+            { isAuthenticated && user?.waitlist && <NavItem to={`/steamder/${user.waitlist}`}>{t('my_steamder')}</NavItem> }
             <NavItem to="/steamders">{t('steamders')}</NavItem>
             <NavItem to="/steamders" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
