@@ -41,7 +41,7 @@ export async function allowUnauthenticated(req: FastifyRequest, res: FastifyRepl
       }
     }
 
-    if (!token) {
+    if (!token || token == 'undefined') {
       return;
     }
 
