@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as SteamderSteamderIdImport } from './routes/steamder/$steamderId'
 
 // Create Virtual Routes
 
@@ -43,6 +44,11 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SteamderSteamderIdRoute = SteamderSteamderIdImport.update({
+  path: '/steamder/$steamderId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -63,6 +69,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SteamdersLazyImport
       parentRoute: typeof rootRoute
     }
+    '/steamder/$steamderId': {
+      preLoaderRoute: typeof SteamderSteamderIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -73,6 +83,7 @@ export const routeTree = rootRoute.addChildren([
   LibraryLazyRoute,
   LoginLazyRoute,
   SteamdersLazyRoute,
+  SteamderSteamderIdRoute,
 ])
 
 /* prettier-ignore-end */
