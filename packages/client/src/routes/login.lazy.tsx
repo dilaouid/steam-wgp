@@ -3,7 +3,6 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { Loginpage } from '../components/templates/Login_page';
 
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 export const Route = createLazyFileRoute("/login")({
   component: Login

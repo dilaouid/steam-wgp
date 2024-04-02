@@ -4,7 +4,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Homepage } from '../components/templates/Home_page';
 
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 export const Route = createFileRoute("/")({
   component: Home,
