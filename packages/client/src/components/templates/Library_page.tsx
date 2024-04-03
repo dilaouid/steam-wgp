@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import { useNavigate } from '@tanstack/react-router';
 import { Container, Row } from 'react-bootstrap';
 
 import CoverImage from '../../assets/images/librarypage/cover.png';
 import { LeftColumnLibrary } from '../organisms/library/LeftColumnLibrary';
 import { RightColumnLibrary } from '../organisms/library/RightColumnLibrary';
 import { useLibraryStore } from '../../store/libraryStore';
-import { useAuthStore } from '../../store/authStore';
 import { useGetLibrary } from '../../hooks/useLibrary';
 import { TGameLibrary } from '../../types/TGameLibrary';
 
@@ -24,13 +22,7 @@ const LibraryContainer = styled(Container)`
 
 export const Librarypage = () => {
     const { library, setLibrary } = useLibraryStore();
-    const { isAuthenticated } = useAuthStore();
     const { data, isLoading, isError } = useGetLibrary();
-
-    const navigate = useNavigate();
-    if (!isAuthenticated) {
-        navigate({ to: '/' });
-    }
 
     useEffect(() => {
         if (library.length > 0) return;

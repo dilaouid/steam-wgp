@@ -32,7 +32,9 @@ export const RightColumnLogin: React.FC = () => {
             if (data[data.length - 1]?.type === 'success') {
                 // wait 3000ms before navigating to the home page
                 setTimeout(() => {
-                    navigate({ to: '/' });
+                    const redirectUrl = localStorage.getItem('postLoginRedirect') || '/';
+                    navigate({ to: redirectUrl });
+                    localStorage.removeItem('postLoginRedirect');
                 }, 3000);
             }
         }
