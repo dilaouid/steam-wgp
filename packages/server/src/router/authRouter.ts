@@ -23,6 +23,7 @@ export default async function authRouter(fastify: FastifyInstance) {
   }, async (identifier: string, profile: any, done: (err: Error | null, user: Player | null) => void) => {
     try {
       const player = profile._json;
+      fastify.log.info(player);
       let user;
       if (!player) {
         return done(null, null);
@@ -34,7 +35,8 @@ export default async function authRouter(fastify: FastifyInstance) {
         const [newUser] = await fastify.db.insert(Players.model).values({
           id: player.steamid,
           avatar_hash: player.avatarhash,
-          username: player.personaname
+          username: player.personaname,
+          profileurl: player.profileurl
         }).returning({ id: Players.model.id, avatar_hash: Players.model.avatar_hash });
         user = newUser;
       } else {
@@ -46,6 +48,10 @@ export default async function authRouter(fastify: FastifyInstance) {
         if (existingUser[0].username !== player.personaname) {
           fastify.log.info('Updating username');
           await fastify.db.update(Players.model).set({ username: player.personaname }).where(eq(Players.model.id, player.steamid as any)).execute();
+        }
+        if (existingUser[0].profileurl !== player.profileurl) {
+          fastify.log.info('Updating profile url');
+          await fastify.db.update(Players.model).set({ profileurl: player.profileurl }).where(eq(Players.model.id, player.steamid as any)).execute();
         }
 
         user = existingUser[0];

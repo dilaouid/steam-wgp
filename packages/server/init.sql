@@ -7,8 +7,9 @@ CREATE TABLE games (
 -- Création de la table players
 CREATE TABLE players (
     id BIGINT PRIMARY KEY,
-    avatar_hash VARCHAR(255) NOT NULL
+    avatar_hash VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
+    profileurl VARCHAR(255) NOT NULL
 );
 
 -- Création de la table libraries
