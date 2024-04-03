@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Link } from "@tanstack/react-router";
+import { IPlayer } from "../../../types/ISteamder";
 
 const StyledImage = styled(Image)<{ $isOtherPlayer: boolean, $disabled: boolean }>`
-    cursor: pointer;
     width: 120px;
     box-shadow: 0px 0px 19px 0px var(--bs-warning);
     border-radius: 23px;
@@ -23,15 +24,16 @@ const LabelTooltip = (message: string) =>
 
 interface ProfilPictureProps {
     disable: boolean;
-    avatar_hash: string;
-    username: string;
-    isOtherPlayer: boolean;
+    isOtherPlayer: boolean
+    player: IPlayer;
 }
 
-export const ProfilPicture: React.FC<ProfilPictureProps> = ({ disable, avatar_hash, username, isOtherPlayer }) => {
+export const ProfilPicture: React.FC<ProfilPictureProps> = ({ disable, isOtherPlayer, player }) => {
     return(
-        <OverlayTrigger placement="top" overlay={LabelTooltip(username)} trigger={['hover', 'focus']}>
-            <StyledImage src={`https://avatars.akamai.steamstatic.com/${avatar_hash}_full.jpg`} loading="lazy" fluid $isOtherPlayer={isOtherPlayer} $disabled={disable} />
-        </OverlayTrigger>
+        <Link to={player.profileurl} target="_blank">
+            <OverlayTrigger placement="top" overlay={LabelTooltip(player.username)} trigger={['hover', 'focus']}>
+                <StyledImage src={`https://avatars.akamai.steamstatic.com/${player.avatar_hash}_full.jpg`} loading="lazy" fluid $isOtherPlayer={isOtherPlayer} $disabled={disable} />
+            </OverlayTrigger>
+        </Link>
     )
 };

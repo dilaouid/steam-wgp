@@ -2,7 +2,8 @@ export interface IPlayer {
     player_id: string;
     username: string;
     avatar_hash: string;
-    games: number[]
+    profileurl: string;
+    games: number[];
 }
 
 export interface ISteamder {
