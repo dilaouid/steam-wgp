@@ -1,4 +1,3 @@
-import { profile } from "console";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { pgTable, bigint, varchar } from "drizzle-orm/pg-core";
 
