@@ -11,6 +11,7 @@ const LoginSection = styled.section`
     background: url(${BackgroundImage}) right / cover;
     padding-top: 9px;
     padding-bottom: 27px;
+    height: 100vh;
 `;
 
 const LoginContainer = styled(Container)`

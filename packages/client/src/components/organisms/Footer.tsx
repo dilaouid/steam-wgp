@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { GithubIcon } from "../atoms/icons/footer/GithubIcon";
 import { CashIcon } from "../atoms/icons/footer/CashIcon";
 import { useTranslation } from "react-i18next";
@@ -13,12 +13,13 @@ const flags = {
 
 export const Footer: React.FC = () => {
     const { t, i18n } = useTranslation('global/footer');
+    const router = useRouterState();
 
     const changeLanguage = (languageCode: string) => {
         i18n.changeLanguage(languageCode);
     };
 
-    return(<>
+    return( router.location.pathname === '/login' ? <></> : <>
         <footer className="text-center">
             <div className="container text-muted py-4 py-lg-5">
                 <ul className="list-inline">

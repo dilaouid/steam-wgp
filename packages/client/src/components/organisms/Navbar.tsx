@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 
 import { useAuthStore } from '../../store/authStore';
 
@@ -35,24 +35,25 @@ const SteamIcon = styled(FaSteam)`
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Navbar: React.FC = () => {
+  const router = useRouterState();
   const { isAuthenticated, toggleAuth, setUser, user } = useAuthStore();
   const navigate = useNavigate();
   const { t } = useTranslation('global/navbar');
 
-    const handleAuthClick = () => {
-      logout().then(() => {
-        toggleAuth(false);
-        setUser(null);
-        navigate({to: '/'}).then(() => {
-          localStorage.removeItem('animationPlayed');
-        })
-      }).catch((err) => {
-        console.error("Impossible de déconnecter l'utilisateur: " + err);
-      });
-    }
+  const handleAuthClick = () => {
+    logout().then(() => {
+      toggleAuth(false);
+      setUser(null);
+      navigate({to: '/'}).then(() => {
+        localStorage.removeItem('animationPlayed');
+      })
+    }).catch((err) => {
+      console.error("Impossible de déconnecter l'utilisateur: " + err);
+    });
+  }
 
   return (
-    <RBNavbar expand="md" variant="dark" bg="black" sticky="top" className="bg-opacity-75 py-3">
+    router.location.pathname === '/login' ? <></> : <RBNavbar expand="md" variant="dark" bg="black" sticky="top" className="bg-opacity-75 py-3">
       <Container>
 
         <RBNavbar.Brand className='user-select-none'>
