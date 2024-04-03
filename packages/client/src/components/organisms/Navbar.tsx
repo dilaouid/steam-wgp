@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
             { isAuthenticated && <NavItem to="/library">{t('library')}</NavItem> }
             { isAuthenticated && user?.waitlist && <NavItem to={`/steamder/${user.waitlist}`}>{t('my_steamder')}</NavItem> }
             <NavItem to="/steamders">{t('steamders')}</NavItem>
-            <NavItem to="/steamders" flashy={true}>{t('donate')}</NavItem>
+            <NavItem to="https://ko-fi.com/dilaouid" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
           { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick}><LogoutIcon /> | { t('logout') } </Button> }
           { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href={ BASE_URL + "/auth/steam" }><SteamIcon /> | {t('login')}</Button> }
