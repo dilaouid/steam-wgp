@@ -20,9 +20,7 @@ export const Route = createFileRoute("/library")({
 
 function Home() {
   useEffect(() => {
-    AOS.init({
-      once: true
-    });
+    AOS.init();
     AOS.refresh();
   }, []);
   return <Librarypage />
