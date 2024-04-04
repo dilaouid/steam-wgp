@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 
 import { useAuthStore } from '../../store/authStore';
 
-import { Container, Navbar as RBNavbar, Nav, Button } from 'react-bootstrap';
+import { Container, Navbar as RBNavbar, Nav, Button, Spinner } from 'react-bootstrap';
 import NavItem from '../atoms/NavItem';
 import { FaPowerOff, FaSteam } from "react-icons/fa";
 
@@ -36,18 +36,22 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Navbar: React.FC = () => {
   const router = useRouterState();
+  const [loading, setLoading] = useState(false);
+
   const { isAuthenticated, toggleAuth, setUser, user } = useAuthStore();
   const navigate = useNavigate();
   const { t } = useTranslation('global/navbar');
 
   const handleAuthClick = () => {
     logout().then(() => {
+      setLoading(true);
       toggleAuth(false);
       setUser(null);
       navigate({to: '/'}).then(() => {
         localStorage.removeItem('animationPlayed');
       })
     }).catch((err) => {
+      setLoading(false);
       console.error("Impossible de déconnecter l'utilisateur: " + err);
     });
   }
@@ -79,7 +83,7 @@ const Navbar: React.FC = () => {
             <NavItem to="/steamders">{t('steamders')}</NavItem>
             <NavItem to="https://ko-fi.com/dilaouid" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>
-          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick}><LogoutIcon /> | { t('logout') } </Button> }
+          { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick}><LogoutIcon /> | { loading ? <Spinner size='sm' /> :  t('logout') } </Button> }
           { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href={ BASE_URL + "/auth/steam" }><SteamIcon /> | {t('login')}</Button> }
         </RBNavbar.Collapse>
       </Container>
