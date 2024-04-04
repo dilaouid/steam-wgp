@@ -22,7 +22,7 @@
             "switch_tooltip": "A la fin, il sera précisé quel joueur n'a pas le jeu sélectionné, ainsi qu'un lien vers la page magasin"
         },
         "errors": {
-            "at_least_two": "Il faut au moins deux joueurs pour démarrer une Steamder !",
+            "not_enough_players": "Il faut au moins deux joueurs pour démarrer une Steamder !",
             "not_matching": "{{ player1 }} et {{ player2 }} n'ont aucun jeu en commun !"
         }
     }
