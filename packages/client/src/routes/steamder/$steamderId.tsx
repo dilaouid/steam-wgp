@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getSteamder } from '../../services/api/waitlists/get';
+import { joinSteamder } from '../../services/api/waitlists/join';
+
 import { useAuthStore } from '../../store/authStore';
 import { useSteamderStore } from '../../store/steamderStore';
 
@@ -25,13 +27,25 @@ export const Route = createFileRoute("/steamder/$steamderId")({
     }
 
   },
-  loader: ({ params: { steamderId } }) => {
+  loader: async ({ params: { steamderId } }) => {
     const { setSteamder } = useSteamderStore.getState();
-
-    getSteamder(steamderId).then((steamder) => {
+    const { setUser, user } = useAuthStore.getState();
+  
+    try {
+      const steamder = await getSteamder(steamderId);
       setSteamder(steamder.data);
-    })
+    } catch {
+      const join = await joinSteamder(steamderId)
+      setSteamder(join.data);
+      if (user) {
+        setUser({ 
+          ...user,
+          waitlist: join.data.id
+        });
+      }
+    }
   },
+  
   onError: () => {
     if (getIsAuthenticated()) {
       throw redirect({
