@@ -1,0 +1,29 @@
+{
+    "waitlist": {
+        "header": "Vous êtes dans une Steamder, mais encore en salle d'attente ! Voici avec qui vous allez potentiellement jouer, on n'attends plus que l'administrateur du salon (le profil avec la petite couronne) démarre, et vous pourrez commencer à choisir !",
+        "players": {
+            "games_in_common_zero": "Aucun jeu en commun ... :(",
+            "games_in_common": "{{ count }} jeu en commun",
+            "games_in_common_other": "{{ count }} jeux en commun"
+        },
+        "informations": {
+            "in_list_zero": "Aucun jeu dans la liste !",
+            "in_list": "<1>{{ count }} jeu</1> dans la liste",
+            "in_list_other": "<1>{{ count }} jeux</1> dans la liste",
+            "waiting": "En attente de <1>{{ username }}</1> pour démarrer la Steamder ..."
+        },
+        "actions": {
+            "start": "Démarrer la Steamder",
+            "leave": "Partir d'ici",
+            "leave_confirm": "Vous êtes administrateur de la Steamder, si vous partez, la Steamder sera annulée. Êtes-vous sûr de vouloir partir ?",
+            "leave_confirm_yes": "Oui",
+            "leave_confirm_no": "Non",
+            "switch": "Prendre tout les jeux plutôt que les jeux en communs",
+            "switch_tooltip": "A la fin, il sera précisé quel joueur n'a pas le jeu sélectionné, ainsi qu'un lien vers la page magasin"
+        },
+        "errors": {
+            "at_least_two": "Il faut au moins deux joueurs pour démarrer une Steamder !",
+            "not_matching": "{{ player1 }} et {{ player2 }} n'ont aucun jeu en commun !"
+        }
+    }
+}
