@@ -49,7 +49,7 @@ export const LeftColumnLibrary: React.FC = () => {
     };
 
     return (
-        <StyledCol sm={12} lg={4} data-aos="fade-right" data-aos-duration="600" data-aos-once="true">
+        <StyledCol sm={12} lg={4} data-aos="fade-right" data-aos-duration="600" data-aos-offset="500">
             <StyledTitle className="text-info">{ t('your_library') }</StyledTitle>
             <p><Trans t={t} i18nKey="find_your_library" components={{ 1: <strong /> }} /></p>
             <Question>{ t('not_finding_a_game') }</Question>

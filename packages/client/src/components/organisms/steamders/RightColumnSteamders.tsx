@@ -71,7 +71,7 @@ export const RightColumnSteamders = () => {
                                         <UnjoinableButton />
                                     }
 
-                                    { user && (!user?.waitlist || user.waitlist === steamder.id) &&
+                                    { user && (user?.waitlist || user.waitlist === steamder.id) &&
                                         <MySteamderButtons id={steamder.id} />
                                     }
 

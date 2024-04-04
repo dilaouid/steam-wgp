@@ -19,8 +19,8 @@ export const RoomActions: React.FC = () => {
 
     if (!steamder) return null;
 
-    const admin: IPlayer = steamder.players.find(p => p.player_id == steamder.admin_id) as IPlayer;
-    const isAdmin = admin.player_id == user?.id;
+    const admin: IPlayer = steamder.players?.find(p => p.player_id == steamder.admin_id) as IPlayer;
+    const isAdmin = admin?.player_id == user?.id;
 
     return (
         <StyledRow className="justify-content-center">

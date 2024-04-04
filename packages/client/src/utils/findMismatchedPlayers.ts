@@ -6,11 +6,11 @@ interface IMismatchedPlayers {
 }
 
 export const findMismatchedPlayers = (steamder: ISteamder): IMismatchedPlayers[] => {
-    if (!steamder || steamder.players.length < 2) return [];
+    if (!steamder || steamder.players?.length < 2) return [];
 
     const mismatchMessages: IMismatchedPlayers[] = [];
 
-    for (let i = 0; i < steamder.players.length; i++) {
+    for (let i = 0; i < steamder.players?.length; i++) {
         for (let j = i + 1; j < steamder.players.length; j++) {
             const player1 = steamder.players[i];
             const player2 = steamder.players[j];

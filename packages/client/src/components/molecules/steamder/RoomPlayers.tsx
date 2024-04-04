@@ -22,14 +22,15 @@ const StyledRow = styled(Row)`
 export const RoomPlayers = () => {
     const { steamder } = useSteamderStore();
     const { user } = useAuthStore();
+    if (!steamder) return null;
 
-    const admin: IPlayer = steamder?.players.find(p => p.player_id == steamder?.admin_id) as IPlayer;
-    const isAdmin = admin.player_id == user?.id;
+    const admin: IPlayer = steamder?.players?.find(p => p.player_id == steamder?.admin_id) as IPlayer;
+    const isAdmin = admin?.player_id == user?.id;
 
     return (
         <StyledRow className="justify-content-center">
-            { steamder && steamder.players.map(player => {
-                const playerIsAdmin = admin.player_id == player.player_id;
+            { steamder && steamder?.players?.map(player => {
+                const playerIsAdmin = admin?.player_id == player.player_id;
                 const isAuthenticatedPlayer = user && user.id == player.player_id;
 
                 const authenticatedPlayer = steamder.players.find(p => p.player_id == user?.id);

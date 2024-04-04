@@ -23,8 +23,9 @@ export const RoomInformations: React.FC = () => {
 
     const { steamder } = useSteamderStore();
     const { user } = useAuthStore();
+    if (!steamder) return null;
 
-    const admin: IPlayer = steamder?.players.find(p => p.player_id == steamder.admin_id) as IPlayer;
+    const admin: IPlayer = steamder?.players?.find(p => p.player_id == steamder.admin_id) as IPlayer;
     const isAdmin = admin?.player_id == user?.id;
 
     return (
