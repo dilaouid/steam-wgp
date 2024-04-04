@@ -28,11 +28,10 @@ export const MySteamderButtons = ({ id }: { id: string }) => {
     const handleLeave = () => {
         setLoading(true);
         leaveMutation.mutateAsync(id).then(() => {
-            setLoading(false)
             if (!user) return;
             setUser({ ...user, waitlist: null });
             setSteamder(null);
-        });
+        }).finally(() => setLoading(false));
     };
 
     return (
