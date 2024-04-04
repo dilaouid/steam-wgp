@@ -6,6 +6,7 @@ import { useSteamderStore } from "../../../store/steamderStore";
 
 import { RoomActions } from "./RoomActions";
 import { AllGamesSwitch } from "./AllGamesSwitch";
+import { ErrorsList } from "./ErrorsList";
 
 import { IPlayer } from "../../../types/ISteamder";
 
@@ -29,7 +30,7 @@ export const RoomInformations: React.FC = () => {
     return (
         <StyledContainer className="text-center p-4 p-lg-5">
             <div className="user-select-none">
-                { isAdmin && steamder && <NoMarginTopText className="text-info-emphasis">
+                { !isAdmin && steamder && <NoMarginTopText className="text-info-emphasis">
                     <Trans t={t} i18nKey="waiting" values={{ username: admin?.username }} components={{ 1: <strong /> }} />
                 </NoMarginTopText> }
 
@@ -40,6 +41,7 @@ export const RoomInformations: React.FC = () => {
             
             <RoomActions />
             { isAdmin && steamder && <AllGamesSwitch active={steamder.display_all_games} /> }
+            <ErrorsList />
         </StyledContainer>
     );
 };
