@@ -3,7 +3,7 @@ import { ISteamder } from '../types/ISteamder';
 
 type SteamderStore = {
     steamder: ISteamder | null;
-    setSteamder: (games: ISteamder) => void;
+    setSteamder: (games: ISteamder | null) => void;
 };
 
 export const useSteamderStore = create<SteamderStore>((set) => ({
