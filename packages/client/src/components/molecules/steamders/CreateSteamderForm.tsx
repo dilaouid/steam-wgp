@@ -1,7 +1,14 @@
+import { useState } from "react";
+
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
 import { Form, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { BsController, BsPersonHeart } from "react-icons/bs";
-import { useTranslation } from "react-i18next";
+
+import { useCreateSteamder } from "../../../hooks/useCreateSteamder";
+import { useNavigate } from "@tanstack/react-router";
+import { useAuthStore } from "../../../store/authStore";
 
 const StyledForm = styled(Form)`
     font-family: 'Archivo Narrow', sans-serif;
@@ -32,15 +39,34 @@ const LabelTooltip = (message: string) =>
 
 export const CreateSteamderForm = () => {
     const { t } = useTranslation('pages/steamders', { keyPrefix: 'left_column.form' });
+    const { setUser, user } = useAuthStore();
+    const [ name, setName ] = useState('');
+    const [ isPrivate, setIsPrivate ] = useState(false);
+    const navigate = useNavigate();
+
+    const createSteamderMutation = useCreateSteamder();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!user) return;
+        createSteamderMutation.mutateAsync({ name, isPrivate }).then((data) => {
+            setUser({ ...user, waitlist: data.data.id });
+            navigate({
+                to: `/steamder/${data.data.id}`
+            })
+        }).catch((err) => {
+            console.error(err);
+        });
+    };
 
     return (
-        <StyledForm className="text-muted">
+        <StyledForm className="text-muted" onSubmit={handleSubmit}>
             <StyledLabel><BsController /> | { t('name') }</StyledLabel>
-            <StyledInput type="text" placeholder={ t('placeholder') } aria-label={ t('placeholder') } />
+            <StyledInput type="text" placeholder={ t('placeholder') } aria-label={ t('placeholder') } value={name} onChange={e => setName(e.target.value)} />
             <OverlayTrigger placement="left" overlay={LabelTooltip(t('tooltip'))} trigger={['hover', 'focus']}>
-                <StyledSwitch type="switch" id="private-switch" label={ t('label') } />
+                <StyledSwitch type="switch" id="private-switch" label={ t('label') } checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)} />
             </OverlayTrigger>
-            <Button variant="info">
+            <Button variant="info" type="submit">
                 <BsPersonHeart /> | { t('submit') }
             </Button>
         </StyledForm>
