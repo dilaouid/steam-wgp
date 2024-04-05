@@ -6,12 +6,10 @@ import { Link } from "@tanstack/react-router"
 import { Button, Col, Spinner } from "react-bootstrap"
 import { useTranslation } from "react-i18next";
 
-import { leaveSteamder } from "../../../services/api/waitlists/leave";
-
 import { BsBoxArrowInDown, BsDoorOpen } from "react-icons/bs"
-import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
+import { useLeaveSteamder } from "../../../hooks/useLeaveSteamder";
 
 const StyledSpinner = styled(Spinner)`
     margin-left: 0.2rem;
@@ -21,7 +19,7 @@ export const MySteamderButtons = ({ id }: { id: string }) => {
     const { t } = useTranslation('pages/steamders', { keyPrefix: 'right_column.table.buttons' });
     const { user, setUser } = useAuthStore();
     const { setSteamder } = useSteamderStore();
-    const leaveMutation = useMutation({ mutationFn: leaveSteamder, mutationKey: ['leave', 'steamder'] });
+    const leaveMutation = useLeaveSteamder();
 
     const [loading, setLoading] = useState(false);
 
