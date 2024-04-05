@@ -19,14 +19,17 @@ export const createWaitlistOpts = {
         minLength: 3,
         maxLength: 40
       },
-      private: { type: 'boolean' }
+      isPrivate: { type: 'boolean' }
     }
   }
 };
 
 async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
+  const fastify = request.server as FastifyInstance;
   const { id } = (request.user as Player);
-  const { private: isPrivate, name } = request.body as { private: boolean; name: string };
+
+  const { isPrivate, name } = request.body as { isPrivate: boolean; name: string };
+  fastify.log.info({ id, isPrivate, name });
   if (typeof isPrivate !== 'boolean')
     return APIResponse(reply, null, 'Vous devez spécifier si la room est privée ou non', 400);
 
@@ -35,8 +38,6 @@ async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
 
   if ((name?.trim().length > 0 && name?.trim().length < 3) || name?.trim().length > 40)
     return APIResponse(reply, null, 'Le nom de la room doit faire entre 3 et 40 caractères', 400);
-
-  const fastify = request.server as FastifyInstance;
 
   if (!id)
     return APIResponse(reply, null, 'Vous devez être connecté pour créer une room', 401);
