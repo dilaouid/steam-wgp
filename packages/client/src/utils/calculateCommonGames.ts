@@ -3,13 +3,17 @@ import { ISteamder } from "../types/ISteamder";
 export const calculateCommonGames = (steamder: ISteamder): number[] | null => {
     if (steamder.players.length === 0)
         return null;
-    let commonGames = steamder.players[0].games;
+    const gamesByPlayer = new Map(steamder.players.map(player => [player.player_id, new Set(player.games)]));
 
-    steamder.players.forEach(player => {
-        const filtered = commonGames.filter(game => player.games.includes(game));
-        // shuffling the array to make it more random
-        commonGames = filtered.sort(() => Math.random() - 0.5);
+    const allGamesSets = Array.from(gamesByPlayer.values());
+    let commonGames = allGamesSets[0];
+
+    allGamesSets.slice(1).forEach(gamesSet => {
+        commonGames = new Set([...commonGames].filter(game => gamesSet.has(game)));
     });
 
-    return commonGames;
+    // shuffle the common games to avoid the same games being displayed first
+    commonGames = new Set([...commonGames].sort(() => Math.random() - 0.5));
+
+    return Array.from(commonGames);
 }
