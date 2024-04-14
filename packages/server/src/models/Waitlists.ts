@@ -32,10 +32,15 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint, i
     return { error: 'already_in_a_room' };
   }
 
+  // get the user's games
+  const games = await fastify.db.select().from(Libraries.model).where(eq(Libraries.model.player_id, userId)).execute();
+
   const newWaitlist: WaitlistInsert = {
     admin_id: BigInt(userId),
     private: isPrivate,
-    name
+    name,
+    common_games: games.length,
+    all_games: games.length
   } as WaitlistInsert;
 
   const insertWaitlist = await fastify.db.insert(model).values(newWaitlist).returning();
@@ -130,7 +135,9 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
 
   const waitlist = {
     ...result[0].waitlist,
-    players: playersWithGames
+    players: playersWithGames,
+    common_games: result[0].waitlist.common_games,
+    all_games: result[0].waitlist.all_games
   };
 
   return waitlist;
