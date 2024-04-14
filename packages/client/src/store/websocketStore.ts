@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import * as websocketActions from '../services/websocket/actions';
 
 interface WebSocketState {
   socket: WebSocket | null;
@@ -8,12 +9,15 @@ interface WebSocketState {
   disconnect: () => void;
 }
 
+const BASE_WS_URL = import.meta.env.VITE_BASE_WS_URL;
+
 const useWebSocketStore = create<WebSocketState>((set, get) => ({
   socket: null,
   message: { action: '' },
 
-  connect: (url: string, token: string) => {
-    const ws = new WebSocket(url, [ token ]);
+  connect: (steamderId, token) => {
+    const url = `${BASE_WS_URL}/ws/${steamderId}`;
+    const ws = new WebSocket(url, [token]);
 
     ws.onopen = () => {
       console.log("Connected to WebSocket");
@@ -21,8 +25,29 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
     };
 
     ws.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-      set({ message: newMessage });
+      const data = JSON.parse(event.data);
+      switch (data.action) {
+        case "leave":
+          websocketActions.leaveSteamder();
+          break;
+        case "start":
+          websocketActions.startSteamder(data.waitlistId);
+          break;
+        case "kicked":
+          websocketActions.kickSteamder(data.playerId);
+          break;
+        case "end":
+          websocketActions.endSteamder();
+          break;
+        case "join":
+          websocketActions.joinSteamder(data.player);
+          break;
+        case "gameEnd":
+          websocketActions.endSteamder();
+          break;
+        default:
+          console.error("Unknown action", data);
+      }
     };
 
     ws.onclose = () => {
