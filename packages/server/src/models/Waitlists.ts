@@ -33,7 +33,18 @@ export async function insertWaitlist(fastify: FastifyInstance, userId: bigint, i
   }
 
   // get the user's games
-  const games = await fastify.db.select().from(Libraries.model).where(eq(Libraries.model.player_id, userId)).execute();
+  const games = await fastify.db
+    .select({ id: Libraries.model.game_id })
+    .from(Libraries.model)
+    .leftJoin(Games.model, eq(Libraries.model.game_id, Games.model.id))
+    .where(
+      and(
+        eq(Libraries.model.player_id, userId),
+        eq(Libraries.model.hidden, false),
+        eq(Games.model.is_selectable, true)
+      )
+    )
+    .execute();
 
   const newWaitlist: WaitlistInsert = {
     admin_id: BigInt(userId),
@@ -99,11 +110,14 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
     .from(model)
     .leftJoin(WaitlistsPlayers.model, eq(model.id, WaitlistsPlayers.model.waitlist_id))
     .leftJoin(Players.model, eq(WaitlistsPlayers.model.player_id, Players.model.id))
-    .leftJoin(Libraries.model, eq(Players.model.id, Libraries.model.player_id))
+    .leftJoin(Libraries.model,
+      and(
+        eq(Players.model.id, Libraries.model.player_id),
+        eq(Libraries.model.hidden, false)
+      ))
     .leftJoin(Games.model, and(
       eq(Libraries.model.game_id, Games.model.id),
-      eq(Games.model.is_selectable, true),
-      eq(Libraries.model.hidden, false)
+      eq(Games.model.is_selectable, true)
     ))
     .where(eq(model.id, waitlistId))
 

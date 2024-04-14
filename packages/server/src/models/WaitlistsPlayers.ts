@@ -17,38 +17,44 @@ export const model = pgTable('waitlists_players', {
   }
 });
 
-export async function getWaitlistPlayers(fastify: FastifyInstance, waitlistId: string): Promise<WaitlistPlayer[]> {
+export async function getWaitlistPlayers(fastify: FastifyInstance, waitlistId: string): Promise<{id:number, player_id:number}[]> {
   return fastify.db
-    .select({ game_id: games.id })
+    .select({ id: games.id, player_id: libraries.player_id })
     .from(waitlists_players)
     .leftJoin(libraries,
-      eq(waitlists_players.player_id, libraries.player_id)
-    )
-    .leftJoin(games,
-      eq(libraries.game_id, games.id)
-    )
-    .where(
       and(
-        eq(waitlists_players.waitlist_id, waitlistId),
-        eq(games.is_selectable, true),
+        eq(waitlists_players.player_id, libraries.player_id),
         eq(libraries.hidden, false)
       )
+    )
+    .leftJoin(games,
+      and(
+        eq(libraries.game_id, games.id),
+        eq(games.is_selectable, true)
+      )
+    )
+    .where(
+      eq(waitlists_players.waitlist_id, waitlistId)
     )
     .execute();
 }
 
-export async function getPlayerGames(fastify: FastifyInstance, userId: bigint): Promise<WaitlistPlayer[]> {
+export async function getPlayerGames(fastify: FastifyInstance, userId: bigint): Promise<{id:number, player_id:number}[]> {
   return fastify.db
-    .select()
+    .select({ id: games.id, player_id: libraries.player_id })
     .from(libraries)
     .where(
-      eq(libraries.player_id, userId)
+      and(
+        eq(libraries.hidden, false),
+        eq(libraries.player_id, userId)
+      )
     )
-    .leftJoin(games, and(
-      eq(libraries.game_id, games.id),
-      eq(games.is_selectable, true),
-      eq(libraries.hidden, false)
-    ))
+    .leftJoin(games,
+      and(
+        eq(libraries.game_id, games.id),
+        eq(games.is_selectable, true)
+      )
+    )
     .execute();
 }
 
@@ -84,20 +90,19 @@ export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, wai
   // add the games of the new player to the list
   const newPlayerGames = await getPlayerGames(fastify, userId);
 
+  // merge newPlayerGames with allWaitlistGames
   allWaitlistGames.push(...newPlayerGames);
 
   // remove duplicates and save in a new array
-  const allWaitlistGamesIds = removeDuplicates(allWaitlistGames);
-
-  // get only the games in common between all players
-  const commonGames = getCommonGames(allWaitlistGamesIds);
+  const withoutDuplicates = removeDuplicates(allWaitlistGames);
+  const common_games = getCommonGames(allWaitlistGames);
 
   // update the waitlist with the common games and all games count
   await fastify.db
     .update(waitlists)
     .set({
-      all_games: allWaitlistGamesIds.length,
-      common_games: commonGames.length
+      all_games: withoutDuplicates.length,
+      common_games: common_games.length
     })
     .where(
       eq(waitlists.id, waitlistId)
