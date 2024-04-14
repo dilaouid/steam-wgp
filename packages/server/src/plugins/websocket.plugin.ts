@@ -250,6 +250,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
         next(true);
       } catch (err) {
+        fastify.log.error(err);
         fastify.log.error('WebSockets Authentification error', err);
         next(false, 401, 'Unauthorized');
       }
