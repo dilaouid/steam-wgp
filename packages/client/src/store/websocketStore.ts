@@ -1,4 +1,3 @@
-// src/store/useWebSocketStore.ts
 import { create } from 'zustand';
 
 interface WebSocketState {

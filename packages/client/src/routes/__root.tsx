@@ -19,7 +19,7 @@ const RootComponent = () => {
 
   useEffect(() => {
     const token = getCookieValue('token');
-    if (!token || !user) return;
+    if (!token || !user?.waitlist) return;
 
     const wsUrl = `${BASE_WS_URL}/ws/${user.waitlist}`;
     connect(wsUrl, token);
