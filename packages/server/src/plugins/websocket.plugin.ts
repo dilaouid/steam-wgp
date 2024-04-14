@@ -348,15 +348,9 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         // get the all the swipped games from waitlistEntry of the player with the playerId
         if (waitlistClients.started && !waitlistClients.ended && waitlistClients.swipedGames) {
           const swipedGames = Object.keys(waitlistClients.swipedGames);
-
-          fastify.log.info(swipedGames);
-          fastify.log.info(`Player ID: ${playerId}`);
-
           const swipedGamesPlayer = swipedGames.filter((gameId: string) => waitlistClients.swipedGames[gameId].includes(playerId));
-
           waitlistClients.sockets.forEach((client: any) => {
             if (client === connection.socket) {
-              fastify.log.info(swipedGamesPlayer);
               client.send(JSON.stringify({ action: 'retrieve', swipedGames: swipedGamesPlayer } ));
             }
           });

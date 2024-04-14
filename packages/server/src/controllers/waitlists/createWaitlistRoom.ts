@@ -29,7 +29,6 @@ async function createWaitlist(request: FastifyRequest, reply: FastifyReply) {
   const { id } = (request.user as Player);
 
   const { isPrivate, name } = request.body as { isPrivate: boolean; name: string };
-  fastify.log.info({ id, isPrivate, name });
   if (typeof isPrivate !== 'boolean')
     return APIResponse(reply, null, 'Vous devez spécifier si la room est privée ou non', 400);
 
