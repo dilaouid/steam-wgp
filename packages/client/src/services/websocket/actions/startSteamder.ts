@@ -1,4 +1,5 @@
 import { Navigate } from "@tanstack/react-router";
+import { drawToast } from "../../../utils/drawToast";
 import { useSteamderStore } from "../../../store/steamderStore";
 
 export const startSteamder = (id?: string) => {
@@ -8,4 +9,5 @@ export const startSteamder = (id?: string) => {
 
     if (id)
         Navigate({ to: `/steamder/${id}` });
+    drawToast('room_begins', "success");
 };

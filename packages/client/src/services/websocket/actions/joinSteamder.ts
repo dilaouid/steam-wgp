@@ -1,25 +1,29 @@
-import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
+import { IPlayer } from "../../../types/ISteamder";
+import { calculateAllGames } from "../../../utils/calculateAllGames";
 import { calculateCommonGames } from "../../../utils/calculateCommonGames";
 
 /**
- * Join the current user to the steamder room
+ * A player join the steamder room
  * 
  * @returns void
  */
-export const joinSteamder = () => {
+export const joinSteamder = (player: IPlayer) => {
     const { setSteamder, steamder } = useSteamderStore.getState();
-    const { user } = useAuthStore.getState();
-    if (!user || !steamder) return;
+    if (!steamder) return;
 
-    const isPlayerAlreadyInRoom = steamder.players.some(current => current.player_id === user.id);
+    const isPlayerAlreadyInRoom = steamder.players.some(current => current.player_id === player.player_id);
     if (isPlayerAlreadyInRoom)
-        return;
+        return steamder;
 
-    const common = calculateCommonGames({ ...steamder, players: [...steamder.players, user] }) || [];
+    const allPlayers = [...steamder.players, player];
+
+    const common = calculateCommonGames({ ...steamder, players: [...steamder.players, player] }) || [];
+    const all_games = calculateAllGames(allPlayers);
     setSteamder({ 
         ...steamder, 
-        players: [...steamder.players, user],
-        commonGames: common
+        players: [...steamder.players, player],
+        common_games: common.length,
+        all_games
     });
 }
