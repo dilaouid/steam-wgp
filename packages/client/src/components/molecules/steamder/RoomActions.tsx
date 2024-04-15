@@ -25,7 +25,9 @@ export const RoomActions: React.FC = () => {
     return (
         <StyledRow className="justify-content-center">
             { isAdmin && <Col sm={"auto"} className="align-self-center">
-                <Button variant="outline-info" className="shadow">{t('start')}</Button>
+                <Button variant="outline-info" className="shadow" disabled={
+                    steamder.players?.length < 2 || (steamder.display_all_games && steamder.all_games == 0) || (!steamder.display_all_games && steamder.common_games == 0)
+                }>{t('start')}</Button>
             </Col> }
             <Col sm={"auto"} className="align-self-center">
                 <Button variant="outline-danger" className="shadow">{t('leave')}</Button>
