@@ -1,3 +1,8 @@
+import useWebSocketStore from "../../../store/websocketStore";
+
 export const startWaitlist = () => {
-    return JSON.stringify({ action: 'start' });
+    const { sendMessage } = useWebSocketStore.getState();
+    const data = JSON.stringify({ action: 'start' });
+
+    sendMessage(data)
 };

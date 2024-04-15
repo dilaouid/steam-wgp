@@ -1,3 +1,8 @@
+import useWebSocketStore from "../../../store/websocketStore";
+
 export const unswipeCard = (gameId: number) => {
-    return JSON.stringify({ action: 'unswipe', payload: { gameId } });
+    const { sendMessage } = useWebSocketStore.getState();
+    const data = JSON.stringify({ action: 'unswipe', payload: { gameId } });
+
+    sendMessage(data);
 };

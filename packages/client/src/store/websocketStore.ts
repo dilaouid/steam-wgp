@@ -5,7 +5,7 @@ interface WebSocketState {
   socket: WebSocket | null;
   message: { action: string, payload?: object };
   connect: (url: string, token: string) => void;
-  sendMessage: (type: string, payload: object) => void;
+  sendMessage: (message: string) => void;
   disconnect: () => void;
 }
 
@@ -36,8 +36,8 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
         case "kicked":
           websocketActions.kickSteamder(data.playerId);
           break;
-        case "end":
-          websocketActions.endSteamder();
+        case "update":
+          websocketActions.updateSteamder(data.player, data.commonGames);
           break;
         case "join":
           websocketActions.joinSteamder(data.player);

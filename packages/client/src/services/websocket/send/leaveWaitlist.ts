@@ -1,3 +1,8 @@
+import useWebSocketStore from "../../../store/websocketStore";
+
 export const leaveWaitlist = () => {
-    return JSON.stringify({ action: 'leave' });
+    const { sendMessage } = useWebSocketStore.getState();
+    const data = JSON.stringify({ action: 'leave' });
+
+    sendMessage(data)
 };
