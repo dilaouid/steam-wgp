@@ -10,6 +10,8 @@ import { useSteamderStore } from '../../store/steamderStore';
 import { Steamderpage } from '../../components/templates/Steamder_page';
 
 import AOS from 'aos';
+import useWebSocketStore from '../../store/websocketStore';
+import { getCookieValue } from '../../utils/cookieUtils';
 
 
 const getIsAuthenticated = () => {
@@ -28,15 +30,26 @@ export const Route = createFileRoute("/steamder/$steamderId")({
 
   },
   loader: async ({ params: { steamderId } }) => {
+    const token = getCookieValue('token') as string;
     const { setSteamder } = useSteamderStore.getState();
+    const { connect } = useWebSocketStore.getState();
     const { setUser, user } = useAuthStore.getState();
   
     try {
       const steamder = await getSteamder(steamderId);
       setSteamder(steamder.data);
+      connect(steamder.data.id, token);
+      
+      if (user) {
+        setUser({
+          ...user,
+          waitlist: steamder.data.id
+        });
+      }
     } catch {
       const join = await joinSteamder(steamderId)
       setSteamder(join.data);
+      connect(join.data.id, token);
       if (user) {
         setUser({ 
           ...user,

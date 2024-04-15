@@ -16,7 +16,7 @@ const WebSocketManager = () => {
     }
 
     return () => disconnect();
-  }, [user?.waitlist, token, connect, disconnect]);
+  }, [user, token, connect, disconnect]);
 
   return null;
 };
