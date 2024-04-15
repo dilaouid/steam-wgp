@@ -31,7 +31,7 @@ export const RightColumnLibrary: React.FC = () => {
                 <Tab eventKey="all_games" title={t('tabs_title.all_games', { count: library.length })}>
                     <TabRow className="g-0">
                         {library.map(game => (
-                            <GameColumn game={game} key={game.game_id} />
+                            <GameColumn game={game} key={'all_' + game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>
@@ -42,7 +42,7 @@ export const RightColumnLibrary: React.FC = () => {
                         { publics.length === 0 && <EmptyTab>{t('no_public_games')}</EmptyTab> }
 
                         {publics.map(game => (
-                            <GameColumn game={game} key={game.game_id} />
+                            <GameColumn game={game} key={'public_' + game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>
@@ -53,7 +53,7 @@ export const RightColumnLibrary: React.FC = () => {
                         { privates.length === 0 && <EmptyTab>{t('no_private_games')}</EmptyTab> }
 
                         {privates.map(game => (
-                            <GameColumn game={game} key={game.game_id} />
+                            <GameColumn game={game} key={'private_' + game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>
@@ -64,7 +64,7 @@ export const RightColumnLibrary: React.FC = () => {
                         { selected.length === 0 && <EmptyTab>{t('no_selected_games')}</EmptyTab> }
 
                         {library.filter(game => selected.includes(game.game_id)).map(game => (
-                            <GameColumn game={game} key={game.game_id} />
+                            <GameColumn game={game} key={'selected_' + game.game_id} />
                         ))}
                     </TabRow>
                 </Tab>
