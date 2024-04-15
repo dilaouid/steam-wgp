@@ -19,6 +19,7 @@ interface Waitlist {
   playerGames: Record<string, number[]>;
   commonGames: number[];
   swipedGames: Record<number, string[]>;
+  display_all_games: boolean;
   started: boolean;
   ended: boolean;
   winner?: number;
@@ -93,6 +94,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       commonGames: [],
       swipedGames: {},
       started: existingWaitlist[0].waitlists.started,
+      display_all_games: existingWaitlist[0].waitlists.display_all_games,
       ended: false,
       sockets: new Set()
     };
@@ -397,6 +399,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
               // cannot start if the waitlist is already started or ended
               if (waitlistClients.started || waitlistClients.ended) return;
+              if (playerId !== waitlistClients.adminId) return;
               await startWaitlist(waitlistId);
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
@@ -443,6 +446,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           case 'kick':
             try {
               if (waitlistClients.started || waitlistClients.ended) return;
+              if (playerId !== waitlistClients.adminId) return;
               leaveWaitlist(waitlistId, payload.playerId);
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
@@ -513,7 +517,18 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             }
             break;
 
+          case 'allGamesSwitch':
+            if (playerId !== waitlistClients.adminId)
+              return;
+            waitlistClients.display_all_games = !waitlistClients.display_all_games;
+            fastify.db.update(Waitlists.model).set({ display_all_games: waitlistClients.display_all_games }).where(eq(Waitlists.model.id, waitlistId)).execute();
+            waitlistEntry.sockets.forEach((client: any) => {
+              client.send(JSON.stringify({ action: 'allGamesSwitch', display_all_games: waitlistClients.display_all_games }));
+            });
+            break;
+
           default:
+            fastify.log.error(`Unknown action: ${action}`);
             break;
           }
         });
