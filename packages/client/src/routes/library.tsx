@@ -20,7 +20,13 @@ export const Route = createFileRoute("/library")({
 
 function Home() {
   useEffect(() => {
-    AOS.init();
+    AOS.init({
+      once: true,
+      duration: 1000,
+      easing: 'ease-in-out',
+      mirror: false,
+      offset: 100
+    });
     AOS.refresh();
   }, []);
   return <Librarypage />
