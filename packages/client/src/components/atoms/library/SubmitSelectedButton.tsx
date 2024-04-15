@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { BsCheckAll } from "react-icons/bs";
 
 import { updateLibrary } from "../../../services/api/players/updateLibraryApi";
+import { updateLibraryWS } from "../../../services/websocket/send";
 
 import { useLibraryStore } from "../../../store/libraryStore";
 
@@ -21,8 +22,13 @@ export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ coun
         try {
             if (count === 0 || updateMutation.isPending) return;
             updateMutation.mutateAsync(selected).then(() => {
-                setLibrary(library.map(game => selected.includes(game.game_id) ? { ...game, hidden: !game.hidden } : game));
+                const newLibrary = library.map(game => selected.includes(game.game_id) ? { ...game, hidden: !game.hidden } : game);
+                setLibrary(newLibrary);
                 setSelected([]);
+                const publicGames = newLibrary.filter(game => !game.hidden).map(game => game.game_id);
+                console.log(publicGames);
+                
+                updateLibraryWS(publicGames);
             });
         } catch (err) {
             console.error("Erreur lors de la mise à jour de la bibliothèque :", err);

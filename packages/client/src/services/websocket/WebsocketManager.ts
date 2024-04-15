@@ -1,22 +1,22 @@
 import { useEffect } from 'react';
 import useWebSocketStore from '../../store/websocketStore';
-import { useSteamderStore } from '../../store/steamderStore';
 import { getCookieValue } from '../../utils/cookieUtils';
+import { useAuthStore } from '../../store/authStore';
 
 const WebSocketManager = () => {
   const { connect, disconnect } = useWebSocketStore();
-  const { steamder } = useSteamderStore();
+  const { user } = useAuthStore.getState();
   const token = getCookieValue('token');
 
   useEffect(() => {
-    if (steamder?.id && token) {
-      connect(steamder.id, token);
+    if (user?.waitlist && token) {
+      connect(user.waitlist, token);
     } else {
       disconnect();
     }
 
     return () => disconnect();
-  }, [steamder?.id, token, connect, disconnect]);
+  }, [user?.waitlist, token, connect, disconnect]);
 
   return null;
 };

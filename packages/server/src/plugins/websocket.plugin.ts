@@ -183,12 +183,15 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     if (!waitlist || waitlist.players.length < 2) return;
 
     const playersAndGamesInfo = await fastify.db.select().from(WaitlistsPlayers.model)
-      .leftJoin(Libraries.model, eq(WaitlistsPlayers.model.player_id, Libraries.model.player_id))
-      .where(
+      .leftJoin(
+        Libraries.model,
         and(
-          eq(WaitlistsPlayers.model.waitlist_id, waitlistId),
+          eq(WaitlistsPlayers.model.player_id, Libraries.model.player_id),
           eq(Libraries.model.hidden, false)
         )
+      )
+      .where(
+        eq(WaitlistsPlayers.model.waitlist_id, waitlistId)
       )
       .execute();
 
@@ -267,7 +270,12 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         const playerId = userAuthMap.get(clientId);
         const playerData = await fastify.db.selectDistinct()
           .from(Players.model)
-          .rightJoin(Libraries.model, eq(Players.model.id, Libraries.model.player_id))
+          .rightJoin(Libraries.model,
+            and(
+              eq(Players.model.id, Libraries.model.player_id),
+              eq(Libraries.model.hidden, false)
+            )
+          )
           .rightJoin(Games.model, eq(Libraries.model.game_id, Games.model.id))
           .where(
             and(
@@ -462,15 +470,40 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           case 'update':
             try {
               if (waitlistClients.started || waitlistClients.ended) return;
-              const playerGames = payload.library.map(Number);
+              const playerGames = payload.publicGames.map(Number);
               waitlistClients.playerGames[playerId] = playerGames;
-              const allPlayerGameArrays: number[][] = Object.values(waitlistClients.playerGames);
-              const commonGames = allPlayerGameArrays.reduce<number[] | null>((common, games) => {
-                if (!common) return games;
-                return common.filter(game => games.includes(game));
-              }, null);
 
-              waitlistClients.commonGames = commonGames || [];
+              const playerIds = Object.keys(waitlistClients.playerGames);
+
+              const allGamesSet = new Set<number>();
+              let commonGamesSet = new Set<number>(waitlistClients.playerGames[playerIds[0]]);
+
+              playerIds.slice(1).forEach(playerId => {
+                const gamesSet = new Set(waitlistClients.playerGames[playerId]);
+                commonGamesSet = new Set([...commonGamesSet].filter(game => gamesSet.has(game)));
+              });
+              const common_games = Array.from(commonGamesSet);
+
+              Object.values(waitlistClients.playerGames).forEach((games: any) => {
+                games.forEach((game: number) => {
+                  allGamesSet.add(game);
+                });
+              });
+
+              const all_games = Array.from(allGamesSet);
+
+              fastify.db
+                .update(Waitlists.model)
+                .set(
+                  {
+                    common_games: common_games.length,
+                    all_games: all_games.length
+                  }
+                ).where(
+                  eq(Waitlists.model.id, waitlistId)
+                ).execute();
+
+              waitlistClients.commonGames = common_games;
 
               waitlistEntry.sockets.forEach((client: any) => {
                 client.send(JSON.stringify({ action: 'update', player: { player_id: playerId, games: playerGames }, commonGames: waitlistClients.commonGames }));
