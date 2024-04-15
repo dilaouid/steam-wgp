@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { switchDisplayGames } from "../../../services/websocket/send";
 
 const StyledSwitch = styled(Form.Check)`
     font-family: Abel, sans-serif;
@@ -20,7 +21,7 @@ export const AllGamesSwitch: React.FC<AllGamesSwitchProps> = ({ active }) => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.actions" });
     return (
         <OverlayTrigger placement="left" overlay={TooltipLabel(t('switch_tooltip'))} trigger={['hover', 'focus']}>
-            <StyledSwitch defaultChecked={active} inline className="text-dark" type="switch" id="all-games-switch" label={t('switch')} />
+            <StyledSwitch defaultChecked={active} inline className="text-dark" type="switch" id="all-games-switch" label={t('switch')} onChange={switchDisplayGames} />
         </OverlayTrigger>
     );
 };

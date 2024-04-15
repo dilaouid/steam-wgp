@@ -15,7 +15,7 @@ const WebSocketManager = () => {
       disconnect();
     }
 
-    return () => disconnect();
+    /* return () => disconnect(); */
   }, [user, token, connect, disconnect]);
 
   return null;

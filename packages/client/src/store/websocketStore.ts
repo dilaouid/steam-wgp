@@ -45,6 +45,9 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
         case "gameEnd":
           websocketActions.endSteamder();
           break;
+        case "allGamesSwitch":
+          websocketActions.switchDisplayGames(data.display_all_games);
+          break;
         default:
           console.error("Unknown action", data);
       }
