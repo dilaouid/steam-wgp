@@ -10,6 +10,8 @@ import { Footer } from '../components/organisms/Footer'
 import { Loader } from '../components/atoms/Loader'
 import WebSocketManager from '../services/websocket/WebsocketManager'
 
+import "react-toastify/dist/ReactToastify.css";
+
 const RootComponent = () => {
   return (
     <>
