@@ -1,20 +1,21 @@
-import { Navigate } from "@tanstack/react-router";
 import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
 import { drawToast } from "../../../utils/drawToast"
 import { calculateCommonGames } from "../../../utils/calculateCommonGames";
 import { calculateAllGames } from "../../../utils/calculateAllGames";
 
-export const kickSteamder = (playerId: string) => {
+export const kickSteamder = (playerId: string)  => {
     const { setSteamder, steamder } = useSteamderStore.getState();
     const { setUser, user } = useAuthStore.getState();
-    if (!user || !steamder) return;
+
+    if (!user || !steamder) 
+        return null;
 
     if (playerId === user.id) {
         drawToast('you_have_been_kicked', 'warn');
         setSteamder(null);
         setUser({ ...user, waitlist: null });
-        Navigate({ to: '/' });
+        window.location.href = '/steamders';
     } else {
         if (steamder.admin_id !== user.id)
             drawToast('player_has_been_kicked', 'warn');
@@ -26,6 +27,5 @@ export const kickSteamder = (playerId: string) => {
             common_games: common_games.length,
             all_games
         });
-
     }
 }
