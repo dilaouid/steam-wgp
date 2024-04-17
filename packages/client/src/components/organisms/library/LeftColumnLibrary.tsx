@@ -16,6 +16,17 @@ const StyledCol = styled(Col)`
     position: sticky;
     top: 15vh;
     z-index: 1;
+    animation: .6s ease-in-out slideInFromLeft;
+    @keyframes slideInFromLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
     @media (max-width: 990px) {
         position: static;
         top: auto;
@@ -49,7 +60,7 @@ export const LeftColumnLibrary: React.FC = () => {
     };
 
     return (
-        <StyledCol sm={12} lg={4} data-aos="fade-right" data-aos-duration="600">
+        <StyledCol sm={12} lg={4}>
             <StyledTitle className="text-info">{ t('your_library') }</StyledTitle>
             <p><Trans t={t} i18nKey="find_your_library" components={{ 1: <strong /> }} /></p>
             <Question>{ t('not_finding_a_game') }</Question>
