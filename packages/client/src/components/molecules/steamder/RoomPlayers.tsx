@@ -41,7 +41,7 @@ export const RoomPlayers = () => {
                 return (
                     <Col key={player.player_id} className="align-self-center" sm={"auto"}>
                         { playerIsAdmin && <RoomAdminIcon isOtherPlayer={!isAuthenticatedPlayer}/> }
-                        { isAdmin && !playerIsAdmin && <KickPlayerButton playerId={player.player_id} steamderId={steamder.id}/> }
+                        { isAdmin && !playerIsAdmin && <KickPlayerButton username={player.username} playerId={player.player_id} steamderId={steamder.id}/> }
                         { !isAuthenticatedPlayer && hasNoCommonWithAnyone && <DangerIcon /> }
                         <ProfilPicture isOtherPlayer={!isAuthenticatedPlayer} disable={gamesInCommon.length == 0} player={player}/>
                         { !isAuthenticatedPlayer && <GamesInCommon commonGames={gamesInCommon.length} /> }

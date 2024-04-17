@@ -19,7 +19,15 @@
             "leave_confirm_yes": "Oui",
             "leave_confirm_no": "Non",
             "switch": "Prendre tout les jeux plutôt que les jeux en communs",
-            "switch_tooltip": "A la fin, il sera précisé quel joueur n'a pas le jeu sélectionné, ainsi qu'un lien vers la page magasin"
+            "switch_tooltip": "A la fin, il sera précisé quel joueur n'a pas le jeu sélectionné, ainsi qu'un lien vers la page magasin",
+            "modal": {
+                "kick": {
+                    "title": "🛑 Expulser un joueur",
+                    "content": "Êtes-vous sûr de vouloir expulser <1>{{ username }}</1> de la Steamder ?",
+                    "yes": "Oui",
+                    "no": "Non"
+                }
+            }
         },
         "errors": {
             "not_enough_players": "Il faut au moins deux joueurs pour démarrer une Steamder !",
