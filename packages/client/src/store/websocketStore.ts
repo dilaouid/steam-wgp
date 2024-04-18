@@ -42,7 +42,7 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
         case "join":
           websocketActions.joinSteamder(data.player);
           break;
-        case "gameEnd":
+        case "end":
           websocketActions.endSteamder();
           break;
         case "allGamesSwitch":

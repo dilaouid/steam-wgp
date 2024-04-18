@@ -1,4 +1,4 @@
-import { Navigate } from "@tanstack/react-router";
+import { router, queryClient } from "../../../main";
 import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
 import { drawToast } from "../../../utils/drawToast"
@@ -10,9 +10,9 @@ export const endSteamder = () => {
     if (!user || !steamder) return;
     setSteamder(null);
     setUser({ ...user, waitlist: null });
+    queryClient.invalidateQueries({ queryKey: ["steamders"] });
     // check if the user is in the steamder room page
-    if (window.location.pathname.includes('/steamder/')) {
-        Navigate({ to: '/' });
-    }
+    if (router.matchRoute('/steamder'))
+        router.navigate({ to: '/', replace: true, resetScroll: true });
     drawToast('admin_closed_room', 'info');
 }

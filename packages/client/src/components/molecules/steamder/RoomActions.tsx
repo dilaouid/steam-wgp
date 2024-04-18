@@ -10,6 +10,7 @@ import { useAuthStore } from "../../../store/authStore";
 import { useLeaveSteamder } from "../../../hooks/useLeaveSteamder";
 
 import { IPlayer } from "../../../types/ISteamder";
+import { leaveWaitlist } from "../../../services/websocket/send";
 
 const StyledRow = styled(Row)`
     height: 91px;
@@ -34,6 +35,7 @@ export const RoomActions: React.FC = () => {
         leaveMutation.mutateAsync(steamder.id).then(() => {
             if (!user) return;
             setUser({ ...user, waitlist: null });
+            leaveWaitlist();
             setSteamder(null);
         }).finally(() => {
             setLoading(false)

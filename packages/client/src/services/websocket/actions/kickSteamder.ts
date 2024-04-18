@@ -1,3 +1,4 @@
+import { router, queryClient } from "../../../main";
 import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
 import { drawToast } from "../../../utils/drawToast"
@@ -12,10 +13,11 @@ export const kickSteamder = (playerId: string)  => {
         return null;
 
     if (playerId === user.id) {
-        drawToast('you_have_been_kicked', 'warn');
+        queryClient.invalidateQueries({ queryKey: ["steamders"] })
+        router.navigate({ to: '/', resetScroll: true });
         setSteamder(null);
         setUser({ ...user, waitlist: null });
-        window.location.href = '/steamders';
+        drawToast('you_have_been_kicked', 'warn');
     } else {
         if (steamder.admin_id !== user.id)
             drawToast('player_has_been_kicked', 'warn');

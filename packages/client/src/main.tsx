@@ -10,12 +10,12 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 
 import { AuthWrapper } from './components/wrappers/AuthWrapper.tsx'
-const router = createRouter({ routeTree })
+export const router = createRouter({ routeTree })
 
 import 'aos/dist/aos.css';
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
