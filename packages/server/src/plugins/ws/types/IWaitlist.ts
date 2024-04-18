@@ -10,5 +10,6 @@ export interface Waitlist {
     started: boolean;
     ended: boolean;
     winner?: number;
+    endTime?: number;
     sockets: Set<any>;
 }

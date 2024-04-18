@@ -347,7 +347,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           const swipedGamesPlayer = swipedGames.filter((gameId: string) => waitlistClients.swipedGames[gameId].includes(playerId));
           waitlistClients.sockets.forEach((client: any) => {
             if (client === connection.socket) {
-              client.send(JSON.stringify({ action: 'retrieve', swipedGames: swipedGamesPlayer } ));
+              client.send(JSON.stringify({ action: 'retrieve', swipedGames: swipedGamesPlayer, endTime: waitlistClients.endTime }));
             }
           });
         }
@@ -387,9 +387,15 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               if (waitlistClients.started || waitlistClients.ended) return;
               if (playerId !== waitlistClients.adminId) return;
               await startWaitlist(waitlistId);
+
+              // count 5 seconds per game
+              const allGames = calculateAllGames(waitlistClients);
+              const timing = (waitlistClients.display_all_games ? allGames.length : waitlistClients.commonGames.length) * 5000;
+              waitlistClients.endTime = Date.now() + timing;
+
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
-                client.send(JSON.stringify({ action: 'start' }));
+                client.send(JSON.stringify({ action: 'start', endTime: waitlistClients.endTime }));
               });
 
               // wait for 10 minutes before ending the waitlist
@@ -410,7 +416,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                   client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
                 });
                 deleteWaitlist(waitlistId);
-              }, 600000);
+              }, timing);
 
             } catch (error) {
               fastify.log.error(`Error in 'start' action: ${error}`);
