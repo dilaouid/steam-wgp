@@ -390,7 +390,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
               // count 5 seconds per game
               const allGames = calculateAllGames(waitlistClients);
-              const timing = (waitlistClients.display_all_games ? allGames.length : waitlistClients.commonGames.length) * 5000;
+              const timing = (waitlistClients.display_all_games ? allGames.length : waitlistClients.commonGames.length) * 2000;
               waitlistClients.endTime = Date.now() + timing;
 
               // send message to all players
