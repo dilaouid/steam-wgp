@@ -1,30 +1,16 @@
 import { FastifyInstance } from 'fastify';
-import websocket from '@fastify/websocket'
-import jwt from 'jsonwebtoken';
-import { Games, Libraries, Players, Waitlists, WaitlistsPlayers } from '../models';
-import { and, eq, inArray } from 'drizzle-orm';
-import { Game } from '../models/Games';
 import { RawData, WebSocket } from 'ws';
+import websocket from '@fastify/websocket'
 
-interface PlayerInfo {
-    avatar_hash: string;
-    player_id: string;
-    username: string;
-    games: number[];
-}
+import { and, eq, inArray } from 'drizzle-orm';
 
-interface Waitlist {
-  adminId: string;
-  players: PlayerInfo[];
-  playerGames: Record<string, number[]>;
-  commonGames: number[];
-  swipedGames: Record<number, string[]>;
-  display_all_games: boolean;
-  started: boolean;
-  ended: boolean;
-  winner?: number;
-  sockets: Set<any>;
-}
+import jwt from 'jsonwebtoken';
+
+import { Games, Libraries, Players, Waitlists, WaitlistsPlayers } from '../models';
+import { Game } from '../models/Games';
+
+import { updateCommonGames, calculateAllGames } from './ws/utils';
+import { Waitlist, PlayerInfo } from './ws/types';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -438,14 +424,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
             // update the waitlistClients.commonGames now that a player has left
             fillPlayerGamesList();
-            {
-              const initialGames: number[] = waitlistClients.playerGames[waitlistClients.players[0].player_id] || [];
-              waitlistClients.commonGames = waitlistClients.players.reduce((commonGames: number[], player: PlayerInfo) => {
-                const currentGames = waitlistClients.playerGames[player.player_id] || [];
-                if (commonGames.length === 0) return currentGames;
-                return commonGames.filter(game => currentGames.includes(game));
-              }, initialGames);
-            }
+            updateCommonGames(waitlistClients);
 
             // send message to all players
             waitlistEntry.sockets.forEach((client: any) => {
@@ -463,12 +442,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
               // update the waitlistClients.commonGames now that a player has left
               fillPlayerGamesList();
-              const initialGames = waitlistClients.playerGames[waitlistClients.players[0].player_id] || [];
-              waitlistClients.commonGames = waitlistClients.players.reduce((commonGames: number[], player: PlayerInfo) => {
-                const currentGames = waitlistClients.playerGames[player.player_id] || [];
-                if (commonGames.length === 0) return currentGames;
-                return commonGames.filter(game => currentGames.includes(game));
-              }, initialGames);
+              updateCommonGames(waitlistClients);
 
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
@@ -499,37 +473,19 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               const playerGames = payload.publicGames.map(Number);
               waitlistClients.playerGames[playerId] = playerGames;
 
-              const playerIds = Object.keys(waitlistClients.playerGames);
-
-              const allGamesSet = new Set<number>();
-              let commonGamesSet = new Set<number>(waitlistClients.playerGames[playerIds[0]]);
-
-              playerIds.slice(1).forEach(playerId => {
-                const gamesSet = new Set(waitlistClients.playerGames[playerId]);
-                commonGamesSet = new Set([...commonGamesSet].filter(game => gamesSet.has(game)));
-              });
-              const common_games = Array.from(commonGamesSet);
-
-              Object.values(waitlistClients.playerGames).forEach((games: any) => {
-                games.forEach((game: number) => {
-                  allGamesSet.add(game);
-                });
-              });
-
-              const all_games = Array.from(allGamesSet);
+              updateCommonGames(waitlistClients);
+              const all_games = calculateAllGames(waitlistClients);
 
               fastify.db
                 .update(Waitlists.model)
                 .set(
                   {
-                    common_games: common_games.length,
+                    common_games: waitlistClients.commonGames.length,
                     all_games: all_games.length
                   }
                 ).where(
                   eq(Waitlists.model.id, waitlistId)
                 ).execute();
-
-              waitlistClients.commonGames = common_games;
 
               waitlistEntry.sockets.forEach((client: any) => {
                 client.send(JSON.stringify({ action: 'update', player: { player_id: playerId, games: playerGames }, commonGames: waitlistClients.commonGames }));
