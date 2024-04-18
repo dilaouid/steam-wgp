@@ -48,13 +48,28 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     waitlists.delete(waitlistId);
   };
 
+  const completeWaitlist = async (waitlistId: string): Promise<void> => {
+    const waitlist: Waitlist = waitlists.get(waitlistId);
+    if (!waitlist) return;
+
+    // complete the waitlist in the database
+    await fastify.db.update(Waitlists.model)
+      .set({ complete: true })
+      .where(eq(Waitlists.model.id, waitlistId))
+      .execute();
+
+    // delete the waitlist in the memory
+    waitlists.delete(waitlistId);
+  };
+
   const createWaitlist = async (waitlistId: string, player: PlayerInfo): Promise<void> => {
     fastify.log.info(`---------Creating waitlist ${waitlistId}---------`);
     const existingWaitlist = await fastify.db.select()
       .from(Waitlists.model)
       .leftJoin(WaitlistsPlayers.model, eq(Waitlists.model.id, WaitlistsPlayers.model.waitlist_id))
       .where(and(
-        eq(Waitlists.model.id, waitlistId)
+        eq(Waitlists.model.id, waitlistId),
+        eq(Waitlists.model.complete, false)
       ))
       .execute();
 
@@ -415,7 +430,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                 waitlistEntry.sockets.forEach((client: any) => {
                   client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
                 });
-                deleteWaitlist(waitlistId);
+                completeWaitlist(waitlistId);
               }, timing);
 
             } catch (error) {
