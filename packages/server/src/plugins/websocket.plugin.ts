@@ -424,7 +424,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             break;
 
             // when a player leaves the waitlist
-          case 'leave':
+          case 'leave': {
             if (waitlistClients.started || waitlistClients.ended) return;
             leaveWaitlist(waitlistId, playerId);
 
@@ -432,15 +432,28 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             fillPlayerGamesList();
             updateCommonGames(waitlistClients);
 
+            const all_games = calculateAllGames(waitlistClients);
+
+            fastify.db
+              .update(Waitlists.model)
+              .set(
+                {
+                  common_games: waitlistClients.commonGames.length,
+                  all_games: all_games.length
+                }
+              ).where(
+                eq(Waitlists.model.id, waitlistId)
+              ).execute();
+
             // send message to all players
             waitlistEntry.sockets.forEach((client: any) => {
               const data = playerId === waitlistClients.adminId ? { action: 'end' } : { action: 'leave', player };
               client.send(JSON.stringify(data));
             });
             break;
-
+          }
           // when a player is kicked from the waitlist
-          case 'kick':
+          case 'kick': {
             try {
               if (waitlistClients.started || waitlistClients.ended) return;
               if (playerId !== waitlistClients.adminId) return;
@@ -449,6 +462,18 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               // update the waitlistClients.commonGames now that a player has left
               fillPlayerGamesList();
               updateCommonGames(waitlistClients);
+              const all_games = calculateAllGames(waitlistClients);
+
+              fastify.db
+                .update(Waitlists.model)
+                .set(
+                  {
+                    common_games: waitlistClients.commonGames.length,
+                    all_games: all_games.length
+                  }
+                ).where(
+                  eq(Waitlists.model.id, waitlistId)
+                ).execute();
 
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
@@ -458,7 +483,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               fastify.log.error(`Error in 'kick' action: ${error}`);
             }
             break;
-
+          }
           // when a player unswipes a game
           case 'unswipe':
             try {
@@ -473,7 +498,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             break;
 
           // when a player updates his library
-          case 'update':
+          case 'update': {
             try {
               if (waitlistClients.started || waitlistClients.ended) return;
               const playerGames = payload.publicGames.map(Number);
@@ -500,7 +525,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               fastify.log.error(`Error in 'update' action: ${error}`);
             }
             break;
-
+          }
           // when the admin switch between common games and all games
           case 'allGamesSwitch':
             if (playerId !== waitlistClients.adminId)
