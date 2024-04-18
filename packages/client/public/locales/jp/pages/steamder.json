@@ -1,0 +1,37 @@
+{
+    "waitlist": {
+        "header": "Steamderの待合室にいます！これから一緒に遊ぶかもしれない人たちです。管理者（小さな王冠のついたプロファイル）が開始するのを待って、ゲーム選択を始められます！",
+        "players": {
+            "games_in_common_zero": "共通のゲームがありません... :(",
+            "games_in_common": "{{ count }}つの共通ゲーム",
+            "games_in_common_other": "{{ count }}つの共通ゲーム"
+        },
+        "informations": {
+            "in_list_zero": "リストにゲームがありません！",
+            "in_list": "<1>{{ count }}つのゲーム</1>がリストにあります",
+            "in_list_other": "<1>{{ count }}つのゲーム</1>がリストにあります",
+            "waiting": "<1>{{ username }}</1>の開始を待っています..."
+        },
+        "actions": {
+            "start": "Steamderを開始",
+            "leave": "ここから去る",
+            "leave_confirm": "あなたはSteamderの管理者です。去るとSteamderはキャンセルされます。本当に去りますか？",
+            "leave_confirm_yes": "はい",
+            "leave_confirm_no": "いいえ",
+            "switch": "共通ゲームの代わりにすべてのゲームを選ぶ",
+            "switch_tooltip": "最終的に、選択したゲームを持っていないプレイヤーとストアページへのリンクが表示されます",
+            "modal": {
+                "kick": {
+                    "title": "🛑 プレイヤーを追放する",
+                    "content": "<1>{{ username }}</1>をSteamderから追放してもよろしいですか？",
+                    "yes": "はい",
+                    "no": "いいえ"
+                }
+            }
+        },
+        "errors": {
+            "not_enough_players": "Steamderを開始するには少なくとも2人のプレイヤーが必要です！",
+            "not_matching": "{{ player1 }}と{{ player2 }}は共通のゲームがありません！"
+        }
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "waitlist": {
+        "header": "Estás en un Steamder, ¡pero aún en la sala de espera! Aquí están los jugadores con los que potencialmente jugarás, solo esperamos que el administrador del salón (el perfil con la pequeña corona) inicie, ¡y podrás comenzar a elegir!",
+        "players": {
+            "games_in_common_zero": "Ningún juego en común... :(",
+            "games_in_common": "{{ count }} juego en común",
+            "games_in_common_other": "{{ count }} juegos en común"
+        },
+        "informations": {
+            "in_list_zero": "¡Ningún juego en la lista!",
+            "in_list": "<1>{{ count }} juego</1> en la lista",
+            "in_list_other": "<1>{{ count }} juegos</1> en la lista",
+            "waiting": "Esperando a <1>{{ username }}</1> para iniciar la Steamder..."
+        },
+        "actions": {
+            "start": "Iniciar la Steamder",
+            "leave": "Salir de aquí",
+            "leave_confirm": "Eres el administrador de la Steamder, si te vas, la Steamder se cancelará. ¿Estás seguro de querer salir?",
+            "leave_confirm_yes": "Sí",
+            "leave_confirm_no": "No",
+            "switch": "Tomar todos los juegos en lugar de solo los comunes",
+            "switch_tooltip": "Al final, se mostrará qué jugador no tiene el juego seleccionado, junto con un enlace a la página de la tienda",
+            "modal": {
+                "kick": {
+                    "title": "🛑 Expulsar a un jugador",
+                    "content": "¿Estás seguro de querer expulsar a <1>{{ username }}</1> de la Steamder?",
+                    "yes": "Sí",
+                    "no": "No"
+                }
+            }
+        },
+        "errors": {
+            "not_enough_players": "¡Necesitas al menos dos jugadores para iniciar una Steamder!",
+            "not_matching": "{{ player1 }} y {{ player2 }} no tienen juegos en común!"
+        }
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "waitlist": {
+        "header": "You're in a Steamder, but still in the waiting room! Here are your potential gaming buddies. We're just waiting for the admin (the profile with the little crown) to start, then you can begin picking games!",
+        "players": {
+            "games_in_common_zero": "No games in common... :(",
+            "games_in_common": "{{ count }} game in common",
+            "games_in_common_other": "{{ count }} games in common"
+        },
+        "informations": {
+            "in_list_zero": "No games in the list!",
+            "in_list": "<1>{{ count }} game</1> in the list",
+            "in_list_other": "<1>{{ count }} games</1> in the list",
+            "waiting": "Waiting for <1>{{ username }}</1> to start the Steamder..."
+        },
+        "actions": {
+            "start": "Start the Steamder",
+            "leave": "Leave here",
+            "leave_confirm": "You're the Steamder admin. If you leave, the Steamder will be cancelled. Are you sure you want to leave?",
+            "leave_confirm_yes": "Yes",
+            "leave_confirm_no": "No",
+            "switch": "Take all games instead of just the common ones",
+            "switch_tooltip": "In the end, it will show which player does not have the selected game, along with a link to the store page",
+            "modal": {
+                "kick": {
+                    "title": "🛑 Kick a player",
+                    "content": "Are you sure you want to kick <1>{{ username }}</1> from the Steamder?",
+                    "yes": "Yes",
+                    "no": "No"
+                }
+            }
+        },
+        "errors": {
+            "not_enough_players": "You need at least two players to start a Steamder!",
+            "not_matching": "{{ player1 }} and {{ player2 }} do not have any games in common!"
+        }
+    }
+}
