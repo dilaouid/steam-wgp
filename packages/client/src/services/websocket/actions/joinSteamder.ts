@@ -1,3 +1,4 @@
+import { queryClient } from "../../../main";
 import { useSteamderStore } from "../../../store/steamderStore";
 import { IPlayer } from "../../../types/ISteamder";
 import { calculateAllGames } from "../../../utils/calculateAllGames";
@@ -13,6 +14,7 @@ export const joinSteamder = (player: IPlayer) => {
     if (!steamder) return;
 
     const isPlayerAlreadyInRoom = steamder.players.some(current => current.player_id === player.player_id);
+    queryClient.invalidateQueries({ queryKey: ["steamders"] });
     if (isPlayerAlreadyInRoom)
         return steamder;
 

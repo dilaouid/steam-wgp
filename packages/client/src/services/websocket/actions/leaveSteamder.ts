@@ -1,3 +1,4 @@
+import { queryClient } from "../../../main";
 import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
 import { calculateAllGames } from "../../../utils/calculateAllGames";
@@ -13,6 +14,7 @@ export const leaveSteamder = (playerId: string): void => {
 
     // count every games in the steamder (each game id from all players is counted only once)
     const all_games = calculateAllGames(steamder.players.filter((current) => current.player_id !== playerId));
+    queryClient.invalidateQueries({ queryKey: ["steamders"] });
 
     setSteamder({ 
         ...steamder, 

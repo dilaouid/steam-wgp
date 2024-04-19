@@ -1,3 +1,4 @@
+import { queryClient } from "../../../main";
 import { useSteamderStore } from "../../../store/steamderStore";
 import { IPlayer } from "../../../types/ISteamder";
 import { calculateAllGames } from "../../../utils/calculateAllGames";
@@ -9,6 +10,7 @@ export const updateSteamder = (player: IPlayer, commonGames: number[]) => {
     const updatedPlayers = steamder.players.map(p => p.player_id === player.player_id ? { ...p, games: player.games } : p);
     const commonGamesLength = commonGames.length;
     const allGamesLength = calculateAllGames(updatedPlayers);
+    queryClient.invalidateQueries({ queryKey: ["steamders"] });
 
     setSteamder({
         ...steamder,
