@@ -54,7 +54,7 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
     };
 
     ws.onclose = () => {
-      console.log("Disconnected from WebSocket");
+      console.error("Disconnected from WebSocket");
       set({ socket: null });
     };
 

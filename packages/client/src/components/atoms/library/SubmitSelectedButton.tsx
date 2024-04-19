@@ -7,6 +7,7 @@ import { updateLibrary } from "../../../services/api/players/updateLibraryApi";
 import { updateLibraryWS } from "../../../services/websocket/send";
 
 import { useLibraryStore } from "../../../store/libraryStore";
+import { drawToast } from "../../../utils/drawToast";
 
 interface SubmitSelectedButtonProps {
     count: number;
@@ -21,14 +22,13 @@ export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ coun
     const handleUpdateLibrary = async () => {
         try {
             if (count === 0 || updateMutation.isPending) return;
-            updateMutation.mutateAsync(selected).then(() => {
+            updateMutation.mutateAsync(selected).then((data) => {
                 const newLibrary = library.map(game => selected.includes(game.game_id) ? { ...game, hidden: !game.hidden } : game);
                 setLibrary(newLibrary);
                 setSelected([]);
-                const publicGames = newLibrary.filter(game => !game.hidden).map(game => game.game_id);
-                console.log(publicGames);
-                
+                const publicGames = newLibrary.filter(game => !game.hidden).map(game => game.game_id);                
                 updateLibraryWS(publicGames);
+                drawToast(data.message, "success");
             });
         } catch (err) {
             console.error("Erreur lors de la mise à jour de la bibliothèque :", err);

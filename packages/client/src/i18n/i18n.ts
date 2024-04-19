@@ -12,7 +12,21 @@ i18n
     debug: true,
     interpolation: {
       escapeValue: false,
-    }
+    },
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    },
+    ns: [
+      "global/navbar",
+      "global/footer",
+      'global/toast',
+
+      'pages/steamders',
+      'pages/steamder',
+      'pages/homepage',
+      "page/login",
+      "page/library",
+    ]
   });
 
 export default i18n;
