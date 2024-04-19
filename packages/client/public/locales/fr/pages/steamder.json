@@ -26,6 +26,13 @@
                     "content": "Êtes-vous sûr de vouloir expulser <1>{{ username }}</1> de la Steamder ?",
                     "yes": "Oui",
                     "no": "Non"
+                },
+                "leave": {
+                    "title": "🚪 Quitter la Steamder",
+                    "warning": "⚠️ ATTENTION !! Vous êtes administrateur de la Steamder, si vous partez, la Steamder sera annulée pour tout le monde !",
+                    "content": "Êtes-vous sûr de vouloir quitter la Steamder ?",
+                    "yes": "Je me tire !",
+                    "no": "Non"
                 }
             }
         },
