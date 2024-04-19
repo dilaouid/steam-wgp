@@ -65,8 +65,7 @@ export const Route = createFileRoute("/steamder/$steamderId")({
         to: '/'
       });
     }
-  },
-  staleTime: 1000 * 60 * 5
+  }
 })
 
 function Steamder() {
