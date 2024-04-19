@@ -19,7 +19,7 @@ export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ coun
     const updateMutation = useMutation({ mutationFn: updateLibrary, mutationKey: ['update', 'library'] });
     const message = count === 0 ? t('disabled') : t('enabled');
     
-    const handleUpdateLibrary = async () => {
+    const handleUpdateLibrary = () => {
         try {
             if (count === 0 || updateMutation.isPending) return;
             updateMutation.mutateAsync(selected).then((data) => {
@@ -29,8 +29,13 @@ export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ coun
                 const publicGames = newLibrary.filter(game => !game.hidden).map(game => game.game_id);                
                 updateLibraryWS(publicGames);
                 drawToast(data.message, "success");
+            }).catch((err) => { 
+                drawToast(err.message, "error");
+                throw err;
             });
-        } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            drawToast(err.message, "error");
             console.error("Erreur lors de la mise à jour de la bibliothèque :", err);
         }
     };
