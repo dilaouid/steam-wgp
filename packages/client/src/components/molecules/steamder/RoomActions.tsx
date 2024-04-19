@@ -40,8 +40,8 @@ export const RoomActions: React.FC = () => {
         setLoading(true);
         leaveMutation.mutateAsync(steamder.id).then(() => {
             if (!user) return;
-            setUser({ ...user, waitlist: null });
             leaveWaitlist();
+            setUser({ ...user, waitlist: null });
             setSteamder(null);
         }).finally(() => {
             setLoading(false)

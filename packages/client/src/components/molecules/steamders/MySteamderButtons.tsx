@@ -7,9 +7,12 @@ import { Button, Col, Spinner } from "react-bootstrap"
 import { useTranslation } from "react-i18next";
 
 import { BsBoxArrowInDown, BsDoorOpen } from "react-icons/bs"
+
 import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
+
 import { useLeaveSteamder } from "../../../hooks/useLeaveSteamder";
+import { leaveWaitlist } from "../../../services/websocket/send";
 
 const StyledSpinner = styled(Spinner)`
     margin-left: 0.2rem;
@@ -28,6 +31,7 @@ export const MySteamderButtons = ({ id }: { id: string }) => {
         leaveMutation.mutateAsync(id).then(() => {
             if (!user) return;
             setUser({ ...user, waitlist: null });
+            leaveWaitlist();
             setSteamder(null);
         }).finally(() => setLoading(false));
     };

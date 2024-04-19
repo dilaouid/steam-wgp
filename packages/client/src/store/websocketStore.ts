@@ -28,7 +28,7 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
       const data = JSON.parse(event.data);
       switch (data.action) {
         case "leave":
-          websocketActions.leaveSteamder();
+          websocketActions.leaveSteamder(data.playerId);
           break;
         case "start":
           websocketActions.startSteamder(data.waitlistId);

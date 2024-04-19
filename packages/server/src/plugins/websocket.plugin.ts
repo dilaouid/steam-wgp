@@ -462,7 +462,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
             // send message to all players
             waitlistEntry.sockets.forEach((client: any) => {
-              const data = playerId === waitlistClients.adminId ? { action: 'end' } : { action: 'leave', player };
+              const data = playerId === waitlistClients.adminId ? { action: 'end' } : { action: 'leave', playerId};
               client.send(JSON.stringify(data));
             });
             break;
