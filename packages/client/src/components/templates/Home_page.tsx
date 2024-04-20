@@ -4,11 +4,12 @@ import { ParallaxBackgroundHome } from "../organisms/homepage/ParallaxBackground
 import { StatsHome } from "../organisms/homepage/StatsHome"
 
 export const Homepage = () => {
-    return (<>
+    return (
+    <div style={{ overflowX: 'hidden'}}>
         <ParallaxBackgroundHome />
         <FeaturesHome />
         <StatsHome />
         <HowTo />
         <hr />
-    </>)
+    </div>)
 }

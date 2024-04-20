@@ -12,6 +12,7 @@ const StyledSection = styled.section`
     background-image: url(${CoverImage});
     background-size: cover;
     background-position: right;
+    overflow-x: hidden;
 `;
 
 export const Steamderpage = () => {
