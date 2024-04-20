@@ -19,7 +19,7 @@ export const leaveSteamder = (playerId: string): void => {
     setSteamder({ 
         ...steamder, 
         players: steamder.players.filter((current) => current.player_id !== playerId),
-        common_games: common_games.length,
+        common_games,
         // count every games in the steamder (without duplicates)
         all_games
     });

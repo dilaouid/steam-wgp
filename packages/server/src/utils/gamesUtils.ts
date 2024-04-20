@@ -30,3 +30,22 @@ export const getCommonGames = (gamesPlayers: WaitlistGamePlayer[]) => {
 
   return Array.from(commonGames);
 };
+
+export const getCommonGamesController = (gamesPlayers: Array<{ games: number[], player_id: string }>): number[] => {
+  const gamesByPlayer = new Map<string, Set<number>>();
+
+  gamesPlayers.forEach(({ games, player_id }) => {
+    const existingSet = gamesByPlayer.get(player_id) || new Set<number>();
+    games.forEach(game => existingSet.add(game));
+    gamesByPlayer.set(player_id, existingSet);
+  });
+
+  const allGamesSets = Array.from(gamesByPlayer.values());
+  return Array.from(allGamesSets.reduce((commonSet, gamesSet) =>
+    new Set([...commonSet].filter(game => gamesSet.has(game)))
+  ));
+};
+
+export const removeDuplicatesController = (games: number[]): number[] => {
+  return Array.from(new Set(games));
+};

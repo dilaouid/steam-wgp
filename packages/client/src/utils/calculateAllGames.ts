@@ -7,5 +7,5 @@ export const calculateAllGames = (players: IPlayer[]) => {
                 acc.push(game);
         });
         return acc;
-    }, [] as number[]).length;  
+    }, [] as number[]);  
 };

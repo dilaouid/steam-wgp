@@ -26,7 +26,7 @@ export const kickSteamder = (playerId: string)  => {
         setSteamder({
             ...steamder,
             players: steamder.players.filter(player => player.player_id !== playerId),
-            common_games: common_games.length,
+            common_games,
             all_games
         });
     }

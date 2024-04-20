@@ -36,7 +36,7 @@ export const RoomInformations: React.FC = () => {
                 </NoMarginTopText> }
 
                 { steamder && <NoMarginTopText className="text-info">
-                    <Trans t={t} i18nKey="in_list" values={{ count: steamder.display_all_games ? steamder.all_games : steamder.common_games }} components={{ 1: <strong /> }} />
+                    <Trans t={t} i18nKey="in_list" values={{ count: steamder.display_all_games ? steamder.all_games.length : steamder.common_games.length }} components={{ 1: <strong /> }} />
                 </NoMarginTopText> }
             </div>
             

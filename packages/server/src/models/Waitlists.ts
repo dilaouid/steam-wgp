@@ -2,6 +2,7 @@ import { pgTable, bigint, boolean, timestamp, uuid, varchar, integer } from "dri
 import { InferInsertModel, InferSelectModel, and, count, eq, sql } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
 import { Games, Libraries, Players, WaitlistsPlayers } from ".";
+import { getCommonGamesController, removeDuplicatesController } from "../utils/gamesUtils";
 
 export const model = pgTable('waitlists', {
   id: uuid('id').primaryKey(),
@@ -151,12 +152,17 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
   }, []);
 
   result[0].waitlist.admin_id = result[0].waitlist.admin_id.toString();
+  const commonGames = getCommonGamesController(playersWithGames.map((player: any) => ({
+    games: player.games,
+    player_id: player.player_id
+  })));
+  const allGames = removeDuplicatesController(playersWithGames.map((p: any) => p.games).flat());
 
   const waitlist = {
     ...result[0].waitlist,
     players: playersWithGames,
-    common_games: result[0].waitlist.common_games,
-    all_games: result[0].waitlist.all_games
+    common_games: commonGames,
+    all_games: allGames
   };
 
   return waitlist;

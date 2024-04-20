@@ -20,12 +20,12 @@ export const joinSteamder = (player: IPlayer) => {
 
     const allPlayers = [...steamder.players, player];
 
-    const common = calculateCommonGames({ ...steamder, players: [...steamder.players, player] }) || [];
+    const common_games = calculateCommonGames({ ...steamder, players: [...steamder.players, player] }) || [];
     const all_games = calculateAllGames(allPlayers);
     setSteamder({ 
         ...steamder, 
         players: [...steamder.players, player],
-        common_games: common.length,
+        common_games,
         all_games
     });
 }
