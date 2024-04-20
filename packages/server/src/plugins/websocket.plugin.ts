@@ -401,12 +401,15 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               // cannot start if the waitlist is already started or ended
               if (waitlistClients.started || waitlistClients.ended) return;
               if (playerId !== waitlistClients.adminId) return;
-              await startWaitlist(waitlistId);
+              fastify.log.info(`Waitlist ${waitlistId} started`);
+
+              const allGames = waitlistClients.display_all_games ? calculateAllGames(waitlistClients) : [];
+              await startWaitlist(waitlistId, allGames);
 
               // count 5 seconds per game
-              const allGames = calculateAllGames(waitlistClients);
               const timing = (waitlistClients.display_all_games ? allGames.length : waitlistClients.commonGames.length) * 2000;
               waitlistClients.endTime = Date.now() + timing;
+
 
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
@@ -504,9 +507,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             try {
               if (!waitlistClients.started || waitlistClients.ended) return;
               const swipedGames = waitlistClients.swipedGames[payload.gameId];
-              if (swipedGames) {
+              if (swipedGames)
                 waitlistClients.swipedGames[payload.gameId] = swipedGames.filter((playerId: string) => playerId !== playerId);
-              }
             } catch (error) {
               fastify.log.error(`Error in 'unswipe' action: ${error}`);
             }

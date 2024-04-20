@@ -31,7 +31,7 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
           websocketActions.leaveSteamder(data.playerId);
           break;
         case "start":
-          websocketActions.startSteamder(data.waitlistId);
+          websocketActions.startSteamder(data.endTime, data?.waitlistId);
           break;
         case "kicked":
           websocketActions.kickSteamder(data.playerId);
@@ -47,6 +47,9 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
           break;
         case "allGamesSwitch":
           websocketActions.switchDisplayGames(data.display_all_games);
+          break;
+        case "retrieve":
+          websocketActions.retrieveSteamder(data.swipedGames, data.endTime);
           break;
         default:
           console.error("Unknown action", data);

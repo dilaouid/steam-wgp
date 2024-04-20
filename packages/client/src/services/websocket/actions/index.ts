@@ -5,6 +5,7 @@ import { kickSteamder } from "./kickSteamder";
 import { startSteamder } from "./startSteamder"; 
 import { updateSteamder } from "./updateSteamder";
 import { switchDisplayGames } from "./switchDisplayGames";
+import { retrieveSteamder } from "./retrieveSteamder";
 
 export {
     endSteamder,
@@ -13,5 +14,6 @@ export {
     kickSteamder,
     startSteamder,
     updateSteamder,
-    switchDisplayGames
+    switchDisplayGames,
+    retrieveSteamder
 }
