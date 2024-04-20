@@ -119,7 +119,12 @@ export async function getWaitlist(fastify: FastifyInstance, waitlistId: string, 
       eq(Libraries.model.game_id, Games.model.id),
       eq(Games.model.is_selectable, true)
     ))
-    .where(eq(model.id, waitlistId))
+    .where(
+      and(
+        eq(model.id, waitlistId),
+        eq(model.complete, false)
+      )
+    )
 
   if (result.length === 0) {
     return null;

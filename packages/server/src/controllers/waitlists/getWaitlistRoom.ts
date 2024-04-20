@@ -35,7 +35,7 @@ async function getWaitlistWithPlayers(request: FastifyRequest< { Params: getWait
   try {
     const waitlist = await getWaitlist(fastify, id.trim(), BigInt(player.id));
     if (!waitlist) {
-      fastify.log.warn(`Waitlist ${id} not found`);
+      fastify.log.warn(`Steamder ${id} not found`);
       return APIResponse(reply, null, i18next.t('room_does_not_exist', { lng: request.userLanguage }), 404);
     }
     return APIResponse(reply, waitlist, i18next.t('retrieved_room', { lng: request.userLanguage }), 200);
