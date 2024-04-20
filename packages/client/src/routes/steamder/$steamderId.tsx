@@ -7,7 +7,7 @@ import { joinSteamder } from '../../services/api/waitlists/join';
 import { useAuthStore } from '../../store/authStore';
 import { useSteamderStore } from '../../store/steamderStore';
 
-import { Steamderpage } from '../../components/templates/Steamder_page';
+import { SteamderWaitPage } from '../../components/templates/SteamderWait_page';
 
 import AOS from 'aos';
 import useWebSocketStore from '../../store/websocketStore';
@@ -69,6 +69,8 @@ export const Route = createFileRoute("/steamder/$steamderId")({
 })
 
 function Steamder() {
+  const { steamder } = useSteamderStore();
+
   useEffect(() => {
     AOS.init({
         once: true,
@@ -76,5 +78,9 @@ function Steamder() {
     });
     AOS.refresh();
   }, []);
-  return <Steamderpage />
+  if (!steamder)
+    return null;
+
+  if (!steamder.started)
+    return <SteamderWaitPage />
 }
