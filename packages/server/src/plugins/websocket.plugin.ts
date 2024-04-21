@@ -40,9 +40,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     if (!waitlist) return;
 
     // delete the waitlist in the database
-    await fastify.db.delete(Waitlists.model)
-      .where(eq(Waitlists.model.id, waitlistId))
-      .execute();
+    await fastify.db.update(Waitlists.model).set({ complete: true }).where(eq(Waitlists.model.id, waitlistId)).execute();
 
     // delete the waitlist in the memory
     waitlists.delete(waitlistId);
@@ -397,11 +395,9 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           case 'start':
             try {
               if (waitlistClients.players.length < 2) return;
-
               // cannot start if the waitlist is already started or ended
               if (waitlistClients.started || waitlistClients.ended) return;
               if (playerId !== waitlistClients.adminId) return;
-              fastify.log.info(`Waitlist ${waitlistId} started`);
 
               const allGames = waitlistClients.display_all_games ? calculateAllGames(waitlistClients) : [];
               await startWaitlist(waitlistId, allGames);
