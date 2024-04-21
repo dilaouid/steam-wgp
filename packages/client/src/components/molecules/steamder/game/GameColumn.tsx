@@ -1,5 +1,5 @@
 import { Col } from "react-bootstrap"
-import { CoverImageSwipe } from "../../../atoms/steamder/game/CoverImageSwipe";
+import { CoverImageSwipe } from "./CoverImageSwipe";
 
 export const GameColumn = () => {
     return (
