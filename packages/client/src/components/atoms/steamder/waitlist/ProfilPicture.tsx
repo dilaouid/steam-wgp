@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "@tanstack/react-router";
-import { IPlayer } from "../../../types/ISteamder";
+import { IPlayer } from "../../../../types/ISteamder";
 
 const StyledImage = styled(Image)<{ $isOtherPlayer: boolean, $disabled: boolean }>`
     width: 120px;

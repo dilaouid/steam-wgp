@@ -6,8 +6,8 @@ import { Trans, useTranslation } from "react-i18next";
 
 import Skeleton from "react-loading-skeleton";
 
-import { useSteamderStore } from "../../../store/steamderStore";
-import { drawToast } from "../../../utils/drawToast";
+import { useSteamderStore } from "../../../../store/steamderStore";
+import { drawToast } from "../../../../utils/drawToast";
 
 const StyledContainer = styled(Container)`
     background: #000000cc;

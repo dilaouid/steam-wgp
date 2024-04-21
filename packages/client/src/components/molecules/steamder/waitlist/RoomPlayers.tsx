@@ -1,18 +1,18 @@
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
 
-import { useSteamderStore } from "../../../store/steamderStore";
-import { useAuthStore } from "../../../store/authStore";
+import { useSteamderStore } from "../../../../store/steamderStore";
+import { useAuthStore } from "../../../../store/authStore";
 
-import { hasNoCommonGamesWithAnyone } from "../../../utils/hasNoCommonGames";
+import { hasNoCommonGamesWithAnyone } from "../../../../utils/hasNoCommonGames";
 
-import { DangerIcon } from "../../atoms/steamder/DangerIcon";
-import { ProfilPicture } from "../../atoms/steamder/ProfilPicture";
-import { RoomAdminIcon } from "../../atoms/steamder/RoomAdminIcon";
-import { GamesInCommon } from "../../atoms/steamder/GamesInCommon";
-import { KickPlayerButton } from "../../atoms/steamder/KickPlayerButton";
+import { DangerIcon } from "../../../atoms/steamder/waitlist/DangerIcon";
+import { ProfilPicture } from "../../../atoms/steamder/waitlist/ProfilPicture";
+import { RoomAdminIcon } from "../../../atoms/steamder/waitlist/RoomAdminIcon";
+import { GamesInCommon } from "../../../atoms/steamder/waitlist/GamesInCommon";
+import { KickPlayerButton } from "../../../atoms/steamder/waitlist/KickPlayerButton";
 
-import { IPlayer } from "../../../types/ISteamder";
+import { IPlayer } from "../../../../types/ISteamder";
 
 const StyledRow = styled(Row)`
     background: #060606c2;

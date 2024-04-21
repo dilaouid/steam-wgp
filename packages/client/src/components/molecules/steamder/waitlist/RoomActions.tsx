@@ -5,12 +5,12 @@ import { useTranslation } from "react-i18next";
 
 import { Row, Col, Button, Modal } from "react-bootstrap";
 
-import { useSteamderStore } from "../../../store/steamderStore";
-import { useAuthStore } from "../../../store/authStore";
-import { useLeaveSteamder } from "../../../hooks/useLeaveSteamder";
+import { useSteamderStore } from "../../../../store/steamderStore";
+import { useAuthStore } from "../../../../store/authStore";
+import { useLeaveSteamder } from "../../../../hooks/useLeaveSteamder";
 
-import { IPlayer } from "../../../types/ISteamder";
-import { leaveWaitlist } from "../../../services/websocket/send";
+import { IPlayer } from "../../../../types/ISteamder";
+import { leaveWaitlist, startWaitlist } from "../../../../services/websocket/send";
 
 const StyledRow = styled(Row)`
     height: 91px;
@@ -72,7 +72,7 @@ export const RoomActions: React.FC = () => {
                 { isAdmin && <Col sm={"auto"} className="align-self-center">
                     <Button variant="outline-info" className="shadow" disabled={
                         steamder.players?.length < 2 || (steamder.display_all_games && steamder.all_games.length == 0) || (!steamder.display_all_games && steamder.common_games.length == 0)
-                    }>{t('start')}</Button>
+                    } onClick={startWaitlist}>{t('start')}</Button>
                 </Col> }
                 <Col sm={"auto"} className="align-self-center">
                     <Button variant="outline-danger" className="shadow" onClick={handleShow} disabled={loading}>{t('leave')}</Button>

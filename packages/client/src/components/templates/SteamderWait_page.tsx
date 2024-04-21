@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 import CoverImage from '../../assets/images/steamderpage/cover.jpg';
-import { Header } from "../molecules/steamder/Header";
-import { RoomPlayers } from "../molecules/steamder/RoomPlayers";
-import { RoomInformations } from "../molecules/steamder/RoomInformations";
+import { Header } from "../molecules/steamder/waitlist/Header";
+import { RoomPlayers } from "../molecules/steamder/waitlist/RoomPlayers";
+import { RoomInformations } from "../molecules/steamder/waitlist/RoomInformations";
 
 const StyledSection = styled.section`
     padding-top: 9px;
