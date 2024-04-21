@@ -41,11 +41,21 @@ export const LikeButton = () => {
         }
     };
 
+    const canLike = () => {
+        if (!steamder) return false;
+        if (steamder.all_games.length == 0 && steamder.display_all_games)
+            return false;
+        if (steamder.common_games.length == 0 && !steamder.display_all_games)
+            return false;
+        return true;
+    };
+
     return (
         <StyledParagraph className="text-center text-sm-center text-md-start">
             <Button variant="danger" style={{ width: 165+'px', textAlign: 'left' }} onClick={swipeGame} 
                 onMouseEnter={() => setHoverLike(true)}
                 onMouseLeave={() => setHoverLike(false)}
+                disabled={!canLike()}
             >
                 <IoHeart />&nbsp; | { t('like') }
             </Button>

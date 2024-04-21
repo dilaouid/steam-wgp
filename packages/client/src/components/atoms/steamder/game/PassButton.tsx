@@ -36,12 +36,22 @@ export const PassButton = () => {
         }
     };
 
+    const canPass = () => {
+        if (!steamder) return false;
+        if (steamder.all_games.length == 0 && steamder.display_all_games)
+            return false;
+        if (steamder.common_games.length == 0 && !steamder.display_all_games)
+            return false;
+        return true;
+    };
+
     return (
         <StyledParagraph className="text-center text-sm-center text-md-start">
             <Button variant="secondary" style={{ width: 165+'px', textAlign: 'left' }} 
                 onMouseEnter={() => setHoverPass(true)}
                 onMouseLeave={() => setHoverPass(false)}
                 onClick={passGame}
+                disabled={!canPass()}
             >
                 <IoSadOutline />&nbsp; | { t('pass') }
             </Button>
