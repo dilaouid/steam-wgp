@@ -121,9 +121,9 @@ export const CoverImageSwipe = () => {
         if (img) img.style.transform = '';
     };
 
-    const imageUrl = steamder?.common_games?.[0]
-        ? `https://steamcdn-a.akamaihd.net/steam/apps/${steamder.common_games[0]}/library_600x900.jpg`
-        : undefined;
+    const imageUrl = steamder?.display_all_games ?
+        `https://steamcdn-a.akamaihd.net/steam/apps/${steamder?.all_games[0]}/library_600x900.jpg` :
+        `https://steamcdn-a.akamaihd.net/steam/apps/${steamder?.common_games[0]}/library_600x900.jpg`;
     
     return (
         <ImageContainer>
