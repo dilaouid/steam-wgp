@@ -21,6 +21,7 @@ const TiltableImage = styled.img<{ $hovered?: boolean }>`
     box-shadow: 0px 0px 17px 10px #ff9b3f45;
     filter: ${props => props.$hovered ? 'grayscale(1)' : 'grayscale(0)'};
     transition: filter 0.3s ease-in-out;
+    user-select: none;
 `;
 
 const StyledHeart = styled(BsHeartFill)`
@@ -30,8 +31,15 @@ const StyledHeart = styled(BsHeartFill)`
     margin: 109px;
     margin-top: 169px;
     margin-left: 108px;
-    opacity: 0.80;
-    transition: opacity 0.3s ease-in-out;
+    opacity: .6;
+
+    // play an animation, appears in fade in
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    animation: fadeIn 0.5s;
 `;
 
 const StyledSad = styled(IoMdSad)`
@@ -41,8 +49,15 @@ const StyledSad = styled(IoMdSad)`
     margin: 109px;
     margin-top: 169px;
     margin-left: 108px;
-    opacity: 0.80;
-    transition: opacity 0.3s ease-in-out;
+    opacity: .6;
+
+    // play an animation, appears in fade in
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    animation: fadeIn 0.5s;
 `;
 
 const RedCover = styled.div`
@@ -53,7 +68,14 @@ const RedCover = styled.div`
     background: #ff0000;
     width: 317px;
     opacity: .6;
-    transition: .5s;
+
+    // play an animation, appears in fade in
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: .6; }
+    }
+
+    animation: fadeIn 0.5s;
 `;
 
 const GrayCover = styled.div`
@@ -64,7 +86,14 @@ const GrayCover = styled.div`
     background: #393939;
     width: 317px;
     opacity: .6;
-    transition: .5s;
+
+    // play an animation, appears in fade in
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: .6; }
+    }
+
+    animation: fadeIn 0.5s;
 `;
 
 export const CoverImageSwipe = () => {
@@ -98,6 +127,7 @@ export const CoverImageSwipe = () => {
     
     return (
         <ImageContainer>
+
             { hoverLike && <>
                 <StyledHeart />
                 <RedCover />

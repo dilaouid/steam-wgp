@@ -46,7 +46,7 @@ export const SwipedGamesBox = () => {
     return (
         <StyledBox>
             { steamder?.swiped_games?.map((game, index) => (
-                <StyledLikedGames onClick={() => unsSwipeGame(game)} key={index} src={`https://steamcdn-a.akamaihd.net/steam/apps/${game}/library_600x900.jpg`} alt={`Game cover for liked game: ${game}`} />
+                <StyledLikedGames className="user-select-none" onClick={() => unsSwipeGame(game)} key={index} src={`https://steamcdn-a.akamaihd.net/steam/apps/${game}/library_600x900.jpg`} alt={`Game cover for liked game: ${game}`} />
             )) }
         </StyledBox>
     )
