@@ -12,6 +12,7 @@ import { SteamderWaitPage } from '../../components/templates/SteamderWait_page';
 import AOS from 'aos';
 import useWebSocketStore from '../../store/websocketStore';
 import { getCookieValue } from '../../utils/cookieUtils';
+import { SteamderPlayPage } from '../../components/templates/SteamderPlay_page';
 
 
 const getIsAuthenticated = () => {
@@ -83,4 +84,6 @@ function Steamder() {
 
   if (!steamder.started)
     return <SteamderWaitPage />
+  else
+    return <SteamderPlayPage />
 }
