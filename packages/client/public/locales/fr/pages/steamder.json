@@ -40,5 +40,18 @@
             "not_enough_players": "Il faut au moins deux joueurs pour démarrer une Steamder !",
             "not_matching": "{{ player1 }} et {{ player2 }} n'ont aucun jeu en commun !"
         }
+    },
+    "game": {
+        "header": "Choisis tes jeux ! 🕹️",
+        "content": "Les jeux passeront les uns après les autres. Likez ceux que vous voulez, passez ceux auxquels vous n'avez pas envie de jouer. Le premier jeu liké par tout le monde dans la <1>Steamder</1> ressortira. Vous pouvez annuler un jeu liké en cliquant dessus sur la petite box à droite. Si aucun jeu liké en commun n'est décidé après le compte à rebours, un jeu aléatoire ressortira ! <1>Il est temps de mettre fin au débat !</1>",
+        "countdown": "Compte à rebours",
+        "actions": {
+            "like": "J'aime !",
+            "pass": "Je passe ..."
+        }
+    },
+    "result": {
+        "you_dont_have": "Tu n'as pas ce jeu ! ...",
+        "players_dont_have": "Les joueurs suivants n'ont pas ce jeu :"
     }
 }
