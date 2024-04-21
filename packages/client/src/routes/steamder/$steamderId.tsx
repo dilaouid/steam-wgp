@@ -38,7 +38,7 @@ export const Route = createFileRoute("/steamder/$steamderId")({
   
     try {
       const steamder = await getSteamder(steamderId);
-      setSteamder(steamder.data);
+      setSteamder({ ...steamder.data, swiped_games: [] });
       connect(steamder.data.id, token);
       
       if (user) {
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/steamder/$steamderId")({
       }
     } catch {
       const join = await joinSteamder(steamderId)
-      setSteamder(join.data);
+      setSteamder({ ...join.data, swiped_games: [] });
       connect(join.data.id, token);
       if (user) {
         setUser({ 

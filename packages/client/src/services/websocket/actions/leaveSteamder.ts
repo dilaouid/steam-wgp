@@ -21,6 +21,7 @@ export const leaveSteamder = (playerId: string): void => {
         players: steamder.players.filter((current) => current.player_id !== playerId),
         common_games,
         // count every games in the steamder (without duplicates)
-        all_games
+        all_games,
+        swiped_games: steamder.swiped_games || []
     });
 }

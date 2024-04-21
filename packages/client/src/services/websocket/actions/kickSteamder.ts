@@ -27,7 +27,8 @@ export const kickSteamder = (playerId: string)  => {
             ...steamder,
             players: steamder.players.filter(player => player.player_id !== playerId),
             common_games,
-            all_games
+            all_games,
+            swiped_games: steamder.swiped_games || []
         });
     }
 }

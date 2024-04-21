@@ -27,13 +27,13 @@ export const LikeButton = () => {
         if (steamder.common_games.length == 0 && !steamder.display_all_games)
             return;
         if (steamder.display_all_games) {
-            if (steamder.swiped_games.includes(steamder.all_games[0]))
+            if (steamder.swiped_games?.includes(steamder.all_games[0]))
                 return;
             swipeCard(steamder.all_games[0]);
             // update swiped games, and all_games (remove the swiped game in all_games)
             setSteamder({ ...steamder, swiped_games: [...steamder.swiped_games, steamder.all_games[0]], all_games: steamder.all_games.slice(1) });
         } else {
-            if (steamder.swiped_games.includes(steamder.common_games[0]))
+            if (steamder.swiped_games?.includes(steamder.common_games[0]))
                 return;
             swipeCard(steamder.common_games[0]);
             // update swiped games, and common_games (remove the swiped game in common_games)

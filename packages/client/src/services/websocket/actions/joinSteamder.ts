@@ -26,6 +26,7 @@ export const joinSteamder = (player: IPlayer) => {
         ...steamder, 
         players: [...steamder.players, player],
         common_games,
-        all_games
+        all_games,
+        swiped_games: steamder.swiped_games || []
     });
 }

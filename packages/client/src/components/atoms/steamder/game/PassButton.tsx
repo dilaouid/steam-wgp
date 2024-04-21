@@ -24,12 +24,12 @@ export const PassButton = () => {
             return;
 
         if (steamder.display_all_games) {
-            if (steamder.swiped_games.includes(steamder.all_games[0]))
+            if (steamder.swiped_games?.includes(steamder.all_games[0]))
                 return;
             // put the game in the last position of all_games
             setSteamder({ ...steamder, all_games: [...steamder.all_games.slice(1), steamder.all_games[0]] });
         } else {
-            if (steamder.swiped_games.includes(steamder.common_games[0]))
+            if (steamder.swiped_games?.includes(steamder.common_games[0]))
                 return;
             // put the game in the last position of common_games
             setSteamder({ ...steamder, common_games: [...steamder.common_games.slice(1), steamder.common_games[0]] });
