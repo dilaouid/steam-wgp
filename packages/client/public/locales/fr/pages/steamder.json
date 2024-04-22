@@ -52,6 +52,7 @@
     },
     "result": {
         "you_dont_have": "Tu n'as pas ce jeu ! ...",
-        "players_dont_have": "Les joueurs suivants n'ont pas ce jeu :"
+        "players_dont_have": "Les joueurs suivants n'ont pas ce jeu :",
+        "shop": "Page du magasin"
     }
 }
