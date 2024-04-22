@@ -4,5 +4,8 @@
     "player_has_been_kicked": "A player has been kicked from the Steamder",
     "room_begins": "Steamder has begun",
     "updated_library": "Your games library has been updated",
-    "link_copied": "Steamder link copied to clipboard"
+    "link_copied": "Steamder link copied to clipboard",
+    "logged_in_to_access_library": "Log in to access your games library",
+    "invalid_id": "Invalid Game ID",
+    "steamder_not_found": "Steamder not found"
 }
