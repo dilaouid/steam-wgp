@@ -45,6 +45,9 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
         case "end":
           websocketActions.endSteamder();
           break;
+        case "gameEnd":
+          websocketActions.gameEnd(data.choosed_game);
+          break;
         case "allGamesSwitch":
           websocketActions.switchDisplayGames(data.display_all_games);
           break;
