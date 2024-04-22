@@ -7,7 +7,8 @@ import { useIsMutating } from "@tanstack/react-query";
 const Container = styled.div<{ $selected?: boolean }>`
     position: relative;
     display: inline-block;
-    width: 70%;
+    width: 145px;
+    height: 218px;
     border-radius: 20px;
     &::before {
         content: "";
