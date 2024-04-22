@@ -14,6 +14,7 @@ export interface ISteamder {
     all_games: number[];
     common_games: number[];
     swiped_games: number[];
+    choosed_game: number | null;
 
     players: IPlayer[];
 
