@@ -81,10 +81,7 @@ function Steamder() {
   const { steamder } = useSteamderStore();
 
   useEffect(() => {
-    AOS.init({
-        once: true,
-        disableMutationObserver: true
-    });
+    AOS.init();
     AOS.refresh();
   }, []);
   if (!steamder)
