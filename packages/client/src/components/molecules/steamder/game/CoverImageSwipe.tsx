@@ -1,8 +1,8 @@
-import { useRef } from "react";
-
 import styled from "styled-components";
 import { BsHeartFill } from "react-icons/bs";
 import { IoMdSad } from "react-icons/io";
+
+import { TiltableImage } from "../../../atoms/steamder/TiltableImage";
 
 import { useSteamderStore } from "../../../../store/steamderStore";
 import { useBtnGameStore } from "../../../../store/hoverBtnGameStore";
@@ -11,17 +11,6 @@ const ImageContainer = styled.div`
     perspective: 1000px;
     display: inline-block;
     position: relative;
-`;
-
-const TiltableImage = styled.img<{ $hovered?: boolean }>`
-    transition: transform 0.3s;
-    transform-style: preserve-3d;
-    width: 317px;
-    border-radius: 40px;
-    box-shadow: 0px 0px 17px 10px #ff9b3f45;
-    filter: ${props => props.$hovered ? 'grayscale(1)' : 'grayscale(0)'};
-    transition: filter 0.3s ease-in-out;
-    user-select: none;
 `;
 
 const StyledHeart = styled(BsHeartFill)`
@@ -97,29 +86,8 @@ const GrayCover = styled.div`
 `;
 
 export const CoverImageSwipe = () => {
-    const imgRef = useRef<HTMLImageElement>(null);
     const { hoverLike, hoverPass } = useBtnGameStore();
     const { steamder } = useSteamderStore();
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
-        const img = imgRef.current;
-        if (!img) return;
-    
-        const { left, top, width, height } = img.getBoundingClientRect();
-        const x = e.clientX - left;
-        const y = e.clientY - top;
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const rotateX = (centerY - y) / 20;
-        const rotateY = (x - centerX) / 20;
-    
-        img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    };
-
-    const handleMouseLeave = () => {
-        const img = imgRef.current;
-        if (img) img.style.transform = '';
-    };
 
     const imageUrl = steamder?.display_all_games ?
         `https://steamcdn-a.akamaihd.net/steam/apps/${steamder?.all_games[0]}/library_600x900.jpg` :
@@ -138,7 +106,7 @@ export const CoverImageSwipe = () => {
                 <GrayCover />
             </> }
 
-            <TiltableImage $hovered={hoverLike || hoverPass} alt={`Game cover for ${steamder?.common_games[0]}`} ref={imgRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} src={imageUrl} />
+            <TiltableImage hovered={hoverLike || hoverPass} alt={`Game cover for ${steamder?.common_games[0]}`} src={imageUrl} />
         </ImageContainer>
     )
 };
