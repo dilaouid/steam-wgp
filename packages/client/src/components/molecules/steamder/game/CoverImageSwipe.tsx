@@ -1,88 +1,18 @@
 import styled from "styled-components";
-import { BsHeartFill } from "react-icons/bs";
-import { IoMdSad } from "react-icons/io";
 
 import { TiltableImage } from "../../../atoms/steamder/TiltableImage";
+import { SadIcon } from "../../../atoms/steamder/game/SadIcon";
 
 import { useSteamderStore } from "../../../../store/steamderStore";
 import { useBtnGameStore } from "../../../../store/hoverBtnGameStore";
+import { GrayCover } from "../../../atoms/steamder/game/GrayCover";
+import { HoverLike } from "./HoverLike";
+import { HoverPass } from "./HoverPass";
 
 const ImageContainer = styled.div`
     perspective: 1000px;
     display: inline-block;
     position: relative;
-`;
-
-const StyledHeart = styled(BsHeartFill)`
-    z-index: 4;
-    position: absolute;
-    font-size: 124px;
-    margin: 109px;
-    margin-top: 169px;
-    margin-left: 108px;
-    opacity: .6;
-
-    // play an animation, appears in fade in
-    @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-    }
-
-    animation: fadeIn 0.5s;
-`;
-
-const StyledSad = styled(IoMdSad)`
-    z-index: 4;
-    position: absolute;
-    font-size: 124px;
-    margin: 109px;
-    margin-top: 169px;
-    margin-left: 108px;
-    opacity: .6;
-
-    // play an animation, appears in fade in
-    @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-    }
-
-    animation: fadeIn 0.5s;
-`;
-
-const RedCover = styled.div`
-    border-radius: 40px;
-    z-index: 3;
-    position: absolute;
-    height: 475.5px;
-    background: #ff0000;
-    width: 317px;
-    opacity: .6;
-
-    // play an animation, appears in fade in
-    @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: .6; }
-    }
-
-    animation: fadeIn 0.5s;
-`;
-
-const GrayCover = styled.div`
-    border-radius: 40px;
-    z-index: 3;
-    position: absolute;
-    height: 475.5px;
-    background: #393939;
-    width: 317px;
-    opacity: .6;
-
-    // play an animation, appears in fade in
-    @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: .6; }
-    }
-
-    animation: fadeIn 0.5s;
 `;
 
 export const CoverImageSwipe = () => {
@@ -96,15 +26,9 @@ export const CoverImageSwipe = () => {
     return (
         <ImageContainer>
 
-            { hoverLike && <>
-                <StyledHeart />
-                <RedCover />
-            </> }
+            { hoverLike && <HoverLike /> }
 
-            { hoverPass && <>
-                <StyledSad />
-                <GrayCover />
-            </> }
+            { hoverPass && <HoverPass /> }
 
             <TiltableImage hovered={hoverLike || hoverPass} alt={`Game cover for ${steamder?.common_games[0]}`} src={imageUrl} />
         </ImageContainer>
