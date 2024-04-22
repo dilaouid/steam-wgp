@@ -21,11 +21,10 @@ interface PlayerNotHavingGameProps {
 
 export const PlayerNotHavingGame: React.FC<PlayerNotHavingGameProps> = ({ player }) => {
     return (
-        <Col className="text-center">
+        <Col className="text-center align-content-center" sm={'auto'}>
             <Link to={ player.profileurl } target="_blank" className="text-decoration-none">
                 <StyledImage src={`https://avatars.akamai.steamstatic.com/${player.avatar_hash}_full.jpg`} alt={`${player.username} profile picture`} />
             </Link>
-            <p className="text-light">{player.username}</p>
         </Col>
     )
 };

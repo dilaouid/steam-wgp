@@ -16,7 +16,7 @@ interface playersWithoutGameProps {
 
 export const PlayersNotHavingGame: React.FC<playersWithoutGameProps> = ({ playersWithoutGame }) => {
     return (
-        <StyledRow>
+        <StyledRow className="justify-content-center">
             { playersWithoutGame.map(player => (
                 <PlayerNotHavingGame key={player.player_id} player={player} />
             )) }

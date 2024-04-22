@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import { useLibraryStore } from "../../../../store/libraryStore";
 import { useSteamderStore } from "../../../../store/steamderStore";
 import { useTranslation } from "react-i18next";
 import { useAuthStore } from "../../../../store/authStore";
@@ -15,27 +14,41 @@ const HaventTheGameTitle = styled.p`
     font-family: Abel, sans-serif;
 `;
 
+const DoesntHaveTheGame = styled.p`
+    background: var(--bs-body-bg);
+    height: 35px;
+    padding: 5px;
+`;
+
 export const HaventTheGame = () => {
     const { user } = useAuthStore();
     const { steamder } = useSteamderStore();
-    const { library } = useLibraryStore();
 
     const { t } = useTranslation('pages/steamder', { keyPrefix: 'result' });
 
-    // check if the authenticated user have the game
-    const userHaveTheGame = library.find(game => parseInt(game.game_id) === steamder?.choosed_game);
+    // get the authenticated player in the steamder room
+    const player = steamder?.players.find(player => player.player_id === user?.id);
+
+    const userHaveTheGame = player?.games.includes(steamder?.choosed_game || 0);
 
     // get all players without the game
     const playersWithoutGame = steamder?.players.filter(player => 
         player.player_id !== user?.id && !player.games.includes(steamder?.choosed_game || 0)
     ) || [];
+
+    const displayComponent = !userHaveTheGame || playersWithoutGame?.length > 0
     
     return (<>
-        { !userHaveTheGame || playersWithoutGame.length > 0 && <div>
+        { displayComponent && <div>
             <hr />
             { !userHaveTheGame && <HaventTheGameTitle className="text-center text-danger fw-bold">{ t('you_dont_have') }</HaventTheGameTitle> }
             { playersWithoutGame.length > 0 &&
-                <PlayersNotHavingGame playersWithoutGame={playersWithoutGame} />
+                <>
+                    <DoesntHaveTheGame className="text-center text-warning fw-bold">
+                        Joueurs n'ayant pas ce jeu:
+                    </DoesntHaveTheGame>
+                    <PlayersNotHavingGame playersWithoutGame={playersWithoutGame} />
+                </>
             }
         </div> } </>
     );
