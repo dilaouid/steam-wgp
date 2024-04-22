@@ -3,7 +3,7 @@ import { CoverImageSwipe } from "./CoverImageSwipe";
 
 export const GameColumn = () => {
     return (
-        <Col className="text-end">
+        <Col className="text-center text-lg-end">
             <CoverImageSwipe />
         </Col>
     )
