@@ -45,7 +45,7 @@ export const HaventTheGame = () => {
             { playersWithoutGame.length > 0 &&
                 <>
                     <DoesntHaveTheGame className="text-center text-warning fw-bold">
-                        Joueurs n'ayant pas ce jeu:
+                        { t('players_dont_have', { count: playersWithoutGame.length }) }
                     </DoesntHaveTheGame>
                     <PlayersNotHavingGame playersWithoutGame={playersWithoutGame} />
                 </>

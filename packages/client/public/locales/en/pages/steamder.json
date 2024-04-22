@@ -52,7 +52,8 @@
     },
     "result": {
         "you_dont_have": "It seems you don't have this game ! ...",
-        "players_dont_have": "The following players don't have this game :",
+        "players_dont_have": "It seems that this player doesn't have this game:",
+        "players_dont_have_other": "It seems that these players don't have this game:",
         "shop": "Store page",
         "its_decided": "It's decided !"
     }
