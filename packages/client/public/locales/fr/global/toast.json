@@ -6,5 +6,6 @@
     "updated_library": "La bibliothèque a été mise à jour",
     "link_copied": "Lien de la Steamder copié dans le presse-papier",
     "logged_in_to_access_library": "Connectez-vous pour accéder à la bibliothèque",
-    "invalid_id": "ID invalide"
+    "invalid_id": "ID invalide",
+    "steamder_not_found": "Steamder introuvable"
 }

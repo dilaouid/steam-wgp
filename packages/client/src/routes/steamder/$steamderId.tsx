@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import AOS from 'aos';
+
+import { createFileRoute } from '@tanstack/react-router'
+
+import { router } from '../../main';
 
 import { getSteamder } from '../../services/api/waitlists/get';
 import { joinSteamder } from '../../services/api/waitlists/join';
@@ -9,10 +13,13 @@ import { useSteamderStore } from '../../store/steamderStore';
 
 import { SteamderWaitPage } from '../../components/templates/SteamderWait_page';
 
-import AOS from 'aos';
 import useWebSocketStore from '../../store/websocketStore';
+
 import { getCookieValue } from '../../utils/cookieUtils';
+import { drawToast } from '../../utils/drawToast';
+
 import { SteamderPlayPage } from '../../components/templates/SteamderPlay_page';
+import { SteamderWinPage } from '../../components/templates/SteamderWin_page';
 
 
 const getIsAuthenticated = () => {
@@ -62,9 +69,10 @@ export const Route = createFileRoute("/steamder/$steamderId")({
   
   onError: () => {
     if (getIsAuthenticated()) {
-      throw redirect({
-        to: '/'
+      router.navigate({
+        to: '/steamders'
       });
+      drawToast('steamder_not_found', 'error');
     }
   }
 })
@@ -84,6 +92,8 @@ function Steamder() {
 
   if (!steamder.started)
     return <SteamderWaitPage />
+  else if (steamder.complete)
+    return <SteamderWinPage />
   else
     return <SteamderPlayPage />
 }
