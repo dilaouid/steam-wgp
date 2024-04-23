@@ -30,6 +30,7 @@ CREATE TABLE waitlists (
     display_all_games BOOLEAN NOT NULL DEFAULT FALSE,
     all_games INT DEFAULT 0,
     common_games INT DEFAULT 0,
+    selected INT DEFAULT 0,
     name VARCHAR(255) NOT NULL DEFAULT 'Steamder',
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -40,4 +41,10 @@ CREATE TABLE waitlists_players (
     player_id BIGINT REFERENCES players(id) ON DELETE CASCADE,
     waitlist_id UUID REFERENCES waitlists(id) ON DELETE CASCADE,
     PRIMARY KEY (player_id, waitlist_id)
+);
+
+-- Création de la table deleted_users
+CREATE TABLE deleted_users (
+    id BIGINT PRIMARY KEY,
+    delete_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

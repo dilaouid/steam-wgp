@@ -10,6 +10,7 @@ export const model = pgTable('waitlists', {
   started: boolean('started').default(false),
   private: boolean('private').default(false),
   complete: boolean('complete').default(false),
+  selected: integer('selected').default(0),
   display_all_games: boolean('display_all_games').default(false),
   common_games: integer('common_games').default(0),
   all_games: integer('all_games').default(0),
