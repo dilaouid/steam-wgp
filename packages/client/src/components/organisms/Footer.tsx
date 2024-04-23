@@ -49,6 +49,7 @@ export const Footer: React.FC = () => {
                         ))}
                     </div>
                 <p className="mb-0">{ t('copy') }</p>
+                <p className="mb-0 text-secondary">{ t('not_affiliated') }</p>
             </div>
         </footer>
     </>)
