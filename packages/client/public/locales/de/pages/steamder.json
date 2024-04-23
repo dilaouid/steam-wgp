@@ -33,5 +33,21 @@
             "not_enough_players": "Du brauchst mindestens zwei Spieler, um eine Steamder zu starten!",
             "not_matching": "{{ player1 }} und {{ player2 }} haben keine Spiele gemeinsam!"
         }
+    },
+    "game": {
+        "header": "Wähle deine Spiele aus! 🕹️",
+        "content": "Die Spiele werden nacheinander angezeigt. Like die Spiele, die du spielen möchtest, und überspringe die, auf die du keine Lust hast. Das erste Spiel, das von allen in der <1>Steamder</1> geliked wird, wird ausgewählt. Du kannst ein geliktes Spiel rückgängig machen, indem du im kleinen Kasten rechts darauf klickst. Wenn nach dem Countdown kein gemeinsam geliktes Spiel feststeht, wird ein zufälliges Spiel ausgewählt! <1>Es ist Zeit, die Diskussion zu beenden!</1>",
+        "countdown": "Countdown",
+        "actions": {
+            "like": "Gefällt mir!",
+            "pass": "Überspringen ..."
+        }
+    },
+    "result": {
+        "you_dont_have": "Es scheint, dass du dieses Spiel nicht hast! ...",
+        "players_dont_have": "Dieser Spieler scheint das Spiel nicht zu haben:",
+        "players_dont_have_other": "Es scheint, dass diese Spieler das Spiel nicht haben:",
+        "shop": "Shop-Seite",
+        "its_decided": "Es ist entschieden!"
     }
 }

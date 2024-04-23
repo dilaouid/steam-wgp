@@ -33,5 +33,21 @@
             "not_enough_players": "¡Necesitas al menos dos jugadores para iniciar una Steamder!",
             "not_matching": "{{ player1 }} y {{ player2 }} no tienen juegos en común!"
         }
+    },
+    "game": {
+        "header": "¡Elige tus juegos! 🕹️",
+        "content": "Los juegos se mostrarán uno tras otro. Dale 'Me gusta' a los que quieras jugar y pasa de los que no te interesen. El primer juego que reciba un 'Me gusta' de todos en la <1>Steamder</1> será el elegido. Puedes cancelar un 'Me gusta' haciendo clic en la pequeña caja a la derecha. Si no se decide ningún juego con 'Me gusta' común después de la cuenta regresiva, ¡se elegirá un juego al azar! <1>¡Es hora de poner fin al debate!</1>",
+        "countdown": "Cuenta atrás",
+        "actions": {
+            "like": "¡Me gusta!",
+            "pass": "Pasar ..."
+        }
+    },
+    "result": {
+        "you_dont_have": "¡Parece que no tienes este juego! ...",
+        "players_dont_have": "Parece que este jugador no tiene el juego:",
+        "players_dont_have_other": "Parece que estos jugadores no tienen el juego:",
+        "shop": "Página de la tienda",
+        "its_decided": "¡Está decidido!"
     }
 }
