@@ -40,10 +40,19 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     if (!waitlist) return;
 
     // delete the waitlist in the database
-    await fastify.db.update(Waitlists.model).set({ complete: true }).where(eq(Waitlists.model.id, waitlistId)).execute();
+    await fastify.db.update(Waitlists.model)
+      .set({
+        complete: true,
+        selected: waitlist.winner
+      }).where(
+        eq(Waitlists.model.id, waitlistId)
+      ).execute();
 
     // remove all waitlistsplayers from the database for this waitlist
-    await fastify.db.delete(WaitlistsPlayers.model).where(eq(WaitlistsPlayers.model.waitlist_id, waitlistId)).execute();
+    await fastify.db.delete(WaitlistsPlayers.model)
+      .where(
+        eq(WaitlistsPlayers.model.waitlist_id, waitlistId)
+      ).execute();
 
     // delete the waitlist in the memory
     waitlists.delete(waitlistId);
