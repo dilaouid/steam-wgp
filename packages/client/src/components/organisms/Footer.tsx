@@ -24,13 +24,13 @@ export const Footer: React.FC = () => {
             <div className="container text-muted py-4 py-lg-5">
                 <ul className="list-inline">
                     <li className="list-inline-item me-4">
-                        <Link className="link-secondary" to="/">{ t('cgu') }</Link>
+                        <Link className="link-secondary" to="/cgu" activeProps={{ className: 'active text-decoration-none opacity-25' }}>{ t('cgu') }</Link>
                     </li>
                     <li className="list-inline-item me-4">
-                        <Link className="link-secondary" to="/">{ t('legals') }</Link>
+                        <Link className="link-secondary" to="/legals" activeProps={{ className: 'active text-decoration-none opacity-25' }}>{ t('legals') }</Link>
                     </li>
                     <li className="list-inline-item">
-                        <Link className="link-secondary" to="/">{ t('bug') }</Link>
+                        <a target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp/issues">{ t('bug') }</a>
                     </li>
                 </ul>
                 <ul className="list-inline">

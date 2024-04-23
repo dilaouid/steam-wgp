@@ -21,6 +21,8 @@ import { Route as SteamderSteamderIdImport } from './routes/steamder/$steamderId
 
 const SteamdersLazyImport = createFileRoute('/steamders')()
 const LoginLazyImport = createFileRoute('/login')()
+const LegalsLazyImport = createFileRoute('/legals')()
+const CguLazyImport = createFileRoute('/cgu')()
 
 // Create/Update Routes
 
@@ -33,6 +35,16 @@ const LoginLazyRoute = LoginLazyImport.update({
   path: '/login',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
+
+const LegalsLazyRoute = LegalsLazyImport.update({
+  path: '/legals',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/legals.lazy').then((d) => d.Route))
+
+const CguLazyRoute = CguLazyImport.update({
+  path: '/cgu',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/cgu.lazy').then((d) => d.Route))
 
 const LibraryRoute = LibraryImport.update({
   path: '/library',
@@ -61,6 +73,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibraryImport
       parentRoute: typeof rootRoute
     }
+    '/cgu': {
+      preLoaderRoute: typeof CguLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/legals': {
+      preLoaderRoute: typeof LegalsLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       preLoaderRoute: typeof LoginLazyImport
       parentRoute: typeof rootRoute
@@ -81,6 +101,8 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   LibraryRoute,
+  CguLazyRoute,
+  LegalsLazyRoute,
   LoginLazyRoute,
   SteamdersLazyRoute,
   SteamderSteamderIdRoute,
