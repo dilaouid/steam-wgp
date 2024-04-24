@@ -8,5 +8,6 @@
     "logged_in_to_access_library": "Connectez-vous pour accéder à la bibliothèque",
     "invalid_id": "ID invalide",
     "steamder_not_found": "Steamder introuvable",
-    "already_in_steamder": "Vous êtes déjà dans une Steamder"
+    "already_in_steamder": "Vous êtes déjà dans une Steamder",
+    "cannot_join_steamder": "Impossible de rejoindre la Steamder"
 }
