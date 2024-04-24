@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
-import { isUserInWaitlist, joinWaitlist } from "../../models/WaitlistsPlayers";
+import { isUserInAWaitlist, isUserInWaitlist, joinWaitlist } from "../../models/WaitlistsPlayers";
 import { isAuthenticated } from "../../auth/mw";
 import { checkWaitlistExists, getWaitlist } from "../../models/Waitlists";
 import { APIResponse } from "../../utils/response";
@@ -40,6 +40,10 @@ async function joinWaitlistController(request: FastifyRequest<{ Params: joinWait
     if (waitlist.data.started) {
       return APIResponse(reply, null, 'room_alreadfy_started', 400);
     }
+
+    const inWaitlist = await isUserInAWaitlist(fastify, user.id);
+    if (inWaitlist)
+      return APIResponse(reply, null, 'already_in_a_room', 401);
 
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
     if (waitlistStatus.inWaitlist) {

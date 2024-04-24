@@ -78,11 +78,20 @@ export async function isUserInWaitlist(fastify: FastifyInstance, userId: bigint,
   };
 }
 
+export async function isUserInAWaitlist(fastify: FastifyInstance, userId: bigint): Promise<boolean> {
+  const result = await fastify.db.select({}).from(model).where(eq(model.player_id, BigInt(userId)));
+  return result.length > 0;
+}
+
 export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, waitlistId: string): Promise<void> {
   const newWaitlistPlayer: WaitlistPlayerInsert = {
     player_id: userId,
     waitlist_id: waitlistId
   };
+
+  const inWaitlist = await isUserInAWaitlist(fastify, userId);
+  if (inWaitlist)
+    return null;
 
   // get all the selectable and public games of each players in the room
   const allWaitlistGames = await getWaitlistPlayers(fastify, waitlistId);
