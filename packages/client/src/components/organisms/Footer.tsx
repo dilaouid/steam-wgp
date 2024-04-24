@@ -1,7 +1,13 @@
+import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
+
+import { Modal, Button } from "react-bootstrap";
+
 import { GithubIcon } from "../atoms/icons/footer/GithubIcon";
 import { CashIcon } from "../atoms/icons/footer/CashIcon";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
+
+import { useAuthStore } from "../../store/authStore";
 
 const flags = {
     fr: 'https://flagicons.lipis.dev/flags/4x3/fr.svg',
@@ -12,6 +18,8 @@ const flags = {
 };
 
 export const Footer: React.FC = () => {
+    const [ show, setShow ] = useState<boolean>(false);
+    const { isAuthenticated } = useAuthStore();
     const { t, i18n } = useTranslation('global/footer');
     const router = useRouterState();
 
@@ -19,7 +27,21 @@ export const Footer: React.FC = () => {
         i18n.changeLanguage(languageCode);
     };
 
+    const handleClose = () => setShow(false);
+
     return( router.location.pathname === '/login' ? <></> : <>
+        { isAuthenticated && <Modal show={show} centered onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>{ t('delete.title') }</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Trans t={t} i18nKey="delete.body" components={{ 1: <strong className="text-warning" /> }} />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="danger">{ t('delete.confirm') }</Button>
+                <Button variant="secondary" onClick={handleClose}>{ t('delete.no') }</Button>
+            </Modal.Footer>
+        </Modal> }
         <footer className="text-center">
             <div className="container text-muted py-4 py-lg-5">
                 <ul className="list-inline">
@@ -32,6 +54,10 @@ export const Footer: React.FC = () => {
                     <li className="list-inline-item">
                         <a target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp/issues">{ t('bug') }</a>
                     </li>
+                    <br />
+                    { isAuthenticated && <li className="list-inline-item">
+                        <span onClick={() => setShow(true)} role="button" className="text-danger">{ t('delete.link') }</span>
+                    </li> }
                 </ul>
                 <ul className="list-inline">
                     <a target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp"><GithubIcon /></a>

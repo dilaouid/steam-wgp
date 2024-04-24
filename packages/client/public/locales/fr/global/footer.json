@@ -3,5 +3,13 @@
     "legals": "Mentions légales",
     "bug": "Signaler un problème",
     "copy": "SteamWGP © 2024 - Tous droits réservés",
-    "not_affiliated": "Ce site n'est pas affilié à Valve Corporation"
+    "not_affiliated": "Ce site n'est pas affilié à Valve Corporation",
+    "delete": {
+
+        "link": "Supprimer mon compte",
+        "title": "Suppression de compte",
+        "body": "Êtes-vous sûr de vouloir supprimer votre compte ? Si vous souhaitez vous reconnecter à SteamWGP, <1>vous devrez attendre 2 jours</1>. Confirmez-vous cette action?",
+        "no": "Non stp arrete",
+        "confirm": "Je supprime mon compte"
+    }
 }

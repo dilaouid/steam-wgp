@@ -7,5 +7,6 @@
     "link_copied": "Lien de la Steamder copié dans le presse-papier",
     "logged_in_to_access_library": "Connectez-vous pour accéder à la bibliothèque",
     "invalid_id": "ID invalide",
-    "steamder_not_found": "Steamder introuvable"
+    "steamder_not_found": "Steamder introuvable",
+    "already_in_steamder": "Vous êtes déjà dans une Steamder"
 }
