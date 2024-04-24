@@ -9,5 +9,7 @@
     "invalid_id": "ID invalide",
     "steamder_not_found": "Steamder introuvable",
     "already_in_steamder": "Vous êtes déjà dans une Steamder",
-    "cannot_join_steamder": "Impossible de rejoindre la Steamder"
+    "cannot_join_steamder": "Impossible de rejoindre la Steamder",
+    "account_deleted": "Votre compte a été supprimé ... On espère vous revoir bientôt !",
+    "user_in_steamder_cannot_kick": "Impossible de supprimer votre compte, vous êtes dans une Steamder"
 }

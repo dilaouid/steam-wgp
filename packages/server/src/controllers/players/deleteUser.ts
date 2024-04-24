@@ -30,7 +30,7 @@ async function deleteUser(request: FastifyRequest, response: FastifyReply) {
       ).execute();
 
     if (inWaitlist.length > 0)
-      return APIResponse(response, null, 'user_in_waitlist_cannot_kick', 400);
+      return APIResponse(response, null, 'user_in_steamder_cannot_kick', 400);
 
     // delete every Library entry for the user
     await fastify.db.delete(Libraries.model)
@@ -47,7 +47,8 @@ async function deleteUser(request: FastifyRequest, response: FastifyReply) {
     // insert the user to the deletedusers table
     await fastify.db.insert(DeletedUsers.model)
       .values({
-        id: id
+        id: id,
+        delete_date: new Date(Date.now())
       }).onConflictDoNothing(
       ).execute();
 

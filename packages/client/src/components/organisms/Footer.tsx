@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Trans, useTranslation } from "react-i18next";
 
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Spinner } from "react-bootstrap";
 
 import { GithubIcon } from "../atoms/icons/footer/GithubIcon";
 import { CashIcon } from "../atoms/icons/footer/CashIcon";
-import { Trans, useTranslation } from "react-i18next";
 
 import { useAuthStore } from "../../store/authStore";
+
+import { useDeleteUser } from "../../hooks/useDeleteUser";
+import { logout } from "../../services/api/global/auth/logoutApi";
+import { drawToast } from "../../utils/drawToast";
 
 const flags = {
     fr: 'https://flagicons.lipis.dev/flags/4x3/fr.svg',
@@ -19,15 +23,27 @@ const flags = {
 
 export const Footer: React.FC = () => {
     const [ show, setShow ] = useState<boolean>(false);
-    const { isAuthenticated } = useAuthStore();
+    const { isAuthenticated, setUser, toggleAuth } = useAuthStore();
     const { t, i18n } = useTranslation('global/footer');
     const router = useRouterState();
+    const navigate = useNavigate();
+    const deleteUserMutation = useDeleteUser();
 
     const changeLanguage = (languageCode: string) => {
         i18n.changeLanguage(languageCode);
     };
 
     const handleClose = () => setShow(false);
+    const handleDelete = () => {
+        deleteUserMutation.mutateAsync().then(() => {
+            handleClose();
+            toggleAuth(false);
+            setUser(null);
+            logout();
+            navigate({ to: '/' });
+            drawToast('account_deleted', 'success');
+        })
+    }
 
     return( router.location.pathname === '/login' ? <></> : <>
         { isAuthenticated && <Modal show={show} centered onHide={handleClose}>
@@ -38,8 +54,10 @@ export const Footer: React.FC = () => {
                 <Trans t={t} i18nKey="delete.body" components={{ 1: <strong className="text-warning" /> }} />
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger">{ t('delete.confirm') }</Button>
-                <Button variant="secondary" onClick={handleClose}>{ t('delete.no') }</Button>
+                <Button onClick={handleDelete} variant="danger" disabled={deleteUserMutation.isPending}>{ 
+                    deleteUserMutation.isPending ? <Spinner variant="light" animation="border" size="sm" /> : t('delete.confirm')
+                }</Button>
+                <Button variant="secondary" onClick={handleClose} disabled={deleteUserMutation.isPending}>{ t('delete.no') }</Button>
             </Modal.Footer>
         </Modal> }
         <footer className="text-center">
