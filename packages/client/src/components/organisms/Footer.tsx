@@ -14,8 +14,8 @@ const flags = {
     en: 'https://flagicons.lipis.dev/flags/4x3/gb.svg',
     es: 'https://flagicons.lipis.dev/flags/4x3/es.svg',
     jp: 'https://flagicons.lipis.dev/flags/4x3/jp.svg',
-    de: 'https://flagicons.lipis.dev/flags/4x3/de.svg',
-};
+    de: 'https://flagicons.lipis.dev/flags/4x3/de.svg'
+}; 
 
 export const Footer: React.FC = () => {
     const [ show, setShow ] = useState<boolean>(false);
@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
                     </li>
                     <br />
                     { isAuthenticated && <li className="list-inline-item">
-                        <span onClick={() => setShow(true)} role="button" className="text-danger">{ t('delete.link') }</span>
+                        <span onClick={() => setShow(true)} role="button" className="link-danger">{ t('delete.link') }</span>
                     </li> }
                 </ul>
                 <ul className="list-inline">
