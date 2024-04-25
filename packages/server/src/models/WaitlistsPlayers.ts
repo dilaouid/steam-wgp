@@ -91,7 +91,7 @@ export async function joinWaitlist(fastify: FastifyInstance, userId: bigint, wai
 
   const inWaitlist = await isUserInAWaitlist(fastify, userId);
   if (inWaitlist)
-    return null;
+    return ;
 
   // get all the selectable and public games of each players in the room
   const allWaitlistGames = await getWaitlistPlayers(fastify, waitlistId);
