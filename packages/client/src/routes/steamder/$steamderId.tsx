@@ -46,24 +46,21 @@ function Steamder() {
     AOS.init();
     AOS.refresh();
 
-    getSteamderMutation.mutateAsync().then(steamder => {
-      setSteamder({ ...steamder.data, swiped_games: [] });
-      setUser({ ...user, waitlist: steamder.data.id });
-      connect(steamder.data.id, token);
-    }).catch(() => {
+    if (user.waitlist) {
+      getSteamderMutation.mutateAsync().then(steamder => {
+        setSteamder({ ...steamder.data, swiped_games: [] });
+        setUser({ ...user, waitlist: steamder.data.id });
+        connect(steamder.data.id, token);
+      })
+    } else {
       joinMutation.mutateAsync().then(steamder => {
         setSteamder({ ...steamder.data, swiped_games: [] });
         setUser({ ...user, waitlist: steamder.data.id });
         connect(steamder.data.id, token);
-      }).catch(() => {
-        drawToast('cannot_join_steamder', 'error');
-        navigate({
-          to: '/steamders'
-        });
-      });
-    });
+      })
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ setSteamder, setUser ]);
+  }, [ setSteamder ]);
 
   if (!steamder) 
     return <></>
