@@ -1,22 +1,22 @@
 {
     "hero": {
-        "title": "¡Decide qué jugar con tus amigos!",
+        "title": "¡Decide qué <1>jugar</1> con tus amigos!",
         "paragraph": "Crea o únete a una sala de Steamder, y elige el juego que más os importa. ¡Con la magia de SteamWGP, llegaréis a un acuerdo sobre qué jugar de manera mucho más eficiente!",
         "login": "Iniciar sesión",
-        "steamders": "Lista de Steamders"
+        "steamders": "Lista de <1>Steamders</1>"
     },
     "features": {
         "1": {
             "title": "Se acabaron los debates interminables",
-            "subtitle": "¡SteamWGP pone fin al debate! Olvídate de discutir durante horas con tus amigos en Discord sobre a qué juego jugaréis."
+            "subtitle": "¡<1>SteamWGP</1> pone fin al debate! Olvídate de discutir durante horas con tus amigos en Discord sobre a qué juego jugaréis."
         },
         "2": {
             "title": "¡No tienes que hacer nada!",
-            "subtitle": "¡SteamWGP se encarga de sincronizar tu biblioteca de juegos de Steam! No necesitas buscar tus juegos durante horas y añadirlos manualmente."
+            "subtitle": "<1>SteamWGP</1> se encarga de sincronizar tu biblioteca de juegos de Steam! No necesitas buscar tus juegos durante horas y añadirlos manualmente."
         },
         "3": {
             "title": "¡Haz nuevos amigos!",
-            "subtitle": "Únete a salas de Steamder públicas para conocer a otros jugadores con quienes pasar buenos momentos."
+            "subtitle": "Únete a salas de <1>Steamder</1> públicas para conocer a otros jugadores con quienes pasar buenos momentos."
         }
     },
     "stats": {
@@ -27,18 +27,18 @@
     },
     "howto": {
         "title": "¿Cómo funciona?",
-        "subtitle": "Usar SteamWGP es extremadamente simple y accesible. ¡Sigue estos sencillos pasos para decidir rápidamente el juego perfecto para disfrutar de un gran momento de juego con tus amigos!",
+        "subtitle": "Usar <1>SteamWGP</1> es extremadamente simple y accesible. ¡Sigue estos sencillos pasos para decidir rápidamente el juego perfecto para disfrutar de un gran momento de juego con tus amigos!",
         "1": {
             "title": "1. Conéctate",
-            "subtitle": "No necesitas registrarte, simplemente inicia sesión con tu cuenta de Steam a través de este enlace, y tu biblioteca se sincronizará con SteamWGP. Por supuesto, solo se añadirán automáticamente los juegos multijugador."
+            "subtitle": "No necesitas registrarte, simplemente <2>inicia sesión</2> con tu cuenta de Steam a través de este enlace, y tu biblioteca se sincronizará con <1>SteamWGP</1>. Por supuesto, solo se añadirán automáticamente los juegos multijugador."
         },
         "2": {
             "title": "2. Crea o únete a un Steamder",
-            "subtitle": "¿Ninguno de tus amigos ha creado un Steamder? ¡Crea uno! ¿Tu amigo quiere invitarte a su Steamder? Comparte el enlace, accedes, ¡y listo!"
+            "subtitle": "¿Ninguno de tus amigos ha creado un <1>Steamder</1>? ¡Crea uno! ¿Tu amigo quiere invitarte a su <1>SteamWGP</1>? Comparte el enlace, accedes, ¡y listo!"
         },
         "3": {
             "title": "3. ¡Vamos allá, mi tesoro!",
-            "subtitle": "El administrador del Steamder (la sala) ha iniciado el juego. Solo elige los juegos que te gustan de la lista, y el primer juego que sea votado por todos los otros miembros del Steamder será el ganador."
+            "subtitle": "El administrador del <1>Steamder</1> (la sala) ha iniciado el juego. Solo elige los juegos que te gustan de la lista, y el primer juego que sea votado por todos los otros miembros del <1>Steamder</1> será el ganador."
         },
         "4": {
             "title": "4. ¡A jugar!",
