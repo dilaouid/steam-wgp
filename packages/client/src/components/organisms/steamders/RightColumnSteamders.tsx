@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import styled from "styled-components";
 import { Col, Row, Table, Spinner } from "react-bootstrap";
 import { BsPeople, BsController } from "react-icons/bs";
@@ -13,6 +15,7 @@ import { LoadingTable } from "../../molecules/steamders/LoadingTable";
 import { UnjoinableButton } from "../../molecules/steamders/UnjoinableButton";
 import { JoinButton } from "../../molecules/steamders/JoinButton";
 import { MySteamderButtons } from "../../molecules/steamders/MySteamderButtons";
+import { PaginationSteamders } from "../../molecules/steamders/Pagination";
 
 const StyledTitle = styled.h4`
     font-family: 'Archivo Narrow', sans-serif;
@@ -23,12 +26,18 @@ const StyledTRow = styled.tr`
 `;
 
 export const RightColumnSteamders = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+
     const { t } = useTranslation('pages/steamders', { keyPrefix: 'right_column' });
     const page = new URLSearchParams(window.location.search).get('page');
 
     const { user } = useAuthStore();
-    const { data: steamders, isFetching: fetchingSteamders } = useGetSteamders(page ? parseInt(page) : 1);
+    const { data: steamders, isFetching: fetchingSteamders, refetch } = useGetSteamders(page ? parseInt(page) : 1);
     const { data: count, isFetching: fetchingCount } = useCountSteamders();
+
+    useEffect(() => {
+        refetch();
+    }, [ currentPage, refetch ]);
 
     return (
         <Col sm={12} md={7} lg={8}>
@@ -85,6 +94,14 @@ export const RightColumnSteamders = () => {
                     ))}
                 </tbody>
             </Table>
+            { !fetchingSteamders && (
+                <PaginationSteamders
+                    totalItems={count}
+                    itemsPerPage={8}
+                    currentPage={currentPage}
+                    onPageChange={page => setCurrentPage(page)}
+                />
+            ) }
         </Col>
     )
 };
