@@ -1,0 +1,34 @@
+{
+    "homepage": {
+        "title": "SteamWGP | ホームページ",
+        "description": "SteamWGPは友達と遊べるゲームを見つけるためのプラットフォームです！ ゲームを選んで、スチームダーを作成し、友達を招待しましょう！"
+    },
+    "login": {
+        "title": "SteamWGP | ログイン",
+        "description": "SteamWGPにログインして、ゲームライブラリにアクセスし、スチームダーを作成または参加しましょう！"
+    },
+    "library": {
+        "title": "SteamWGP | ゲームライブラリ",
+        "description": "ゲームライブラリを確認し、ゲームを公開または非公開に設定し、友達と遊ぶためのスチームダーを作成しましょう！"
+    },
+    "steamder": {
+        "title": "SteamWGP | Steamder",
+        "description": "スチームダールームに参加して、夜のゲームを決定しましょう。スワイプして投票し、全員の同意を得た最初のゲームが選ばれて一緒に遊びます。"
+    },
+    "steamders": {
+        "title": "SteamWGP | スチームダー一覧",
+        "description": "コミュニティによって作成されたスチームダーのリストを確認し、興味があるものに参加しましょう！"
+    },
+    "cgu": {
+        "title": "SteamWGP | 利用規約",
+        "description": "SteamWGPの利用規約をご覧ください。"
+    },
+    "legals": {
+        "title": "SteamWGP | 法的表示",
+        "description": "SteamWGPの法的表示をご覧ください。"
+    },
+    "404": {
+        "title": "SteamWGP | ページが見つかりません",
+        "description": "お探しのページは存在しないか、移動された可能性があります。"
+    }
+}

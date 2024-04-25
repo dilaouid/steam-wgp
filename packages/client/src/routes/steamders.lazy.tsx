@@ -3,16 +3,13 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { SteamdersPage } from '../components/templates/Steamders_page';
 
 import AOS from 'aos';
-import { useTranslation } from 'react-i18next';
+import { HelmetWrapper } from '../components/wrappers/HelmetWrapper';
 
 export const Route = createLazyFileRoute("/steamders")({
   component: Steamders
 })
 
 function Steamders() {
-  const { t } = useTranslation('global/titles');
-  document.title = t('steamders');
-
   useEffect(() => {
     AOS.init({
         once: true,
@@ -20,5 +17,8 @@ function Steamders() {
     });
     AOS.refresh();
   }, []);
-  return <SteamdersPage />
+  return (
+  <HelmetWrapper keyPrefix='steamders' noindex={false}>
+    <SteamdersPage />
+  </HelmetWrapper>)
 }

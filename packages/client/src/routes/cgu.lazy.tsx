@@ -1,14 +1,15 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { CGUpage } from '../components/templates/CGU_page'
-import { useTranslation } from 'react-i18next'
+import { HelmetWrapper } from '../components/wrappers/HelmetWrapper'
 
 export const Route = createLazyFileRoute("/cgu")({
   component: CGU,
 })
 
 function CGU() {
-  const { t } = useTranslation('global/titles');
-  document.title = t('cgu');
-
-  return <CGUpage />
+  return (
+    <HelmetWrapper keyPrefix='cgu' noindex={false}>
+      <CGUpage />
+    </HelmetWrapper>
+  );
 }

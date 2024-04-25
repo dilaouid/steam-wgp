@@ -17,6 +17,7 @@ import { SteamderWinPage } from '../../components/templates/SteamderWin_page';
 import { useGetSteamder } from '../../hooks/useGetSteamder';
 import { useJoinSteamder } from '../../hooks/useJoinSteamder';
 import { useTranslation } from 'react-i18next';
+import { HelmetWrapper } from '../../components/wrappers/HelmetWrapper';
 
 export const Route = createFileRoute("/steamder/$steamderId")({
   component: Steamder
@@ -62,13 +63,12 @@ function Steamder() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ setSteamder ]);
 
-  if (!steamder) 
-    return <></>
+  if (!steamder) return <></>
 
-  if (!steamder.started)
-    return <SteamderWaitPage />
-  else if (steamder.complete)
-    return <SteamderWinPage />
-  else
-    return <SteamderPlayPage />
+  return (<HelmetWrapper keyPrefix='steamder' noindex={true}>
+      { !steamder.started && <SteamderWaitPage /> }
+      { steamder.complete && <SteamderWinPage /> }
+      { (steamder.started && !steamder.complete) && <SteamderPlayPage /> }
+    </HelmetWrapper>
+  )
 }
