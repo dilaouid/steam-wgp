@@ -24,8 +24,7 @@ export async function isAuthenticated(req: FastifyRequest, res: FastifyReply) {
     const decoded = jwt.verify(token, secretKey) as any;
 
     const userExists = await req.server.db.select().from(Players.model).where(eq(Players.model.id, decoded.id)).execute();
-
-    if (!userExists)
+    if (userExists.length === 0)
       throw new Error('User not found');
 
     req.user = decoded;
