@@ -16,6 +16,7 @@ import { SteamderWinPage } from '../../components/templates/SteamderWin_page';
 
 import { useGetSteamder } from '../../hooks/useGetSteamder';
 import { useJoinSteamder } from '../../hooks/useJoinSteamder';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute("/steamder/$steamderId")({
   component: Steamder
@@ -31,6 +32,9 @@ function Steamder() {
 
   const joinMutation = useJoinSteamder(steamderId);
   const getSteamderMutation = useGetSteamder(steamderId);
+
+  const { t } = useTranslation('global/titles');
+  document.title = t('steamder');
 
   useEffect(() => {
     if (!isAuthenticated || !user) {

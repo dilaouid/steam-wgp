@@ -5,9 +5,10 @@ import { Librarypage } from '../components/templates/Library_page';
 
 import AOS from 'aos';
 import { useAuthStore } from '../store/authStore';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute("/library")({
-  component: Home,
+  component: Library,
   loader: () => {
     const { isAuthenticated } = useAuthStore.getState();
     if (!isAuthenticated) {
@@ -18,7 +19,10 @@ export const Route = createFileRoute("/library")({
   }
 })
 
-function Home() {
+function Library() {
+  const { t } = useTranslation('global/titles');
+  document.title = t('library');
+
   useEffect(() => {
     AOS.init({
       once: true,
