@@ -10,7 +10,7 @@ export declare module 'fastify' {
       NOT_SAME_ORIGIN?: boolean;
       ORIGIN?: string;
       STEAM_API_KEY?: string;
-      STEAM_REDIRECT_URI?: string;
+      DOMAIN?: string;
       NODE_ENV?: string;
       SECRET_KEY: string;
       FRONT?: string;

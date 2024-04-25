@@ -102,7 +102,8 @@ export default async function authRouter(fastify: FastifyInstance) {
           secure: process.env.NODE_ENV === 'production',
           path: '/',
           maxAge: 18000,
-          sameSite: process.env.NODE_ENV === 'production' ? 'none' : true
+          sameSite: process.env.NODE_ENV === 'production' ? 'none' : true,
+          domain: fastify.config.DOMAIN
         });
         return reply.redirect(`${fastify.config.FRONT}/login${fastify.config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
       }

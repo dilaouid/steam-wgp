@@ -14,7 +14,7 @@ export const options: RouteShorthandOptions = {
               PORT: { type: 'string' },
               ORIGIN: { type: 'string' },
               STEAM_API_KEY: { type: 'string' },
-              STEAM_REDIRECT_URI: { type: 'string' },
+              DOMAIN: { type: 'string' },
               DATABASE_URL: { type: 'string' },
               NODE_ENV: { type: 'string' },
               SECRET_KEY: { type: 'string' },
