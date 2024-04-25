@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
 
-import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
+import { createFileRoute, useParams } from '@tanstack/react-router'
 
 import { useAuthStore } from '../../store/authStore';
 import { useSteamderStore } from '../../store/steamderStore';
@@ -10,7 +10,6 @@ import useWebSocketStore from '../../store/websocketStore';
 import { SteamderWaitPage } from '../../components/templates/SteamderWait_page';
 
 import { getCookieValue } from '../../utils/cookieUtils';
-import { drawToast } from '../../utils/drawToast';
 
 import { SteamderPlayPage } from '../../components/templates/SteamderPlay_page';
 import { SteamderWinPage } from '../../components/templates/SteamderWin_page';
@@ -33,13 +32,10 @@ function Steamder() {
   const joinMutation = useJoinSteamder(steamderId);
   const getSteamderMutation = useGetSteamder(steamderId);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (!isAuthenticated || !user) {
-      navigate({
-        to: '/'
-      });
+      localStorage.setItem('postLoginRedirect', '/steamder/' + steamderId);
+      window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/steam`;
       return;
     }
 
