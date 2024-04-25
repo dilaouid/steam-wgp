@@ -1,0 +1,15 @@
+{
+    "admin_closed_room": "Der Administrator hat den Steamder geschlossen",
+    "you_have_been_kicked": "Du wurdest aus dem Steamder verwiesen",
+    "player_has_been_kicked": "Ein Spieler wurde aus dem Steamder verwiesen",
+    "room_begins": "Der Steamder beginnt",
+    "updated_library": "Die Bibliothek wurde aktualisiert",
+    "link_copied": "Steamder-Link wurde in die Zwischenablage kopiert",
+    "logged_in_to_access_library": "Melden Sie sich an, um auf die Bibliothek zuzugreifen",
+    "invalid_id": "Ungültige ID",
+    "steamder_not_found": "Steamder nicht gefunden",
+    "already_in_steamder": "Sie sind bereits in einer Steamder",
+    "cannot_join_steamder": "Beitritt zur Steamder nicht möglich",
+    "account_deleted": "Ihr Konto wurde gelöscht... Wir hoffen, Sie bald wiederzusehen!",
+    "user_in_steamder_cannot_kick": "Konto kann nicht gelöscht werden, da Sie sich in einer Steamder befinden"
+}

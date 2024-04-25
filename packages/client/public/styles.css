@@ -1,0 +1,17 @@
+.nav-pills .nav-link.active, .nav-tabs .nav-link.active {
+    background: var(--bs-cyan);
+    user-select: none;
+}
+
+.nav-item {
+    margin-right: 30px;
+}
+
+.pagination {
+    --bs-pagination-active-border-color: #d6722a;
+    --bs-pagination-active-bg: #d6722a;
+    --bs-pagination-hover-bg: #d6682a;
+    --bs-pagination-hover-border-color: transparent;
+    --bs-pagination-focus-color: var(--bs-warning);
+}
+  

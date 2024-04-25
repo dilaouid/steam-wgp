@@ -1,0 +1,38 @@
+{
+    "left_column": {
+        "create": "Créer une <1>Steamder</1>",
+        "explain_part_1": "Une <1>Steamder</1>, c'est un salon où vous invitez d'autres joueurs (ou qu'ils rejoignent eux-mêmes). Vos jeux multijoueurs sont mis en communs, et une fois la partie lancée, vous avez tout les jeux qui passent devant vous.",
+        "explain_part_2": "A vous de liker ou pas les différents jeux qui passent devant vous. Le premier jeu liké par tout les joueurs ressortira pour tout le monde, et ainsi, vous avez pu décider du jeu auquel jouer. <1>Ça clôture définitivement le débat !</1>",
+        "form": {
+            "name": "Nom de la Steamder",
+            "placeholder": "Ex: Soirée entre potes",
+            "label": "Steamder privée",
+            "tooltip": "Si vous cochez cette case, votre Steamder ne sera pas visible par les autres joueurs, et ne sera joignable qu'avec un lien d'invitation.",
+            "submit": "Créer la Steamder"
+        },
+        "already_in": "Vous êtes déjà dans une Steamder, vous ne pouvez donc pas en créer.",
+        "not_logged": "Vous devez être connecté pour créer une Steamder."
+    },
+    "right_column": {
+        "heading": "Steamders publiques",
+        "subtitle": "Retrouvez ici les <1>Steamders</1> accessibles à tout le monde. Le moyen idéal de se faire de nouveaux amis ! Mais n'oubliez pas, <2>vous ne pouvez être que dans une seule <1>Steamder</1> à la fois !</2> N'abusons pas des bonnes choses ...",
+        "table": {
+            "heading": {
+                "name": "Nom de la Steamder",
+                "players_count": "Nombre de joueurs",
+                "available_games": "Jeux disponibles",
+                "actions": "Actions"
+            },
+            "buttons": {
+                "join": "Rejoindre",
+                "leave": "Quitter",
+                "unavailable": "Injoignable",
+                "open": "Ouvrir"
+            },
+            "tooltip": "Vous ne pouvez être que dans une Steamder à la fois ! Quittez votre Steamder actuelle pour en rejoindre une autre.",
+            "empty": "Aucune Steamder publique n'est disponible pour le moment. Créez-en une !"
+        },
+        "actives": "{{ count }} Steamder active",
+        "actives_other": "{{ count }} Steamders actives"
+    }
+}

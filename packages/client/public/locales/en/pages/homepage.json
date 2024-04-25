@@ -1,0 +1,48 @@
+{
+    "hero": {
+        "title": "Decide what to <1>play</1> with your friends!",
+        "paragraph": "Create or join a <1>Steamder</1> room, and choose the game you are passionate about! With the magic of <1>SteamWGP</1>, you will come to an agreement on the choice of game much more efficiently!",
+        "login": "Log in",
+        "steamders": "List of <1>Steamders</1>"
+    },
+    "features": {
+        "1": {
+            "title": "No more endless debates",
+            "subtitle": "<1>SteamWGP</1> is here to settle the debate! No more lengthy discussions with your friends on Discord to decide which game you're going to play!"
+        },
+        "2": {
+            "title": "You don't have to do anything!",
+            "subtitle": "<1>SteamWGP</1> takes care of syncing your Steam game library! No need to spend 5 hours looking for your games and adding them manually!"
+        },
+        "3": {
+            "title": "Make friends!",
+            "subtitle": "Join public rooms (also called <1>Steamder</1>) to meet other players to have a good time with!"
+        }
+    },
+    "stats": {
+        "registered": "Gamers registered",
+        "repertoried": "Games catalogued",
+        "matches": "Matches made",
+        "actives": "Actives Steamders"
+    },
+    "howto": {
+        "title": "How does it work?",
+        "subtitle": "Using <1>SteamWGP</1> is a breeze and accessible to all! Just follow these simple steps to swiftly decide on the perfect game for a fantastic gaming session with your pals!",
+        "1": {
+            "title": "1. Log in",
+            "subtitle": "No need to sign up, simply log in with your Steam account through <2>this link</2>, and your library will be synchronized with <1>SteamWGP</1>! Of course, only multiplayer games will be automatically added to your <1>SteamWGP</1> library!"
+        },
+        "2": {
+            "title": "2. Create or join a Steamder",
+            "subtitle": "None of your friends created a <1>Steamder</1>? Create one!\nYour friend wants to invite you to their <1>Steamder</1>? They share the link with you, you access it, and congratulations!"
+        },
+        "3": {
+            "title": "3. Let's roll, team!",
+            "subtitle": "The <1>Steamder</1> admin has kicked off the session! Just pick your favorites from the list, and the first game to get unanimous votes from all <1>Steamder</1> members wins the selection!"
+        },
+        "4": {
+            "title": "4. Let's play!",
+            "subtitle": "And just like that, you've quickly agreed on the perfect multiplayer game to enjoy without any fuss!"
+        }
+    }
+}

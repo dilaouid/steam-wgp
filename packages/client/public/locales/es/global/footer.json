@@ -1,0 +1,14 @@
+{
+    "cgu": "Términos y Condiciones",
+    "legals": "Aviso legal",
+    "bug": "Reportar un problema",
+    "copy": "SteamWGP © 2024 - Todos los derechos reservados",
+    "not_affiliated": "SteamWGP no está afiliado a Valve Corporation",
+    "delete": {
+        "link": "Eliminar mi cuenta",
+        "title": "Eliminación de cuenta",
+        "body": "¿Estás seguro de que quieres eliminar tu cuenta? Si deseas volver a conectarte a SteamWGP después de eliminarla, <1>deberás esperar 48 horas para poder utilizar la plataforma nuevamente</1>. ¿Confirmas esta acción?",
+        "no": "Conservo mi cuenta",
+        "confirm": "Eliminar mi cuenta"
+    }
+}

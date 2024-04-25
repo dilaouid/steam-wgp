@@ -1,0 +1,37 @@
+{
+    "left_column": {
+        "your_library": "🎮 Your Library",
+        "find_your_library": "Find your multiplayer <1>Steam</1> games library here.",
+        "not_finding_a_game": "Can't find one of your games?",
+        "not_multiplayer": "It means <1>SteamWGP</1> has determined it's not a multiplayer game and doesn't belong here!",
+        "select_games": "Here, you can choose which games to make public or private in <1>Steamders</1>. If there's a game you really dislike or find embarrassing, this page is for you!",
+        "how_to": "How to do it?",
+        "click": "Simply by clicking on the game in question, and confirming your action! Easy, right? 😉",
+        "explanations": "By joining a <1>Steamder</1>, your private games will not be added to the list of common games among the players in the room.",
+        "selected_count": {
+            "public": "{{count}} public game",
+            "public_other": "{{count}} public games",
+            "private": "{{count}} private game",
+            "private_other": "{{count}} private games"
+        },
+        "submit_selected_button": {
+            "disabled": "No games selected",
+            "enabled": " | Confirm Changes",
+            "loading": "Loading ..."
+        }
+    },
+    "right_column": {
+        "tabs_title": {
+            "all_games": "All Games ({{count}})",
+            "selected_games": "Selected Game ({{count}})",
+            "selected_games_other": "Selected Games ({{count}})",
+            "public_games": "Public Game ({{count}})",
+            "public_games_other": "Public Games ({{count}})",
+            "private_games": "Private Game ({{count}})",
+            "private_games_other": "Private Games ({{count}})"
+        },
+        "no_selected_games": "No games selected",
+        "no_public_games": "No public games",
+        "no_private_games": "No private games"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "cgu": "Terms of Use",
+    "legals": "Legal Notice",
+    "bug": "Report an Issue",
+    "copy": "SteamWGP © 2024 - All rights reserved",
+    "not_affiliated": "This site is not affiliated with Valve Corporation",
+    "delete": {
+        "link": "Delete my account",
+        "title": "Account Deletion",
+        "body": "Are you sure you want to delete your account? If you wish to reconnect to SteamWGP after deleting it, <1>you will need to wait 48 hours before you can use the platform again</1>. Do you confirm this action?",
+        "no": "I'll keep my account",
+        "confirm": "I delete my account"
+    }
+}

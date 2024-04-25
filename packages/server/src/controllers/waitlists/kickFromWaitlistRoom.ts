@@ -4,7 +4,6 @@ import { isAuthenticated } from "../../auth/mw";
 import { APIResponse } from "../../utils/response";
 import { and, eq } from "drizzle-orm";
 import { Waitlists, WaitlistsPlayers } from "../../models";
-import i18next from "../../plugins/i18n.plugin";
 
 interface Parameters {
     roomId: string;
@@ -35,7 +34,7 @@ async function kickFromWaitlist(request: FastifyRequest, reply: FastifyReply) {
   const fastify = request.server as FastifyInstance;
 
   if (!id)
-    return APIResponse(reply, null, i18next.t('need_to_be_logged_in', { lng: request.userLanguage }), 401);
+    return APIResponse(reply, null, 'need_to_be_logged_in', 401);
   try {
 
     // check if the user is in admin of the waitlist and the playerid is in the waitlist
@@ -53,7 +52,7 @@ async function kickFromWaitlist(request: FastifyRequest, reply: FastifyReply) {
       .execute();
 
     if (waitlist.length === 0) {
-      return APIResponse(reply, null, i18next.t('not_room_admin', { lng: request.userLanguage }), 401);
+      return APIResponse(reply, null, 'not_room_admin', 401);
     }
 
     // remove the player from the waitlist
@@ -64,10 +63,10 @@ async function kickFromWaitlist(request: FastifyRequest, reply: FastifyReply) {
       )
     ).execute();
 
-    return APIResponse(reply, null, i18next.t('kicked_player', { lng: request.userLanguage }), 200);
+    return APIResponse(reply, null, 'kicked_player', 200);
 
   } catch (err) {
     fastify.log.error(err);
-    return APIResponse(reply, null, i18next.t('internal_server_error', { lng: request.userLanguage }), 500);
+    return APIResponse(reply, null, 'internal_server_error', 500);
   }
 }

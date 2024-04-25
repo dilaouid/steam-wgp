@@ -1,0 +1,37 @@
+{
+    "left_column": {
+        "your_library": "🎮 Deine Bibliothek",
+        "find_your_library": "Finde hier deine <1>Steam</1>-Multiplayer-Spielebibliothek.",
+        "not_finding_a_game": "Kannst du eines deiner Spiele nicht finden?",
+        "not_multiplayer": "Das bedeutet, dass <1>SteamWGP</1> entschieden hat, es ist kein Multiplayer-Spiel und gehört daher nicht hierher.",
+        "select_games": "Hier kannst du auswählen, welche Spiele du in <1>Steamders</1> öffentlich oder privat machen möchtest. Wenn es ein Spiel gibt, das du wirklich nicht magst oder peinlich findest, ist diese Seite für dich!",
+        "how_to": "Wie geht das?",
+        "click": "Einfach auf das betreffende Spiel klicken und deine Aktion bestätigen! Einfach, oder? 😉",
+        "explanations": "Wenn du einem <1>Steamder</1> beitrittst, werden deine privaten Spiele nicht zur Liste der gemeinsamen Spiele der Spieler im Raum hinzugefügt.",
+        "selected_count": {
+            "public": "{{count}} öffentliches Spiel",
+            "public_other": "{{count}} öffentliche Spiele",
+            "private": "{{count}} privates Spiel",
+            "private_other": "{{count}} private Spiele"
+        },
+        "submit_selected_button": {
+            "disabled": "Keine Spiele ausgewählt",
+            "enabled": " | Änderungen bestätigen",
+            "loading": "Lädt ..."
+        }
+    },
+    "right_column": {
+        "tabs_title": {
+            "all_games": "Alle Spiele ({{count}})",
+            "selected_games": "Ausgewähltes Spiel ({{count}})",
+            "selected_games_other": "Ausgewählte Spiele ({{count}})",
+            "public_games": "Öffentliches Spiel ({{count}})",
+            "public_games_other": "Öffentliche Spiele ({{count}})",
+            "private_games": "Privates Spiel ({{count}})",
+            "private_games_other": "Private Spiele ({{count}})"
+        },
+        "no_selected_games": "Keine Spiele ausgewählt",
+        "no_public_games": "Keine öffentlichen Spiele",
+        "no_private_games": "Keine privaten Spiele"
+    }
+}

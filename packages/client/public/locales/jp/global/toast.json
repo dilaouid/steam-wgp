@@ -1,0 +1,15 @@
+{
+    "admin_closed_room": "管理者がSteamderを閉じました",
+    "you_have_been_kicked": "Steamderから追放されました",
+    "player_has_been_kicked": "プレイヤーがSteamderから追放されました",
+    "room_begins": "Steamderが始まります",
+    "updated_library": "ライブラリが更新されました",
+    "link_copied": "Steamderのリンクがクリップボードにコピーされました",
+    "logged_in_to_access_library": "ライブラリにアクセスするにはログインしてください",
+    "invalid_id": "無効なIDです",
+    "steamder_not_found": "Steamderが見つかりません",
+    "already_in_steamder": "すでにSteamderに参加しています",
+    "cannot_join_steamder": "Steamderに参加できません",
+    "account_deleted": "アカウントが削除されました...またのお越しをお待ちしています！",
+    "user_in_steamder_cannot_kick": "Steamderに参加中はアカウントを削除できません"
+}

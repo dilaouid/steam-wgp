@@ -1,0 +1,60 @@
+{
+    "waitlist": {
+        "header": "Vous êtes dans une Steamder, mais encore en salle d'attente ! Voici avec qui vous allez potentiellement jouer, on n'attends plus que l'administrateur du salon (le profil avec la petite couronne) démarre, et vous pourrez commencer à choisir !",
+        "players": {
+            "games_in_common_zero": "Aucun jeu en commun ... :(",
+            "games_in_common": "{{ count }} jeu en commun",
+            "games_in_common_other": "{{ count }} jeux en commun"
+        },
+        "informations": {
+            "in_list_zero": "Aucun jeu dans la liste !",
+            "in_list": "<1>{{ count }} jeu</1> dans la liste",
+            "in_list_other": "<1>{{ count }} jeux</1> dans la liste",
+            "waiting": "En attente de <1>{{ username }}</1> pour démarrer la Steamder ..."
+        },
+        "actions": {
+            "start": "Démarrer la Steamder",
+            "leave": "Partir d'ici",
+            "leave_confirm": "Vous êtes administrateur de la Steamder, si vous partez, la Steamder sera annulée. Êtes-vous sûr de vouloir partir ?",
+            "leave_confirm_yes": "Oui",
+            "leave_confirm_no": "Non",
+            "switch": "Prendre tout les jeux plutôt que les jeux en communs",
+            "switch_tooltip": "A la fin, il sera précisé quel joueur n'a pas le jeu sélectionné, ainsi qu'un lien vers la page magasin",
+            "modal": {
+                "kick": {
+                    "title": "🛑 Expulser un joueur",
+                    "content": "Êtes-vous sûr de vouloir expulser <1>{{ username }}</1> de la Steamder ?",
+                    "yes": "Oui",
+                    "no": "Non"
+                },
+                "leave": {
+                    "title": "🚪 Quitter la Steamder",
+                    "warning": "⚠️ ATTENTION !! Vous êtes administrateur de la Steamder, si vous partez, la Steamder sera annulée pour tout le monde !",
+                    "content": "Êtes-vous sûr de vouloir quitter la Steamder ?",
+                    "yes": "Je me tire !",
+                    "no": "Non"
+                }
+            }
+        },
+        "errors": {
+            "not_enough_players": "Il faut au moins deux joueurs pour démarrer une Steamder !",
+            "not_matching": "{{ player1 }} et {{ player2 }} n'ont aucun jeu en commun !"
+        }
+    },
+    "game": {
+        "header": "Choisis tes jeux ! 🕹️",
+        "content": "Les jeux passeront les uns après les autres. Likez ceux que vous voulez, passez ceux auxquels vous n'avez pas envie de jouer. Le premier jeu liké par tout le monde dans la <1>Steamder</1> ressortira. Vous pouvez annuler un jeu liké en cliquant dessus sur la petite box à droite. Si aucun jeu liké en commun n'est décidé après le compte à rebours, un jeu aléatoire ressortira ! <1>Il est temps de mettre fin au débat !</1>",
+        "countdown": "Compte à rebours",
+        "actions": {
+            "like": "J'aime !",
+            "pass": "Je passe ..."
+        }
+    },
+    "result": {
+        "you_dont_have": "Il semblerait que tu n'as pas ce jeu ! ...",
+        "players_dont_have": "Ce joueur semble ne pas avoir ce jeu :",
+        "players_dont_have_other": "Il semblerait que ces joueurs n'ont pas ce jeu :",
+        "shop": "Page du magasin",
+        "its_decided": "C'est décidé !"
+    }
+}

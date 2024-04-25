@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import fastifyPassport from '@fastify/passport';
+import { and, eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
 
-import { Players, WaitlistsPlayers } from '../models';
+import { DeletedUsers, Players, WaitlistsPlayers } from '../models';
 import { Player } from '../models/Players';
-import { eq } from 'drizzle-orm';
 import { isAuthenticated } from '../auth/mw';
 import { APIResponse } from '../utils/response';
 import i18next from '../plugins/i18n.plugin';
@@ -28,13 +28,33 @@ export default async function authRouter(fastify: FastifyInstance) {
         return done(null, null);
       }
 
+      // check if the user is not in the deletedusers table
+      const isUserDeleted = await fastify.db.select({ delete_date: DeletedUsers.model.delete_date })
+        .from(DeletedUsers.model)
+        .where(
+          and(
+            eq(DeletedUsers.model.id, player.steamid)
+          )
+        );
+      if (isUserDeleted.length > 0) {
+        if (Date.now() - isUserDeleted[0].delete_date > 172800000) {
+          fastify.log.info(`User ${player.steamid} is in the deletedusers table, but he can login now`);
+          await fastify.db.delete(DeletedUsers.model).where(eq(DeletedUsers.model.id, player.steamid)).execute();
+        } else {
+          fastify.log.warn(`User ${player.steamid} is in the deletedusers table, he can't login yet`);
+          return done(new Error(`You cannot login yet, since you have deleted your account recently, please wait ${Math.ceil((172800000 - (Date.now() - isUserDeleted[0].delete_date)) / 1000 / 60 / 60)} more hours`), null);
+        }
+      }
+      /////////////////////////////////////////////
+
       const existingUser = await fastify.db.select().from(Players.model).where(eq(Players.model.id, player.steamid as any));
       if (existingUser.length === 0) {
         fastify.log.info('Inserting new user');
         const [newUser] = await fastify.db.insert(Players.model).values({
           id: player.steamid,
           avatar_hash: player.avatarhash,
-          username: player.personaname
+          username: player.personaname,
+          profileurl: player.profileurl
         }).returning({ id: Players.model.id, avatar_hash: Players.model.avatar_hash });
         user = newUser;
       } else {
@@ -46,6 +66,10 @@ export default async function authRouter(fastify: FastifyInstance) {
         if (existingUser[0].username !== player.personaname) {
           fastify.log.info('Updating username');
           await fastify.db.update(Players.model).set({ username: player.personaname }).where(eq(Players.model.id, player.steamid as any)).execute();
+        }
+        if (existingUser[0].profileurl !== player.profileurl) {
+          fastify.log.info('Updating profile url');
+          await fastify.db.update(Players.model).set({ profileurl: player.profileurl }).where(eq(Players.model.id, player.steamid as any)).execute();
         }
 
         user = existingUser[0];
@@ -63,8 +87,8 @@ export default async function authRouter(fastify: FastifyInstance) {
     // Route pour initier l'authentification Steam
     fastify.get('/steam', { preValidation: fastifyPassport.authenticate('steam', { session: false }) }, async (request, reply) => {
       if (!request.user)
-        return APIResponse(reply, null, i18next.t('logged_in_to_view_profile', { lng: request.userLanguage }), 401);
-      return APIResponse(reply, request.user, i18next.t('logged_in', { lng: request.userLanguage }), 200);
+        return APIResponse(reply, null, 'logged_in_to_view_profile', 401);
+      return APIResponse(reply, request.user, 'logged_in', 200);
     });
 
     // Route de callback après l'authentification Steam
@@ -72,7 +96,7 @@ export default async function authRouter(fastify: FastifyInstance) {
       async (request, reply) => {
         if (!request.user) throw new Error('Missing user object in request');
         const user = request.user as Player & { username: string };
-        const jwtToken = jwt.sign({ id: String(user.id), username: user.username }, fastify.config.SECRET_KEY, { expiresIn: '5h' });
+        const jwtToken = jwt.sign({ id: String(user.id), username: user.username, avatar_hash: user.avatar_hash }, fastify.config.SECRET_KEY, { expiresIn: '5h' });
         reply.setCookie('token', jwtToken, {
           httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
@@ -80,8 +104,7 @@ export default async function authRouter(fastify: FastifyInstance) {
           maxAge: 18000,
           sameSite: process.env.NODE_ENV === 'production' ? 'none' : true
         });
-
-        return reply.redirect(`${fastify.config.FRONT}${fastify.config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
+        return reply.redirect(`${fastify.config.FRONT}/login${fastify.config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
       }
     );
 
@@ -89,18 +112,18 @@ export default async function authRouter(fastify: FastifyInstance) {
     fastify.get('/logout', async (request, reply) => {
       request.logOut();
       reply.clearCookie("token")
-      return APIResponse(reply, null, i18next.t('logged_out', { lng: request.userLanguage }), 200);
+      return APIResponse(reply, null, 'logged_out', 200);
     });
 
     fastify.get('/me', { preValidation: isAuthenticated }, async (request, reply) => {
       if (!request.user)
-        return APIResponse(reply, null, i18next.t('logged_in_to_view_profile', { lng: request.userLanguage }), 401);
+        return APIResponse(reply, null, 'logged_in_to_view_profile', 401);
       const user = request.user as Player & { username: string };
       const findRoom = await fastify.db.select({
         waitlist: WaitlistsPlayers.model.waitlist_id
       }).from(WaitlistsPlayers.model).where(eq(WaitlistsPlayers.model.player_id, user.id))
       const { waitlist } = findRoom?.length > 0 ? findRoom[0] : '';
-      return APIResponse(reply, { id: user.id, username: user.username, waitlist }, i18next.t('logged_in', { lng: request.userLanguage }), 200);
+      return APIResponse(reply, { id: user.id, username: user.username, waitlist, avatar_hash: user.avatar_hash }, i18next.t('logged_in', { lng: request.userLanguage }), 200);
     });
 
   });

@@ -1,0 +1,34 @@
+{
+    "homepage": {
+        "title": "SteamWGP | Página Principal",
+        "description": "Únete a SteamWGP para descubrir los mejores juegos que puedes compartir con amigos. Crea o únete a un Steamder y embarca en sesiones de juego inolvidables!"
+    },
+    "login": {
+        "title": "SteamWGP | Iniciar Sesión",
+        "description": "Inicia sesión para acceder a tu biblioteca de juegos y entrar en Steamders exclusivos."
+    },
+    "library": {
+        "title": "SteamWGP | Mi Biblioteca",
+        "description": "Administra tu biblioteca de juegos en SteamWGP, explora nuevas formas de jugar e inicia Steamders con tus juegos favoritos."
+    },
+    "steamder": {
+        "title": "SteamWGP | Steamder",
+        "description": "Únete a una sala de Steamder donde los jugadores se unen para decidir el juego de la noche. Desliza, vota y el primer juego que gane la aprobación de todos será elegido para jugar juntos."
+    },
+    "steamders": {
+        "title": "SteamWGP | Todos los Steamders",
+        "description": "Explora y únete a los Steamders activos, conoce nuevos jugadores y participa en emocionantes aventuras grupales."
+    },
+    "cgu": {
+        "title": "SteamWGP | Términos de Uso",
+        "description": "Infórmate sobre nuestros términos de uso para garantizar una experiencia segura y placentera en SteamWGP."
+    },
+    "legals": {
+        "title": "SteamWGP | Avisos Legales",
+        "description": "Aprende todo sobre las reglas y regulaciones que rigen el uso de la plataforma SteamWGP."
+    },
+    "404": {
+        "title": "SteamWGP | Error 404",
+        "description": "¡Vaya! La página que buscas no está disponible. Puede haber sido movida o eliminada."
+    }
+}

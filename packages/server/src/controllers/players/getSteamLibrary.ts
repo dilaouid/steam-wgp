@@ -98,7 +98,7 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
       return APIResponse(reply, null, i18next.t('need_to_be_logged_in', { lng: language }), 401);
     reply.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
       try {
-        yield { data: JSON.stringify({ message: i18next.t('load_steam_library', { lng: language }), type: 'info', complete: false }) }
+        yield { data: JSON.stringify({ message: 'load_steam_library', type: 'info', complete: false, progress: 0 }) }
         const library = await fastify.db.select({ game_id: Libraries.model.game_id }).from(Libraries.model).where(eq(Libraries.model.player_id, id));
         const playerLibraryIds = new Set(library.map((game: ILibrary) => game.game_id));
 
@@ -106,25 +106,25 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
         const steamLibraryRequest = await fetch(`${fastify.config.STEAM_GetOwnedGames}/?key=${fastify.config.STEAM_API_KEY}&steamid=${id}&include_appinfo=true&include_played_free_games=true&format=json`);
         if (steamLibraryRequest == null || steamLibraryRequest.status !== 200) {
           fastify.log.warn(`Steam API is not responding...`);
-          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible_yet", { lng: language }), type: 'danger', complete: true }) };
+          yield { data: JSON.stringify({ message: "steam_library_not_accessible_yet", type: 'danger', complete: true, progress: 0 }) };
           return;
         }
         const steamLibrary = await steamLibraryRequest.json() as ISteamResponse;
 
         if (steamLibrary.response && !steamLibrary.response?.games) {
           const complete = playerLibraryIds.size > 0;
-          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible", { lng: language }), type: 'danger', complete }) };
+          yield { data: JSON.stringify({ message: "steam_library_not_accessible", type: 'danger', complete, progress: 15 }) };
           return;
         }
 
         fastify.log.info('Steam library fetched successfully !');
         if (!steamLibrary.response) {
           fastify.log.warn(`Steam API is not responding...`);
-          yield { data: JSON.stringify({ message: i18next.t("steam_library_not_accessible_yet", { lng: language }), type: 'danger', complete: true }) };
+          yield { data: JSON.stringify({ message: "steam_library_not_accessible_yet", type: 'danger', complete: true, progress: 20 }) };
           return;
         }
 
-        yield { data: JSON.stringify({ message: i18next.t("adding_games_to_library", { lng: language }), type: 'info', complete: false }) };
+        yield { data: JSON.stringify({ message: "adding_games_to_library", type: 'info', complete: false, progress: 20 }) };
         const steamAppIds = steamLibrary.response.games.map((game: ILibrary) => game.appid);
         const gamesToAddToLibrary = steamAppIds.filter((gameId: number) => !playerLibraryIds.has(gameId));
 
@@ -145,22 +145,18 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
 
         // insert the games in the Libraries table if they are not already in the database
         fastify.log.info(`Inserting games into the library...`);
-        yield { data: JSON.stringify({ message: i18next.t("adding_games_to_collection", { lng: language }), type: 'info', complete: false }) };
-
+        yield { data: JSON.stringify({ message: "adding_games_to_collection", type: 'info', complete: false, progress: 60 }) };
         await insertGamesIntoLibrary(fastify, BigInt(id), gamesToAddToLibrary);
 
         // if added games in db is less than gamesToAddToLibrary, then warn the user
         if (gamesToAddToLibrary.length > 0 && gamesToAddToLibrary.length < gamesToAdd.length) {
-          const messageKey = gamesToAddToLibrary.length <= 1 ? 'game_cannot_add_singular' : 'game_cannot_add_plural';
-          const message = i18next.t(messageKey, { lng: language, count: gamesToAddToLibrary.length });
-
-          yield { data: JSON.stringify({ message, type: 'danger' }) };
+          yield { data: JSON.stringify({ message: 'game_cannot_add', type: 'danger', count: gamesToAddToLibrary.length, progress: 60 }) };
           fastify.log.warn(`Only ${gamesToAdd.length} out of ${gamesToAddToLibrary.length} games were added to the database`);
         }
-        yield { data: JSON.stringify({ message: i18next.t('loading_library_complete', { lng: language }), type: 'success', complete: true }) }
+        yield { data: JSON.stringify({ message: 'loading_library_complete', type: 'success', complete: true, progress: 100 }) }
       } catch (err) {
         fastify.log.error(err);
-        yield { data: JSON.stringify({ message: i18next.t('error_occured_in_loading_library', { lng: language }), type: 'danger', complete: true }) };
+        yield { data: JSON.stringify({ message: 'error_occured_in_loading_library', type: 'danger', complete: true, progress: 100 }) };
       }
     })());
   } catch (error: any) {

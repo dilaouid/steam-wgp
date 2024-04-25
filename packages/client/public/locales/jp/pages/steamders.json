@@ -1,0 +1,38 @@
+{
+    "left_column": {
+        "create": "<1>Steamder</1>を作成",
+        "explain_part_1": "<1>Steamder</1>とは、他のプレイヤーを招待する（または自分で参加する）ゲームルームのこと。マルチプレイヤーゲームが集まり、ゲームが始まると、全てのゲームが提示されます。",
+        "explain_part_2": "提示された各ゲームに対して好きかどうかを選ぶのはあなた次第。全てのプレイヤーが好きだと選んだ最初のゲームが全員に選ばれ、これで議論は一件落着！<1>議論終了！</1>",
+        "form": {
+            "name": "Steamderの名前",
+            "placeholder": "例：友達との夜",
+            "label": "プライベートSteamder",
+            "tooltip": "このボックスをチェックすると、あなたのSteamderは他のプレイヤーには見えず、招待リンクを通じてのみ参加可能になります。",
+            "submit": "Steamderを作成"
+        },
+        "already_in": "すでにSteamderに参加しているため、新たに作成することはできません。",
+        "not_logged": "Steamderを作成するには、ログインする必要があります。"
+    },
+    "right_column": {
+        "heading": "公開Steamders",
+        "subtitle": "ここでは、誰でもアクセスできる<1>Steamders</1>を見つけることができます。新しい友達を作る理想的な方法！ただし、<2>一度に一つの<1>Steamder</1>にしかいられない</2>ことを忘れずに。良いものを過度には...",
+        "table": {
+            "heading": {
+                "name": "Steamderの名前",
+                "players_count": "プレイヤー数",
+                "available_games": "利用可能なゲーム",
+                "actions": "アクション"
+            },
+            "buttons": {
+                "join": "参加する",
+                "leave": "退出する",
+                "unavailable": "参加不可",
+                "open": "開く"
+            },
+            "tooltip": "一度に一つのSteamderにしかいられません！他に参加するには現在のSteamderを退出してください。",
+            "empty": "現在、公開されているSteamderはありません。作成しましょう！"
+        },
+        "actives": "{{ count }}件のアクティブなSteamder",
+        "actives_other": "{{ count }}件のアクティブなSteamders"
+    }
+}

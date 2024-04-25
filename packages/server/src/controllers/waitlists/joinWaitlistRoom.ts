@@ -1,11 +1,10 @@
 import { FastifyReply, FastifyRequest, HTTPMethods } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
-import { isUserInWaitlist, joinWaitlist } from "../../models/WaitlistsPlayers";
+import { isUserInAWaitlist, isUserInWaitlist, joinWaitlist } from "../../models/WaitlistsPlayers";
 import { isAuthenticated } from "../../auth/mw";
 import { checkWaitlistExists, getWaitlist } from "../../models/Waitlists";
 import { APIResponse } from "../../utils/response";
-import i18next from "../../plugins/i18n.plugin";
 export interface joinWaitlistParams {
   id: string;
 }
@@ -35,23 +34,27 @@ async function joinWaitlistController(request: FastifyRequest<{ Params: joinWait
     const waitlist = await checkWaitlistExists(fastify, id.trim(), user.id.toString());
     if (!waitlist.data) {
       fastify.log.warn(`Waitlist ${id} not found`);
-      return APIResponse(reply, null, i18next.t('room_does_not_exist', { lng: request.userLanguage }), 404);
+      return APIResponse(reply, null, 'room_does_not_exist', 404);
     }
 
     if (waitlist.data.started) {
-      return APIResponse(reply, null, i18next.t('room_alreadfy_started', { lng: request.userLanguage }), 400);
+      return APIResponse(reply, null, 'room_alreadfy_started', 400);
     }
+
+    const inWaitlist = await isUserInAWaitlist(fastify, user.id);
+    if (inWaitlist)
+      return APIResponse(reply, null, 'already_in_a_room', 401);
 
     const waitlistStatus = await isUserInWaitlist(fastify, user.id, id);
     if (waitlistStatus.inWaitlist) {
-      return APIResponse(reply, null, i18next.t('already_in_a_room', { lng: request.userLanguage }), 400);
+      return APIResponse(reply, null, 'already_in_a_room', 400);
     } else {
       await joinWaitlist(fastify, user.id, id);
       const waitlist = await getWaitlist(fastify, id.trim(), BigInt(user.id));
-      return APIResponse(reply, waitlist, i18next.t('joined_the_room', { lng: request.userLanguage }), 200);
+      return APIResponse(reply, waitlist, 'joined_the_room', 200);
     }
   } catch (err) {
     fastify.log.error(err);
-    return APIResponse(reply, null, i18next.t('internal_server_error', { lng: request.userLanguage }), 500);
+    return APIResponse(reply, null, 'internal_server_error', 500);
   }
 }

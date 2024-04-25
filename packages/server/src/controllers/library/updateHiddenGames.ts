@@ -3,7 +3,6 @@ import { FastifyInstance } from "fastify/types/instance";
 import { Player } from "../../models/Players";
 import { getPlayerAllLibrary } from "../../models/Libraries";
 import { APIResponse } from "../../utils/response";
-import i18next from "../../plugins/i18n.plugin";
 import { isAuthenticated } from "../../auth/mw";
 import { and, eq, inArray } from "drizzle-orm";
 import { Libraries } from "../../models";
@@ -97,13 +96,13 @@ async function updateHiddenGames(request: FastifyRequest<{ Body: IBody }>, reply
 
     // Toggle hidden status of the games
     await toggleHiddenGames(fastify, userId, gameIds, library);
-    return APIResponse(reply, null, i18next.t('updated_library', { lng: request.userLanguage }), 200);
+    return APIResponse(reply, null, 'updated_library', 200);
   } catch (error: any) {
     const messageKey = ['logged_in_to_access_library', 'invalid_id'].includes(error.message)
       ? error.message
       : 'internal_server_error';
     const statusCode = ['logged_in_to_access_library', 'invalid_id'].includes(error.message) ? 401 : 500;
     fastify.log.error(error);
-    return APIResponse(reply, null, i18next.t(messageKey, { lng: request.userLanguage }), statusCode);
+    return APIResponse(reply, null, messageKey, statusCode);
   }
 }

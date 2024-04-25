@@ -1,0 +1,53 @@
+{
+    "waitlist": {
+        "header": "Du bist in einer Steamder, aber noch im Wartezimmer! Hier siehst du, mit wem du potenziell spielen wirst. Wir warten nur noch darauf, dass der Administrator (das Profil mit der kleinen Krone) den Startknopf drückt, dann kannst du anfangen auszuwählen!",
+        "players": {
+            "games_in_common_zero": "Keine Spiele gemeinsam... :(",
+            "games_in_common": "{{ count }} Spiel gemeinsam",
+            "games_in_common_other": "{{ count }} Spiele gemeinsam"
+        },
+        "informations": {
+            "in_list_zero": "Keine Spiele auf der Liste!",
+            "in_list": "<1>{{ count }} Spiel</1> auf der Liste",
+            "in_list_other": "<1>{{ count }} Spiele</1> auf der Liste",
+            "waiting": "Warten auf <1>{{ username }}</1>, um die Steamder zu starten..."
+        },
+        "actions": {
+            "start": "Die Steamder starten",
+            "leave": "Hier verlassen",
+            "leave_confirm": "Du bist der Administrator der Steamder. Wenn du gehst, wird die Steamder abgebrochen. Bist du sicher, dass du gehen möchtest?",
+            "leave_confirm_yes": "Ja",
+            "leave_confirm_no": "Nein",
+            "switch": "Alle Spiele wählen, statt nur die gemeinsamen",
+            "switch_tooltip": "Am Ende wird angezeigt, welcher Spieler das ausgewählte Spiel nicht hat, inklusive eines Links zur Shop-Seite",
+            "modal": {
+                "kick": {
+                    "title": "🛑 Einen Spieler rauswerfen",
+                    "content": "Bist du sicher, dass du <1>{{ username }}</1> aus der Steamder rauswerfen möchtest?",
+                    "yes": "Ja",
+                    "no": "Nein"
+                }
+            }
+        },
+        "errors": {
+            "not_enough_players": "Du brauchst mindestens zwei Spieler, um eine Steamder zu starten!",
+            "not_matching": "{{ player1 }} und {{ player2 }} haben keine Spiele gemeinsam!"
+        }
+    },
+    "game": {
+        "header": "Wähle deine Spiele aus! 🕹️",
+        "content": "Die Spiele werden nacheinander angezeigt. Like die Spiele, die du spielen möchtest, und überspringe die, auf die du keine Lust hast. Das erste Spiel, das von allen in der <1>Steamder</1> geliked wird, wird ausgewählt. Du kannst ein geliktes Spiel rückgängig machen, indem du im kleinen Kasten rechts darauf klickst. Wenn nach dem Countdown kein gemeinsam geliktes Spiel feststeht, wird ein zufälliges Spiel ausgewählt! <1>Es ist Zeit, die Diskussion zu beenden!</1>",
+        "countdown": "Countdown",
+        "actions": {
+            "like": "Gefällt mir!",
+            "pass": "Überspringen ..."
+        }
+    },
+    "result": {
+        "you_dont_have": "Es scheint, dass du dieses Spiel nicht hast! ...",
+        "players_dont_have": "Dieser Spieler scheint das Spiel nicht zu haben:",
+        "players_dont_have_other": "Es scheint, dass diese Spieler das Spiel nicht haben:",
+        "shop": "Shop-Seite",
+        "its_decided": "Es ist entschieden!"
+    }
+}

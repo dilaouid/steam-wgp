@@ -1,0 +1,37 @@
+{
+    "left_column": {
+        "your_library": "🎮 Votre bibliothèque",
+        "find_your_library": "Retrouvez votre bibliothèque de jeux multijoueurs <1>Steam</1> ici.",
+        "not_finding_a_game": "Vous ne retrouvez pas un de vos jeux ?",
+        "not_multiplayer": "C'est que <1>SteamWGP</1> a considéré qu'il n'est pas un jeu multijoueur et qu'il n'a donc pas sa place ici !",
+        "select_games": "Ici, vous pouvez décidez des jeux que vous souhaitez rendre publiques ou privés dans les <1>Steamders</1>. Si jamais vous voulez cacher un jeu que vous n'aimez vraiment pas ou que vous trouvez gênant, cette page est pour vous !",
+        "how_to": "Comment faire ?",
+        "click": "Tout simplement, en cliquant sur le jeu en question, et en validant votre opération ! Alors, facile ? 😉",
+        "explanations": "En rejoignant une <1>Steamder</1>, vos jeux privés ne seront donc pas ajoutés à la liste des jeux en communs entre les différents joueurs du salon.",
+        "selected_count": {
+            "public": "{{count}} jeu publique",
+            "public_other": "{{count}} jeux publiques",
+            "private": "{{count}} jeu privé",
+            "private_other": "{{count}} jeux privés"
+        },
+        "submit_selected_button": {
+            "disabled": "Aucun jeu sélectionné",
+            "enabled": " | Confirmer les changements",
+            "loading": "Chargement ..."
+        }
+    },
+    "right_column": {
+        "tabs_title": {
+            "all_games": "Tous les jeux ({{count}})",
+            "selected_games": "Jeu sélectionné ({{count}})",
+            "selected_games_other": "Jeux sélectionnés ({{count}})",
+            "public_games": "Jeu publique ({{count}})",
+            "public_games_other": "Jeux publiques ({{count}})",
+            "private_games": "Jeu privé ({{count}})",
+            "private_games_other": "Jeux privés ({{count}})"
+        },
+        "no_selected_games": "Aucun jeu sélectionné",
+        "no_public_games": "Aucun jeu publique",
+        "no_private_games": "Aucun jeu privé"
+    }
+}

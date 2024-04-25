@@ -1,29 +1,16 @@
 import { FastifyInstance } from 'fastify';
-import websocket from '@fastify/websocket'
-import jwt from 'jsonwebtoken';
-import { Games, Libraries, Players, Waitlists, WaitlistsPlayers } from '../models';
-import { and, eq, inArray } from 'drizzle-orm';
-import { Game } from '../models/Games';
 import { RawData, WebSocket } from 'ws';
+import websocket from '@fastify/websocket'
 
-interface PlayerInfo {
-    avatar_hash: string;
-    player_id: string;
-    username: string;
-    games: number[];
-}
+import { and, eq } from 'drizzle-orm';
 
-interface Waitlist {
-  adminId: string;
-  players: PlayerInfo[];
-  playerGames: Record<string, number[]>;
-  commonGames: number[];
-  swipedGames: Record<number, string[]>;
-  started: boolean;
-  ended: boolean;
-  winner?: number;
-  sockets: Set<any>;
-}
+import jwt from 'jsonwebtoken';
+
+import { Games, Libraries, Players, Waitlists, WaitlistsPlayers } from '../models';
+import { Game } from '../models/Games';
+
+import { updateCommonGames, calculateAllGames, checkCommonGames } from './ws/utils';
+import { Waitlist, PlayerInfo } from './ws/types';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -53,9 +40,19 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     if (!waitlist) return;
 
     // delete the waitlist in the database
-    await fastify.db.delete(Waitlists.model)
-      .where(eq(Waitlists.model.id, waitlistId))
-      .execute();
+    await fastify.db.update(Waitlists.model)
+      .set({
+        complete: true,
+        selected: waitlist.winner
+      }).where(
+        eq(Waitlists.model.id, waitlistId)
+      ).execute();
+
+    // remove all waitlistsplayers from the database for this waitlist
+    await fastify.db.delete(WaitlistsPlayers.model)
+      .where(
+        eq(WaitlistsPlayers.model.waitlist_id, waitlistId)
+      ).execute();
 
     // delete the waitlist in the memory
     waitlists.delete(waitlistId);
@@ -67,7 +64,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       .from(Waitlists.model)
       .leftJoin(WaitlistsPlayers.model, eq(Waitlists.model.id, WaitlistsPlayers.model.waitlist_id))
       .where(and(
-        eq(Waitlists.model.id, waitlistId)
+        eq(Waitlists.model.id, waitlistId),
+        eq(Waitlists.model.complete, false)
       ))
       .execute();
 
@@ -93,6 +91,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       commonGames: [],
       swipedGames: {},
       started: existingWaitlist[0].waitlists.started,
+      display_all_games: existingWaitlist[0].waitlists.display_all_games,
       ended: false,
       sockets: new Set()
     };
@@ -178,17 +177,20 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     return false;
   };
 
-  const startWaitlist = async (waitlistId: string): Promise<void> => {
+  const startWaitlist = async (waitlistId: string, allGames: number[]): Promise<void> => {
     const waitlist: Waitlist = waitlists.get(waitlistId);
     if (!waitlist || waitlist.players.length < 2) return;
 
     const playersAndGamesInfo = await fastify.db.select().from(WaitlistsPlayers.model)
-      .leftJoin(Libraries.model, eq(WaitlistsPlayers.model.player_id, Libraries.model.player_id))
-      .where(
+      .leftJoin(
+        Libraries.model,
         and(
-          eq(WaitlistsPlayers.model.waitlist_id, waitlistId),
+          eq(WaitlistsPlayers.model.player_id, Libraries.model.player_id),
           eq(Libraries.model.hidden, false)
         )
+      )
+      .where(
+        eq(WaitlistsPlayers.model.waitlist_id, waitlistId)
       )
       .execute();
 
@@ -202,26 +204,12 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     }
     fillPlayerGamesList();
 
-    const initialGames = waitlist.playerGames[waitlist.players[0].player_id] || [];
-    waitlist.commonGames = waitlist.players.reduce((commonGames, player) => {
-      const currentGames = waitlist.playerGames[player.player_id] || [];
-      if (commonGames.length === 0) return currentGames;
-      return commonGames.filter(game => currentGames.includes(game));
-    }, initialGames);
-
-    const commonSelectableGames = await fastify.db.select({ id: Games.model.id })
-      .from(Games.model)
-      .where(
-        and(
-          inArray(Games.model.id, waitlist.commonGames),
-          eq(Games.model.is_selectable, true)
-        )
-      )
-      .execute();
-
-    if (commonSelectableGames.length !== waitlist.commonGames.length) {
-      fastify.log.error(`Not all common games are selectable for room ${waitlistId}`);
-      return;
+    if (!waitlist.display_all_games) {
+      const commonSelectableGames = await checkCommonGames(waitlist, waitlistId, fastify);
+      if (!commonSelectableGames) return;
+      waitlist.commonGames = commonSelectableGames.map((game: Game) => game.id)
+    } else {
+      waitlist.commonGames = allGames;
     }
 
     // update the waitlist in the database (start: true)
@@ -229,8 +217,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       .set({ started: true })
       .where(eq(Waitlists.model.id, waitlistId))
       .execute();
-
-    waitlist.commonGames = commonSelectableGames.map((game: Game) => game.id)
     waitlist.started = true;
   };
 
@@ -250,6 +236,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
         next(true);
       } catch (err) {
+        fastify.log.error(err);
         fastify.log.error('WebSockets Authentification error', err);
         next(false, 401, 'Unauthorized');
       }
@@ -266,7 +253,12 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         const playerId = userAuthMap.get(clientId);
         const playerData = await fastify.db.selectDistinct()
           .from(Players.model)
-          .rightJoin(Libraries.model, eq(Players.model.id, Libraries.model.player_id))
+          .rightJoin(Libraries.model,
+            and(
+              eq(Players.model.id, Libraries.model.player_id),
+              eq(Libraries.model.hidden, false)
+            )
+          )
           .rightJoin(Games.model, eq(Libraries.model.game_id, Games.model.id))
           .where(
             and(
@@ -347,16 +339,10 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         // get the all the swipped games from waitlistEntry of the player with the playerId
         if (waitlistClients.started && !waitlistClients.ended && waitlistClients.swipedGames) {
           const swipedGames = Object.keys(waitlistClients.swipedGames);
-
-          fastify.log.info(swipedGames);
-          fastify.log.info(`Player ID: ${playerId}`);
-
           const swipedGamesPlayer = swipedGames.filter((gameId: string) => waitlistClients.swipedGames[gameId].includes(playerId));
-
           waitlistClients.sockets.forEach((client: any) => {
             if (client === connection.socket) {
-              fastify.log.info(swipedGamesPlayer);
-              client.send(JSON.stringify({ action: 'retrieve', swipedGames: swipedGamesPlayer } ));
+              client.send(JSON.stringify({ action: 'retrieve', swipedGames: swipedGamesPlayer, endTime: waitlistClients.endTime }));
             }
           });
         }
@@ -378,7 +364,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               if (checkGameEnd(waitlistId, payload.gameId)) {
                 // get the game that is swiped by all the players
                 waitlistEntry.sockets.forEach((client: any) => {
-                  client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
+                  client.send(JSON.stringify({ action: 'gameEnd', choosed_game: waitlistClients.winner }));
                 });
                 deleteWaitlist(waitlistId);
               }
@@ -391,16 +377,26 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           case 'start':
             try {
               if (waitlistClients.players.length < 2) return;
-
               // cannot start if the waitlist is already started or ended
               if (waitlistClients.started || waitlistClients.ended) return;
-              await startWaitlist(waitlistId);
+              if (playerId !== waitlistClients.adminId) return;
+
+              const allGames = waitlistClients.display_all_games ? calculateAllGames(waitlistClients) : [];
+              await startWaitlist(waitlistId, allGames);
+
+              // count 5 seconds per game
+              const timing = (waitlistClients.display_all_games ? allGames.length : waitlistClients.commonGames.length) * 2000;
+
+              const endTime = Date.now() + timing + 20000;
+              waitlistClients.endTime = endTime;
+
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
-                client.send(JSON.stringify({ action: 'start' }));
+                fastify.log.info(`Starting waitlist ${waitlistId}`);
+                client.send(JSON.stringify({ action: 'start', endTime: waitlistClients.endTime }));
               });
 
-              // wait for 10 minutes before ending the waitlist
+              // wait for x minutes before ending the waitlist
               setTimeout(() => {
                 if (!waitlistClients || !waitlistClients.started || waitlistClients.ended) return;
                 waitlistClients.ended = true;
@@ -411,14 +407,18 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                   const mostSwipedGame = swipedGames.reduce((a, b) => waitlistClients.swipedGames[a].length > waitlistClients.swipedGames[b].length ? a : b);
                   waitlistClients.winner = parseInt(mostSwipedGame);
                 } else {
-                  waitlistClients.winner = waitlistClients.commonGames[Math.floor(Math.random() * waitlistClients.commonGames.length)];
+                  // check if display_all_games is true, the random game will be picked from all games otherwise from common games
+                  waitlistClients.winner =
+                    waitlistClients.display_all_games ?
+                      allGames[Math.floor(Math.random() * allGames.length)] :
+                      waitlistClients.commonGames[Math.floor(Math.random() * waitlistClients.commonGames.length)];
                 }
 
                 waitlistEntry.sockets.forEach((client: any) => {
-                  client.send(JSON.stringify({ action: 'gameEnd', winner: waitlistClients.winner }));
+                  client.send(JSON.stringify({ action: 'gameEnd', choosed_game: waitlistClients.winner }));
                 });
                 deleteWaitlist(waitlistId);
-              }, 600000);
+              }, timing + 20000);
 
             } catch (error) {
               fastify.log.error(`Error in 'start' action: ${error}`);
@@ -426,21 +426,57 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             break;
 
             // when a player leaves the waitlist
-          case 'leave':
+          case 'leave': {
             if (waitlistClients.started || waitlistClients.ended) return;
             leaveWaitlist(waitlistId, playerId);
+
+            // update the waitlistClients.commonGames now that a player has left
+            fillPlayerGamesList();
+            updateCommonGames(waitlistClients);
+
+            const all_games = calculateAllGames(waitlistClients);
+
+            fastify.db
+              .update(Waitlists.model)
+              .set(
+                {
+                  common_games: waitlistClients.commonGames.length,
+                  all_games: all_games.length
+                }
+              ).where(
+                eq(Waitlists.model.id, waitlistId)
+              ).execute();
+
             // send message to all players
             waitlistEntry.sockets.forEach((client: any) => {
-              const data = playerId === waitlistClients.adminId ? { action: 'end' } : { action: 'leave', player };
+              const data = playerId === waitlistClients.adminId ? { action: 'end' } : { action: 'leave', playerId};
               client.send(JSON.stringify(data));
             });
             break;
-
+          }
           // when a player is kicked from the waitlist
-          case 'kick':
+          case 'kick': {
             try {
               if (waitlistClients.started || waitlistClients.ended) return;
+              if (playerId !== waitlistClients.adminId) return;
               leaveWaitlist(waitlistId, payload.playerId);
+
+              // update the waitlistClients.commonGames now that a player has left
+              fillPlayerGamesList();
+              updateCommonGames(waitlistClients);
+              const all_games = calculateAllGames(waitlistClients);
+
+              fastify.db
+                .update(Waitlists.model)
+                .set(
+                  {
+                    common_games: waitlistClients.commonGames.length,
+                    all_games: all_games.length
+                  }
+                ).where(
+                  eq(Waitlists.model.id, waitlistId)
+                ).execute();
+
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
                 client.send(JSON.stringify({ action: 'kicked', playerId: payload.playerId }));
@@ -449,33 +485,39 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               fastify.log.error(`Error in 'kick' action: ${error}`);
             }
             break;
-
+          }
           // when a player unswipes a game
           case 'unswipe':
             try {
               if (!waitlistClients.started || waitlistClients.ended) return;
               const swipedGames = waitlistClients.swipedGames[payload.gameId];
-              if (swipedGames) {
+              if (swipedGames)
                 waitlistClients.swipedGames[payload.gameId] = swipedGames.filter((playerId: string) => playerId !== playerId);
-              }
             } catch (error) {
               fastify.log.error(`Error in 'unswipe' action: ${error}`);
             }
             break;
 
           // when a player updates his library
-          case 'update':
+          case 'update': {
             try {
               if (waitlistClients.started || waitlistClients.ended) return;
-              const playerGames = payload.library.map(Number);
+              const playerGames = payload.publicGames.map(Number);
               waitlistClients.playerGames[playerId] = playerGames;
-              const allPlayerGameArrays: number[][] = Object.values(waitlistClients.playerGames);
-              const commonGames = allPlayerGameArrays.reduce<number[] | null>((common, games) => {
-                if (!common) return games;
-                return common.filter(game => games.includes(game));
-              }, null);
 
-              waitlistClients.commonGames = commonGames || [];
+              updateCommonGames(waitlistClients);
+              const all_games = calculateAllGames(waitlistClients);
+
+              fastify.db
+                .update(Waitlists.model)
+                .set(
+                  {
+                    common_games: waitlistClients.commonGames.length,
+                    all_games: all_games.length
+                  }
+                ).where(
+                  eq(Waitlists.model.id, waitlistId)
+                ).execute();
 
               waitlistEntry.sockets.forEach((client: any) => {
                 client.send(JSON.stringify({ action: 'update', player: { player_id: playerId, games: playerGames }, commonGames: waitlistClients.commonGames }));
@@ -484,8 +526,20 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               fastify.log.error(`Error in 'update' action: ${error}`);
             }
             break;
+          }
+          // when the admin switch between common games and all games
+          case 'allGamesSwitch':
+            if (playerId !== waitlistClients.adminId)
+              return;
+            waitlistClients.display_all_games = !waitlistClients.display_all_games;
+            fastify.db.update(Waitlists.model).set({ display_all_games: waitlistClients.display_all_games }).where(eq(Waitlists.model.id, waitlistId)).execute();
+            waitlistEntry.sockets.forEach((client: any) => {
+              client.send(JSON.stringify({ action: 'allGamesSwitch', display_all_games: waitlistClients.display_all_games }));
+            });
+            break;
 
           default:
+            fastify.log.error(`Unknown action: ${action}`);
             break;
           }
         });

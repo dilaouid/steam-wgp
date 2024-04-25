@@ -5,6 +5,7 @@
     ],
     "scripts": {
       "dev:client": "pnpm --filter steamwgp-client dev",
+      "preview:client": "pnpm --filter steamwgp-client preview",
       "build:client": "pnpm --filter steamwgp-client build",
       "build:client:prod": "pnpm --filter steamwgp-client build:prod",
       "lint:client": "pnpm --filter steamwgp-client lint",
@@ -16,7 +17,8 @@
       "lint:server:fix": "pnpm --filter steamwgp-server lint:fix",
       "lint": "pnpm run lint:client && pnpm run lint:server",
       "build": "pnpm run build:client && pnpm run build:server",
-      "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\""
+      "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
+      "preview": "concurrently \"pnpm run preview:client\" \"pnpm run dev:server\""
     },
     "devDependencies": {
       "concurrently": "^8.2.2"

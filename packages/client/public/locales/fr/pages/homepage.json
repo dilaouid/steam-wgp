@@ -1,0 +1,48 @@
+{
+    "hero": {
+        "title": "Décidez à quoi <1>jouer</1> avec vos amis !",
+        "paragraph": "Créez ou rejoignez un salon <1>Steamder</1>, et choisissez le jeu qui vous tient à cœur ! Avec la magie de <1>SteamWGP</1>, vous arriverez à vous mettre d'accord sur le choix du jeu beaucoup plus efficacement !",
+        "login": "Se connecter",
+        "steamders": "Liste des <1>Steamders</1>"
+    },
+    "features": {
+        "1": {
+            "title": "Fini les débats interminables",
+            "subtitle": "<1>SteamWGP</1> est là pour clore le débat ! Fini les discussions à rallonge avec vos amis sur Discord pour décider du jeu auquel vous allez jouer !"
+        },
+        "2": {
+            "title": "Vous n'avez rien à faire !",
+            "subtitle": "<1>SteamWGP</1> s'occupe de synchroniser votre bibliothèque de jeux Steam ! Pas besoin d'aller chercher vos jeux pendant 5 heures et les rajouter à la main !"
+        },
+        "3": {
+            "title": "Faites vous des amis !",
+            "subtitle": "Rejoignez des salons (aussi appelés <1>Steamder</1>) publiques pour rencontrer d'autres joueurs avec qui passer un bon moment !"
+        }
+    },
+    "stats": {
+        "registered": "Gamers inscrits",
+        "repertoried": "Jeux répertoriés",
+        "matches": "Matches réalisés",
+        "actives": "Steamders actives"
+    },
+    "howto": {
+        "title": "Comment ça marche ?",
+        "subtitle": "L'utilisation de <1>SteamWGP</1> est extrêmement simple et accessible ! Suivez ces simples étapes pour pouvoir enfin décider du jeu parfait pour passer un excellent moment de gaming avec vos amis !",
+        "1": {
+            "title": "1. Connectez vous",
+            "subtitle": "Pas besoin de vous inscrire, connectez vous simplement avec votre compte Steam en passant par <2>ce lien</2>, et votre bibliothèque sera synchronisée avec <1>SteamWGP</1> ! Bien entendu, seulement les jeux multijoueur seront automatiquement ajouté à votre bibliothèque <1>SteamWGP</1> !"
+        },
+        "2": {
+            "title": "2. Créez ou rejoignez une Steamder",
+            "subtitle": "Aucun de vos amis n'a crée de <1>Steamder</1> ? Créez-en une !\nVotre ami veut vous inviter dans sa <1>Steamder</1> ? Il vous partage le lien, vous y accéder, et félicitations !"
+        },
+        "3": {
+            "title": "3. C'est parti mon kiwi !",
+            "subtitle": "L'administrateur de la <1>Steamder</1> (du salon) a commencé la partie ! Choisissez simplement les jeux qui vous plaisent dans la liste, et le premier jeu qui aura été voté par tout les autres membres de la <1>Steamder</1> ressortira !"
+        },
+        "4": {
+            "title": "4. Let's play !",
+            "subtitle": "Et voilà, vous vous êtes décidé, extrêmement rapidement, sans blabla, du jeu multi idéal pour passer un bon moment !"
+        }
+    }
+}

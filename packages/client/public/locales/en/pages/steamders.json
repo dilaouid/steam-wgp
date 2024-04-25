@@ -1,0 +1,38 @@
+{
+    "left_column": {
+        "create": "Create a <1>Steamder</1>",
+        "explain_part_1": "A <1>Steamder</1> is a room where you invite other players (or they join by themselves). Your multiplayer games are pooled together, and once the game starts, all games are presented to you.",
+        "explain_part_2": "It's up to you to like or dislike the various games that come up. The first game liked by all players will be selected for everyone, ending the debate once and for all! <1>Debate settled!</1>",
+        "form": {
+            "name": "Steamder Name",
+            "placeholder": "E.g.: Friends Night Out",
+            "label": "Private Steamder",
+            "tooltip": "If you check this box, your Steamder will not be visible to other players and can only be joined via an invitation link.",
+            "submit": "Create Steamder"
+        },
+        "already_in": "You are already in a Steamder. Leave it to create a new one.",
+        "not_logged": "You must be logged in to create a Steamder."
+    },
+    "right_column": {
+        "heading": "Public Steamders",
+        "subtitle": "Here you'll find <1>Steamders</1> open to everyone. The perfect way to make new friends! But remember, <2>you can only be in one <1>Steamder</1> at a time!</2> Let's not overdo a good thing...",
+        "table": {
+            "heading": {
+                "name": "Steamder Name",
+                "players_count": "Number of Players",
+                "available_games": "Available Games",
+                "actions": "Actions"
+            },
+            "buttons": {
+                "join": "Join",
+                "leave": "Leave",
+                "unavailable": "Unavailable",
+                "open": "Open"
+            },
+            "tooltip": "You can only be in one Steamder at a time! Leave your current Steamder to join another.",
+            "empty": "No public Steamders are available right now. Create one!"
+        },
+        "actives": "{{ count }} Active Steamder",
+        "actives_other": "{{ count }} Active Steamders"
+    }
+}

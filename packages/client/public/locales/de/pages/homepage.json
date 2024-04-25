@@ -1,0 +1,48 @@
+{
+    "hero": {
+        "title": "Entscheidet gemeinsam, was ihr <1>spielt</1>!",
+        "paragraph": "Erstellt oder tretet einem Steamder-Raum bei und wählt gemeinsam das Spiel, das euch am meisten am Herzen liegt. Mit der Magie von <1>SteamWGP</1> findet ihr viel effizienter zu einer Einigung!",
+        "login": "Einloggen",
+        "steamders": "<1>Steamder</1>-Liste"
+    },
+    "features": {
+        "1": {
+            "title": "Schluss mit endlosen Diskussionen",
+            "subtitle": "Mit <1>SteamWGP</1> ist die Debatte beendet! Schluss mit den langen Diskussionen mit Freunden auf Discord über das nächste Spiel!"
+        },
+        "2": {
+            "title": "Ihr müsst nichts tun!",
+            "subtitle": "<1>SteamWGP</1> synchronisiert eure Steam-Spielebibliothek automatisch! Kein langwieriges Suchen und manuelles Hinzufügen eurer Spiele mehr!"
+        },
+        "3": {
+            "title": "Findet neue Freunde!",
+            "subtitle": "Tretet öffentlichen <1>Steamder</1>-Räumen bei und trefft andere Spieler für gute Zeiten zusammen!"
+        }
+    },
+    "stats": {
+        "registered": "Registrierte Gamer",
+        "repertoried": "Katalogisierte Spiele",
+        "matches": "Gemachte Matches",
+        "actives": "Aktive Steamders"
+    },
+    "howto": {
+        "title": "Wie funktioniert's?",
+        "subtitle": "Die Nutzung von <1>SteamWGP</1> ist super einfach und zugänglich! Folgt diesen einfachen Schritten, um schnell das perfekte Spiel für ein großartiges Gaming-Erlebnis mit Freunden zu finden.",
+        "1": {
+            "title": "1. Loggt euch ein",
+            "subtitle": "Ihr müsst euch nicht registrieren, loggt euch einfach mit eurem Steam-Konto über <2>diesen Link ein</2>, und eure Spielebibliothek wird mit <1>SteamWGP</1> synchronisiert! Natürlich werden nur Multiplayer-Spiele automatisch hinzugefügt."
+        },
+        "2": {
+            "title": "2. Erstellt oder tretet einem Steamder bei",
+            "subtitle": "Habt ihr noch keinen <1>Steamder</1> erstellt? Dann macht einen! Möchte euch ein Freund zu seinem Steamder einladen? Er teilt euch den Link, ihr tretet bei, und voilà!"
+        },
+        "3": {
+            "title": "3. Los geht’s, meine Süße!",
+            "subtitle": "Der Administrator des <1>Steamder</1> (des Raumes) hat das Spiel gestartet! Wählt einfach die Spiele, die euch gefallen, und das erste Spiel, das von allen anderen Mitgliedern des <1>Steamder</1> gewählt wird, gewinnt!"
+        },
+        "4": {
+            "title": "4. Auf ins Spiel!",
+            "subtitle": "Und da habt ihr es, blitzschnell und ohne Umschweife, habt ihr das ideale Multiplayer-Spiel für eine gute Zeit ausgewählt!"
+        }
+    }
+}
