@@ -98,7 +98,7 @@ export default async function authRouter(fastify: FastifyInstance) {
         const user = request.user as Player & { username: string };
         const jwtToken = jwt.sign({ id: String(user.id), username: user.username, avatar_hash: user.avatar_hash }, fastify.config.SECRET_KEY, { expiresIn: '5h' });
         reply.setCookie('token', jwtToken, {
-          httpOnly: process.env.NODE_ENV === 'production',
+          httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
           path: '/',
           maxAge: 18000,
@@ -108,7 +108,6 @@ export default async function authRouter(fastify: FastifyInstance) {
         return reply.redirect(`${fastify.config.FRONT}/login${fastify.config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
       }
     );
-
     // Route pour déconnecter l'utilisateur
     fastify.get('/logout', async (request, reply) => {
       request.logOut();
