@@ -7,7 +7,7 @@
     "delete": {
         "link": "Supprimer mon compte",
         "title": "Suppression de compte",
-        "body": "Êtes-vous sûr de vouloir supprimer votre compte ? Si vous souhaitez vous reconnecter à SteamWGP, <1>vous devrez attendre 48 heures</1>. Confirmez-vous cette action?",
+        "body": "Êtes-vous sûr de vouloir supprimer votre compte ? Si vous souhaitez vous reconnecter à SteamWGP après la suppression de celui-ci, <1>vous devrez attendre 48 heures pour pouvoir re-utiliser la plateforme</1>. Confirmez-vous cette action?",
         "no": "Je garde mon compte",
         "confirm": "Je supprime mon compte"
     }

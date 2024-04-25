@@ -3,5 +3,12 @@
     "legals": "Impressum",
     "bug": "Ein Problem melden",
     "copy": "SteamWGP © 2024 - Alle Rechte vorbehalten",
-    "not_affiliated": "SteamWGP ist nicht mit Valve Corporation oder Steam verbunden."
+    "not_affiliated": "SteamWGP ist nicht mit Valve Corporation oder Steam verbunden.",
+    "delete": {
+        "link": "Mein Konto löschen",
+        "title": "Kontolöschung",
+        "body": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Wenn Sie sich nach der Löschung erneut bei SteamWGP anmelden möchten, <1>müssen Sie 48 Stunden warten, bevor Sie die Plattform wieder nutzen können</1>. Bestätigen Sie diese Aktion?",
+        "no": "Ich behalte mein Konto",
+        "confirm": "Ich lösche mein Konto"
+    }
 }

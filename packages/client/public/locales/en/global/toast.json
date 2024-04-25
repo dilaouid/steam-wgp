@@ -7,5 +7,9 @@
     "link_copied": "Steamder link copied to clipboard",
     "logged_in_to_access_library": "Log in to access your games library",
     "invalid_id": "Invalid Game ID",
-    "steamder_not_found": "Steamder not found"
+    "steamder_not_found": "Steamder not found",
+    "already_in_steamder": "You are already in a Steamder",
+    "cannot_join_steamder": "Unable to join the Steamder",
+    "account_deleted": "Your account has been deleted... We hope to see you back soon!",
+    "user_in_steamder_cannot_kick": "Cannot delete your account while you are in a Steamder"
 }

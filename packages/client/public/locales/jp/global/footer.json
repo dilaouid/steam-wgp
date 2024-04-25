@@ -3,5 +3,12 @@
     "legals": "法的表記",
     "bug": "問題を報告する",
     "copy": "SteamWGP © 2024 - 全著作権所有",
-    "not_affiliated": "SteamWGPはValve Corporationとは関係ありません。"
+    "not_affiliated": "SteamWGPはValve Corporationとは関係ありません。",
+    "delete": {
+        "link": "アカウントを削除する",
+        "title": "アカウントの削除",
+        "body": "アカウントを削除してもよろしいですか？削除後にSteamWGPに再接続する場合、<1>プラットフォームを再利用する前に48時間待つ必要があります</1>。このアクションを確認しますか？",
+        "no": "アカウントを保持する",
+        "confirm": "アカウントを削除する"
+    }
 }
