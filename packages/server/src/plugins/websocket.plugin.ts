@@ -387,8 +387,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               // count 5 seconds per game
               const timing = (waitlistClients.display_all_games ? allGames.length : waitlistClients.commonGames.length) * 2000;
 
-              // remove the * 10000 later (testing purpose)
-              waitlistClients.endTime = Date.now() + timing + 20000;
+              const endTime = Date.now() + timing + 20000;
+              waitlistClients.endTime = endTime;
 
               // send message to all players
               waitlistEntry.sockets.forEach((client: any) => {
@@ -418,7 +418,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                   client.send(JSON.stringify({ action: 'gameEnd', choosed_game: waitlistClients.winner }));
                 });
                 deleteWaitlist(waitlistId);
-              }, timing);
+              }, timing + 20000);
 
             } catch (error) {
               fastify.log.error(`Error in 'start' action: ${error}`);
