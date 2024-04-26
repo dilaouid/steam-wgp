@@ -3,4 +3,5 @@ export interface PlayerInfo {
     player_id: string;
     username: string;
     games: number[];
+    profileurl: string;
 }

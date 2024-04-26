@@ -278,7 +278,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               avatar_hash: entry.players.avatar_hash,
               player_id: id,
               username: entry.players.username,
-              games: []
+              games: [],
+              profileurl: entry.players.profileurl
             };
           }
 
@@ -298,7 +299,8 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           avatar_hash: playersInfo[playerId].avatar_hash,
           player_id: playerId,
           username: playersInfo[playerId].username,
-          games: playersInfo[playerId].games
+          games: playersInfo[playerId].games,
+          profileurl: playerData[0].players.profileurl
         }
 
         // create the waitlist if it doesn't exist yet
