@@ -1,20 +1,23 @@
+import React from "react";
 import styled from "styled-components";
 
 import { Row } from "react-bootstrap";
 import { WinnerColumn } from "../../../molecules/steamder/end/WinnerColumn";
 import { ShopPageColumn } from "../../../molecules/steamder/end/ShopPageColumn";
-import { useSteamderStore } from "../../../../store/steamderStore";
 
 const StyledRow = styled(Row)`
     margin-bottom: 17px;
 `;
 
-export const GameWinRow = () => {
-    const { steamder } = useSteamderStore();
+interface GameWinRowProps {
+    printShop: boolean;
+}
+
+export const GameWinRow: React.FC<GameWinRowProps> = ({ printShop }) => {
     return (
         <StyledRow>
             <WinnerColumn />
-            { steamder?.display_all_games && <ShopPageColumn /> }
+            { printShop && <ShopPageColumn /> }
         </StyledRow>
     )
 };
