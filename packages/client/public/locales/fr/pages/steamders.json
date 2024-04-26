@@ -8,7 +8,8 @@
             "placeholder": "Ex: Soirée entre potes",
             "label": "Steamder privée",
             "tooltip": "Si vous cochez cette case, votre Steamder ne sera pas visible par les autres joueurs, et ne sera joignable qu'avec un lien d'invitation.",
-            "submit": "Créer la Steamder"
+            "submit": "Créer la Steamder",
+            "loading": "Création en cours ..."
         },
         "already_in": "Vous êtes déjà dans une Steamder, vous ne pouvez donc pas en créer.",
         "not_logged": "Vous devez être connecté pour créer une Steamder."

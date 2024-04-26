@@ -8,7 +8,8 @@
             "placeholder": "E.g.: Friends Night Out",
             "label": "Private Steamder",
             "tooltip": "If you check this box, your Steamder will not be visible to other players and can only be joined via an invitation link.",
-            "submit": "Create Steamder"
+            "submit": "Create Steamder",
+            "loading": "Creating Steamder..."
         },
         "already_in": "You are already in a Steamder. Leave it to create a new one.",
         "not_logged": "You must be logged in to create a Steamder."

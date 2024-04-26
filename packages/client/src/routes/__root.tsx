@@ -29,7 +29,7 @@ const RootComponent = () => {
         <Navbar />
         <Outlet />
         <Footer />
-        <TanStackRouterDevtools />
+        { process.env.NODE_ENV !== 'production' && <TanStackRouterDevtools /> }
       </Suspense>
     </>
   );

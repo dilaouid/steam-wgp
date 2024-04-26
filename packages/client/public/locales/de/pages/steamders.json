@@ -8,7 +8,8 @@
             "placeholder": "Z.B.: Freundeabend",
             "label": "Privater Steamder",
             "tooltip": "Wenn du dieses Kästchen ankreuzt, wird dein Steamder für andere Spieler nicht sichtbar sein und kann nur über einen Einladungslink beigetreten werden.",
-            "submit": "Steamder erstellen"
+            "submit": "Steamder erstellen",
+            "loading": "Erstelle Steamder..."
         },
         "already_in": "Du bist bereits in einem Steamder! Verlasse ihn, um einen neuen zu erstellen.",
         "not_logged": "Melde dich an, um einen Steamder zu erstellen."

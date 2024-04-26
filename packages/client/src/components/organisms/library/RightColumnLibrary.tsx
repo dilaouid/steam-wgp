@@ -4,6 +4,8 @@ import { useLibraryStore } from "../../../store/libraryStore";
 import { useTranslation } from "react-i18next";
 import { EmptyTab } from "../../molecules/library/EmptyTab";
 import { GameColumn } from "../../molecules/library/GameColumn";
+import { queryClient } from "../../../main";
+import { SkeletonGameLoad } from "../../molecules/library/SkeletonGameLoad";
 
 const StyledTabs = styled(Tabs)`
     font-family: 'Archivo Narrow', sans-serif;
@@ -19,6 +21,7 @@ export const RightColumnLibrary: React.FC = () => {
     const { library, selected } = useLibraryStore();
     const publics = library.filter(game => !game.hidden);
     const privates = library.filter(game => game.hidden);
+    const state = queryClient.getQueryState(['library', 'get'])
 
     return(
         <Col>
@@ -30,42 +33,49 @@ export const RightColumnLibrary: React.FC = () => {
             >
                 <Tab eventKey="all_games" title={t('tabs_title.all_games', { count: library.length })}>
                     <TabRow className="g-0">
-                        {library.map(game => (
+                        { state?.status == 'success' && library.map(game => (
                             <GameColumn game={game} key={'all_' + game.game_id} />
-                        ))}
+                        )) }
+                        { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }
                     </TabRow>
                 </Tab>
 
                 <Tab eventKey="public_games" title={t('tabs_title.public_games', { count: publics.length })}>
                     <TabRow className="g-0">
 
-                        { publics.length === 0 && <EmptyTab>{t('no_public_games')}</EmptyTab> }
+                        { state?.status == 'success' && publics.length === 0 && <EmptyTab>{t('no_public_games')}</EmptyTab> }
 
-                        {publics.map(game => (
+                        { state?.status == 'success' && publics.map(game => (
                             <GameColumn game={game} key={'public_' + game.game_id} />
-                        ))}
+                        )) }
+                        
+                        { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }
                     </TabRow>
                 </Tab>
 
                 <Tab eventKey="private_games" title={t('tabs_title.private_games', { count: privates.length })}>
                     <TabRow className="g-0">
 
-                        { privates.length === 0 && <EmptyTab>{t('no_private_games')}</EmptyTab> }
+                        { state?.status == 'success' && privates.length === 0 && <EmptyTab>{t('no_private_games')}</EmptyTab> }
 
-                        {privates.map(game => (
+                        { state?.status == 'success' && privates.map(game => (
                             <GameColumn game={game} key={'private_' + game.game_id} />
-                        ))}
+                        )) }
+
+                        { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }
                     </TabRow>
                 </Tab>
 
                 <Tab eventKey="selected_games" title={t('tabs_title.selected_games', { count: selected.length })}>
                     <TabRow className="g-0">
 
-                        { selected.length === 0 && <EmptyTab>{t('no_selected_games')}</EmptyTab> }
+                        { state?.status == 'success' && selected.length === 0 && <EmptyTab>{t('no_selected_games')}</EmptyTab> }
 
-                        {library.filter(game => selected.includes(game.game_id)).map(game => (
+                        { state?.status == 'success' && library.filter(game => selected.includes(game.game_id)).map(game => (
                             <GameColumn game={game} key={'selected_' + game.game_id} />
-                        ))}
+                        )) }
+
+                        { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }
                     </TabRow>
                 </Tab>
 

@@ -71,8 +71,11 @@ export const RoomActions: React.FC = () => {
             <StyledRow className="justify-content-center">
                 { isAdmin && <Col sm={"auto"} className="align-self-center">
                     <Button variant="outline-info" className="shadow" disabled={
-                        steamder.players?.length < 2 || (steamder.display_all_games && steamder.all_games.length == 0) || (!steamder.display_all_games && steamder.common_games.length == 0)
-                    } onClick={startWaitlist}>{t('start')}</Button>
+                        loading || steamder.players?.length < 2 || (steamder.display_all_games && steamder.all_games.length == 0) || (!steamder.display_all_games && steamder.common_games.length == 0)
+                    } onClick={() => { 
+                        setLoading(true);
+                        startWaitlist();
+                    }} >{t('start')}</Button>
                 </Col> }
                 <Col sm={"auto"} className="align-self-center">
                     <Button variant="outline-danger" className="shadow" onClick={handleShow} disabled={loading}>{t('leave')}</Button>
