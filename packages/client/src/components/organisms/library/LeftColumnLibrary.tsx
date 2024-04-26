@@ -49,7 +49,7 @@ export const LeftColumnLibrary: React.FC = () => {
     };
 
     return (
-        <StyledCol sm={12} lg={4} data-aos="fade-right" data-aos-duration="450">
+        <StyledCol sm={12} lg={4}>
             <StyledTitle className="text-info">{ t('your_library') }</StyledTitle>
             <p><Trans t={t} i18nKey="find_your_library" components={{ 1: <strong /> }} /></p>
             <Question>{ t('not_finding_a_game') }</Question>
@@ -60,7 +60,7 @@ export const LeftColumnLibrary: React.FC = () => {
             <p>{ t('click') }</p>
             <p><Trans t={t} i18nKey="explanations" components={{ 1: <strong className="text-info" /> }} /></p>
             <hr />
-            <StyledRow className="text-center" data-aos="zoom-out" data-aos-duration="450" data-aos-delay="300">
+            <StyledRow className="text-center" data-aos="zoom-out" data-aos-duration="450">
                 <SelectedCount count={getPublicGames().length} type="public" />
                 <SelectedCount count={getPrivateGames().length} type="private" />
                 <ButtonCol sm={12}>

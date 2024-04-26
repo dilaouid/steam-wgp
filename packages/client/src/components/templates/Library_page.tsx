@@ -22,26 +22,24 @@ const LibraryContainer = styled(Container)`
 
 export const Librarypage = () => {
     const { library, setLibrary } = useLibraryStore();
-    const { data, isLoading, isError } = useGetLibrary();
+    const { data, isError } = useGetLibrary();
 
     useEffect(() => {
         if (library.length > 0) return;
-        
         if (data && !isError) {
             // filter data library by asc order (game_id)
             data.sort((a: TGameLibrary, b: TGameLibrary) => a.game_id.localeCompare(b.game_id));
             setLibrary(data);
         }
-
     }, [data, library, setLibrary, isError]);
 
     return (
     <LibrarySection>
         <LibraryContainer>
-            { !isLoading && <Row className='g-3'>
+            <Row className='g-3'>
                 <LeftColumnLibrary />
                 <RightColumnLibrary />
-            </Row> }
+            </Row>
         </LibraryContainer>
     </LibrarySection>)
 }
