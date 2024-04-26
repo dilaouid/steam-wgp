@@ -8,7 +8,8 @@
             "placeholder": "例：友達との夜",
             "label": "プライベートSteamder",
             "tooltip": "このボックスをチェックすると、あなたのSteamderは他のプレイヤーには見えず、招待リンクを通じてのみ参加可能になります。",
-            "submit": "Steamderを作成"
+            "submit": "Steamderを作成",
+            "loading": "Steamderを作成中..."
         },
         "already_in": "すでにSteamderに参加しているため、新たに作成することはできません。",
         "not_logged": "Steamderを作成するには、ログインする必要があります。"

@@ -38,9 +38,9 @@ const LabelTooltip = (message: string) =>
     </Tooltip>;
 
 export const CreateSteamderForm = () => {
+    const [ name, setName ] = useState('');
     const { t } = useTranslation('pages/steamders', { keyPrefix: 'left_column.form' });
     const { setUser, user } = useAuthStore();
-    const [ name, setName ] = useState('');
     const [ isPrivate, setIsPrivate ] = useState(false);
     const navigate = useNavigate();
 
@@ -62,12 +62,12 @@ export const CreateSteamderForm = () => {
     return (
         <StyledForm className="text-muted" onSubmit={handleSubmit}>
             <StyledLabel><BsController /> | { t('name') }</StyledLabel>
-            <StyledInput type="text" placeholder={ t('placeholder') } aria-label={ t('placeholder') } value={name} onChange={e => setName(e.target.value)} />
+            <StyledInput type="text" placeholder={ t('placeholder') } aria-label={ t('placeholder') } value={name} onChange={e => setName(e.target.value)} disabled={createSteamderMutation.isPending} />
             <OverlayTrigger placement="left" overlay={LabelTooltip(t('tooltip'))} trigger={['hover', 'focus']}>
-                <StyledSwitch type="switch" id="private-switch" label={ t('label') } checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)} />
+                <StyledSwitch type="switch" id="private-switch" label={ t('label') } checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)} disabled={createSteamderMutation.isPending} />
             </OverlayTrigger>
-            <Button variant="info" type="submit">
-                <BsPersonHeart /> | { t('submit') }
+            <Button variant="info" type="submit" disabled={createSteamderMutation.isPending || (name.length > 0 && name.length < 3) }>
+                <BsPersonHeart /> | { createSteamderMutation.isPending ? t('loading') : t('submit') }
             </Button>
         </StyledForm>
     )

@@ -8,7 +8,8 @@
             "placeholder": "Ej.: Noche entre amigos",
             "label": "Steamder privado",
             "tooltip": "Si marcas esta casilla, tu Steamder no será visible para otros jugadores y solo se podrá unir mediante un enlace de invitación.",
-            "submit": "Crear Steamder"
+            "submit": "Crear Steamder",
+            "loading": "Creando Steamder..."
         },
         "already_in": "Ya estás en un Steamder. Sal de tu Steamder actual para crear uno nuevo.",
         "not_logged": "Inicia sesión para crear un Steamder."
