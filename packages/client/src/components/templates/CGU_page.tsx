@@ -4,13 +4,16 @@ import { Container } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import { useTranslation } from "react-i18next";
 
+const availableLanguages = ["en", "fr", "jp", "es", "de"]
+
 export const CGUpage = () => {
   const [markdown, setMarkdown] = useState("");
   const { i18n } = useTranslation();
 
   useEffect(() => {
     const loadMarkdown = async () => {
-      const path = `/locales/${i18n.language}/cgu.md`;
+      const language = availableLanguages.includes(i18n.language) ? i18n.language : "fr";
+      const path = `/locales/${language}/cgu.md`;
       try {
         const response = await fetch(path);
         const text = await response.text();
