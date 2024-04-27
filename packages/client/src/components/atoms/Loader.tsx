@@ -26,7 +26,7 @@ export const Loader: React.FC = () => {
     const { t } = useTranslation('translation');
 
     return (
-        <Row className="justify-content-center align-items-center">
+        <Row className="g-0 justify-content-center align-items-center">
             <Col className="text-center align-self-center" sm={"auto"}>
                 <StyledLoaderText className="text-warning">{ t('loading') }</StyledLoaderText>
                 <StyledLottie animationData={LoadingController} />
