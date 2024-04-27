@@ -2,9 +2,10 @@ import { FastifyInstance } from "fastify";
 import { deleteWaitlist, checkGameEnd } from "../utils";
 import { Waitlist } from "../types";
 
-export const swipe = async (fastify: FastifyInstance, waitlist: Waitlist, waitlistId: string, gameId: number, playerId: string) => {
+export const swipe = async (fastify: FastifyInstance, waitlists: Map<any, any>, waitlistId: string, gameId: number, playerId: string) => {
   try {
     const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
+    const waitlist: Waitlist = waitlists.get(waitlistId);
 
     if (waitlist && waitlist.started && !waitlist.ended && waitlist.commonGames.includes(gameId)) {
       if (waitlist.swipedGames[gameId] && !waitlist.swipedGames[gameId].includes(playerId)) {

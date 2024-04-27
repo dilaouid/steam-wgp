@@ -18,8 +18,8 @@ export const SwipedGamesBox = () => {
 
     return (
         <StyledBox>
-            { steamder?.swiped_games?.map((game, index) => (
-                <SwipedGame game_id={game} key={index} />
+            { steamder?.swiped_games?.map((gameId) => (
+                <SwipedGame game_id={gameId} key={gameId} />
             )) }
         </StyledBox>
     )

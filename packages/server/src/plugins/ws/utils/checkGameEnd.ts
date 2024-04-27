@@ -5,7 +5,7 @@ export const checkGameEnd = (waitlistId: string, gameId: number, waitlist: Waitl
     const swipedGames = waitlist.swipedGames[gameId];
     const players = waitlist.players;
 
-    const gameEnd = swipedGames.length === players.length;
+    const gameEnd = swipedGames?.length === players?.length;
 
     waitlist.ended = gameEnd;
     if (waitlist.ended)
