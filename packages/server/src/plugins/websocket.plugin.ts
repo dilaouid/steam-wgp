@@ -11,7 +11,7 @@ import { Game } from '../models/Games';
 
 import { updateCommonGames, calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
 import { Waitlist, PlayerInfo } from './ws/types';
-import { swipe, leave, kick } from './ws/actions';
+import { swipe, leave, kick, unswipe } from './ws/actions';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -370,14 +370,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           }
           // when a player unswipes a game
           case 'unswipe':
-            try {
-              if (!waitlistClients.started || waitlistClients.ended) return;
-              const swipedGames = waitlistClients.swipedGames[payload.gameId];
-              if (swipedGames)
-                waitlistClients.swipedGames[payload.gameId] = swipedGames.filter((playerId: string) => playerId !== playerId);
-            } catch (error) {
-              fastify.log.error(`Error in 'unswipe' action: ${error}`);
-            }
+            unswipe(fastify, waitlistClients, payload.gameId);
             break;
 
           // when a player updates his library
