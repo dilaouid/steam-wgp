@@ -11,7 +11,7 @@ import { Game } from '../models/Games';
 
 import { updateCommonGames, calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
 import { Waitlist, PlayerInfo } from './ws/types';
-import { swipe, leave } from './ws/actions';
+import { swipe, leave, kick } from './ws/actions';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -117,14 +117,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     }, initialGames);
 
     return true;
-  };
-
-  const leaveWaitlist = (waitlistId: string, playerId: string): void => {
-    const waitlist: Waitlist = waitlists.get(waitlistId);
-    if (waitlist) {
-      waitlist.players = waitlist.players.filter((player: PlayerInfo) => player.player_id !== playerId);
-      delete waitlist.playerGames[playerId];
-    }
   };
 
   const startWaitlist = async (waitlistId: string, allGames: number[]): Promise<void> => {
@@ -373,34 +365,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           }
           // when a player is kicked from the waitlist
           case 'kick': {
-            try {
-              if (waitlistClients.started || waitlistClients.ended) return;
-              if (playerId !== waitlistClients.adminId) return;
-              leaveWaitlist(waitlistId, payload.playerId);
-
-              // update the waitlistClients.commonGames now that a player has left
-              // fillPlayerGamesList();
-              updateCommonGames(waitlistClients);
-              const all_games = calculateAllGames(waitlistClients);
-
-              fastify.db
-                .update(Waitlists.model)
-                .set(
-                  {
-                    common_games: waitlistClients.commonGames.length,
-                    all_games: all_games.length
-                  }
-                ).where(
-                  eq(Waitlists.model.id, waitlistId)
-                ).execute();
-
-              // send message to all players
-              waitlistEntry.sockets.forEach((client: any) => {
-                client.send(JSON.stringify({ action: 'kicked', playerId: payload.playerId }));
-              });
-            } catch (error) {
-              fastify.log.error(`Error in 'kick' action: ${error}`);
-            }
+            kick(fastify, waitlistId, playerId, payload.playerId, waitlistClients);
             break;
           }
           // when a player unswipes a game
