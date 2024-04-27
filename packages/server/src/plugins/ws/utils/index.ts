@@ -5,6 +5,8 @@ import { deleteWaitlist } from "./deleteWaitlist";
 import { checkGameEnd } from "./checkGameEnd";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
 import { startWaitlist } from "./startWaitlist";
+import { createWaitlist } from "./createWaitlist";
+import { joinWaitlist } from "./joinWaitlist";
 
 export {
   calculateAllGames,
@@ -14,4 +16,6 @@ export {
   checkGameEnd,
   fillPlayerGamesList,
   startWaitlist,
+  createWaitlist,
+  joinWaitlist
 };

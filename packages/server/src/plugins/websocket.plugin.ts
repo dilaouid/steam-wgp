@@ -6,10 +6,10 @@ import { and, eq } from 'drizzle-orm';
 
 import jwt from 'jsonwebtoken';
 
-import { Games, Libraries, Players, Waitlists, WaitlistsPlayers } from '../models';
+import { Games, Libraries, Players } from '../models';
 
-import { fillPlayerGamesList } from './ws/utils';
-import { Waitlist, PlayerInfo } from './ws/types';
+import { createWaitlist, joinWaitlist } from './ws/utils';
+import { PlayerInfo } from './ws/types';
 import { swipe, leave, kick, unswipe, update, allGamesSwitch } from './ws/actions';
 import { start } from './ws/actions/start';
 
@@ -25,89 +25,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     if (waitlistEntry)
       waitlistEntry.sockets.delete(socket);
     userAuthMap.delete(clientId);
-  };
-
-  const createWaitlist = async (waitlistId: string, player: PlayerInfo): Promise<void> => {
-    fastify.log.info(`---------Creating waitlist ${waitlistId}---------`);
-    const existingWaitlist = await fastify.db.select()
-      .from(Waitlists.model)
-      .leftJoin(WaitlistsPlayers.model, eq(Waitlists.model.id, WaitlistsPlayers.model.waitlist_id))
-      .where(and(
-        eq(Waitlists.model.id, waitlistId),
-        eq(Waitlists.model.complete, false)
-      ))
-      .execute();
-
-    if (existingWaitlist.length === 0) {
-      fastify.log.error(`Waitlist ${waitlistId} doesn't exists`);
-      return;
-    }
-
-    // check if player is in the waitlist
-    const IsPlayerInWaitlist = existingWaitlist.some((row: any) => {
-      return row.waitlists_players.player_id === BigInt(player.player_id);
-    });
-    if (!IsPlayerInWaitlist) {
-      fastify.log.error(`Player ${player.player_id} is not in waitlist ${waitlistId}`);
-      return;
-    }
-
-    const adminId = existingWaitlist[0].waitlists.admin_id.toString();
-    const waitlist: Waitlist = {
-      adminId,
-      players: [player],
-      playerGames: {},
-      commonGames: [],
-      swipedGames: {},
-      started: existingWaitlist[0].waitlists.started,
-      display_all_games: existingWaitlist[0].waitlists.display_all_games,
-      ended: false,
-      sockets: new Set()
-    };
-    waitlists.set(waitlistId, waitlist);
-  };
-
-  const joinWaitlist = async (waitlistId: string, player: PlayerInfo): Promise<boolean> => {
-    const playerInDb = await fastify.db.select()
-      .from(WaitlistsPlayers.model)
-      .where(and(
-        eq(WaitlistsPlayers.model.waitlist_id, waitlistId),
-        eq(WaitlistsPlayers.model.player_id, BigInt(player.player_id))
-      ))
-      .execute();
-
-    if (playerInDb.length === 0) {
-    // L'utilisateur n'est pas dans la liste d'attente en base de données
-      fastify.log.warn(`Player ${player.player_id} is not in waitlist ${waitlistId} in the database.`);
-      return false;
-    }
-
-    if (!player.username) {
-      fastify.log.warn(`Player ${player.player_id} doesn't have a username.`);
-      return false;
-    }
-
-    const waitlist: Waitlist = waitlists.get(waitlistId);
-    if (!waitlist) return false;
-
-    const existingPlayerIndex = waitlist.players.findIndex(p => p.player_id === player.player_id);
-    if (existingPlayerIndex > -1) {
-      waitlist.players[existingPlayerIndex] = player;
-    } else {
-      fastify.log.info(`Player ${player.player_id} joined waitlist ${waitlistId}`);
-      waitlist.players.push(player);
-    }
-
-    fillPlayerGamesList(waitlists);
-
-    const initialGames = waitlist.playerGames[waitlist.players[0].player_id] || [];
-    waitlist.commonGames = waitlist.players.reduce((commonGames, player) => {
-      const currentGames = waitlist.playerGames[player.player_id] || [];
-      if (commonGames.length === 0) return currentGames;
-      return commonGames.filter(game => currentGames.includes(game));
-    }, initialGames);
-
-    return true;
   };
 
   return fastify.register(websocket, { options: {
@@ -197,7 +114,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         let waitlistEntry = waitlists.get(waitlistId);
 
         if (!waitlistEntry) {
-          await createWaitlist(waitlistId, player);
+          await createWaitlist(fastify, waitlistId, player, waitlists);
           waitlistEntry = waitlists.get(waitlistId);
           if (!waitlistEntry) {
             fastify.log.error(`Waitlist ${waitlistId} couldn't be created`);
@@ -205,7 +122,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
             return;
           }
         } else {
-          const joined = await joinWaitlist(waitlistId, player); // push the add who join?
+          const joined = await joinWaitlist(fastify, waitlistId, player, waitlists);
           if (!joined) {
             fastify.log.error(`Player ${playerId} couldn't join waitlist ${waitlistId}`);
             connection.socket.close();
