@@ -31,19 +31,23 @@ export const SwipedGame: React.FC<SwipedGameProps> = ({ game_id }) => {
         setImageUrl(`https://cdn.akamai.steamstatic.com/steam/apps/${game_id}/header.jpg`);
     };
 
-    const unsSwipeGame = (game_id: number) => {
+    const unsSwipeGame = () => {
         if (!steamder) return;
         if (!steamder.swiped_games.includes(game_id)) return;
-
+        
         unswipeCard(game_id);
-        if (steamder.display_all_games)
-            setSteamder({ ...steamder, swiped_games: steamder.swiped_games.filter((game) => game !== game_id), all_games: [...steamder.all_games, game_id] });
-        else
-            setSteamder({ ...steamder, swiped_games: steamder.swiped_games.filter((game) => game !== game_id), common_games: [...steamder.common_games, game_id] });
+        const property = steamder.display_all_games ? 'all_games' : 'common_games';
+
+        const newSwipedGames = steamder.swiped_games.filter((game) => game !== game_id);
+
+        setSteamder({ ...steamder, 
+            // remove game_id from swiped_games array
+            swiped_games: newSwipedGames,
+            [property]: [ ...steamder[property], game_id ]});
     };
 
     return (
-        <StyledLikedGames onError={handleImageError} className="user-select-none" onClick={() => unsSwipeGame(game_id)} src={imageUrl} alt={`Game cover for liked game: ${game_id}`} />
+        <StyledLikedGames onError={handleImageError} className="user-select-none" onClick={() => unsSwipeGame()} src={imageUrl} alt={`Game cover for liked game: ${game_id}`} />
     );
 
 };
