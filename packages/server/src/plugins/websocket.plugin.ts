@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 import { Games, Libraries, Players, Waitlists, WaitlistsPlayers } from '../models';
 import { Game } from '../models/Games';
 
-import { updateCommonGames, calculateAllGames, checkCommonGames } from './ws/utils';
+import { updateCommonGames, calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
 import { Waitlist, PlayerInfo } from './ws/types';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
@@ -34,29 +34,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       });
     });
   }
-
-  const deleteWaitlist = async (waitlistId: string): Promise<void> => {
-    const waitlist: Waitlist = waitlists.get(waitlistId);
-    if (!waitlist) return;
-
-    // delete the waitlist in the database
-    await fastify.db.update(Waitlists.model)
-      .set({
-        complete: true,
-        selected: waitlist.winner
-      }).where(
-        eq(Waitlists.model.id, waitlistId)
-      ).execute();
-
-    // remove all waitlistsplayers from the database for this waitlist
-    await fastify.db.delete(WaitlistsPlayers.model)
-      .where(
-        eq(WaitlistsPlayers.model.waitlist_id, waitlistId)
-      ).execute();
-
-    // delete the waitlist in the memory
-    waitlists.delete(waitlistId);
-  };
 
   const createWaitlist = async (waitlistId: string, player: PlayerInfo): Promise<void> => {
     fastify.log.info(`---------Creating waitlist ${waitlistId}---------`);
@@ -368,7 +345,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                 waitlistEntry.sockets.forEach((client: any) => {
                   client.send(JSON.stringify({ action: 'gameEnd', choosed_game: waitlistClients.winner }));
                 });
-                deleteWaitlist(waitlistId);
+                deleteWaitlist(fastify, waitlistId, waitlistClients.winner);
               }
             } catch (error) {
               fastify.log.error(`Error in 'swipe' action: ${error}`);
@@ -419,7 +396,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
                 waitlistEntry.sockets.forEach((client: any) => {
                   client.send(JSON.stringify({ action: 'gameEnd', choosed_game: waitlistClients.winner }));
                 });
-                deleteWaitlist(waitlistId);
+                deleteWaitlist(fastify, waitlistId, waitlistClients.winner);
               }, timing + 20000);
 
             } catch (error) {
