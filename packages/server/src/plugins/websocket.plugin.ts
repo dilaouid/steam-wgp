@@ -9,9 +9,9 @@ import jwt from 'jsonwebtoken';
 import { Games, Libraries, Players, Waitlists, WaitlistsPlayers } from '../models';
 import { Game } from '../models/Games';
 
-import { updateCommonGames, calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
+import { calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
 import { Waitlist, PlayerInfo } from './ws/types';
-import { swipe, leave, kick, unswipe } from './ws/actions';
+import { swipe, leave, kick, unswipe, update } from './ws/actions';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -375,31 +375,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
           // when a player updates his library
           case 'update': {
-            try {
-              if (waitlistClients.started || waitlistClients.ended) return;
-              const playerGames = payload.publicGames.map(Number);
-              waitlistClients.playerGames[playerId] = playerGames;
-
-              updateCommonGames(waitlistClients);
-              const all_games = calculateAllGames(waitlistClients);
-
-              fastify.db
-                .update(Waitlists.model)
-                .set(
-                  {
-                    common_games: waitlistClients.commonGames.length,
-                    all_games: all_games.length
-                  }
-                ).where(
-                  eq(Waitlists.model.id, waitlistId)
-                ).execute();
-
-              waitlistEntry.sockets.forEach((client: any) => {
-                client.send(JSON.stringify({ action: 'update', player: { player_id: playerId, games: playerGames }, commonGames: waitlistClients.commonGames }));
-              });
-            } catch (error) {
-              fastify.log.error(`Error in 'update' action: ${error}`);
-            }
+            update(fastify, waitlistClients, waitlistId, payload.publicGames, playerId);
             break;
           }
           // when the admin switch between common games and all games
