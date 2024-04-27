@@ -11,7 +11,7 @@ import { Game } from '../models/Games';
 
 import { updateCommonGames, calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
 import { Waitlist, PlayerInfo } from './ws/types';
-import { swipe } from './ws/actions';
+import { swipe, leave } from './ws/actions';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -368,31 +368,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
             // when a player leaves the waitlist
           case 'leave': {
-            if (waitlistClients.started || waitlistClients.ended) return;
-            leaveWaitlist(waitlistId, playerId);
-
-            // update the waitlistClients.commonGames now that a player has left
-            fillPlayerGamesList();
-            updateCommonGames(waitlistClients);
-
-            const all_games = calculateAllGames(waitlistClients);
-
-            fastify.db
-              .update(Waitlists.model)
-              .set(
-                {
-                  common_games: waitlistClients.commonGames.length,
-                  all_games: all_games.length
-                }
-              ).where(
-                eq(Waitlists.model.id, waitlistId)
-              ).execute();
-
-            // send message to all players
-            waitlistEntry.sockets.forEach((client: any) => {
-              const data = playerId === waitlistClients.adminId ? { action: 'end' } : { action: 'leave', playerId};
-              client.send(JSON.stringify(data));
-            });
+            leave(fastify, waitlistId, waitlistClients, playerId);
             break;
           }
           // when a player is kicked from the waitlist
@@ -403,7 +379,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
               leaveWaitlist(waitlistId, payload.playerId);
 
               // update the waitlistClients.commonGames now that a player has left
-              fillPlayerGamesList();
+              // fillPlayerGamesList();
               updateCommonGames(waitlistClients);
               const all_games = calculateAllGames(waitlistClients);
 
