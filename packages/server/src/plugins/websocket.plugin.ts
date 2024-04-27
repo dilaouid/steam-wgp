@@ -11,7 +11,7 @@ import { Game } from '../models/Games';
 
 import { calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
 import { Waitlist, PlayerInfo } from './ws/types';
-import { swipe, leave, kick, unswipe, update } from './ws/actions';
+import { swipe, leave, kick, unswipe, update, allGamesSwitch } from './ws/actions';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -380,13 +380,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           }
           // when the admin switch between common games and all games
           case 'allGamesSwitch':
-            if (playerId !== waitlistClients.adminId)
-              return;
-            waitlistClients.display_all_games = !waitlistClients.display_all_games;
-            fastify.db.update(Waitlists.model).set({ display_all_games: waitlistClients.display_all_games }).where(eq(Waitlists.model.id, waitlistId)).execute();
-            waitlistEntry.sockets.forEach((client: any) => {
-              client.send(JSON.stringify({ action: 'allGamesSwitch', display_all_games: waitlistClients.display_all_games }));
-            });
+            allGamesSwitch(fastify, waitlistClients, waitlistId, playerId);
             break;
 
           default:
