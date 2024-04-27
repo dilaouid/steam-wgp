@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { Waitlists, WaitlistsPlayers } from "../../../models";
 import { eq } from "drizzle-orm";
 
-export const deleteWaitlist = async (fastify: FastifyInstance, waitlistId: string, winner: number) => {
+export const deleteWaitlist = async (fastify: FastifyInstance, waitlistId: string, winner: number | undefined) => {
   const waitlist: any = fastify.waitlists.get(waitlistId);
   if (!waitlist) return;
 

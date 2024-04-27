@@ -11,6 +11,7 @@ import { Game } from '../models/Games';
 
 import { updateCommonGames, calculateAllGames, checkCommonGames, deleteWaitlist } from './ws/utils';
 import { Waitlist, PlayerInfo } from './ws/types';
+import { swipe } from './ws/actions';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
@@ -124,34 +125,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
       waitlist.players = waitlist.players.filter((player: PlayerInfo) => player.player_id !== playerId);
       delete waitlist.playerGames[playerId];
     }
-  };
-
-  const swipeGame = (waitlistId: string, playerId: string, gameId: number): void => {
-    const waitlist: Waitlist = waitlists.get(waitlistId);
-    if (waitlist && waitlist.started && !waitlist.ended && waitlist.commonGames.includes(gameId)) {
-      if (waitlist.swipedGames[gameId] && !waitlist.swipedGames[gameId].includes(playerId)) {
-        waitlist.swipedGames[gameId].push(playerId);
-      } else {
-        waitlist.swipedGames[gameId] = [playerId];
-      }
-    }
-  };
-
-  // check if a game is swiped by all the players
-  const checkGameEnd = (waitlistId: string, gameId: number): boolean => {
-    const waitlist: Waitlist = waitlists.get(waitlistId);
-    if (waitlist && waitlist.started && !waitlist.ended) {
-      const swipedGames = waitlist.swipedGames[gameId];
-      const players = waitlist.players;
-
-      const gameEnd = swipedGames.length === players.length;
-
-      waitlist.ended = gameEnd;
-      if (waitlist.ended)
-        waitlist.winner = gameId;
-      return gameEnd;
-    }
-    return false;
   };
 
   const startWaitlist = async (waitlistId: string, allGames: number[]): Promise<void> => {
@@ -338,18 +311,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
           // when a player swipes a game
           case 'swipe':
-            try {
-              swipeGame(waitlistId, playerId, payload.gameId);
-              if (checkGameEnd(waitlistId, payload.gameId)) {
-                // get the game that is swiped by all the players
-                waitlistEntry.sockets.forEach((client: any) => {
-                  client.send(JSON.stringify({ action: 'gameEnd', choosed_game: waitlistClients.winner }));
-                });
-                deleteWaitlist(fastify, waitlistId, waitlistClients.winner);
-              }
-            } catch (error) {
-              fastify.log.error(`Error in 'swipe' action: ${error}`);
-            }
+            swipe(fastify, waitlistClients, waitlistId, payload.gameId, playerId);
             break;
 
             // when the admin starts the waitlist
