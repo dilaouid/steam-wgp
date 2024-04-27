@@ -33,7 +33,7 @@ export const HowTo: React.FC = () => {
             <Row className="text-body-tertiary">
 
                 {icons.map((icon, index) => (
-                    <Col key={index} data-aos="zoom-in" data-aos-delay={index * 100}>
+                    <Col sm={12} md={6} lg={3} key={index} data-aos="zoom-in" data-aos-delay={index * 100}>
                         <div className="d-flex p-3">
                             { icon }
                             <div className="px-2">
