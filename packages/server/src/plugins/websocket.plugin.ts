@@ -168,7 +168,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
           // when a player swipes a game
           case 'swipe':
-            swipe(fastify, waitlistClients, waitlistId, payload.gameId, playerId);
+            swipe(fastify, waitlists, waitlistId, payload.gameId, playerId);
             break;
 
             // when the admin starts the waitlist
