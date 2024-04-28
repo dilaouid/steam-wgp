@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { Link } from "@tanstack/react-router";
+import Skeleton from "react-loading-skeleton";
 
 const StyledImage = styled.img<{ $golden?: boolean }>`
   width: 100%;
@@ -44,8 +45,12 @@ export const GameImage: React.FC<ImageContainerProps> = ({ game_id, golden }) =>
   };
 
   return (
-    <Link to={`https://store.steampowered.com/app/${game_id}`} target="_blank">
-      <StyledImage onError={handleImageError} ref={imgRef} src={imageUrl} alt={`Game cover for ${game_id}`} $golden={golden} />
-    </Link>
+    <>
+      { game_id == 0 && <Skeleton width={170} height={250} baseColor="#343a40" highlightColor="#495057" style={{ borderRadius: 15+'px'}} /> }
+      { game_id != 0 && <Link to={`https://store.steampowered.com/app/${game_id}`} target="_blank">
+          <StyledImage onError={handleImageError} ref={imgRef} src={imageUrl} alt={`Game cover for ${game_id}`} $golden={golden} />
+        </Link>
+      }
+    </>
   );
 };
