@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { GameCard } from "../../molecules/homepage/GameCard";
 import { Col, Row } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 
 const StyledPodium = styled.div`
@@ -21,16 +21,13 @@ export const Podium: React.FC = () => {
         select: (data) => data.data
     });
 
-    console.log(statsData);
-    
-
     return (
         <>
             <Row className="mb-5" data-aos="zoom-out">
                 <Col md={8} xl={6} className="text-center mx-auto">
                     <h2>{ t('title') }</h2>
                     <p className="w-lg-50">
-                        { t('content') }
+                        <Trans t={t} i18nKey="content" components={{ 1: <strong  className="text-info"/> }} />
                     </p>
                 </Col>
              </Row>

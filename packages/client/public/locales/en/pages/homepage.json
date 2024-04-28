@@ -25,6 +25,10 @@
         "matches": "Matches made",
         "actives": "Actives Steamders"
     },
+    "podium": {
+        "title": "Top 3 voted games",
+        "content": "Here are the top 3 games that have been voted the most in the <1>Steamders</1>! Not interested in these games? No problem, you can always create your own <1>Steamder</1> and choose the game you want!"
+    },
     "howto": {
         "title": "How does it work?",
         "subtitle": "Using <1>SteamWGP</1> is a breeze and accessible to all! Just follow these simple steps to swiftly decide on the perfect game for a fantastic gaming session with your pals!",
