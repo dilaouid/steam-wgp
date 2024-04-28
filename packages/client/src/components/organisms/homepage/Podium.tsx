@@ -21,6 +21,15 @@ export const Podium: React.FC = () => {
         select: (data) => data.data
     });
 
+    const calculateScorePercentage = (score: number, totalMatches: number) => totalMatches > 0 ? (score / totalMatches) * 100 : 0;
+
+    const passScore = (index: number) => {
+        return { 
+            game_id: statsData?.podium[index].game_id,
+            score: calculateScorePercentage(statsData?.podium[index].score, statsData?.matches)
+        }
+    }
+
     return (
         <>
             <Row className="mb-5" data-aos="zoom-out">
@@ -33,13 +42,13 @@ export const Podium: React.FC = () => {
              </Row>
             <StyledPodium data-aos="zoom-out" data-aos-duration="800">
                 {/* Second place */}
-                { <GameCard size="small" color="silver" score={isPending ? null : statsData?.podium[1]} /> }
+                { <GameCard size="small" color="silver" score={isPending ? null : passScore(1) } /> }
                 
                 {/* First place */}
-                { <GameCard size="large" color="gold" score={isPending ? null : statsData?.podium[0]} /> }
+                { <GameCard size="large" color="gold" score={isPending ? null : passScore(0) } /> }
                 
                 {/* Third place */}
-                { <GameCard size="small" color="#cd7f32" score={isPending ? null : statsData?.podium[2]} /> }
+                { <GameCard size="small" color="#cd7f32" score={isPending ? null : passScore(2) } /> }
             </StyledPodium>
             <hr />
         </>

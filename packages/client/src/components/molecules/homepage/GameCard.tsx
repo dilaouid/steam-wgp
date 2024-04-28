@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Spinner } from "react-bootstrap";
+import CountUp from "react-countup";
 
 import { Trophy } from "../../atoms/homepage/Trophy";
 import { GameImage } from "../../atoms/homepage/GameImage";
@@ -49,7 +50,9 @@ export const GameCard: React.FC<GameCardProps> = ({ size, color, score }) => {
           score ? score.game_id : 0
         } golden={size == 'large'} />
         <StyledUpvotes $color={color}>{
-          score ? score.score : <Spinner animation="border" />
+          score ?
+              <CountUp start={0} end={score.score} duration={2} decimals={2} suffix=" %" enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250} />
+          :   <Spinner animation="border" />
         }</StyledUpvotes>
     </StyledGameCard>
   )
