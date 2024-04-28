@@ -20,6 +20,7 @@
             "leave_confirm_no": "Nein",
             "switch": "Alle Spiele wählen, statt nur die gemeinsamen",
             "switch_tooltip": "Am Ende wird angezeigt, welcher Spieler das ausgewählte Spiel nicht hat, inklusive eines Links zur Shop-Seite",
+            "share": "Teilen",
             "modal": {
                 "kick": {
                     "title": "🛑 Einen Spieler rauswerfen",

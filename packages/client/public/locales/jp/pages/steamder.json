@@ -20,6 +20,7 @@
             "leave_confirm_no": "いいえ",
             "switch": "共通ゲームの代わりにすべてのゲームを選ぶ",
             "switch_tooltip": "最終的に、選択したゲームを持っていないプレイヤーとストアページへのリンクが表示されます",
+            "share": "Steamderを共有",
             "modal": {
                 "kick": {
                     "title": "🛑 プレイヤーを追放する",
