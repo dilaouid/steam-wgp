@@ -20,6 +20,7 @@
             "leave_confirm_no": "No",
             "switch": "Take all games instead of just the common ones",
             "switch_tooltip": "In the end, it will show which player does not have the selected game, along with a link to the store page",
+            "share": "Share the Steamder link",
             "modal": {
                 "kick": {
                     "title": "🛑 Kick a player",

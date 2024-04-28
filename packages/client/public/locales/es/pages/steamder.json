@@ -20,6 +20,7 @@
             "leave_confirm_no": "No",
             "switch": "Tomar todos los juegos en lugar de solo los comunes",
             "switch_tooltip": "Al final, se mostrará qué jugador no tiene el juego seleccionado, junto con un enlace a la página de la tienda",
+            "share": "Compartir la Steamder",
             "modal": {
                 "kick": {
                     "title": "🛑 Expulsar a un jugador",
