@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Spinner } from "react-bootstrap";
+
 import { Trophy } from "../../atoms/homepage/Trophy";
 import { GameImage } from "../../atoms/homepage/GameImage";
 
@@ -36,15 +38,19 @@ const StyledUpvotes = styled.span<{$color: string}>`
 interface GameCardProps {
     size: 'large' | 'small';
     color: string;
-    score: { score: number, game_id: number };
+    score: { score: number, game_id: number } | null;
 }
 
 export const GameCard: React.FC<GameCardProps> = ({ size, color, score }) => {
-    return (
-        <StyledGameCard size={size}>
-            <Trophy color={color} />
-            <GameImage game_id={score.game_id} golden={size == 'large'} />
-            <StyledUpvotes $color={color}>{score.score}</StyledUpvotes>
-        </StyledGameCard>
-    )
+  return (
+    <StyledGameCard size={size}>
+        <Trophy color={color} />
+        <GameImage game_id={
+          score ? score.game_id : 0
+        } golden={size == 'large'} />
+        <StyledUpvotes $color={color}>{
+          score ? score.score : <Spinner animation="border" />
+        }</StyledUpvotes>
+    </StyledGameCard>
+  )
 };

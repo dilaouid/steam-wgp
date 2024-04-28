@@ -16,7 +16,7 @@ const StyledPodium = styled.div`
 export const Podium: React.FC = () => {
     const { t } = useTranslation('pages/homepage', { keyPrefix: 'podium' });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: statsData, isFetching, isError } = useQuery<any>({
+    const { data: statsData, isPending } = useQuery<any>({
         queryKey: ['stats'],
         select: (data) => data.data
     });
@@ -33,13 +33,13 @@ export const Podium: React.FC = () => {
              </Row>
             <StyledPodium data-aos="zoom-out" data-aos-duration="800">
                 {/* Second place */}
-                { (!isFetching && !isError && statsData) && <GameCard size="small" color="silver" score={statsData.podium[1]} /> }
+                { <GameCard size="small" color="silver" score={isPending ? null : statsData?.podium[1]} /> }
                 
                 {/* First place */}
-                { (!isFetching && !isError && statsData) && <GameCard size="large" color="gold" score={statsData.podium[0]} /> }
+                { <GameCard size="large" color="gold" score={isPending ? null : statsData?.podium[0]} /> }
                 
                 {/* Third place */}
-                { (!isFetching && !isError && statsData) && <GameCard size="small" color="#cd7f32" score={statsData.podium[2]} /> }
+                { <GameCard size="small" color="#cd7f32" score={isPending ? null : statsData?.podium[2]} /> }
             </StyledPodium>
             <hr />
         </>
