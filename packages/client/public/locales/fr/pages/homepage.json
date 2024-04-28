@@ -25,6 +25,10 @@
         "matches": "Matches réalisés",
         "actives": "Steamders actives"
     },
+    "podium": {
+        "title": "Top 3 des jeux les plus choisis",
+        "content": "Voici le top 3 des jeux les plus choisis par les joueurs de <1>SteamWGP</1> ! Histoire de vous donner une idée des jeux qui pourraient vous plaire !"
+    },
     "howto": {
         "title": "Comment ça marche ?",
         "subtitle": "L'utilisation de <1>SteamWGP</1> est extrêmement simple et accessible ! Suivez ces simples étapes pour pouvoir enfin décider du jeu parfait pour passer un excellent moment de gaming avec vos amis !",
