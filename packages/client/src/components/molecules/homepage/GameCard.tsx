@@ -51,7 +51,9 @@ export const GameCard: React.FC<GameCardProps> = ({ size, color, score }) => {
         } golden={size == 'large'} />
         <StyledUpvotes $color={color}>{
           score ?
-              <CountUp start={0} end={score.score} duration={2} decimals={2} suffix=" %" enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250} />
+              <CountUp start={0} end={score.score} duration={2} decimals={2} suffix=" %" enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={150}>
+                 {({ countUpRef }) => <span ref={countUpRef} />}
+              </CountUp>
           :   <Spinner animation="border" />
         }</StyledUpvotes>
     </StyledGameCard>

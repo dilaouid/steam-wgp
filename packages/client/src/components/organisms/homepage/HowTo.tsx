@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Col, Container, Row } from "react-bootstrap";
 import { SteamIcon } from "../../atoms/icons/howto/SteamIcon";
 import { RocketIcon } from "../../atoms/icons/howto/RocketIcon";
@@ -7,10 +6,7 @@ import { ControllerIcon } from "../../atoms/icons/howto/ControllerIcon";
 
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
-
-const StyledTitle = styled.h2`
-    font-family: 'Archivo Narrow', sans-serif;
-`;
+import { StyledTitle } from "../../atoms/homepage/StyledTitle";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

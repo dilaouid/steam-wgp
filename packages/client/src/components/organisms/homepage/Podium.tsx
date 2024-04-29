@@ -1,9 +1,10 @@
 import styled from "styled-components";
-
-import { GameCard } from "../../molecules/homepage/GameCard";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { Trans, useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+
+import { GameCard } from "../../molecules/homepage/GameCard";
+import { StyledTitle } from "../../atoms/homepage/StyledTitle";
 
 const StyledPodium = styled.div`
   text-align: center;
@@ -32,24 +33,26 @@ export const Podium: React.FC = () => {
 
     return (
         <>
-            <Row className="mb-5" data-aos="zoom-out">
-                <Col md={8} xl={6} className="text-center mx-auto">
-                    <h2>{ t('title') }</h2>
-                    <p className="w-lg-50">
-                        <Trans t={t} i18nKey="content" components={{ 1: <strong  className="text-info"/> }} />
-                    </p>
-                </Col>
-             </Row>
-            <StyledPodium data-aos="zoom-out" data-aos-duration="800">
-                {/* Second place */}
-                { <GameCard size="small" color="silver" score={isPending ? null : passScore(1) } /> }
-                
-                {/* First place */}
-                { <GameCard size="large" color="gold" score={isPending ? null : passScore(0) } /> }
-                
-                {/* Third place */}
-                { <GameCard size="small" color="#cd7f32" score={isPending ? null : passScore(2) } /> }
-            </StyledPodium>
+            <Container>
+                <Row className="mb-5" data-aos="zoom-out">
+                    <Col md={8} xl={6} className="text-center mx-auto">
+                        <StyledTitle>{ t('title') }</StyledTitle>
+                        <p className="w-lg-50">
+                            <Trans t={t} i18nKey="content" components={{ 1: <strong  className="text-info"/> }} />
+                        </p>
+                    </Col>
+                </Row>
+                <StyledPodium data-aos="zoom-out" data-aos-duration="800">
+                    {/* Second place */}
+                    { <GameCard size="small" color="silver" score={isPending ? null : passScore(1) } /> }
+                    
+                    {/* First place */}
+                    { <GameCard size="large" color="gold" score={isPending ? null : passScore(0) } /> }
+                    
+                    {/* Third place */}
+                    { <GameCard size="small" color="#cd7f32" score={isPending ? null : passScore(2) } /> }
+                </StyledPodium>
+             </Container>
             <hr />
         </>
     )
