@@ -111,7 +111,10 @@ export default async function authRouter(fastify: FastifyInstance) {
     // Route pour déconnecter l'utilisateur
     fastify.get('/logout', async (request, reply) => {
       request.logOut();
-      reply.clearCookie("token")
+      reply.clearCookie("token", {
+        path: '/',
+        domain: process.env.NODE_ENV === 'production' ? fastify.config.DOMAIN : undefined
+      });
       return APIResponse(reply, null, 'logged_out', 200);
     });
 

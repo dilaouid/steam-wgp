@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Container, Navbar as RBNavbar, Nav, Button, Spinner } from 'react-bootstrap';
+import { FaPowerOff, FaSteam } from "react-icons/fa";
+
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 
 import { useAuthStore } from '../../store/authStore';
 
-import { Container, Navbar as RBNavbar, Nav, Button, Spinner } from 'react-bootstrap';
-import NavItem from '../atoms/NavItem';
-import { FaPowerOff, FaSteam } from "react-icons/fa";
+
+import { logout } from '../../services/api/global/auth/logoutApi';
+import { deleteCookie } from '../../utils/cookieUtils';
 
 import NavbarLogo from '../../assets/images/navbar/logo.png';
-import { logout } from '../../services/api/global/auth/logoutApi';
+import NavItem from '../atoms/NavItem';
 
 const StyledNav = styled(Nav)`
     font-family: 'Abel', sans-serif;
@@ -45,6 +48,7 @@ const Navbar: React.FC = () => {
   const handleAuthClick = () => {
     logout().then(() => {
       setLoading(true);
+      deleteCookie('token');
       toggleAuth(false);
       setUser(null);
       navigate({to: '/'}).then(() => {
