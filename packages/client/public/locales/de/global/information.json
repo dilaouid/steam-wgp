@@ -1,0 +1,7 @@
+{
+    "reset": {
+      "header": "📢 Wichtige Aktualisierung",
+      "body": "<3>🚨 Aufgrund der Anfragenlimits von Steam mussten wir alle Spielbibliotheken zurücksetzen, um unsere Datenbank mit Spielen von einer externen Steam-Quelle neu zu füllen.</3><3><2>Leider müssen Sie daher Ihre Bibliothekseinstellungen erneut aktualisieren, um anzugeben, welche Spiele privat oder öffentlich sind.</2></3><3>🙏 Wir entschuldigen uns aufrichtig für die Unannehmlichkeiten und haben Maßnahmen ergriffen, um solche Vorfälle in Zukunft zu verhindern. <1>Mehr über dieses Ereignis erfahren.</1></3>",
+      "button": "OK"
+    }
+}  

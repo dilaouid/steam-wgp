@@ -1,0 +1,7 @@
+{
+    "reset": {
+      "header": "📢 Important Update",
+      "body": "<3>🚨 Due to Steam's request limits, we had to reset all game libraries while refilling our database with games from an external Steam source.</3><3><2>Unfortunately, this means you will need to update your library settings again to indicate which games are private or public.</2></3><3>🙏 We sincerely apologize for this inconvenience and have taken measures to prevent such incidents in the future. <1>Learn more about this incident.</1></3>",
+      "button": "OK"
+    }
+}

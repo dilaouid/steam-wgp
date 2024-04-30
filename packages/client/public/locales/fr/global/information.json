@@ -1,0 +1,7 @@
+{
+    "reset": {
+      "header": "📢 Mise à jour importante",
+      "body": "<3>🚨 En raison des limites de requêtes imposées par Steam, nous avons dû réinitialiser toutes les bibliothèques de jeux au moment de re-remplir la base de données de tout les jeux en prenant une ressource hors-Steam.</3><3><2>Vous devrez donc, malheureusement, mettre à jour les paramètres de votre bibliothèque pour indiquer quels jeux sont privés ou publics à nouveau.</2></3><3>🙏 Nous vous prions de nous excuser sincèrement pour ce désagrément et avons pris des mesures pour éviter que cela se reproduise à l'avenir. <1>En savoir plus sur cet incident.</1></3>",
+      "button": "OK"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "reset": {
+      "header": "📢 Actualización Importante",
+      "body": "<3>🚨 Debido a los límites de solicitudes de Steam, tuvimos que restablecer todas las bibliotecas de juegos para rellenar nuevamente nuestra base de datos con juegos de una fuente externa a Steam.</3><3><2>Desafortunadamente, esto significa que necesitarás actualizar nuevamente la configuración de tu biblioteca para indicar cuáles juegos son privados o públicos.</2></3><3>🙏 Nos disculpamos sinceramente por los inconvenientes y hemos tomado medidas para evitar que esto suceda en el futuro. <1>Más información sobre este incidente.</1></3>",
+      "button": "OK"
+    }
+}
