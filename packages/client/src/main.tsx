@@ -14,6 +14,7 @@ export const router = createRouter({ routeTree })
 
 import 'aos/dist/aos.css';
 import 'react-loading-skeleton/dist/skeleton.css'
+import { NotificationWrapper } from './components/wrappers/NotificationWrapper.tsx'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,6 +32,7 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
       <AuthWrapper> 
+        <NotificationWrapper />
         <RouterProvider router={router} />
       </AuthWrapper>
       </QueryClientProvider>

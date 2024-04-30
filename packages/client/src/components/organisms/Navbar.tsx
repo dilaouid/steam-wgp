@@ -10,7 +10,6 @@ import { useAuthStore } from '../../store/authStore';
 
 
 import { logout } from '../../services/api/global/auth/logoutApi';
-import { deleteCookie } from '../../utils/cookieUtils';
 
 import NavbarLogo from '../../assets/images/navbar/logo.png';
 import NavItem from '../atoms/NavItem';
@@ -48,12 +47,9 @@ const Navbar: React.FC = () => {
   const handleAuthClick = () => {
     logout().then(() => {
       setLoading(true);
-      deleteCookie('token');
       toggleAuth(false);
       setUser(null);
-      navigate({to: '/'}).then(() => {
-        localStorage.removeItem('animationPlayed');
-      })
+      navigate({to: '/'})
     }).catch((err) => {
       setLoading(false);
       console.error("Impossible de déconnecter l'utilisateur: " + err);
