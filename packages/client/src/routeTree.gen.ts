@@ -66,30 +66,51 @@ const SteamderSteamderIdRoute = SteamderSteamderIdImport.update({
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
     '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
       preLoaderRoute: typeof LibraryImport
       parentRoute: typeof rootRoute
     }
     '/cgu': {
+      id: '/cgu'
+      path: '/cgu'
+      fullPath: '/cgu'
       preLoaderRoute: typeof CguLazyImport
       parentRoute: typeof rootRoute
     }
     '/legals': {
+      id: '/legals'
+      path: '/legals'
+      fullPath: '/legals'
       preLoaderRoute: typeof LegalsLazyImport
       parentRoute: typeof rootRoute
     }
     '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
       preLoaderRoute: typeof LoginLazyImport
       parentRoute: typeof rootRoute
     }
     '/steamders': {
+      id: '/steamders'
+      path: '/steamders'
+      fullPath: '/steamders'
       preLoaderRoute: typeof SteamdersLazyImport
       parentRoute: typeof rootRoute
     }
     '/steamder/$steamderId': {
+      id: '/steamder/$steamderId'
+      path: '/steamder/$steamderId'
+      fullPath: '/steamder/$steamderId'
       preLoaderRoute: typeof SteamderSteamderIdImport
       parentRoute: typeof rootRoute
     }
@@ -98,7 +119,7 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
+export const routeTree = rootRoute.addChildren({
   IndexRoute,
   LibraryRoute,
   CguLazyRoute,
@@ -106,6 +127,46 @@ export const routeTree = rootRoute.addChildren([
   LoginLazyRoute,
   SteamdersLazyRoute,
   SteamderSteamderIdRoute,
-])
+})
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/",
+        "/library",
+        "/cgu",
+        "/legals",
+        "/login",
+        "/steamders",
+        "/steamder/$steamderId"
+      ]
+    },
+    "/": {
+      "filePath": "index.tsx"
+    },
+    "/library": {
+      "filePath": "library.tsx"
+    },
+    "/cgu": {
+      "filePath": "cgu.lazy.tsx"
+    },
+    "/legals": {
+      "filePath": "legals.lazy.tsx"
+    },
+    "/login": {
+      "filePath": "login.lazy.tsx"
+    },
+    "/steamders": {
+      "filePath": "steamders.lazy.tsx"
+    },
+    "/steamder/$steamderId": {
+      "filePath": "steamder/$steamderId.tsx"
+    }
+  }
+}
+ROUTE_MANIFEST_END */
