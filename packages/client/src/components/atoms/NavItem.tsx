@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
 
 import 'animate.css';
-
 interface NavItemProps {
   to: string;
   children: React.ReactNode;
