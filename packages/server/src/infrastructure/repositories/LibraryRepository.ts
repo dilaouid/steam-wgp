@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { and, eq, inArray } from "drizzle-orm";
 
-import { games, libraries } from "../data/schemas";
+import { games, libraries, players } from "../data/schemas";
 import { Library } from "../../domain/entities";
 
 /**
@@ -28,6 +28,36 @@ export const getPlayerLibrary = async (
     throw new Error("Failed to get player games library");
   }
 };
+
+/**
+ * Retrieves the player's library from the database. This function is used to get all the games in the library, including the hidden ones.
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {bigint} playerId - The ID of the player.
+ * @returns {Promise<Partial<Library[]>>} - A promise that resolves to the player's library.
+ * @throws {Error} - If there is an error retrieving the player's library.
+ * @example
+ * const library = await getPlayerAllLibrary(fastify, 1n);
+ * console.log(library);
+ * // Output: [{ id: 6685, hidden: false }, { id: 44542, hidden: true }]
+ *
+ */
+export async function getPlayerAllLibrary(
+  fastify: FastifyInstance,
+  playerId: bigint
+): Promise<Partial<Library[]>> {
+  const result = fastify.db
+    .select({
+      id: libraries.game_id,
+      hidden: libraries.hidden,
+    })
+    .from(libraries)
+    .leftJoin(players, eq(libraries.player_id, players.id))
+    .leftJoin(games, eq(libraries.game_id, games.id))
+    .where(and(eq(players.id, playerId), eq(games.is_selectable, true)))
+    .execute();
+
+  return result;
+}
 
 /**
  * Retrieves the games library for a specific player.
