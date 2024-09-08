@@ -47,17 +47,17 @@ export const getPlayerAccordingToSteamId = async (
  * Retrieves a player from the database based on their ID.
  *
  * @param {FastifyInstance} fastify - The Fastify instance.
- * @param {number} id - The ID of the player.
+ * @param {bigint} id - The ID of the player.
  * @returns {Promise<any>} - A promise that resolves to the player data.
  * @throws {Error} - If there is an error retrieving the player.
  */
 export const getPlayerAccordingToId = async (
   fastify: FastifyInstance,
-  id: number
+  id: bigint
 ) => {
   try {
     const { db } = fastify;
-    return db.select().from(players).where({ id }).execute();
+    return db.select().from(players).where(eq(players.id, id)).execute();
   } catch (err) {
     fastify.log.error(err);
     throw new Error("Failed to get player");
@@ -107,7 +107,16 @@ export const insertPlayer = async (
 ) => {
   try {
     const { db } = fastify;
-    return db.insert(players).values(data).returning(returning).execute();
+    let query = db.insert(players).values(data);
+    if (returning && returning.length > 0) {
+      const returnObject = Object.fromEntries(
+        returning.map(key => [key, players[key]])
+      );
+      query = query.returning(returnObject);
+    } else {
+      query = query.returning();
+    }
+    return query;
   } catch (err) {
     fastify.log.error(err);
     throw new Error("Failed to insert player");

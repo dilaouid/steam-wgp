@@ -1,14 +1,13 @@
 import { FastifyInstance } from 'fastify';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import fastifyPassport from '@fastify/passport';
-import { and, eq } from 'drizzle-orm';
 
-import { DeletedUsers, Players } from '../models';
 import { Player } from '../models/Players';
 import { isAuthenticated } from '../auth/mw';
 import { APIResponse } from '../utils/response';
 import i18next from '../plugins/i18n.plugin';
-import { getUserWaitlist, login, logout } from '../domain/services/AuthService';
+import { checkUserDeleted, getUserWaitlist, login, logout } from '../domain/services/AuthService';
+import { retrieveUserById } from '../domain/services/PlayerService';
 
 export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());
@@ -23,57 +22,17 @@ export default async function authRouter(fastify: FastifyInstance) {
   }, async (identifier: string, profile: any, done: (err: Error | null, user: Player | null) => void) => {
     try {
       const player = profile._json;
-      let user;
       if (!player) {
         return done(null, null);
       }
 
+      const userId = BigInt(player.steamid);
+
       // check if the user is not in the deletedusers table
-      const isUserDeleted = await fastify.db.select({ delete_date: DeletedUsers.model.delete_date })
-        .from(DeletedUsers.model)
-        .where(
-          and(
-            eq(DeletedUsers.model.id, player.steamid)
-          )
-        );
-      if (isUserDeleted.length > 0) {
-        if (Date.now() - isUserDeleted[0].delete_date > 172800000) {
-          fastify.log.info(`User ${player.steamid} is in the deletedusers table, but he can login now`);
-          await fastify.db.delete(DeletedUsers.model).where(eq(DeletedUsers.model.id, player.steamid)).execute();
-        } else {
-          fastify.log.warn(`User ${player.steamid} is in the deletedusers table, he can't login yet`);
-          return done(new Error(`You cannot login yet, since you have deleted your account recently, please wait ${Math.ceil((172800000 - (Date.now() - isUserDeleted[0].delete_date)) / 1000 / 60 / 60)} more hours`), null);
-        }
-      }
-      /////////////////////////////////////////////
+      await checkUserDeleted(fastify, userId);
 
-      const existingUser = await fastify.db.select().from(Players.model).where(eq(Players.model.id, player.steamid as any));
-      if (existingUser.length === 0) {
-        fastify.log.info('Inserting new user');
-        const [newUser] = await fastify.db.insert(Players.model).values({
-          id: player.steamid,
-          avatar_hash: player.avatarhash,
-          username: player.personaname,
-          profileurl: player.profileurl
-        }).returning({ id: Players.model.id, avatar_hash: Players.model.avatar_hash });
-        user = newUser;
-      } else {
-        fastify.log.warn('User already exists');
-        if (existingUser[0].avatar_hash !== player.avatarhash) {
-          fastify.log.info('Updating avatar hash');
-          await fastify.db.update(Players.model).set({ avatar_hash: player.avatarhash }).where(eq(Players.model.id, player.steamid as any)).execute();
-        }
-        if (existingUser[0].username !== player.personaname) {
-          fastify.log.info('Updating username');
-          await fastify.db.update(Players.model).set({ username: player.personaname }).where(eq(Players.model.id, player.steamid as any)).execute();
-        }
-        if (existingUser[0].profileurl !== player.profileurl) {
-          fastify.log.info('Updating profile url');
-          await fastify.db.update(Players.model).set({ profileurl: player.profileurl }).where(eq(Players.model.id, player.steamid as any)).execute();
-        }
-
-        user = existingUser[0];
-      }
+      // check if the user is in the database, if not, add it, otherwise update it if needed
+      const user = await retrieveUserById(fastify, userId, player);
 
       return done(null, user);
     } catch (err) {

@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import jwt from "jsonwebtoken";
 import { Player } from "../entities";
-import { getPlayerWaitlist } from "../../infrastructure/repositories";
+import { getPlayerWaitlist, isUserDeleted, unDeleteUser } from "../../infrastructure/repositories";
 
 type User = Player & { username: string };
 
@@ -16,8 +16,8 @@ export const getUserWaitlist = async (
   fastify: FastifyInstance,
   playerId: bigint
 ) => {
-  const [playerWaitlist] = (await getPlayerWaitlist(fastify, playerId)) || null;
-  return playerWaitlist.id;
+  const [ playerWaitlist ] = await getPlayerWaitlist(fastify, playerId) || null;
+  return playerWaitlist?.id ?? null;
 };
 
 /**
@@ -72,5 +72,30 @@ export const login = async (
     domain:
       process.env.NODE_ENV === "production" ? fastify.config.DOMAIN : undefined,
   });
-  return reply.redirect(`${config.FRONT}/login${config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
+  return reply.redirect(
+    `${config.FRONT}/login${config.NOT_SAME_ORIGIN ? "?token=" + jwtToken : ""}`
+  );
+};
+
+/**
+ * Checks if a user is deleted and performs necessary actions based on the result.
+ * @param fastify - The Fastify instance.
+ * @param playerId - The ID of the player.
+ * @throws {Error} - Throws an error if the user is recently deleted.
+ */
+export const checkUserDeleted = async (
+  fastify: FastifyInstance,
+  playerId: bigint
+) => {
+  const status = await isUserDeleted(fastify, playerId);
+  if (status.isDeleted && status.remainingTime > 0) {
+    fastify.log.warn(`User ${playerId} is in the deletedusers table, he can't login yet`);
+    const remainingHours = Math.ceil(status.remainingTime / 1000 / 60 / 60);
+    throw new Error(`You cannot login yet, since you have deleted your account recently, please wait ${remainingHours} more hours`);
+  } else if (!status.isDeleted) {
+    fastify.log.info(`User ${playerId} is not in the deletedusers table`);
+  } else if (status.isDeleted && status.remainingTime === 0) {
+    fastify.log.info(`User ${playerId} is in the deletedusers table, but he can login now`);
+    await unDeleteUser(fastify, playerId);
+  }
 };

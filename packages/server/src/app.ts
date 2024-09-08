@@ -23,6 +23,8 @@ const initialize = async () => {
     await plugins.envPlugin(fastify);
     await fastify.after();
 
+    const { config } = fastify
+
     // ====================  Every plugins are loaded, we can now load the routes below
     plugins.corsPlugin(fastify).ready((err: Error) => {
       if (err) fastify.log.error(err);
@@ -42,9 +44,9 @@ const initialize = async () => {
 
     await fastify.register(FastifySSEPlugin);
     await fastify.register(fastifyCookie);
-    await fastify.register(fastifySession, { secret: fastify.config.SECRET_KEY });
+    await fastify.register(fastifySession, { secret: config.SECRET_KEY });
 
-    await fastify.register(plugins.drizzlePlugin, fastify.config);
+    await fastify.register(plugins.drizzlePlugin, config);
     // ==================== End of plugins loading
 
     // ==================== Routes loading below
@@ -58,8 +60,8 @@ const initialize = async () => {
     // ==================== End of routes loading
 
     // ==================== Server boot and listen
-    const port = fastify.config.PORT || 3000;
-    await fastify.listen({ port, host: fastify.config.SERVER_HOST, listenTextResolver: (address: string) => {
+    const port = config.PORT || 3000;
+    await fastify.listen({ port, host: config.SERVER_HOST, listenTextResolver: (address: string) => {
       return `Server listening on ${address}`
     }}, (error: any) => {
       if (error) throw error;
