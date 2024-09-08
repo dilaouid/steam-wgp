@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import * as plugins from './plugins';
 import debugRouter from './router/debugRouter';
-import authRouter from './router/authRouter';
+import authRouter from './infrastructure/web/routes/auth.route';
 import fastifySession from '@fastify/session';
 import fastifyCookie from '@fastify/cookie';
 import playerRouter from './router/playersRouter';
