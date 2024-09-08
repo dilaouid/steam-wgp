@@ -114,7 +114,7 @@ export const getPlayerWaitlist = async (
   playerId: bigint
 ): Promise<any> => {
   return fastify.db
-    .select()
+    .select({id: waitlistsPlayers.waitlist_id})
     .from(waitlistsPlayers)
     .where(eq(waitlistsPlayers.player_id, playerId))
     .execute();

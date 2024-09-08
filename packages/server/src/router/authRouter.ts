@@ -2,13 +2,13 @@ import { FastifyInstance } from 'fastify';
 import { Strategy as SteamStrategy } from 'passport-steam';
 import fastifyPassport from '@fastify/passport';
 import { and, eq } from 'drizzle-orm';
-import jwt from 'jsonwebtoken';
 
-import { DeletedUsers, Players, WaitlistsPlayers } from '../models';
+import { DeletedUsers, Players } from '../models';
 import { Player } from '../models/Players';
 import { isAuthenticated } from '../auth/mw';
 import { APIResponse } from '../utils/response';
 import i18next from '../plugins/i18n.plugin';
+import { getUserWaitlist, login, logout } from '../domain/services/AuthService';
 
 export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());
@@ -93,28 +93,13 @@ export default async function authRouter(fastify: FastifyInstance) {
 
     // Route de callback après l'authentification Steam
     fastify.get('/steam/callback', { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/logout' }) },
-      async (request, reply) => {
-        if (!request.user) throw new Error('Missing user object in request');
-        const user = request.user as Player & { username: string };
-        const jwtToken = jwt.sign({ id: String(user.id), username: user.username, avatar_hash: user.avatar_hash }, fastify.config.SECRET_KEY, { expiresIn: '5h' });
-        reply.setCookie('token', jwtToken, {
-          httpOnly: false,
-          secure: process.env.NODE_ENV === 'production',
-          path: '/',
-          maxAge: 18000,
-          sameSite: process.env.NODE_ENV === 'production' ? 'none' : true,
-          domain: process.env.NODE_ENV === 'production' ? fastify.config.DOMAIN : undefined
-        });
-        return reply.redirect(`${fastify.config.FRONT}/login${fastify.config.NOT_SAME_ORIGIN ? '?token=' + jwtToken : ''}`);
+      (request, reply) => {
+        return login(fastify, reply, request);
       }
     );
     // Route pour déconnecter l'utilisateur
     fastify.get('/logout', async (request, reply) => {
-      request.logOut();
-      reply.clearCookie("token", {
-        path: '/',
-        domain: process.env.NODE_ENV === 'production' ? fastify.config.DOMAIN : undefined
-      });
+      logout(fastify, reply, request);
       return APIResponse(reply, null, 'logged_out', 200);
     });
 
@@ -122,10 +107,7 @@ export default async function authRouter(fastify: FastifyInstance) {
       if (!request.user)
         return APIResponse(reply, null, 'logged_in_to_view_profile', 401);
       const user = request.user as Player & { username: string };
-      const findRoom = await fastify.db.select({
-        waitlist: WaitlistsPlayers.model.waitlist_id
-      }).from(WaitlistsPlayers.model).where(eq(WaitlistsPlayers.model.player_id, user.id))
-      const { waitlist } = findRoom?.length > 0 ? findRoom[0] : '';
+      const waitlist = await getUserWaitlist(fastify, BigInt(user.id));
       return APIResponse(reply, { id: user.id, username: user.username, waitlist, avatar_hash: user.avatar_hash }, i18next.t('logged_in', { lng: request.userLanguage }), 200);
     });
 
