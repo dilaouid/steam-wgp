@@ -1,13 +1,14 @@
 import Fastify from 'fastify';
 import * as plugins from './plugins';
-import debugRouter from './router/debugRouter';
+import debugRouter from './infrastructure/web/routes/debug.route';
 import authRouter from './infrastructure/web/routes/auth.route';
-import fastifySession from '@fastify/session';
-import fastifyCookie from '@fastify/cookie';
+import globalRouter from './infrastructure/web/routes/global.route';
 import playerRouter from './router/playersRouter';
 import waitlistRouter from './router/waitlistRouter';
 import libraryRouter from './router/libraryRouter';
-import globalRouter from './router/globalRouter';
+
+import fastifySession from '@fastify/session';
+import fastifyCookie from '@fastify/cookie';
 
 import { FastifySSEPlugin } from "fastify-sse-v2";
 

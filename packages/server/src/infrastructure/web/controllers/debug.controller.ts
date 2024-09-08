@@ -33,7 +33,7 @@ export const getAllEnvVariables = (
  * @param reply - The Fastify reply object.
  * @returns A response object with a message indicating that everything has been deleted.
  */
-export const trucateAll = async (
+export const truncateAll = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
@@ -51,9 +51,8 @@ export const trucateAll = async (
 
 /**
  * [DEBUG - Works only in development] Seeds the database with games.
- * You will need to have a steamdb.json file in the same directory as this file.
+ * You will need to have a steamdb.json file in the same directory as this file (packages/server/src/infrastructure/web/controllers/steamdb.json).
  * You can download the file from: https://github.com/leinstay/steamdb/blob/main/steamdb.json
- * Place this file in the root of the server directory (packages/server).
  * @param request - The Fastify request object.
  * @param reply - The Fastify reply object.
  * @returns A response object with a message indicating that the games have been imported.
@@ -61,7 +60,7 @@ export const trucateAll = async (
 export const seed = async (request: FastifyRequest, reply: FastifyReply) => {
   const fastify = request.server as FastifyInstance;
 
-  // Path of the steamdb.json file: packages/server/steamdb.json
+  // Path of the steamdb.json file: packages/server/src/infrastructure/web/controllers/steamdb.json
   const jsonPath = path.join(__dirname, "steamdb.json");
   const jsonData = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
 

@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { games } from "../data/schemas";
 import { count, inArray } from "drizzle-orm";
 
-export const countGames = async (fastify: FastifyInstance): Promise<number> => {
+export const countGames = async (fastify: FastifyInstance): Promise<any> => {
   const { db } = fastify;
   return await db
     .select({

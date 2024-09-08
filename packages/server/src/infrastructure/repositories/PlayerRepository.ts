@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { and, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 
 import { games, libraries, players } from "../data/schemas";
 import { Player } from "../../domain/entities";
@@ -135,7 +135,7 @@ export const countPlayers = async (fastify: FastifyInstance) => {
     const { db } = fastify;
     return db
       .select({
-        count: db.count(),
+        count: count()
       })
       .from(players)
       .execute();
