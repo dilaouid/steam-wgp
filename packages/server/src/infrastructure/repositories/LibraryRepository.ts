@@ -114,7 +114,7 @@ export const insertToLibrary = async (
 /**
  * Updates the visibility of libraries in the database.
  *
- * @param fastify - The Fastify instance.
+ * @param {FastifyInstance} fastify - The Fastify instance.
  * @param userId - The ID of the user.
  * @param gameIds - An array of game IDs and their corresponding visibility status.
  * @param hidden - The new visibility status to be set.

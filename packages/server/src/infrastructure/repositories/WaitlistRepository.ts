@@ -6,7 +6,7 @@ import {
   players,
   libraries,
 } from "../data/schemas";
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, count, desc, eq, ne, sql } from "drizzle-orm";
 
 export const insertWaitlist = async (
   fastify: FastifyInstance,
@@ -26,7 +26,8 @@ export const getWaitlistWithPlayers = async (
   fastify: FastifyInstance,
   waitlistId: string
 ): Promise<any> => {
-  return fastify.db
+  const { db } = fastify;
+  return db
     .select()
     .from(waitlists)
     .leftJoin(waitlistsPlayers, eq(waitlistsPlayers.waitlist_id, waitlists.id))
@@ -45,7 +46,8 @@ export const getWaitlistPlayersAndGames = async (
   fastify: FastifyInstance,
   waitlistId: string
 ): Promise<any> => {
-  return fastify.db
+  const { db } = fastify;
+  return db
     .select({ waitlist: waitlists, players, games })
     .from(waitlists)
     .leftJoin(waitlistsPlayers, eq(waitlists.id, waitlistsPlayers.waitlist_id))
@@ -74,7 +76,8 @@ export const getWaitlistsPagination = async (
   limit: number,
   offset: number
 ): Promise<any> => {
-  return fastify.db
+  const { db } = fastify;
+  return db
     .select({
       id: waitlists.id,
       name: waitlists.name,
@@ -101,7 +104,8 @@ export const getWaitlistsPagination = async (
 export const countAvailableWaitlists = async (
   fastify: FastifyInstance
 ): Promise<number> => {
-  return fastify.db
+  const { db } = fastify;
+  return db
     .select({
       count: count(),
     })
@@ -115,7 +119,8 @@ export const isAdminFromWaitlist = async (
   waitlistId: string,
   playerId: bigint
 ): Promise<any> => {
-  return fastify.db
+  const { db } = fastify;
+  return db
     .select()
     .from(waitlists)
     .where(and(eq(waitlists.id, waitlistId), eq(waitlists.admin_id, playerId)))
@@ -134,13 +139,16 @@ export const isAdminFromWaitlist = async (
  *
  * @param fastify - The Fastify instance.
  * @param waitlistId - The ID of the waitlist to check.
+ * @param started - Whether the waitlist has started.
  * @returns A Promise that resolves to the result of the query execution.
  */
 export const checkWaitlistExists = async (
   fastify: FastifyInstance,
-  waitlistId: string
+  waitlistId: string,
+  started: boolean
 ): Promise<any> => {
-  return fastify.db
+  const { db } = fastify;
+  return db
     .select()
     .from(waitlists)
     .leftJoin(
@@ -150,8 +158,93 @@ export const checkWaitlistExists = async (
     .where(
       and(
         eq(waitlists.id, waitlistId),
-        eq(waitlists.complete, false)
+        eq(waitlists.complete, false),
+        eq(waitlists.started, started)
       )
     )
     .execute();
 };
+
+/**
+ * Deletes a waitlist entry from the database.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} waitlistId - The ID of the waitlist entry to delete.
+ * @returns {Promise<any>} - A promise that resolves when the waitlist entry is deleted.
+ */
+export const deleteWaitlist = async (
+  fastify: FastifyInstance,
+  waitlistId: string
+): Promise<any> => {
+  const { db } = fastify;
+  return db
+    .delete()
+    .from(waitlists)
+    .where(eq(waitlists.id, waitlistId))
+    .execute();
+};
+
+/**
+ * Counts the number of waitlists based on the completion status.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {boolean} complete - A boolean indicating the completion status of the waitlists.
+ * @returns A Promise that resolves to the count of waitlists.
+ */
+export const countWaitlists = async (fastify: FastifyInstance, complete: boolean): Promise<any> => {
+  const { db } = fastify;
+  return db
+    .select({
+      count: count(),
+    })
+    .from(waitlists)
+    .where(eq(waitlists.complete, complete))
+    .execute();
+}
+
+/**
+ * Retrieves the popular selected games from the waitlist repository.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @returns A promise that resolves to an array of popular games.
+ */
+export const getPopularGames = async (fastify: FastifyInstance): Promise<any> => {
+  const { db } = fastify;
+  return db
+    .select({
+      game_id: waitlists.selected,
+      score: count(waitlists.selected),
+    })
+    .from(waitlists)
+    .where(
+      and(
+        eq(waitlists.complete, true),
+        ne(waitlists.selected, 0)
+      )
+    )
+    .groupBy(waitlists.selected)
+    .orderBy(desc(count(waitlists.selected)))
+    .limit(3)
+    .execute();
+}
+
+/**
+ * Updates the `display_all_games` property of a waitlist in the database.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} waitlistId - The ID of the waitlist.
+ * @param {boolean} displayAllGames - The new value for the `display_all_games` property.
+ * @returns {Promise<any>} - A promise that resolves when the update is complete.
+ */
+export const displayAllGamesSwitch = async (
+  fastify: FastifyInstance,
+  waitlistId: string,
+  displayAllGames: boolean
+): Promise<any> => {
+  const { db } = fastify;
+  return db
+    .update(waitlists)
+    .set({ display_all_games: displayAllGames })
+    .where(eq(waitlists.id, waitlistId))
+    .execute();
+}
