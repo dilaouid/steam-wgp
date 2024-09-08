@@ -13,6 +13,7 @@ import { FastifySSEPlugin } from "fastify-sse-v2";
 
 const fastify: any = Fastify({
   logger: plugins.logger,
+  disableRequestLogging: true,
   ignoreTrailingSlash: true,
   ignoreDuplicateSlashes: true
 });
@@ -63,7 +64,6 @@ const initialize = async () => {
     }}, (error: any) => {
       if (error) throw error;
     });
-
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
