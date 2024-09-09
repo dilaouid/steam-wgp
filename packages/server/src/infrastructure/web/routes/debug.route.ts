@@ -12,12 +12,12 @@ import { getAllEnvVariables, truncateAll, seed } from '../controllers/debug.cont
 export default async function debugRouter(fastify: FastifyInstance) {
   fastify.register(async function (fastify) {
     // Route to get all environment variables
-    fastify.get('/env', getAllEnvVariables);
+    fastify.get('/env', getAllEnvVariables); // :GET /debug/env
 
     // Route to truncate all data in the database
-    fastify.get('/truncate', truncateAll);
+    fastify.get('/truncate', truncateAll); // :GET /debug/truncate
 
     // Route to seed the database with games
-    fastify.get('/seed', seed);
+    fastify.get('/seed', seed); // :GET /debug/seed
   });
 }

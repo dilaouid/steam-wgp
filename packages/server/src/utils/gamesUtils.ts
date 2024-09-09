@@ -3,6 +3,12 @@ interface WaitlistGamePlayer {
   player_id: number;
 }
 
+/**
+ * Removes duplicate elements from an array of WaitlistGamePlayer objects based on their 'id' property.
+ *
+ * @param allWaitlistGames - The array of WaitlistGamePlayer objects.
+ * @returns An array of unique 'id' values from the input array.
+ */
 export const removeDuplicates = (allWaitlistGames: WaitlistGamePlayer[]) => {
   return allWaitlistGames.reduce((acc: number[], current: { id: number }) => {
     if (!acc.includes(current.id)) {
@@ -31,6 +37,12 @@ export const getCommonGames = (gamesPlayers: WaitlistGamePlayer[]) => {
   return Array.from(commonGames);
 };
 
+/**
+ * Retrieves the common games from an array of game players.
+ *
+ * @param gamesPlayers - An array of WaitlistGamePlayer objects.
+ * @returns An array of common games.
+ */
 export const getCommonGamesController = (gamesPlayers: Array<{ games: number[], player_id: string }>): number[] => {
   const gamesByPlayer = new Map<string, Set<number>>();
 

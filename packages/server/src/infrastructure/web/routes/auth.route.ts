@@ -13,15 +13,16 @@ export default async function authRouter(fastify: FastifyInstance) {
 
   fastify.register(async function (fastify) {
     // Route to connect with Steam OpenID
-    fastify.get('/steam', { preValidation: fastifyPassport.authenticate('steam', { session: false }) }, steam);
+    fastify.get('/steam', { preValidation: fastifyPassport.authenticate('steam', { session: false }) }, steam); // :GET /auth/steam
 
     // Route to handle the Steam callback (redirected from Steam)
-    fastify.get('/steam/callback', { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/logout' }) }, steamCallback(fastify));
+    fastify.get('/steam/callback', { preValidation: fastifyPassport.authenticate('steam', { session: false, failureRedirect: '/logout' }) }, steamCallback(fastify)); // :GET /auth/steam/callback
 
     // Route to disconnect the user
-    fastify.get('/logout', logoutUser(fastify));
+    // [GET] /auth/logout
+    fastify.get('/logout', logoutUser(fastify)); // :GET /auth/logout
 
     // Route to get the user's profile information (requires authentication)
-    fastify.get('/me', { preValidation: isAuthenticated }, getMe(fastify));
+    fastify.get('/me', { preValidation: isAuthenticated }, getMe(fastify)); // :GET /auth/me
   });
 }
