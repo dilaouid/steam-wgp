@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { getAllEnvVariables, truncateAll, seed } from '../controllers/debug.controller';
+import { getAllEnvVariables, truncateAll, seed } from '../controllers/debug';
 
 // This route is only available in development mode, and it is used to debug the application.
 // Use it *CAREFULLY*, as it can delete all data in the database.

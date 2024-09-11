@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 
-import { SteamWGPStats } from "../../../domain/services/globalService";
-import { APIResponse } from "../../../utils/response";
+import { SteamWGPStats } from "../../../../domain/services/globalService";
+import { APIResponse } from "../../../../utils/response";
 
 /**
  * Retrieves the statistics from SteamWGP and returns an API response.

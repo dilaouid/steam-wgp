@@ -1,6 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { allowUnauthenticated, isAuthenticated } from "../../../auth/mw";
-import { join, leave } from "../controllers/steamder.controller";
+import { join, leave } from "../controllers/steamder";
 
 /**
  * Options for creating a steamder.
@@ -90,7 +90,7 @@ export const leaveSteamderOpts = {
 export const kickFromSteamderOpts = {
   method: 'DELETE' as HTTPMethods,
   url: '/:steamderId/kick/:playerId',
-  handler: kickFromWaitlist,
+  handler: kickFromSteamder,
   schema: {
     params: {
       type: 'object',
