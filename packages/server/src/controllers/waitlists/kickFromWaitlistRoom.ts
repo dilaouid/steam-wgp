@@ -28,12 +28,12 @@ export const kickFromWaitlistOpts = {
 };
 
 async function kickFromWaitlist(request: FastifyRequest, reply: FastifyReply) {
-  const { id } = (request.user as Player);
+  const { userId } = (request.user as Player);
   const { roomId, playerId } = (request.params as Parameters);
 
   const fastify = request.server as FastifyInstance;
 
-  if (!id)
+  if (!userId)
     return APIResponse(reply, null, 'need_to_be_logged_in', 401);
   try {
 
@@ -41,7 +41,7 @@ async function kickFromWaitlist(request: FastifyRequest, reply: FastifyReply) {
     const waitlist = await fastify.db.select().from(Waitlists.model).where(
       and(
         eq(Waitlists.model.id, roomId),
-        eq(Waitlists.model.admin_id, id)
+        eq(Waitlists.model.admin_id, userId)
       ))
       .leftJoin(WaitlistsPlayers.model,
         and(
