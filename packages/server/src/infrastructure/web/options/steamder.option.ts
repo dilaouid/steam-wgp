@@ -1,16 +1,16 @@
 import { HTTPMethods } from "fastify";
 import { allowUnauthenticated, isAuthenticated } from "../../../auth/mw";
-import { join } from "../controllers/steamder.controller";
+import { join, leave } from "../controllers/steamder.controller";
 
 /**
- * Options for creating a waitlist.
+ * Options for creating a steamder.
  * Route: POST - /
- * @example fastify.route(createWaitlistOpts);
+ * @example fastify.route(createSteamderOpts);
  */
 export const createSteamderOpts = {
   method: "POST" as HTTPMethods,
   url: "/",
-  handler: createWaitlist,
+  handler: createSteamder,
   preValidation: [isAuthenticated],
   body: {
     type: "object",
@@ -30,12 +30,12 @@ export const createSteamderOpts = {
 /**
  * Options for retrieving waitlists.
  * Route: GET - /search
- * @example fastify.route(getWaitlistsOpts);
+ * @example fastify.route(getSteamdersOpts);
  */
 export const getSteamdersOpts = {
   method: "GET" as HTTPMethods,
   url: "/search",
-  handler: getWaitlists,
+  handler: getSteamders,
   preValidation: [allowUnauthenticated],
   schema: {
     querystring: {
@@ -52,7 +52,7 @@ export const getSteamdersOpts = {
 export const countSteamdersOpts = {
   method: "GET" as HTTPMethods,
   url: "/count",
-  handler: countWaitlists,
+  handler: countSteamders,
 };
 
 export const joinSteamderOpts = {
@@ -69,4 +69,37 @@ export const joinSteamderOpts = {
       }
     }
   }
+};
+
+export const leaveSteamderOpts = {
+  method: 'DELETE' as HTTPMethods,
+  url: '/:id',
+  handler: leave,
+  preValidation: [isAuthenticated],
+  schema: {
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: { type: 'string' }
+      }
+    }
+  }
+};
+
+export const kickFromSteamderOpts = {
+  method: 'DELETE' as HTTPMethods,
+  url: '/:steamderId/kick/:playerId',
+  handler: kickFromWaitlist,
+  schema: {
+    params: {
+      type: 'object',
+      required: ['steamderId', 'playerId'],
+      properties: {
+        steamderId: { type: 'string' },
+        playerid: { type: 'string' }
+      }
+    }
+  },
+  preValidation: [isAuthenticated]
 };

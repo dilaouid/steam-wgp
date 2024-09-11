@@ -248,3 +248,16 @@ export const displayAllGamesSwitch = async (
     .where(eq(steamders.id, steamderId))
     .execute();
 }
+
+export const updateSteamder = async (
+  fastify: FastifyInstance,
+  steamderId: string,
+  data: any
+): Promise<any> => {
+  const { db } = fastify;
+  return db
+    .update(steamders)
+    .set(data)
+    .where(eq(steamders.id, steamderId))
+    .execute();
+};

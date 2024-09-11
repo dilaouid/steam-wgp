@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Pool } from "pg";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { NodePgDatabase, drizzle } from "drizzle-orm/node-postgres";

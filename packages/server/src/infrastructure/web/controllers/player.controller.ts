@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { APIResponse } from "../../../utils/response";
 import { Player } from "../../../models/Players";
-import { isUserInSteamder } from "../../../domain/services/waitlistPlayerService";
+import { isUserInSteamder } from "../../../domain/services/steamderPlayerService";
 import { deletePlayer, deleteUser } from "../../repositories";
 
 /**
