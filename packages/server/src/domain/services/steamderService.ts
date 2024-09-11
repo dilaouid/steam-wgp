@@ -71,8 +71,8 @@ export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderI
     }
 
     // Otherwise, delete the player from the steamder and updates the game lists from it
-    await updateGameLists(fastify, steamderId);
     await leaveSteamder(fastify, playerId, steamderId);
+    await updateGameLists(fastify, steamderId);
     return { success: true, message: "left_the_room", status: 200 };
   } catch (err) {
     fastify.log.error(err);
