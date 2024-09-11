@@ -7,8 +7,8 @@ import {
   deletedUsers,
   games,
   libraries,
-  waitlists,
-  waitlistsPlayers,
+  steamders,
+  steamdersPlayers,
   players,
 } from "../../data/schemas";
 
@@ -42,9 +42,9 @@ export const truncateAll = async (
 
   await db.delete(games);
   await db.delete(libraries);
-  await db.delete(waitlistsPlayers);
+  await db.delete(steamdersPlayers);
   await db.delete(players);
-  await db.delete(waitlists);
+  await db.delete(steamders);
   await db.delete(deletedUsers);
   reply.send({ message: "Everything has been deleted" });
 };

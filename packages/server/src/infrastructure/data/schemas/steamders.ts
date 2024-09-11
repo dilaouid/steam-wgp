@@ -1,7 +1,7 @@
 import { pgTable, bigint, boolean, timestamp, uuid, varchar, integer } from "drizzle-orm/pg-core";
 import { players } from ".";
 
-export const waitlists = pgTable('waitlists', {
+export const steamders = pgTable('steamders', {
   id: uuid('id').primaryKey(),
   admin_id: bigint('admin_id', { mode: 'bigint' }).references(() => players.id, { onDelete: 'cascade' }),
   started: boolean('started').default(false),

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { players, libraries, games, waitlists, waitlistsPlayers } from "./";
+import { players, libraries, games, steamders, steamdersPlayers } from "./";
 
 export const librariesRelations = relations(libraries, ({ one }) => ({
   player: one(players, {
@@ -12,32 +12,32 @@ export const librariesRelations = relations(libraries, ({ one }) => ({
   }),
 }));
 
-export const waitlistsRelations = relations(waitlists, ({ one, many }) => ({
+export const steamdersRelations = relations(steamders, ({ one, many }) => ({
   admin: one(players, {
-    fields: [waitlists.admin_id],
+    fields: [steamders.admin_id],
     references: [players.id],
   }),
-  players: many(waitlistsPlayers),
+  players: many(steamdersPlayers),
 }));
 
-export const waitlistsPlayersRelations = relations(
-  waitlistsPlayers,
+export const steamdersPlayersRelations = relations(
+  steamdersPlayers,
   ({ one }) => ({
     player: one(players, {
-      fields: [waitlistsPlayers.player_id],
+      fields: [steamdersPlayers.player_id],
       references: [players.id],
     }),
-    waitlist: one(waitlists, {
-      fields: [waitlistsPlayers.waitlist_id],
-      references: [waitlists.id],
+    steamder: one(steamders, {
+      fields: [steamdersPlayers.steamder_id],
+      references: [steamders.id],
     }),
   })
 );
 
 export const playersRelations = relations(players, ({ many }) => ({
   libraries: many(libraries),
-  adminWaitlists: many(waitlists),
-  waitlistsParticipated: many(waitlistsPlayers),
+  adminSteamders: many(steamders),
+  steamdersParticipated: many(steamdersPlayers),
 }));
 
 export const gamesRelations = relations(games, ({ many }) => ({

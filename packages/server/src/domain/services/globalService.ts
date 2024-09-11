@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import {
   countGames,
   countPlayers,
-  countWaitlists,
+  countSteamders,
   getPopularGames,
 } from "../../infrastructure/repositories";
 
@@ -15,15 +15,15 @@ import {
 export const SteamWGPStats = async (fastify: FastifyInstance) => {
   const [ players ] = await countPlayers(fastify);
   const [ games ] = await countGames(fastify);
-  const [ matches ] = await countWaitlists(fastify, true);
-  const [ waitlists ] = await countWaitlists(fastify, false);
+  const [ matches ] = await countSteamders(fastify, true);
+  const [ steamders ] = await countSteamders(fastify, false);
   const podium = await getPopularGames(fastify);
 
   return {
     players: players.count,
     games: games.count,
     matches: matches.count,
-    waitlists: waitlists.count,
+    steamders: steamders.count,
     podium,
   };
 };

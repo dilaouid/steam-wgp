@@ -8,11 +8,11 @@ import { Player } from "../../domain/entities";
  * Deletes a player from the database.
  *
  * @param {FastifyInstance} fastify - The Fastify instance.
- * @param {number} id - The ID of the player to delete.
+ * @param {bigint} id - The ID of the player to delete.
  * @returns {Promise<any>} - A promise that resolves to the result of the delete operation.
  * @throws {Error} - If there is an error deleting the player.
  */
-export const deletePlayer = async (fastify: FastifyInstance, id: number) => {
+export const deletePlayer = async (fastify: FastifyInstance, id: bigint) => {
   try {
     const { db } = fastify;
     return db.delete(players).where({ id }).execute();

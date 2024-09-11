@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { APIResponse } from "../../../utils/response";
-import { getUserWaitlist, login, logout } from "../../../domain/services/authService";
+import { getUserSteamder, login, logout } from "../../../domain/services/authService";
 import { Player } from "../../../models/Players";
 
 /**
@@ -51,6 +51,6 @@ export const getMe = (fastify: FastifyInstance) => async (request: FastifyReques
   if (!request.user)
     return APIResponse(reply, null, "logged_in_to_view_profile", 401);
   const user = request.user as Player & { username: string };
-  const waitlist = await getUserWaitlist(fastify, BigInt(user.id));
-  return APIResponse(reply, { id: user.id, username: user.username, waitlist, avatar_hash: user.avatar_hash }, 'logged_in', 200);
+  const steamder = await getUserSteamder(fastify, BigInt(user.id));
+  return APIResponse(reply, { id: user.id, username: user.username, steamder, avatar_hash: user.avatar_hash }, 'logged_in', 200);
 };
