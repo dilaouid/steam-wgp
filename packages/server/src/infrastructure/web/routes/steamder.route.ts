@@ -5,7 +5,8 @@ import {
   kickFromSteamderOpts,
   leaveSteamderOpts,
   countSteamdersOpts,
-  getSteamderWithPlayersOpts
+  getSteamderWithPlayersOpts,
+  getSteamdersOpts
 } from "../options/steamder.option";
 
 export default async function steamderRouter(fastify: FastifyInstance) {
@@ -13,6 +14,7 @@ export default async function steamderRouter(fastify: FastifyInstance) {
     fastify.route(joinSteamderOpts);            // :PATCH   /steamder/:id
     fastify.route(leaveSteamderOpts);           // :DELETE  /steamder/:id
     fastify.route(kickFromSteamderOpts);        // :DELETE  /steamder/:steamderId/kick/:playerId
+    fastify.route(getSteamdersOpts);            // :GET     /steamder
     fastify.route(countSteamdersOpts);          // :GET     /steamder/count
     fastify.route(getSteamderWithPlayersOpts);  // :GET     /steamder/:id
   });

@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { checkSteamderExists, deleteSteamder, getSteamderPlayersAndGames, isPlayerInSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
+import { checkSteamderExists, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, isPlayerInSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
 import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "../../utils/gamesUtils";
 
 interface ISteamderExistsReturns {
@@ -106,4 +106,9 @@ export const formatSteamderInfos = (steamderInfos: any) => {
     common_games: commonGames,
     all_games: allGames
   };
+};
+
+export const paginateSteamder = async (fastify: FastifyInstance, offset: number, limit: number) => {
+  const steamders = await getSteamdersPagination(fastify, limit, offset);
+  return steamders[0] || null;
 };
