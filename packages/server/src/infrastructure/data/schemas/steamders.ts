@@ -2,7 +2,7 @@ import { pgTable, bigint, boolean, timestamp, uuid, varchar, integer } from "dri
 import { players } from ".";
 
 export const steamders = pgTable('steamders', {
-  id: uuid('id').primaryKey(),
+  id: uuid('id').primaryKey().defaultRandom(),
   admin_id: bigint('admin_id', { mode: 'bigint' }).references(() => players.id, { onDelete: 'cascade' }),
   started: boolean('started').default(false),
   private: boolean('private').default(false),
