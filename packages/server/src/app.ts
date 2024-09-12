@@ -4,7 +4,7 @@ import debugRouter from './infrastructure/web/routes/debug.route';
 import authRouter from './infrastructure/web/routes/auth.route';
 import globalRouter from './infrastructure/web/routes/global.route';
 import steamderRouter from './infrastructure/web/routes/steamder.route';
-import playerRouter from './router/playersRouter';
+import playerRouter from './infrastructure/web/routes/player.route';
 import libraryRouter from './router/libraryRouter';
 
 import fastifySession from '@fastify/session';

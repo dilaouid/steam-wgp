@@ -132,7 +132,7 @@ export const countPlayerGamesLibrary = async (
  */
 export const insertToLibrary = async (
   fastify: FastifyInstance,
-  values: Library
+  values: any
 ) => {
   try {
     const { db } = fastify;

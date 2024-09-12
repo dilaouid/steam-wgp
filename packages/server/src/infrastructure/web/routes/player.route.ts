@@ -1,9 +1,10 @@
+/* eslint-disable no-multi-spaces */
 import { FastifyInstance } from 'fastify';
-import { deleteUserOpts } from '../options/player.option';
+import { deleteUserOpts, getSteamLibraryOpts } from '../options/player.option';
 
 export default async function playerRouter(fastify: FastifyInstance) {
   fastify.register(async function (fastify) {
-    // Route to delete a user account after authentication
-    fastify.route(deleteUserOpts); // :DELETE /players
+    fastify.route(deleteUserOpts);      // :DELETE  /players
+    fastify.route(getSteamLibraryOpts); // :GET     /library-checker
   });
 }
