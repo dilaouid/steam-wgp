@@ -50,17 +50,32 @@ export const getSteamderPlayersAndGames = async (
   return db
     .select({ steamder: steamders, players, games })
     .from(steamders)
-    .leftJoin(steamdersPlayers, eq(steamders.id, steamdersPlayers.steamder_id))
+    .leftJoin(steamdersPlayers,
+      and(
+        eq(steamders.id, steamdersPlayers.steamder_id)
+      )
+    )
     .leftJoin(players, eq(steamdersPlayers.player_id, players.id))
     .leftJoin(
       libraries,
-      and(eq(players.id, libraries.player_id), eq(libraries.hidden, false))
+      and(
+        eq(players.id, libraries.player_id),
+        eq(libraries.hidden, false)
+      )
     )
     .leftJoin(
       games,
-      and(eq(libraries.game_id, games.id), eq(games.is_selectable, true))
+      and(
+        eq(libraries.game_id, games.id),
+        eq(games.is_selectable, true)
+      )
     )
-    .where(and(eq(steamders.id, steamderId), eq(steamders.complete, false)));
+    .where(
+      and(
+        eq(steamders.id, steamderId),
+        eq(steamders.complete, false)
+      )
+    );
 };
 
 /**

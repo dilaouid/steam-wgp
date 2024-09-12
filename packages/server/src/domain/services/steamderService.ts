@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { checkSteamderExists, deleteSteamder, getSteamderPlayersAndGames, isPlayerInSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
-import { getCommonGames, removeDuplicates } from "../../utils/gamesUtils";
+import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "../../utils/gamesUtils";
 
 interface ISteamderExistsReturns {
     success: boolean;
@@ -47,6 +47,16 @@ export const updateGameLists = async (fastify: FastifyInstance, steamderId: stri
   }
 };
 
+export const getSteamderInfos = async (fastify: FastifyInstance, steamderId: string) => {
+  try {
+    const steamder = await getSteamderPlayersAndGames(fastify, steamderId);
+    return steamder[0] || null;
+  } catch (err) {
+    fastify.log.error(err);
+    return null;
+  }
+};
+
 export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderId: string, playerId: bigint): Promise<ISteamderExistsReturns> => {
   try {
     const steamder = await isPlayerInSteamder(fastify, playerId, steamderId);
@@ -79,3 +89,21 @@ export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderI
     return { success: true, message: "internal_server_error", status: 500 };
   }
 }
+
+export const formatSteamderInfos = (steamderInfos: any) => {
+  const players = steamderInfos.reduce(formatPlayers, []);
+  steamderInfos.steamder.admin_id = steamderInfos.steamder.admin_id.toString();
+
+  const commonGames = getCommonGamesController(players.map((player: any) => ({
+    games: player.games,
+    player_id: player.player_id
+  })));
+  const allGames = removeDuplicatesController(players.map((p: any) => p.games).flat());
+
+  return {
+    ...steamderInfos.steamder,
+    players: steamderInfos,
+    common_games: commonGames,
+    all_games: allGames
+  };
+};

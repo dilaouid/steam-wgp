@@ -61,3 +61,23 @@ export const getCommonGamesController = (gamesPlayers: Array<{ games: number[], 
 export const removeDuplicatesController = (games: number[]): number[] => {
   return Array.from(new Set(games));
 };
+
+export const formatPlayers = (acc: any[], row: { players: { id: string; avatar_hash: string; username: string, profileurl: string }; games: any; }) => {
+  row.players.id = row.players.id.toString();
+  const player = acc.find((p: { player_id: any; }) => p.player_id === row.players.id) || {
+    player_id: row.players.id,
+    avatar_hash: row.players.avatar_hash,
+    username: row.players.username,
+    profileurl: row.players.profileurl,
+    games: []
+  };
+
+  if (!acc.includes(player)) {
+    acc.push(player);
+  }
+
+  if (row.games) {
+    player.games.push(row.games.id);
+  }
+  return acc;
+};

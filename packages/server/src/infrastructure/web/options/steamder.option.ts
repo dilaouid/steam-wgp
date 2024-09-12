@@ -1,6 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { allowUnauthenticated, isAuthenticated } from "../../../auth/mw";
-import { join, leave, kickSteamder, countSteamders } from "../controllers/steamder";
+import { join, leave, kickSteamder, countSteamders, getSteamderWithPlayers } from "../controllers/steamder";
 
 /**
  * Options for creating a steamder.
@@ -47,6 +47,22 @@ export const getSteamdersOpts = {
       },
     },
   },
+};
+
+export const getSteamderWithPlayersOpts = {
+  method: 'GET' as HTTPMethods,
+  url: '/:id',
+  handler: getSteamderWithPlayers,
+  preValidation: [isAuthenticated],
+  schema: {
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: { type: 'string' }
+      }
+    }
+  }
 };
 
 export const countSteamdersOpts = {
