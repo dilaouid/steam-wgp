@@ -1,7 +1,8 @@
 {
     "name": "steamwgp-monorepo",
     "workspaces": [
-      "packages/*"
+      "packages/*",
+      "packages/@shared/*"
     ],
     "scripts": {
       "dev:client": "pnpm --filter steamwgp-client dev",

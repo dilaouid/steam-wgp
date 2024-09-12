@@ -1,3 +1,3 @@
 packages :
   - 'packages/**'
-  - 'packages/@shared/zod'
+  - 'packages/@shared/**'

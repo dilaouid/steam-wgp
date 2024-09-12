@@ -1,10 +1,10 @@
 {
-    "name": "@shared/zod",
+    "name": "@shared",
     "version": "1.0.0",
     "main": "index.js",
     "types": "index.d.ts",
     "exports": {
-      "./schemas": "./schemas"
+      "./schemas": "./zod/schemas"
     },
     "dependencies": {
       "zod": "^3.x.x"
