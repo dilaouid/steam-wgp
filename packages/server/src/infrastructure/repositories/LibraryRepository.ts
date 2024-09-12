@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, count, eq, inArray } from "drizzle-orm";
 
 import { games, libraries, players } from "../data/schemas";
 import { Library } from "../../domain/entities";
@@ -75,6 +75,7 @@ export const getPlayerGamesLibrary = async (
     const { db } = fastify;
     return db
       .select({ game_id: libraries.game_id })
+      .from(libraries)
       .leftJoin(games, eq(libraries.game_id, games.id))
       .where(
         and(
@@ -87,6 +88,37 @@ export const getPlayerGamesLibrary = async (
   } catch (err) {
     fastify.log.error(err);
     throw new Error("Failed to get player games library");
+  }
+};
+
+/**
+ * Count the games library for a specific player.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {bigint} id - The ID of the player.
+ * @returns {Promise<any>} - A promise that resolves to the games library.
+ * @throws {Error} - If there is an error retrieving the games library.
+ */
+export const countPlayerGamesLibrary = async (
+  fastify: FastifyInstance,
+  id: bigint
+) => {
+  try {
+    const { db } = fastify;
+    return db
+      .select({ count: count() })
+      .from(libraries)
+      .leftJoin(games, eq(libraries.game_id, games.id))
+      .where(
+        and(
+          eq(libraries.player_id, id),
+          eq(libraries.hidden, false),
+          eq(games.is_selectable, true)
+        )
+      ).execute();
+  } catch (err) {
+    fastify.log.error(err);
+    throw new Error("Failed to count player games library");
   }
 };
 

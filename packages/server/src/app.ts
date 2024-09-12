@@ -3,8 +3,8 @@ import * as plugins from './plugins';
 import debugRouter from './infrastructure/web/routes/debug.route';
 import authRouter from './infrastructure/web/routes/auth.route';
 import globalRouter from './infrastructure/web/routes/global.route';
+import steamderRouter from './infrastructure/web/routes/steamder.route';
 import playerRouter from './router/playersRouter';
-import waitlistRouter from './router/waitlistRouter';
 import libraryRouter from './router/libraryRouter';
 
 import fastifySession from '@fastify/session';
@@ -55,7 +55,7 @@ const initialize = async () => {
       await fastify.register(debugRouter, { prefix: '/debug' });
     await fastify.register(authRouter, { prefix: '/auth' });
     await fastify.register(playerRouter, { prefix: '/players' });
-    await fastify.register(waitlistRouter, { prefix: '/waitlist' });
+    await fastify.register(steamderRouter, { prefix: '/steamder' });
     await fastify.register(libraryRouter, { prefix: '/library' });
     await fastify.register(globalRouter, { prefix: '/' });
     // ==================== End of routes loading

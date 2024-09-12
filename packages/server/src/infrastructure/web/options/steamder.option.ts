@@ -1,6 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { allowUnauthenticated, isAuthenticated } from "../../../auth/mw";
-import { join, leave, kickSteamder, countSteamders, getSteamderWithPlayers, getSteamders } from "../controllers/steamder";
+import { join, leave, kickSteamder, countSteamders, getSteamderWithPlayers, getSteamders, newSteamder } from "../controllers/steamder";
 
 /**
  * Options for creating a steamder.
@@ -10,7 +10,7 @@ import { join, leave, kickSteamder, countSteamders, getSteamderWithPlayers, getS
 export const createSteamderOpts = {
   method: "POST" as HTTPMethods,
   url: "/",
-  handler: createSteamder,
+  handler: newSteamder,
   preValidation: [isAuthenticated],
   body: {
     type: "object",

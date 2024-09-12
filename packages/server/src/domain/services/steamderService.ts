@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { checkSteamderExists, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, isPlayerInSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
+import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, insertSteamder, isPlayerInSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
 import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "../../utils/gamesUtils";
+import { SteamderInsert } from "../entities";
 
 interface ISteamderExistsReturns {
     success: boolean;
@@ -32,6 +33,13 @@ export const isSteamderAvailable = async (fastify: FastifyInstance, steamderId: 
 };
 
 
+/**
+ * Updates the game lists (common and all games) for a Steamder.
+ *
+ * @param fastify - The Fastify instance.
+ * @param steamderId - The ID of the Steamder.
+ * @returns A boolean indicating whether the game lists were successfully updated.
+ */
 export const updateGameLists = async (fastify: FastifyInstance, steamderId: string) => {
   try {
     const allSteamderGames = await getSteamderPlayersAndGames(fastify, steamderId);
@@ -47,6 +55,13 @@ export const updateGameLists = async (fastify: FastifyInstance, steamderId: stri
   }
 };
 
+/**
+ * Retrieves Steamder information.
+ *
+ * @param fastify - The Fastify instance.
+ * @param steamderId - The Steamder ID.
+ * @returns The Steamder information or null if an error occurs.
+ */
 export const getSteamderInfos = async (fastify: FastifyInstance, steamderId: string) => {
   try {
     const steamder = await getSteamderPlayersAndGames(fastify, steamderId);
@@ -57,6 +72,14 @@ export const getSteamderInfos = async (fastify: FastifyInstance, steamderId: str
   }
 };
 
+/**
+ * Leave and update a steamder.
+ *
+ * @param fastify - The Fastify instance.
+ * @param steamderId - The ID of the steamder.
+ * @param playerId - The ID of the player.
+ * @returns A promise that resolves to an object containing the success status, message, and status code.
+ */
 export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderId: string, playerId: bigint): Promise<ISteamderExistsReturns> => {
   try {
     const steamder = await isPlayerInSteamder(fastify, playerId, steamderId);
@@ -90,6 +113,12 @@ export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderI
   }
 }
 
+/**
+ * Formats the steamderInfos object to return only the necessary data.
+ *
+ * @param steamderInfos - The steamderInfos object to be formatted.
+ * @returns The formatted steamderInfos object.
+ */
 export const formatSteamderInfos = (steamderInfos: any) => {
   const players = steamderInfos.reduce(formatPlayers, []);
   steamderInfos.steamder.admin_id = steamderInfos.steamder.admin_id.toString();
@@ -111,4 +140,30 @@ export const formatSteamderInfos = (steamderInfos: any) => {
 export const paginateSteamder = async (fastify: FastifyInstance, offset: number, limit: number) => {
   const steamders = await getSteamdersPagination(fastify, limit, offset);
   return steamders[0] || null;
+};
+
+/**
+ * Creates a Steamder.
+ *
+ * @param fastify - The Fastify instance.
+ * @param playerId - The ID of the player.
+ * @param name - The name of the Steamder.
+ * @param isPrivate - Indicates if the Steamder is private.
+ * @returns The created Steamder or null if not found.
+ */
+export const createSteamder = async (fastify: FastifyInstance, playerId: bigint, name: string, isPrivate: boolean) => {
+  const numberOfGames = await countPlayerGamesLibrary(fastify, playerId);
+
+  const data: SteamderInsert = {
+    admin_id: playerId,
+    name,
+    private: isPrivate,
+    complete: false,
+    started: false,
+    common_games: numberOfGames,
+    all_games: numberOfGames
+  };
+
+  const steamder = await insertSteamder(fastify, data);
+  return steamder[0] || null;
 };
