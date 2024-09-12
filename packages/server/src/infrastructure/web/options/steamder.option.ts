@@ -48,6 +48,11 @@ export const getSteamdersOpts = {
   },
 };
 
+/**
+ * Options for getting Steamder with players.
+ * Route: GET - /:id
+ * @example fastify.route(getSteamderWithPlayersOpts);
+ */
 export const getSteamderWithPlayersOpts = {
   method: 'GET' as HTTPMethods,
   url: '/:id',
@@ -64,12 +69,22 @@ export const getSteamderWithPlayersOpts = {
   }
 };
 
+/**
+ * Options for counting Steamders.
+ * Route: GET - /count
+ * @example fastify.route(countSteamdersOpts);
+ */
 export const countSteamdersOpts = {
   method: "GET" as HTTPMethods,
   url: "/count",
   handler: countSteamders,
 };
 
+/**
+ * Options for joining Steamder.
+ * Route: PATCH - /:id
+ * @example fastify.route(joinSteamderOpts);
+ */
 export const joinSteamderOpts = {
   method: 'PATCH' as HTTPMethods,
   url: '/:id',
@@ -86,6 +101,11 @@ export const joinSteamderOpts = {
   }
 };
 
+/**
+ * Options for leaving Steamder.
+ * Route: DELETE - /:id
+ * @example fastify.route(leaveSteamderOpts);
+ */
 export const leaveSteamderOpts = {
   method: 'DELETE' as HTTPMethods,
   url: '/:id',
@@ -102,6 +122,11 @@ export const leaveSteamderOpts = {
   }
 };
 
+/**
+ * Options for kicking a player from Steamder.
+ * Route: DELETE - /:steamderId/kick/:playerId
+ * @example fastify.route(kickFromSteamderOpts);
+ */
 export const kickFromSteamderOpts = {
   method: 'DELETE' as HTTPMethods,
   url: '/:steamderId/kick/:playerId',
