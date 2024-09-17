@@ -2,7 +2,7 @@ import { EventMessage, FastifyInstance, FastifyReply, FastifyRequest } from "fas
 import { APIResponse, setSSEHeaders } from "../../../../utils/response";
 import jwt from 'jsonwebtoken';
 import { Player } from "../../../../domain/entities";
-import { fetchingSteamLibrary, getGamesNotInDB, insertGamesInDatabase, insertGamesInLibrary, ISteamResponse, setInitialLibrary, updateProgress } from "../../../../domain/services/progressService";
+import { fetchingSteamLibrary, getGamesNotInDB, insertGamesInDatabase, insertGamesInLibrary, IProgressOpt, ISteamResponse, setInitialLibrary, updateProgress } from "../../../../domain/services/progressService";
 
 export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token: string } }>, response: FastifyReply) => {
   const fastify = request.server as FastifyInstance;
@@ -23,23 +23,17 @@ export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token
 
     response.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
       try {
-        const libraryGenerator = setInitialLibrary(fastify, id);
-        for await (const progressMessage of libraryGenerator)
-          yield progressMessage;
+        yield updateProgress({ message: 'load_steam_library', type: 'info', complete: false, progress: 0 });
+        const playerLibraryIds = await setInitialLibrary(fastify, id);
 
-        const playerLibraryIds = (await libraryGenerator.next()).value;
-        if (!playerLibraryIds)
-          return;
+        if (!playerLibraryIds) return;
 
-        const steamLibraryGenerator = await fetchingSteamLibrary(fastify, playerLibraryIds, STEAM_GetOwnedGames as string, STEAM_API_KEY as string, id);
-        for await (const progressMessage of steamLibraryGenerator)
-          yield progressMessage;
+        const fetchedSteamLibrary = await fetchingSteamLibrary(fastify, playerLibraryIds, STEAM_GetOwnedGames as string, STEAM_API_KEY as string, id) as IProgressOpt & { library: ISteamResponse | null };
+        yield updateProgress({ message: fetchedSteamLibrary.message, type: fetchedSteamLibrary.type, complete: fetchedSteamLibrary.complete, progress: fetchedSteamLibrary.progress});
+        if (!fetchedSteamLibrary.library) return;
 
-        const steamLibrary = (await steamLibraryGenerator.next()).value as ISteamResponse;
-        if (!steamLibrary) return;
+        const steamLibrary = fetchedSteamLibrary.library;
 
-
-        yield updateProgress({ message: "adding_games_to_library", type: 'info', complete: false, progress: 20 });
         const { gamesToAddToLibrary, appIdsNotInDB } = await getGamesNotInDB(fastify, steamLibrary, playerLibraryIds);
 
         let gamesToAdd = 0;
@@ -49,10 +43,15 @@ export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token
 
         fastify.log.info(`\n--- ${gamesToAdd} games have been added to the database ---\n`);
 
+        yield updateProgress({ message: "adding_games_to_collection", type: 'info', complete: false, progress: 60 });
+
         // insert the games in the Libraries table if they are not already in the database
-        const insertGenerator = insertGamesInLibrary(fastify, id, gamesToAddToLibrary, gamesToAdd);
-        for await (const progressMessage of insertGenerator)
-          yield progressMessage;
+        const insertedToLibrary = await insertGamesInLibrary(fastify, id, gamesToAddToLibrary);
+        if (insertedToLibrary > 0 && insertedToLibrary < gamesToAdd) {
+          yield updateProgress({ message: 'game_cannot_add', type: 'danger', count: gamesToAddToLibrary.length, progress: 60, complete: false })
+          fastify.log.warn(`Only ${gamesToAdd} out of ${gamesToAddToLibrary.length} games were added to the database`);
+        }
+        yield updateProgress({ message: 'loading_library_complete', type: 'success', complete: true, progress: 100 })
       } catch (error: any) {
         fastify.log.error(error);
         yield { data: JSON.stringify({ message: 'error_loading_steam_library', type: 'danger', complete: true, progress: 100 }) };

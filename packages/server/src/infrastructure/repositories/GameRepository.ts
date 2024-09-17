@@ -42,8 +42,8 @@ export const getGamesAccordingToList = async (
  */
 export const insertGames = async (
   fastify: FastifyInstance,
-  gamesToAdd: { game_id: number; is_selectable: boolean; id?: number }[]
+  gamesToAdd: { id: number; is_selectable: boolean; }[]
 ): Promise<any> => {
   const { db } = fastify;
-  return db.insert(gamesToAdd).into(games).onConflictDoNothing().execute();
+  return db.insert(games).values(gamesToAdd).returning().execute();
 };

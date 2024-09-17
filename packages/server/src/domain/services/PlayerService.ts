@@ -20,7 +20,6 @@ export const updateAvatarHash = async (
   currentHash: string,
   avatarHash: string
 ) => {
-  fastify.log.info(`${id} - ${currentHash} - ${avatarHash}`);
   if (currentHash !== avatarHash) {
     fastify.log.info(`Updating avatar hash for ${id}`);
     await updatePlayer(fastify, id, { avatar_hash: avatarHash });

@@ -1,7 +1,7 @@
-import { EventMessage, FastifyInstance } from "fastify";
+import { FastifyInstance } from "fastify";
 import { getGamesAccordingToList, getPlayerLibrary, insertGames, insertToLibrary } from "../../infrastructure/repositories";
 
-interface IProgressOpt {
+export interface IProgressOpt {
     message: string;
     type: 'info' | 'danger' | 'success';
     complete: boolean;
@@ -16,7 +16,6 @@ export interface ISteamResponse { games: { appid: number; }[]; }
 async function fetchGameDetails(f: FastifyInstance, appId: number): Promise<any> {
   const gameDetailsResponse = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appId}`);
   const gameDetails = await gameDetailsResponse?.json() as any || null;
-
   if (!gameDetails) {
     f.log.warn(`Game ${appId} is not selectable - Steam API is not responding in https://store.steampowered.com/api/appdetails?appids=${appId}...`);
     return null;
@@ -24,7 +23,7 @@ async function fetchGameDetails(f: FastifyInstance, appId: number): Promise<any>
 
   const isSelectable = gameDetails[appId].data.categories?.some((category: any) => [1, 49, 36].includes(category.id));
   f.log.info(`Game ${appId} is ${isSelectable ? 'selectable' : 'not selectable'}`);
-  return { game_id: appId, is_selectable: Boolean(isSelectable) };
+  return { id: appId, is_selectable: Boolean(isSelectable) };
 }
 
 async function getAppIdsNotInDB(fastify: FastifyInstance, steamAppIds: number[]) {
@@ -42,30 +41,27 @@ export const updateProgress = (opts: IProgressOpt) => {
   return { data: JSON.stringify(opts) };
 }
 
-export async function* setInitialLibrary(f: FastifyInstance, playerId: bigint): AsyncGenerator<EventMessage, Set<string>> {
-  yield updateProgress({ message: 'load_steam_library', type: 'info', complete: false, progress: 0 });
+export async function setInitialLibrary(f: FastifyInstance, playerId: bigint): Promise<Set<any>> {
   const library = await getPlayerLibrary(f, playerId);
   return new Set(library.map((game: ILibrary) => game.game_id));
 }
 
-export async function* fetchingSteamLibrary(f: FastifyInstance, library: any, baseUrl: string, API_KEY: string, playerId: bigint): AsyncGenerator<EventMessage, ISteamResponse | null> {
+export async function fetchingSteamLibrary(f: FastifyInstance, library: any, baseUrl: string, API_KEY: string, playerId: bigint): Promise<Partial<IProgressOpt & { library: ISteamResponse | null}>> {
   f.log.info(`Fetching Steam library for player ${playerId}...`);
   const steamLibraryRequest = await requestSteamAPILibrary(baseUrl, API_KEY, playerId);
   if (steamLibraryRequest == null || steamLibraryRequest.status !== 200) {
     f.log.warn(`Steam API is not responding...`);
-    yield updateProgress({ message: "steam_library_not_accessible_yet", type: 'danger', complete: true, progress: 0 });
-    return null;
+    return { complete: true, library: null, progress: 0, type: 'danger', message: "steam_library_not_accessible_yet" };
   }
   const steamLibrary = await steamLibraryRequest.json() as ISteamResponse & { response: { games: { appid: number; }[] } };
 
   if (steamLibrary.response && !steamLibrary.response?.games) {
     const complete = library.size > 0;
-    yield updateProgress({ message: "steam_library_not_accessible", type: 'danger', complete, progress: 15 });
-    return null;
+    return { complete, library: null, progress: 15, type: 'danger', message: "steam_library_not_accessible" };
   }
 
   f.log.info('Steam library fetched successfully !');
-  return steamLibrary.response;
+  return { complete: false, library: steamLibrary.response, progress: 20, type: 'info', message: "adding_games_to_library" };
 }
 
 /**
@@ -91,7 +87,7 @@ export const insertGamesInDatabase = async (f: FastifyInstance, appIdsNotInDB: n
   f.log.info(`Inserting games into the database...`);
   const gamesToAdd = await Promise.all(appIdsNotInDB.map(async appId => await fetchGameDetails(f, appId).catch(err => {
     f.log.error(err);
-    return { game_id: appId, is_selectable: false }
+    return { id: appId, is_selectable: false }
   })));
 
   const filteredGamesToAdd = gamesToAdd.filter((game: number) => game !== null);
@@ -100,15 +96,9 @@ export const insertGamesInDatabase = async (f: FastifyInstance, appIdsNotInDB: n
   return gamesToAdd.length;
 }
 
-export async function* insertGamesInLibrary(f: FastifyInstance, playerId: bigint, gamesToAddToLibrary: number[], gamesAddedToDB: number) {
-  yield updateProgress({ message: "adding_games_to_collection", type: 'info', complete: false, progress: 60 });
-  const insert = gamesToAddToLibrary.map((game_id) => ({ game_id, playerId }));
+export async function insertGamesInLibrary(f: FastifyInstance, playerId: bigint, gamesToAddToLibrary: number[]): Promise<number> {
+  const insert = gamesToAddToLibrary.map((game_id) => ({ game_id, player_id: playerId }));
   await insertToLibrary(f, insert);
 
-  // if added games in db is less than gamesToAddToLibrary, then warn the user
-  if (gamesToAddToLibrary.length > 0 && gamesToAddToLibrary.length < gamesAddedToDB) {
-    yield updateProgress({ message: 'game_cannot_add', type: 'danger', count: gamesToAddToLibrary.length, progress: 60, complete: false })
-    f.log.warn(`Only ${gamesAddedToDB} out of ${gamesToAddToLibrary.length} games were added to the database`);
-  }
-  yield updateProgress({ message: 'loading_library_complete', type: 'success', complete: true, progress: 100 })
+  return gamesToAddToLibrary.length;
 }

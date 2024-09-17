@@ -101,9 +101,10 @@ async function getSteamLibrary(request: FastifyRequest<{ Querystring: IQS }>, re
         yield { data: JSON.stringify({ message: 'load_steam_library', type: 'info', complete: false, progress: 0 }) }
         const library = await fastify.db.select({ game_id: Libraries.model.game_id }).from(Libraries.model).where(eq(Libraries.model.player_id, id));
         const playerLibraryIds = new Set(library.map((game: ILibrary) => game.game_id));
+        const url = `${fastify.config.STEAM_GetOwnedGames}/?key=${fastify.config.STEAM_API_KEY}&steamid=${id}&include_appinfo=true&include_played_free_games=true&format=json`
 
         fastify.log.info(`Fetching Steam library for player ${id}...`);
-        const steamLibraryRequest = await fetch(`${fastify.config.STEAM_GetOwnedGames}/?key=${fastify.config.STEAM_API_KEY}&steamid=${id}&include_appinfo=true&include_played_free_games=true&format=json`);
+        const steamLibraryRequest = await fetch(url);
         if (steamLibraryRequest == null || steamLibraryRequest.status !== 200) {
           fastify.log.warn(`Steam API is not responding...`);
           yield { data: JSON.stringify({ message: "steam_library_not_accessible_yet", type: 'danger', complete: true, progress: 0 }) };
