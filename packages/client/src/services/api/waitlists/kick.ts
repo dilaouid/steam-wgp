@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const kickSteamder = (steamderId: string, playerId: string) => {
     const token = getCookieValue('token');
-    return fetch(`${BASE_URL}/waitlist/${steamderId}/kick/${playerId}`, {
+    return fetch(`${BASE_URL}/steamder/${steamderId}/kick/${playerId}`, {
         method: "DELETE",
         credentials: "include",
         headers: {

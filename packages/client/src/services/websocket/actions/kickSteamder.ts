@@ -16,7 +16,7 @@ export const kickSteamder = (playerId: string)  => {
         queryClient.invalidateQueries({ queryKey: ["steamders"] })
         router.navigate({ to: '/', resetScroll: true });
         setSteamder(null);
-        setUser({ ...user, waitlist: null });
+        setUser({ ...user, steamder: null });
         drawToast('you_have_been_kicked', 'warn');
     } else {
         if (steamder.admin_id !== user.id)

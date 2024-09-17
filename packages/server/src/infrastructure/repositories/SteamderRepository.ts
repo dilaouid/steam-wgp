@@ -12,7 +12,7 @@ export const insertSteamder = async (
   fastify: FastifyInstance,
   data: any
 ): Promise<any> => {
-  return fastify.db.insert(data).into(steamders).returning().execute();
+  return fastify.db.insert(steamders).values(data).returning().execute();
 };
 
 /**
@@ -194,8 +194,7 @@ export const deleteSteamder = async (
 ): Promise<any> => {
   const { db } = fastify;
   return db
-    .delete()
-    .from(steamders)
+    .delete(steamders)
     .where(eq(steamders.id, steamderId))
     .execute();
 };

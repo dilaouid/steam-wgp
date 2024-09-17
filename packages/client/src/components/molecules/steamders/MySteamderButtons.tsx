@@ -30,7 +30,7 @@ export const MySteamderButtons = ({ id }: { id: string }) => {
         setLoading(true);
         leaveMutation.mutateAsync(id).then(() => {
             if (!user) return;
-            setUser({ ...user, waitlist: null });
+            setUser({ ...user, steamder: null });
             leaveWaitlist();
             setSteamder(null);
         }).finally(() => setLoading(false));

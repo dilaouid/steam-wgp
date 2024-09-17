@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const countSteamders = () => {
-    return fetch(`${BASE_URL}/waitlist/count`, {
+    return fetch(`${BASE_URL}/steamder/count`, {
         method: 'GET',
         credentials: "include"
     }).then(response => {

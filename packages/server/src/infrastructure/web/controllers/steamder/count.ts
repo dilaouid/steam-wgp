@@ -6,8 +6,8 @@ export async function countSteamders(request: FastifyRequest, reply: FastifyRepl
   const fastify = request.server as FastifyInstance;
 
   try {
-    const numberOfWaitlists = await countAvailableSteamders(fastify);
-    return APIResponse(reply, { count: numberOfWaitlists }, 'OK', 200);
+    const numberOfSteamders = await countAvailableSteamders(fastify);
+    return APIResponse(reply, { count: numberOfSteamders }, 'OK', 200);
   } catch (err) {
     fastify.log.error(err);
     return APIResponse(reply, null, err as string, 500);

@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getSteamder = (steamderId: string) => {
     const token = getCookieValue('token');
-    return fetch(`${BASE_URL}/waitlist/${steamderId}`, {
+    return fetch(`${BASE_URL}/steamder/${steamderId}`, {
         method: 'GET',
         credentials: "include",
         headers: {

@@ -6,8 +6,8 @@ import { checkCommonGames } from "./checkCommonGames";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
 import { Game } from "../../../domain/entities";
 
-export const startWaitlist = async (fastify: FastifyInstance, waitlist: Steamder, waitlistId: string, allGames: number[], waitlists: Map<any, any>): Promise<void> => {
-  if (!waitlist || waitlist.players.length < 2) return;
+export const startWaitlist = async (fastify: FastifyInstance, steamder: Steamder, steamderId: string, allGames: number[], steamdersMap: Map<any, any>): Promise<void> => {
+  if (!steamder || steamder.players.length < 2) return;
 
   const playersAndGamesInfo = await fastify.db.select().from(steamdersPlayers)
     .leftJoin(
@@ -18,32 +18,32 @@ export const startWaitlist = async (fastify: FastifyInstance, waitlist: Steamder
       )
     )
     .where(
-      eq(steamdersPlayers.steamder_id, waitlistId)
+      eq(steamdersPlayers.steamder_id, steamderId)
     )
     .execute();
 
-  // check if all players are in the waitlist
-  const allPlayersPresent = waitlist.players.every((player: PlayerInfo) =>
-    playersAndGamesInfo.some((row: any) => row.waitlists_players.player_id !== BigInt(player?.player_id)));
+  // check if all players are in the steamder
+  const allPlayersPresent = steamder.players.every((player: PlayerInfo) =>
+    playersAndGamesInfo.some((row: any) => row.steamder_players.player_id !== BigInt(player?.player_id)));
 
   if (!allPlayersPresent) {
-    fastify.log.error(`Mismatch in players present in the room ${waitlistId}`);
+    fastify.log.error(`Mismatch in players present in the room ${steamderId}`);
     return;
   }
-  fillPlayerGamesList(waitlists);
+  fillPlayerGamesList(steamdersMap);
 
-  if (!waitlist.display_all_games) {
-    const commonSelectableGames = await checkCommonGames(waitlist, waitlistId, fastify);
+  if (!steamder.display_all_games) {
+    const commonSelectableGames = await checkCommonGames(steamder, steamderId, fastify);
     if (!commonSelectableGames) return;
-    waitlist.commonGames = commonSelectableGames.map((game: Game) => game.id)
+    steamder.commonGames = commonSelectableGames.map((game: Game) => game.id)
   } else {
-    waitlist.commonGames = allGames;
+    steamder.commonGames = allGames;
   }
 
-  // update the waitlist in the database (start: true)
+  // update the steamder in the database (start: true)
   await fastify.db.update(steamders)
     .set({ started: true })
-    .where(eq(steamders.id, waitlistId))
+    .where(eq(steamders.id, steamderId))
     .execute();
-  waitlist.started = true;
+  steamder.started = true;
 };

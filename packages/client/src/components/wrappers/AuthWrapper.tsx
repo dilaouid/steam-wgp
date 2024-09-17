@@ -12,6 +12,9 @@ export const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
     const { data, isError, error, isSuccess, isFetched } = useCheckAuth();
     const { setUser, toggleAuth } = useAuthStore();
 
+    console.log(data);
+    
+
     useEffect(() => {
         if (isError) {
             setUser(null);

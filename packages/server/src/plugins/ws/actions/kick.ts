@@ -15,7 +15,7 @@ export const kick = (fastify: FastifyInstance, waitlistId: string, playerId: str
       delete waitlist.playerGames[playerToKick];
     }
 
-    const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
+    const waitlistDecorate: any = fastify.steamders.get(waitlistId);
 
     // update the waitlistClients.commonGames now that a player has left
     // fillPlayerGamesList();

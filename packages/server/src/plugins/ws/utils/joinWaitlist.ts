@@ -4,18 +4,18 @@ import { steamdersPlayers } from "../../../infrastructure/data/schemas";
 import { PlayerInfo, Steamder } from "../types";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
 
-export const joinWaitlist = async (fastify: FastifyInstance, waitlistId: string, player: PlayerInfo, waitlists: Map<any, any>): Promise<boolean> => {
+export const joinSteamder = async (fastify: FastifyInstance, steamderId: string, player: PlayerInfo, steamdersMap: Map<any, any>): Promise<boolean> => {
   const playerInDb = await fastify.db.select()
     .from(steamdersPlayers)
     .where(and(
-      eq(steamdersPlayers.steamder_id, waitlistId),
+      eq(steamdersPlayers.steamder_id, steamderId),
       eq(steamdersPlayers.player_id, BigInt(player.player_id))
     ))
     .execute();
 
   if (playerInDb.length === 0) {
     // L'utilisateur n'est pas dans la liste d'attente en base de données
-    fastify.log.warn(`Player ${player.player_id} is not in waitlist ${waitlistId} in the database.`);
+    fastify.log.warn(`Player ${player.player_id} is not in waitlist ${steamderId} in the database.`);
     return false;
   }
 
@@ -24,22 +24,22 @@ export const joinWaitlist = async (fastify: FastifyInstance, waitlistId: string,
     return false;
   }
 
-  const waitlist: Steamder = waitlists.get(waitlistId);
-  if (!waitlist) return false;
+  const steamder: Steamder = steamdersMap.get(steamderId);
+  if (!steamder) return false;
 
-  const existingPlayerIndex = waitlist.players.findIndex(p => p.player_id === player.player_id);
+  const existingPlayerIndex = steamder.players.findIndex(p => p.player_id === player.player_id);
   if (existingPlayerIndex > -1) {
-    waitlist.players[existingPlayerIndex] = player;
+    steamder.players[existingPlayerIndex] = player;
   } else {
-    fastify.log.info(`Player ${player.player_id} joined waitlist ${waitlistId}`);
-    waitlist.players.push(player);
+    fastify.log.info(`Player ${player.player_id} joined waitlist ${steamderId}`);
+    steamder.players.push(player);
   }
 
-  fillPlayerGamesList(waitlists);
+  fillPlayerGamesList(steamdersMap);
 
-  const initialGames = waitlist.playerGames[waitlist.players[0].player_id] || [];
-  waitlist.commonGames = waitlist.players.reduce((commonGames, player) => {
-    const currentGames = waitlist.playerGames[player.player_id] || [];
+  const initialGames = steamder.playerGames[steamder.players[0].player_id] || [];
+  steamder.commonGames = steamder.players.reduce((commonGames, player) => {
+    const currentGames = steamder.playerGames[player.player_id] || [];
     if (commonGames.length === 0) return currentGames;
     return commonGames.filter(game => currentGames.includes(game));
   }, initialGames);

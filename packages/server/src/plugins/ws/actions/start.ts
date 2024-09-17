@@ -2,16 +2,16 @@ import { FastifyInstance } from "fastify";
 import { Steamder } from "../types";
 import { calculateAllGames, deleteWaitlist, startWaitlist } from "../utils";
 
-export const start = async (fastify: FastifyInstance, waitlist: Steamder, waitlistId: string, playerId: string, waitlists: Map<any, any>) => {
+export const start = async (fastify: FastifyInstance, waitlist: Steamder, waitlistId: string, playerId: string, steamders: Map<any, any>) => {
   try {
     if (waitlist.players.length < 2) return;
     // cannot start if the waitlist is already started or ended
     if (waitlist.started || waitlist.ended) return;
     if (playerId !== waitlist.adminId) return;
-    const waitlistEntry: any = fastify.waitlists.get(waitlistId);
+    const waitlistEntry: any = fastify.steamders.get(waitlistId);
 
     const allGames = waitlist.display_all_games ? calculateAllGames(waitlist) : [];
-    await startWaitlist(fastify, waitlist, waitlistId, allGames, waitlists)
+    await startWaitlist(fastify, waitlist, waitlistId, allGames, steamders)
 
     // count 5 seconds per game
     const timing = (waitlist.display_all_games ? allGames.length : waitlist.commonGames.length) * 2000;

@@ -6,7 +6,7 @@ import { PlayerInfo, Steamder } from "../types";
 import { calculateAllGames, updateCommonGames } from "../utils";
 
 export const leave = async (fastify: FastifyInstance, waitlistId: string, waitlist: Steamder, playerId: string) => {
-  const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
+  const waitlistDecorate: any = fastify.steamders.get(waitlistId);
 
   if (waitlist.started || waitlist.ended || !waitlistDecorate) return;
   if (waitlist) {

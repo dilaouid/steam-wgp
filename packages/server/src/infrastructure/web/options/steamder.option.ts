@@ -27,7 +27,7 @@ export const createSteamderOpts = {
 };
 
 /**
- * Options for retrieving waitlists.
+ * Options for retrieving steamders.
  * Route: GET - /search
  * @example fastify.route(getSteamdersOpts);
  */

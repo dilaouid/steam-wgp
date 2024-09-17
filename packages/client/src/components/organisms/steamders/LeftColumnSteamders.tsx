@@ -42,8 +42,8 @@ export const LeftColumnSteamders: React.FC = () => {
             </StyledText>
             <hr />
             { !user && <CannotCreateSteamder>{ t('not_logged') }</CannotCreateSteamder> }
-            { user && user.waitlist && <CannotCreateSteamder>{ t('already_in') }</CannotCreateSteamder> }
-            { user && !user.waitlist && <CreateSteamderForm /> }
+            { user && user.steamder && <CannotCreateSteamder>{ t('already_in') }</CannotCreateSteamder> }
+            { user && !user.steamder && <CreateSteamderForm /> }
         </StyledCol>
     );
 };

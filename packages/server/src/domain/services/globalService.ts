@@ -7,10 +7,10 @@ import {
 } from "../../infrastructure/repositories";
 
 /**
- * Retrieves statistics for the SteamWGP service: player count, game count, match count, waitlist count, and 3 most popular games.
+ * Retrieves statistics for the SteamWGP service: player count, game count, match count, steamder count, and 3 most popular games.
  *
  * @param {FastifyInstance} fastify - The Fastify instance.
- * @returns {Promise<Object>} The statistics object containing player count, game count, match count, waitlist count, and popular games.
+ * @returns {Promise<Object>} The statistics object containing player count, game count, match count, steamder count, and popular games.
  */
 export const SteamWGPStats = async (fastify: FastifyInstance) => {
   const [ players ] = await countPlayers(fastify);

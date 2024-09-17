@@ -31,7 +31,7 @@ export async function getSteamderWithPlayers(request: FastifyRequest<{ Params: P
     if (!steamderInfos) return APIResponse(reply, null, "room_does_not_exist", 404);
 
     // Format the steamder infos to return only the necessary data and with the correct format
-    const steamder = formatSteamderInfos(steamderInfos[0]);
+    const steamder = formatSteamderInfos(steamderInfos);
     return APIResponse(reply, steamder, "retrieved_room", 200);
   } catch (err) {
     fastify.log.error(err);

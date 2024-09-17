@@ -7,7 +7,7 @@ export const searchSteamders = async (page: number) => {
     const offset = (page - 1) * ELEMENTS_PER_PAGE;
     try {
         const token = getCookieValue('token');
-        const response = await fetch(`${BASE_URL}/waitlist/search?limit=${limit}&offset=${offset}`, {
+        const response = await fetch(`${BASE_URL}/steamder/search?limit=${limit}&offset=${offset}`, {
             headers: {
                 'Authorization': 'Bearer ' + token
             },
