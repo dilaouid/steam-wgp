@@ -1,11 +1,12 @@
 import { HTTPMethods } from "fastify";
 import { isAuthenticated } from "../../../auth/mw";
+import { getLibrary, updateHiddenGames } from "../controllers/library";
 
 export const getLibraryOpts = {
-  method: "GET" as HTTPMethods,
-  url: "/",
+  method: 'GET' as HTTPMethods,
+  url: '/',
   handler: getLibrary,
-  preValidation: [isAuthenticated],
+  preValidation: [isAuthenticated]
 };
 
 export const updateHiddenGamesOpts = {
