@@ -132,3 +132,4 @@ bs*
 .unotes/*
 steamdb.json
 migrations/
+*.sql
