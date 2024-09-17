@@ -65,7 +65,7 @@ export const removeDuplicatesController = (games: number[]): number[] => {
 export const formatPlayers = (acc: any[], row: { players: { id: string; avatar_hash: string; username: string, profileurl: string }; games: any; }) => {
   row.players.id = row.players.id.toString();
   const player = acc.find((p: { player_id: any; }) => p.player_id === row.players.id) || {
-    player_id: row.players.id,
+    player_id: row.players.id.toString(),
     avatar_hash: row.players.avatar_hash,
     username: row.players.username,
     profileurl: row.players.profileurl,
