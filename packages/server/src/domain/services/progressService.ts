@@ -98,6 +98,7 @@ export const insertGamesInDatabase = async (f: FastifyInstance, appIdsNotInDB: n
 
 export async function insertGamesInLibrary(f: FastifyInstance, playerId: bigint, gamesToAddToLibrary: number[]): Promise<number> {
   const insert = gamesToAddToLibrary.map((game_id) => ({ game_id, player_id: playerId }));
+  if (insert.length === 0) return 0;
   await insertToLibrary(f, insert);
 
   return gamesToAddToLibrary.length;
