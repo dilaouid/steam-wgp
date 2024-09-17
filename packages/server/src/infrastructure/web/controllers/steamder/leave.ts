@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
 import { APIResponse } from "../../../../utils/response";
 import { leaveAndUpdateSteamder } from "../../../../domain/services/steamderService";
-import { Player } from "../../../../models/Players";
+import { Player } from "../../../../domain/entities";
 
 
 /**

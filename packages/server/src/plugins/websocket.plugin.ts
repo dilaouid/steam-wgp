@@ -8,20 +8,20 @@ import jwt from 'jsonwebtoken';
 
 import { games, libraries, players } from '../infrastructure/data/schemas';
 
-import { createWaitlist, joinWaitlist } from './ws/utils';
+import { createWaitlist, joinSteamder } from './ws/utils';
 import { PlayerInfo } from './ws/types';
 import { swipe, leave, kick, unswipe, update, allGamesSwitch } from './ws/actions';
 import { start } from './ws/actions/start';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
-  const waitlists = new Map();
+  const steamders = new Map();
   const userAuthMap = new Map();
 
-  fastify.decorate('waitlists', waitlists);
+  fastify.decorate('steamders', steamders);
 
   const handleSocketClose = (waitlistId: string, socket: WebSocket, clientId: string) => {
-    const waitlistEntry = waitlists.get(waitlistId);
+    const waitlistEntry = steamders.get(waitlistId);
     if (waitlistEntry)
       waitlistEntry.sockets.delete(socket);
     userAuthMap.delete(clientId);
@@ -111,18 +111,18 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         }
 
         // create the waitlist if it doesn't exist yet
-        let waitlistEntry = waitlists.get(waitlistId);
+        let waitlistEntry = steamders.get(waitlistId);
 
         if (!waitlistEntry) {
-          await createWaitlist(fastify, waitlistId, player, waitlists);
-          waitlistEntry = waitlists.get(waitlistId);
+          await createWaitlist(fastify, waitlistId, player, steamders);
+          waitlistEntry = steamders.get(waitlistId);
           if (!waitlistEntry) {
             fastify.log.error(`Waitlist ${waitlistId} couldn't be created`);
             connection.socket.close();
             return;
           }
         } else {
-          const joined = await joinWaitlist(fastify, waitlistId, player, waitlists);
+          const joined = await joinSteamder(fastify, waitlistId, player, steamders);
           if (!joined) {
             fastify.log.error(`Player ${playerId} couldn't join waitlist ${waitlistId}`);
             connection.socket.close();
@@ -133,7 +133,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
         // add the socket to the waitlist
         waitlistEntry.sockets.add(connection.socket);
 
-        const waitlistClients = waitlists.get(waitlistId);
+        const waitlistClients = steamders.get(waitlistId);
         if (!waitlistClients)
           throw new Error('waitlistClients is undefined');
         waitlistEntry.sockets.add(connection.socket);
@@ -168,12 +168,12 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
           // when a player swipes a game
           case 'swipe':
-            swipe(fastify, waitlists, waitlistId, payload.gameId, playerId);
+            swipe(fastify, steamders, waitlistId, payload.gameId, playerId);
             break;
 
             // when the admin starts the waitlist
           case 'start':
-            start(fastify, waitlistClients, waitlistId, playerId, waitlists);
+            start(fastify, waitlistClients, waitlistId, playerId, steamders);
             break;
 
             // when a player leaves the waitlist

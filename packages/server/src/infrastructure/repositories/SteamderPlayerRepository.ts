@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { libraries, steamdersPlayers } from "../data/schemas";
+import { libraries, steamders, steamdersPlayers } from "../data/schemas";
 import { and, eq } from "drizzle-orm";
 
 export const isPlayerInASteamder = async (
@@ -28,6 +28,7 @@ export const isPlayerInSteamder = async (
         eq(steamdersPlayers.steamder_id, steamderId)
       )
     )
+    .leftJoin(steamders, eq(steamders.id, steamdersPlayers.steamder_id))
     .limit(1)
     .execute();
 };
@@ -71,8 +72,8 @@ export const joinSteamder = async (
   steamderId: string
 ): Promise<any> => {
   return fastify.db
-    .insert({ player_id: playerId, steamder_id: steamderId })
-    .into(steamdersPlayers)
+    .insert(steamdersPlayers)
+    .values({ player_id: playerId, steamder_id: steamderId })
     .returning()
     .execute();
 }
@@ -91,8 +92,7 @@ export const leaveSteamder = async (
   steamderId: string
 ): Promise<any> => {
   return fastify.db
-    .delete()
-    .from(steamdersPlayers)
+    .delete(steamdersPlayers)
     .where(
       and(
         eq(steamdersPlayers.player_id, playerId),

@@ -6,7 +6,7 @@ import { checkGameEnd } from "./checkGameEnd";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
 import { startWaitlist } from "./startWaitlist";
 import { createWaitlist } from "./createWaitlist";
-import { joinWaitlist } from "./joinWaitlist";
+import { joinSteamder } from "./joinWaitlist";
 
 export {
   calculateAllGames,
@@ -17,5 +17,5 @@ export {
   fillPlayerGamesList,
   startWaitlist,
   createWaitlist,
-  joinWaitlist
+  joinSteamder
 };

@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, insertSteamder, isPlayerInSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
+import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, insertSteamder, isPlayerInSteamder, joinSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
 import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "../../utils/gamesUtils";
 import { SteamderInsert } from "../entities";
 
@@ -19,8 +19,9 @@ interface ISteamderExistsReturns {
  */
 export const isSteamderAvailable = async (fastify: FastifyInstance, steamderId: string): Promise<ISteamderExistsReturns> => {
   try {
+
     const steamder = await checkSteamderExists(fastify, steamderId, false);
-    if (!steamder.data) {
+    if (!steamder) {
       fastify.log.warn(`Steamder ${steamderId} not found`);
       return { success: false, message: "room_does_not_exist", status: 404 };
     }
@@ -65,7 +66,7 @@ export const updateGameLists = async (fastify: FastifyInstance, steamderId: stri
 export const getSteamderInfos = async (fastify: FastifyInstance, steamderId: string) => {
   try {
     const steamder = await getSteamderPlayersAndGames(fastify, steamderId);
-    return steamder[0] || null;
+    return steamder;
   } catch (err) {
     fastify.log.error(err);
     return null;
@@ -82,22 +83,25 @@ export const getSteamderInfos = async (fastify: FastifyInstance, steamderId: str
  */
 export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderId: string, playerId: bigint): Promise<ISteamderExistsReturns> => {
   try {
-    const steamder = await isPlayerInSteamder(fastify, playerId, steamderId);
+    const [ steamder ] = await isPlayerInSteamder(fastify, playerId, steamderId);
+    const { steamders } = steamder;
+    fastify.log.info(`Player ${playerId} leaving steamder ${steamderId}`);
+    fastify.log.info(steamder);
 
     // If the player is not in the steamder, return false
-    if (!steamder.data) {
+    if (!steamders) {
       fastify.log.warn(`Player ${playerId} not found in steamder ${steamderId}`);
       return { success: false, message: "room_does_not_exist", status: 404 };
     }
 
     // If the steamder has already started, return false
-    if (steamder.data.started) {
+    if (steamders.started) {
       fastify.log.warn(`Steamder ${steamderId} already started`);
       return { success: false, message: "room_already_started", status: 400 };
     }
 
     // If the player is the admin, delete the steamder
-    if (steamder.data.admin_id === playerId) {
+    if (steamders.admin_id === playerId) {
       fastify.log.warn(`Player ${playerId} is the admin of steamder ${steamderId}`);
       await deleteSteamder(fastify, steamderId);
       return { success: true, message: "left_the_room", status: 200 };
@@ -121,7 +125,7 @@ export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderI
  */
 export const formatSteamderInfos = (steamderInfos: any) => {
   const players = steamderInfos.reduce(formatPlayers, []);
-  steamderInfos.steamder.admin_id = steamderInfos.steamder.admin_id.toString();
+  steamderInfos[0].steamder.admin_id = steamderInfos[0].steamder.admin_id.toString();
 
   const commonGames = getCommonGamesController(players.map((player: any) => ({
     games: player.games,
@@ -130,8 +134,8 @@ export const formatSteamderInfos = (steamderInfos: any) => {
   const allGames = removeDuplicatesController(players.map((p: any) => p.games).flat());
 
   return {
-    ...steamderInfos.steamder,
-    players: steamderInfos,
+    ...steamderInfos[0].steamder,
+    players: players,
     common_games: commonGames,
     all_games: allGames
   };
@@ -139,7 +143,7 @@ export const formatSteamderInfos = (steamderInfos: any) => {
 
 export const paginateSteamder = async (fastify: FastifyInstance, offset: number, limit: number) => {
   const steamders = await getSteamdersPagination(fastify, limit, offset);
-  return steamders[0] || null;
+  return steamders || null;
 };
 
 /**
@@ -152,7 +156,7 @@ export const paginateSteamder = async (fastify: FastifyInstance, offset: number,
  * @returns The created Steamder or null if not found.
  */
 export const createSteamder = async (fastify: FastifyInstance, playerId: bigint, name: string, isPrivate: boolean) => {
-  const numberOfGames = await countPlayerGamesLibrary(fastify, playerId);
+  const [numberOfGames] = await countPlayerGamesLibrary(fastify, playerId);
 
   const data: SteamderInsert = {
     admin_id: playerId,
@@ -160,10 +164,13 @@ export const createSteamder = async (fastify: FastifyInstance, playerId: bigint,
     private: isPrivate,
     complete: false,
     started: false,
-    common_games: numberOfGames,
-    all_games: numberOfGames
+    common_games: numberOfGames.count,
+    all_games: numberOfGames.count
   };
 
-  const steamder = await insertSteamder(fastify, data);
-  return steamder[0] || null;
+  fastify.log.info(`Creating steamder ${name} for player ${playerId}`);
+
+  const [ steamder ] = await insertSteamder(fastify, data);
+  await joinSteamder(fastify, playerId, steamder.id);
+  return { ...steamder, admin_id: playerId.toString() };
 };

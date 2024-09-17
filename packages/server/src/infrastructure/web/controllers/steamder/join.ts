@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
 import { APIResponse } from "../../../../utils/response";
 import { isSteamderAvailable } from "../../../../domain/services/steamderService";
-import { Player } from "../../../../models/Players";
+import { Player } from "../../../../domain/entities";
 import { isUserInSteamder } from "../../../../domain/services/steamderPlayerService";
 import { joinSteamder } from "../../../repositories";
 
@@ -23,8 +23,9 @@ export const join = async (request: FastifyRequest<{ Params: { id: string } }>, 
       return APIResponse(response, null, isAvailable.message as string, isAvailable.status);
 
     const inSteamder = await isUserInSteamder(fastify, user.id);
-    if (inSteamder)
-      return APIResponse(response, null, 'already_in_a_room', 401);
+    if (inSteamder) {
+      return APIResponse(response, null, 'already_in_room', 400);
+    }
 
     const joined = await joinSteamder(fastify, user.id, id);
     return APIResponse(response, joined, 'joined_the_room', 200);
