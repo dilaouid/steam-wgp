@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { Waitlists, WaitlistsPlayers } from "../../../models";
+import { steamders, steamdersPlayers } from "../../../infrastructure/data/schemas";
 import { eq } from "drizzle-orm";
 
 export const deleteWaitlist = async (fastify: FastifyInstance, waitlistId: string, winner: number | undefined) => {
@@ -7,18 +7,18 @@ export const deleteWaitlist = async (fastify: FastifyInstance, waitlistId: strin
   if (!waitlist) return;
 
   // delete the waitlist in the database
-  await fastify.db.update(Waitlists.model)
+  await fastify.db.update(steamders)
     .set({
       complete: true,
       selected: winner
     }).where(
-      eq(Waitlists.model.id, waitlistId)
+      eq(steamders.id, waitlistId)
     ).execute();
 
   // remove all waitlistsplayers from the database for this waitlist
-  await fastify.db.delete(WaitlistsPlayers.model)
+  await fastify.db.delete(steamdersPlayers)
     .where(
-      eq(WaitlistsPlayers.model.waitlist_id, waitlistId)
+      eq(steamdersPlayers.steamder_id, waitlistId)
     ).execute();
 
   // delete the waitlist in the memory

@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { Waitlist } from "../types";
+import { Steamder } from "../types";
 import { calculateAllGames, deleteWaitlist, startWaitlist } from "../utils";
 
-export const start = async (fastify: FastifyInstance, waitlist: Waitlist, waitlistId: string, playerId: string, waitlists: Map<any, any>) => {
+export const start = async (fastify: FastifyInstance, waitlist: Steamder, waitlistId: string, playerId: string, waitlists: Map<any, any>) => {
   try {
     if (waitlist.players.length < 2) return;
     // cannot start if the waitlist is already started or ended

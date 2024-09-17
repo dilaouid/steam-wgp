@@ -1,24 +1,24 @@
 import { FastifyInstance } from "fastify";
-import { Libraries, Waitlists, WaitlistsPlayers } from "../../../models";
-import { PlayerInfo, Waitlist } from "../types";
+import { PlayerInfo, Steamder } from "../types";
+import { libraries, steamders, steamdersPlayers } from "../../../infrastructure/data/schemas";
 import { and, eq } from "drizzle-orm";
 import { checkCommonGames } from "./checkCommonGames";
-import { Game } from "../../../models/Games";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
+import { Game } from "../../../domain/entities";
 
-export const startWaitlist = async (fastify: FastifyInstance, waitlist: Waitlist, waitlistId: string, allGames: number[], waitlists: Map<any, any>): Promise<void> => {
+export const startWaitlist = async (fastify: FastifyInstance, waitlist: Steamder, waitlistId: string, allGames: number[], waitlists: Map<any, any>): Promise<void> => {
   if (!waitlist || waitlist.players.length < 2) return;
 
-  const playersAndGamesInfo = await fastify.db.select().from(WaitlistsPlayers.model)
+  const playersAndGamesInfo = await fastify.db.select().from(steamdersPlayers)
     .leftJoin(
-      Libraries.model,
+      libraries,
       and(
-        eq(WaitlistsPlayers.model.player_id, Libraries.model.player_id),
-        eq(Libraries.model.hidden, false)
+        eq(steamdersPlayers.player_id, libraries.player_id),
+        eq(libraries.hidden, false)
       )
     )
     .where(
-      eq(WaitlistsPlayers.model.waitlist_id, waitlistId)
+      eq(steamdersPlayers.steamder_id, waitlistId)
     )
     .execute();
 
@@ -41,9 +41,9 @@ export const startWaitlist = async (fastify: FastifyInstance, waitlist: Waitlist
   }
 
   // update the waitlist in the database (start: true)
-  await fastify.db.update(Waitlists.model)
+  await fastify.db.update(steamders)
     .set({ started: true })
-    .where(eq(Waitlists.model.id, waitlistId))
+    .where(eq(steamders.id, waitlistId))
     .execute();
   waitlist.started = true;
 };

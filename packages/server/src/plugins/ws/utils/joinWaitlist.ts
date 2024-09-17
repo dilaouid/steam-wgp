@@ -1,15 +1,15 @@
 import { and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
-import { WaitlistsPlayers } from "../../../models";
-import { PlayerInfo, Waitlist } from "../types";
+import { steamdersPlayers } from "../../../infrastructure/data/schemas";
+import { PlayerInfo, Steamder } from "../types";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
 
 export const joinWaitlist = async (fastify: FastifyInstance, waitlistId: string, player: PlayerInfo, waitlists: Map<any, any>): Promise<boolean> => {
   const playerInDb = await fastify.db.select()
-    .from(WaitlistsPlayers.model)
+    .from(steamdersPlayers)
     .where(and(
-      eq(WaitlistsPlayers.model.waitlist_id, waitlistId),
-      eq(WaitlistsPlayers.model.player_id, BigInt(player.player_id))
+      eq(steamdersPlayers.steamder_id, waitlistId),
+      eq(steamdersPlayers.player_id, BigInt(player.player_id))
     ))
     .execute();
 
@@ -24,7 +24,7 @@ export const joinWaitlist = async (fastify: FastifyInstance, waitlistId: string,
     return false;
   }
 
-  const waitlist: Waitlist = waitlists.get(waitlistId);
+  const waitlist: Steamder = waitlists.get(waitlistId);
   if (!waitlist) return false;
 
   const existingPlayerIndex = waitlist.players.findIndex(p => p.player_id === player.player_id);

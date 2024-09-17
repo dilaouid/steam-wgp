@@ -1,11 +1,11 @@
 import { FastifyInstance } from "fastify";
 import { deleteWaitlist, checkGameEnd } from "../utils";
-import { Waitlist } from "../types";
+import { Steamder } from "../types";
 
 export const swipe = async (fastify: FastifyInstance, waitlists: Map<any, any>, waitlistId: string, gameId: number, playerId: string) => {
   try {
     const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
-    const waitlist: Waitlist = waitlists.get(waitlistId);
+    const waitlist: Steamder = waitlists.get(waitlistId);
 
     if (waitlist && waitlist.started && !waitlist.ended && waitlist.commonGames.includes(gameId)) {
       if (waitlist.swipedGames[gameId] && !waitlist.swipedGames[gameId].includes(playerId)) {

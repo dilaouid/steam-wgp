@@ -1,4 +1,4 @@
 import { PlayerInfo } from "./IPlayerInfo";
-import { Waitlist } from "./IWaitlist";
+import { Steamder } from "./ISteamder";
 
-export { PlayerInfo, Waitlist };
+export { PlayerInfo, Steamder };

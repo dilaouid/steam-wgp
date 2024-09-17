@@ -1,16 +1,16 @@
 import { FastifyInstance } from "fastify";
-import { PlayerInfo, Waitlist } from "../types";
-import { Waitlists, WaitlistsPlayers } from "../../../models";
+import { PlayerInfo, Steamder } from "../types";
+import { steamders, steamdersPlayers } from "../../../infrastructure/data/schemas";
 import { and, eq } from "drizzle-orm";
 
 export const createWaitlist = async (fastify: FastifyInstance, waitlistId: string, player: PlayerInfo, waitlists: Map<any, any>): Promise<void> => {
   fastify.log.info(`---------Creating waitlist ${waitlistId}---------`);
   const existingWaitlist = await fastify.db.select()
-    .from(Waitlists.model)
-    .leftJoin(WaitlistsPlayers.model, eq(Waitlists.model.id, WaitlistsPlayers.model.waitlist_id))
+    .from(steamders)
+    .leftJoin(steamdersPlayers, eq(steamders.id, steamdersPlayers.steamder_id))
     .where(and(
-      eq(Waitlists.model.id, waitlistId),
-      eq(Waitlists.model.complete, false)
+      eq(steamders.id, waitlistId),
+      eq(steamders.complete, false)
     ))
     .execute();
 
@@ -29,7 +29,7 @@ export const createWaitlist = async (fastify: FastifyInstance, waitlistId: strin
   }
 
   const adminId = existingWaitlist[0].waitlists.admin_id.toString();
-  const waitlist: Waitlist = {
+  const waitlist: Steamder = {
     adminId,
     players: [player],
     playerGames: {},

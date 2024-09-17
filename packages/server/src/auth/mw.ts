@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import jwt from 'jsonwebtoken';
 import { eq } from 'drizzle-orm';
 
-import { Players } from '../models';
+import { players } from '../infrastructure/data/schemas';
 
 export async function isAuthenticated(req: FastifyRequest, res: FastifyReply) {
   try {
@@ -23,7 +23,7 @@ export async function isAuthenticated(req: FastifyRequest, res: FastifyReply) {
     const secretKey = req.server.config.SECRET_KEY;
     const decoded = jwt.verify(token, secretKey) as any;
 
-    const userExists = await req.server.db.select().from(Players.model).where(eq(Players.model.id, decoded.id)).execute();
+    const userExists = await req.server.db.select().from(players).where(eq(players.id, decoded.id)).execute();
     if (userExists.length === 0)
       throw new Error('User not found');
 

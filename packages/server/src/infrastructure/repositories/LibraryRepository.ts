@@ -44,7 +44,7 @@ export const getPlayerLibrary = async (
 export async function getPlayerAllLibrary(
   fastify: FastifyInstance,
   playerId: bigint
-): Promise<Partial<Library[]>> {
+): Promise<Library[]> {
   const result = fastify.db
     .select({
       id: libraries.game_id,

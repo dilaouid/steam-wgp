@@ -1,11 +1,11 @@
 import { FastifyInstance } from "fastify";
 
 import { eq } from "drizzle-orm";
-import { Waitlists } from "../../../models";
-import { PlayerInfo, Waitlist } from "../types";
+import { steamders } from "../../../infrastructure/data/schemas";
+import { PlayerInfo, Steamder } from "../types";
 import { calculateAllGames, updateCommonGames } from "../utils";
 
-export const leave = async (fastify: FastifyInstance, waitlistId: string, waitlist: Waitlist, playerId: string) => {
+export const leave = async (fastify: FastifyInstance, waitlistId: string, waitlist: Steamder, playerId: string) => {
   const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
 
   if (waitlist.started || waitlist.ended || !waitlistDecorate) return;
@@ -20,14 +20,14 @@ export const leave = async (fastify: FastifyInstance, waitlistId: string, waitli
   const all_games = calculateAllGames(waitlist);
 
   fastify.db
-    .update(Waitlists.model)
+    .update(steamders)
     .set(
       {
         common_games: waitlist.commonGames.length,
         all_games: all_games.length
       }
     ).where(
-      eq(Waitlists.model.id, waitlistId)
+      eq(steamders.id, waitlistId)
     ).execute();
 
   // send message to all players

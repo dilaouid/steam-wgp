@@ -6,7 +6,7 @@ import { and, eq } from 'drizzle-orm';
 
 import jwt from 'jsonwebtoken';
 
-import { Games, Libraries, Players } from '../models';
+import { games, libraries, players } from '../infrastructure/data/schemas';
 
 import { createWaitlist, joinWaitlist } from './ws/utils';
 import { PlayerInfo } from './ws/types';
@@ -59,18 +59,18 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
         const playerId = userAuthMap.get(clientId);
         const playerData = await fastify.db.selectDistinct()
-          .from(Players.model)
-          .rightJoin(Libraries.model,
+          .from(players)
+          .rightJoin(libraries,
             and(
-              eq(Players.model.id, Libraries.model.player_id),
-              eq(Libraries.model.hidden, false)
+              eq(players.id, libraries.player_id),
+              eq(libraries.hidden, false)
             )
           )
-          .rightJoin(Games.model, eq(Libraries.model.game_id, Games.model.id))
+          .rightJoin(games, eq(libraries.game_id, games.id))
           .where(
             and(
-              eq(Players.model.id, BigInt(playerId)),
-              eq(Games.model.is_selectable, true)
+              eq(players.id, BigInt(playerId)),
+              eq(games.is_selectable, true)
             )
           ).execute();
 

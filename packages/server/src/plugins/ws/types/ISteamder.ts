@@ -1,6 +1,6 @@
 import { PlayerInfo } from "./IPlayerInfo";
 
-export interface Waitlist {
+export interface Steamder {
     adminId: string;
     players: PlayerInfo[];
     playerGames: Record<string, number[]>;

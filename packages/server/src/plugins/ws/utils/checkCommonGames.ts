@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
-import { Waitlist } from "../types";
+import { Steamder } from "../types";
 import { inArray, eq, and } from "drizzle-orm";
-import { Games } from "../../../models";
+import { games } from "../../../infrastructure/data/schemas";
 
-export const checkCommonGames = async (waitlist: Waitlist, waitlistId: string, fastify: FastifyInstance) => {
+export const checkCommonGames = async (waitlist: Steamder, waitlistId: string, fastify: FastifyInstance) => {
   const initialGames = waitlist.playerGames[waitlist.players[0].player_id] || [];
   waitlist.commonGames = waitlist.players.reduce((commonGames, player) => {
     const currentGames = waitlist.playerGames[player.player_id] || [];
@@ -11,12 +11,12 @@ export const checkCommonGames = async (waitlist: Waitlist, waitlistId: string, f
     return commonGames.filter(game => currentGames.includes(game));
   }, initialGames);
 
-  const commonSelectableGames = await fastify.db.select({ id: Games.model.id })
-    .from(Games.model)
+  const commonSelectableGames = await fastify.db.select({ id: games.id })
+    .from(games)
     .where(
       and(
-        inArray(Games.model.id, waitlist.commonGames),
-        eq(Games.model.is_selectable, true)
+        inArray(games.id, waitlist.commonGames),
+        eq(games.is_selectable, true)
       )
     )
     .execute();
