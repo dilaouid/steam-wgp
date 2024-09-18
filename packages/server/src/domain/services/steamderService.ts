@@ -10,7 +10,7 @@ interface ISteamderExistsReturns {
 }
 
 /**
- * Checks if the steamder is available for a given waitlist ID and player ID (and the steamder haven't started yet)
+ * Checks if the steamder is available for a given steamder ID and player ID (and the steamder haven't started yet)
  *
  * @param fastify - The Fastify instance.
  * @param steamderId - The ID of the steamder.
@@ -20,7 +20,7 @@ interface ISteamderExistsReturns {
 export const isSteamderAvailable = async (fastify: FastifyInstance, steamderId: string): Promise<ISteamderExistsReturns> => {
   try {
 
-    const steamder = await checkSteamderExists(fastify, steamderId, false);
+    const [ steamder ] = await checkSteamderExists(fastify, steamderId, false);
     if (!steamder) {
       fastify.log.warn(`Steamder ${steamderId} not found`);
       return { success: false, message: "room_does_not_exist", status: 404 };
@@ -48,7 +48,7 @@ export const updateGameLists = async (fastify: FastifyInstance, steamderId: stri
     const allGamesIds = removeDuplicates(allSteamderGames);
     const commonGamesIds = getCommonGames(allSteamderGames);
 
-    await updateSteamder(fastify, steamderId, { common_games: commonGamesIds, all_games: allGamesIds });
+    await updateSteamder(fastify, steamderId, { common_games: commonGamesIds.length, all_games: allGamesIds.length });
     return true;
   } catch (err) {
     fastify.log.error(err);
@@ -86,7 +86,6 @@ export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderI
     const [ steamder ] = await isPlayerInSteamder(fastify, playerId, steamderId);
     const { steamders } = steamder;
     fastify.log.info(`Player ${playerId} leaving steamder ${steamderId}`);
-    fastify.log.info(steamder);
 
     // If the player is not in the steamder, return false
     if (!steamders) {
@@ -107,11 +106,14 @@ export const leaveAndUpdateSteamder = async (fastify: FastifyInstance, steamderI
       return { success: true, message: "left_the_room", status: 200 };
     }
 
+    fastify.log.info(`It's possible to leave the steamder ${steamderId}`);
+
     // Otherwise, delete the player from the steamder and updates the game lists from it
     await leaveSteamder(fastify, playerId, steamderId);
     await updateGameLists(fastify, steamderId);
     return { success: true, message: "left_the_room", status: 200 };
   } catch (err) {
+    fastify.log.error('------- Error in leaveAndUpdateSteamder -------');
     fastify.log.error(err);
     return { success: true, message: "internal_server_error", status: 500 };
   }

@@ -2,8 +2,8 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
 import { APIResponse } from "../../../../utils/response";
 import { updateGameLists } from "../../../../domain/services/steamderService";
-import { Player } from "../../../../models/Players";
 import { canAdminKickFromSteamder, leaveSteamder } from "../../../repositories";
+import { Player } from "../../../../domain/entities";
 
 interface Parameters {
     steamderId: string;
@@ -28,13 +28,13 @@ export const kickSteamder = async (request: FastifyRequest<{ Params: Parameters 
   const fastify = request.server as FastifyInstance;
   try {
     // Check if the authenticated user is an admin of the steamder so they can kick the player
-    const inSteamder = await canAdminKickFromSteamder(fastify, steamderId, BigInt(playerId), user.id);
+    const inSteamder = await canAdminKickFromSteamder(fastify, steamderId, user.id, BigInt(playerId));
     if (inSteamder.length === 0)
       return APIResponse(response, null, 'not_room_admin', 401);
-
-    // if the authenticated user
+    // if the authenticated user is the admin of the steamder, kick the player
     await leaveSteamder(fastify, BigInt(playerId), steamderId);
     await updateGameLists(fastify, steamderId);
+    return APIResponse(response, null, 'player_kicked', 200);
   } catch (err) {
     fastify.log.error(err);
     return APIResponse(response, null, 'internal_server_error', 500);

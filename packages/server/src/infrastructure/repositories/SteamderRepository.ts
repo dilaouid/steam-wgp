@@ -129,12 +129,7 @@ export const countAvailableSteamders = async (
     .execute();
 };
 
-export const canAdminKickFromSteamder = async (
-  fastify: FastifyInstance,
-  steamderId: string,
-  playerId: bigint,
-  userId: bigint
-): Promise<any> => {
+export const canAdminKickFromSteamder = async (fastify: FastifyInstance, steamderId: string, playerId: bigint, userId: bigint): Promise<any> => {
   const { db } = fastify;
   return db
     .select()
