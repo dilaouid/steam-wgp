@@ -1,12 +1,18 @@
 {
-    "name": "@steamwgp/shared",
-    "version": "1.0.0",
-    "main": "index.js",
-    "types": "index.d.ts",
-    "exports": {
-      "./zod/schemas/*": "./zod/schemas/*"
-    },
-    "dependencies": {
-      "zod": "^3.x.x"
-    }
+  "name": "@steamwgp/shared",
+  "version": "1.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exports": {
+    "./zod/schemas/*": "./zod/schemas/*"
+  },
+  "dependencies": {
+    "zod": "^3.x.x"
+  },
+  "devDependencies": {
+    "typescript": "^4.x.x"
   }
+}

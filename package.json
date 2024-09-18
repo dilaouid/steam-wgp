@@ -1,28 +1,29 @@
 {
-    "name": "steamwgp-monorepo",
-    "workspaces": [
-      "packages/*"
-    ],
-    "scripts": {
-      "dev:client": "pnpm --filter steamwgp-client dev",
-      "preview:client": "pnpm --filter steamwgp-client preview",
-      "build:client": "pnpm --filter steamwgp-client build",
-      "build:client:prod": "pnpm --filter steamwgp-client build:prod",
-      "lint:client": "pnpm --filter steamwgp-client lint",
-      "deploy:client": "pnpm --filter steamwgp-client deploy",
-      "dev:server": "pnpm --filter steamwgp-server dev",
-      "build:server": "pnpm --filter steamwgp-server build",
-      "start:server": "pnpm --filter steamwgp-server start",
-      "lint:server": "pnpm --filter steamwgp-server lint",
-      "lint:server:fix": "pnpm --filter steamwgp-server lint:fix",
-      "lint": "pnpm run lint:client && pnpm run lint:server",
-      "build": "pnpm run build:client && pnpm run build:server",
-      "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
-      "preview": "concurrently \"pnpm run preview:client\" \"pnpm run dev:server\"",
-      "generate": "pnpm --filter steamwgp-server generate",
-      "migrate": "pnpm --filter steamwgp-server migrate"
-    },
-    "devDependencies": {
-      "concurrently": "^8.2.2"
-    }
+  "name": "steamwgp-monorepo",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:client": "pnpm --filter steamwgp-client dev",
+    "preview:client": "pnpm --filter steamwgp-client preview",
+    "build:client": "pnpm --filter steamwgp-client build",
+    "build:client:prod": "pnpm --filter steamwgp-client build:prod",
+    "lint:client": "pnpm --filter steamwgp-client lint",
+    "deploy:client": "pnpm --filter steamwgp-client deploy",
+    "dev:server": "pnpm --filter steamwgp-server dev",
+    "build:server": "pnpm --filter steamwgp-server build",
+    "start:server": "pnpm --filter steamwgp-server start",
+    "lint:server": "pnpm --filter steamwgp-server lint",
+    "lint:server:fix": "pnpm --filter steamwgp-server lint:fix",
+    "lint": "pnpm run lint:client && pnpm run lint:server",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
+    "preview": "concurrently \"pnpm run preview:client\" \"pnpm run dev:server\"",
+    "generate": "pnpm --filter steamwgp-server generate",
+    "migrate": "pnpm --filter steamwgp-server migrate"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "pnpm":"9.10.0"
+  }
 }
