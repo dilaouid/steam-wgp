@@ -50,7 +50,6 @@ export const CreateSteamderForm = () => {
         e.preventDefault();
         if (!user) return;
         createSteamderMutation.mutateAsync({ name, isPrivate }).then((data) => {
-            console.log(data)
             setUser({ ...user, steamder: data.data.id });
             navigate({
                 to: `/steamder/${data.data.id}`
