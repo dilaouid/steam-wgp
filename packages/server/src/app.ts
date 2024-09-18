@@ -1,11 +1,6 @@
 import Fastify from 'fastify';
 import * as plugins from './plugins';
-import debugRouter from './infrastructure/web/routes/debug.route';
-import authRouter from './infrastructure/web/routes/auth.route';
-import globalRouter from './infrastructure/web/routes/global.route';
-import steamderRouter from './infrastructure/web/routes/steamder.route';
-import playerRouter from './infrastructure/web/routes/player.route';
-import libraryRouter from './infrastructure/web/routes/library.route';
+import router from './infrastructure/web/routes';
 
 import fastifySession from '@fastify/session';
 import fastifyCookie from '@fastify/cookie';
@@ -47,13 +42,7 @@ const initialize = async () => {
     // ==================== End of plugins loading
 
     // ==================== Routes loading below
-    if (fastify.config.NODE_ENV === 'development')
-      await fastify.register(debugRouter, { prefix: '/debug' });
-    await fastify.register(authRouter, { prefix: '/auth' });
-    await fastify.register(playerRouter, { prefix: '/players' });
-    await fastify.register(steamderRouter, { prefix: '/steamder' });
-    await fastify.register(libraryRouter, { prefix: '/library' });
-    await fastify.register(globalRouter, { prefix: '/' });
+    await fastify.register(router);
     // ==================== End of routes loading
 
     // ==================== Server boot and listen

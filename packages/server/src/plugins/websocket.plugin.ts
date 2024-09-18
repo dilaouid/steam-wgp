@@ -168,7 +168,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
           // when a player swipes a game
           case 'swipe':
-            fastify.log.info(`Player ${playerId} swiped game ${payload.gameId}`);
             swipe(fastify, steamders, steamderId, payload.gameId, playerId);
             break;
 
@@ -189,7 +188,6 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           }
           // when a player unswipes a game
           case 'unswipe':
-            fastify.log.info(`Player ${playerId} unswiped game ${payload.gameId}`);
             unswipe(fastify, steamderClients, payload.gameId);
             break;
 
