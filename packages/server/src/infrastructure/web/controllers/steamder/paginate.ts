@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { paginateSteamder } from "../../../../domain/services/steamderService";
-import { paginateSchema } from "@shared/zod/schemas/steamderSchema";
+import { paginateSchema } from "@steamwgp/shared/zod/schemas/steamderSchema.ts";
+
 import { APIResponse } from "../../../../utils/response";
 
 interface Parameters {
