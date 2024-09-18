@@ -1,10 +1,10 @@
 {
-    "name": "@shared",
+    "name": "@steamwgp/shared",
     "version": "1.0.0",
     "main": "index.js",
     "types": "index.d.ts",
     "exports": {
-      "./schemas": "./zod/schemas"
+      "./zod/schemas/*": "./zod/schemas/*"
     },
     "dependencies": {
       "zod": "^3.x.x"
