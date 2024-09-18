@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { checkUserDeleted } from "../../domain/services/authService";
-import { retrieveUserById } from "../../domain/services/playerService";
-import { Player } from "../../models/Players";
+import { checkUserDeleted } from "../../domain/services/AuthService";
+import { retrieveUserById } from "../../domain/services/PlayerService";
+import { Player } from "../../domain/entities";
 
 export const validateSteam = async (
   fastify: FastifyInstance,

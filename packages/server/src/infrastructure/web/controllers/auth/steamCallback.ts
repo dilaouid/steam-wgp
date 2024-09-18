@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { login } from "../../../../domain/services/authService";
+import { login } from "../../../../domain/services/AuthService";
 
 /**
  * Handles the Steam callback for authentication.

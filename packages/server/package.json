@@ -41,8 +41,7 @@
     "pg": "^8.12.0",
     "pino": "^8.21.0",
     "pino-pretty": "^10.3.1",
-    "postgres": "^3.4.4",
-    "@steamwgp/shared": "workspace:*"
+    "postgres": "^3.4.4"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

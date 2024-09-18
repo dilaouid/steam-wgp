@@ -2,7 +2,8 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Player } from "../../../../domain/entities";
 import { APIResponse } from "../../../../utils/response";
 
-import { steamderSchema } from "@steamwgp/shared/zod/schemas/steamderSchema.ts";
+import { steamderSchema } from "../../validations";
+
 import { isUserInSteamder } from "../../../../domain/services/steamderPlayerService";
 import { createSteamder } from "../../../../domain/services/steamderService";
 

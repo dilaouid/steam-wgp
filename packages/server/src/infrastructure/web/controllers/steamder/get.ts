@@ -3,7 +3,7 @@ import { Player } from "../../../../domain/entities";
 import { APIResponse } from "../../../../utils/response";
 import { isUserInSpecificSteamder } from "../../../../domain/services/steamderPlayerService";
 
-import { uuidSchema } from "@steamwgp/shared/zod/schemas/typeSchema.ts";
+import { uuidSchema } from "../../validations";
 import { formatSteamderInfos, getSteamderInfos } from "../../../../domain/services/steamderService";
 
 interface Parameters {
