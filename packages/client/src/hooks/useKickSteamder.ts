@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { kickSteamder } from "../services/api/waitlists/kick";
+import { kickSteamder } from "../services/api/steamders/kick";
 
 export const useKickSteamder = (steamderId: string, playerId: string) => {
     const queryClient = useQueryClient();
