@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import path from "path";
 import fs from "fs";
 import { FastifyInstance } from "fastify/types/instance";
+import { games } from "../../../data/schemas";
 
 /**
  * [DEBUG - Works only in development] Seeds the database with games.
@@ -20,7 +21,7 @@ export const seed = async (request: FastifyRequest, reply: FastifyReply) => {
 
   // Map the games to the database schema
   // Only games with multiplayer capabilities are selectable
-  const games = jsonData.map((game: any) => {
+  const gamesToAdd = jsonData.map((game: any) => {
     const hasMultiplayer =
       game.categories?.includes("Multi-player") ||
       game.categories?.includes("Online PvP") ||
@@ -28,7 +29,7 @@ export const seed = async (request: FastifyRequest, reply: FastifyReply) => {
     return { id: game.sid, is_selectable: hasMultiplayer };
   });
   try {
-    for (const game of games)
+    for (const game of gamesToAdd)
       await fastify.db.insert(games).values(game).onConflictDoNothing();
     return reply.send({
       success: true,
