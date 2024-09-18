@@ -14,7 +14,7 @@ const LabelTooltip = (message: string) =>
     </Tooltip>;
 
 export const GamesInCommon: React.FC<{commonGames: number}> = ({ commonGames }) => {
-    const { t } = useTranslation('pages/steamder', { keyPrefix: 'waitlist.players' });
+    const { t } = useTranslation('pages/steamder', { keyPrefix: 'steamder.players' });
 
     return (
         <OverlayTrigger placement="bottom" overlay={LabelTooltip(t('games_in_common', { count: commonGames }))}>

@@ -27,7 +27,7 @@ interface KickPlayerButtonProps {
 }
 
 export const KickPlayerButton: React.FC<KickPlayerButtonProps> = ({ playerId, steamderId, username }) => {
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.actions.modal.kick" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.actions.modal.kick" });
     const [show, setShow] = useState(false);
     const kickMutation = useKickSteamder(steamderId, playerId);
     

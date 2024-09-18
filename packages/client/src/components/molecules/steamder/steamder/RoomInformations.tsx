@@ -19,7 +19,7 @@ const NoMarginTopText = styled.p`
 `;
 
 export const RoomInformations: React.FC = () => {
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.informations" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.informations" });
 
     const { steamder } = useSteamderStore();
     const { user } = useAuthStore();

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { useSteamderStore } from "../../../../store/steamderStore";
 
-import { NotMatchingGames } from "../../../atoms/steamder/waitlist/NotMatchingGames";
+import { NotMatchingGames } from "../../../atoms/steamder/steamder/NotMatchingGames";
 
 import { findMismatchedPlayers } from "../../../../utils/findMismatchedPlayers";
 import { ISteamder } from "../../../../types/ISteamder";
@@ -18,7 +18,7 @@ const StyledDiv = styled.div`
 `;
 
 export const ErrorsList: React.FC = () => {
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.errors" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.errors" });
     const { steamder } = useSteamderStore();
     if (!steamder) return null;
 

@@ -12,7 +12,7 @@ interface MatchingGamesProps {
 }
 
 export const NotMatchingGames: React.FC<MatchingGamesProps> = ({ player1, player2 }) => {
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.errors" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.errors" });
     return (
         <NoMarginText className="text-danger">
             <BsExclamationOctagon /> <Trans t={t} i18nKey="not_matching" values={{ player1, player2 }} components={{ 1: <strong /> }} />

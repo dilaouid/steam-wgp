@@ -1,8 +1,8 @@
 import useWebSocketStore from "../../../store/websocketStore";
 
-export const leaveWaitlist = () => {
+export const startSteamder = () => {
     const { sendMessage } = useWebSocketStore.getState();
-    const data = JSON.stringify({ action: 'leave' });
+    const data = JSON.stringify({ action: 'start' });
 
     sendMessage(data)
 };

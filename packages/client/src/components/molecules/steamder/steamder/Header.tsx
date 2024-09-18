@@ -5,7 +5,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import Skeleton from "react-loading-skeleton";
 
-import { CopyIcon } from "../../../atoms/steamder/waitlist/CopyIcon";
+import { CopyIcon } from "../../../atoms/steamder/steamder/CopyIcon";
 
 import { useSteamderStore } from "../../../../store/steamderStore";
 
@@ -22,7 +22,7 @@ const StyledTitle = styled.h3`
 `;
 
 export const Header = () => {
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder" });
     const { steamder } = useSteamderStore();
 
     return(

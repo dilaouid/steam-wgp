@@ -10,14 +10,14 @@ import { useAuthStore } from "../../../../store/authStore";
 import { useLeaveSteamder } from "../../../../hooks/useLeaveSteamder";
 
 import { IPlayer } from "../../../../types/ISteamder";
-import { leaveWaitlist, startWaitlist } from "../../../../services/websocket/send";
+import { leaveSteamder, startSteamder } from "../../../../services/websocket/send";
 
 const StyledRow = styled(Row)`
     height: 91px;
 `;
 
 export const RoomActions: React.FC = () => {
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.actions" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.actions" });
     const { steamder, setSteamder } = useSteamderStore();
     const { user, setUser } = useAuthStore();
     const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const RoomActions: React.FC = () => {
         setLoading(true);
         leaveMutation.mutateAsync(steamder.id).then(() => {
             if (!user) return;
-            leaveWaitlist();
+            leaveSteamder();
             setUser({ ...user, steamder: null });
             setSteamder(null);
         }).finally(() => {
@@ -74,7 +74,7 @@ export const RoomActions: React.FC = () => {
                         loading || steamder.players?.length < 2 || (steamder.display_all_games && steamder.all_games.length == 0) || (!steamder.display_all_games && steamder.common_games.length == 0)
                     } onClick={() => { 
                         setLoading(true);
-                        startWaitlist();
+                        startSteamder();
                     }} >{t('start')}</Button>
                 </Col> }
                 <Col sm={"auto"} className="align-self-center">

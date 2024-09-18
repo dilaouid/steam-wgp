@@ -12,7 +12,7 @@ import { useAuthStore } from "../../../store/authStore";
 import { useSteamderStore } from "../../../store/steamderStore";
 
 import { useLeaveSteamder } from "../../../hooks/useLeaveSteamder";
-import { leaveWaitlist } from "../../../services/websocket/send";
+import { leaveSteamder } from "../../../services/websocket/send";
 
 const StyledSpinner = styled(Spinner)`
     margin-left: 0.2rem;
@@ -31,7 +31,7 @@ export const MySteamderButtons = ({ id }: { id: string }) => {
         leaveMutation.mutateAsync(id).then(() => {
             if (!user) return;
             setUser({ ...user, steamder: null });
-            leaveWaitlist();
+            leaveSteamder();
             setSteamder(null);
         }).finally(() => setLoading(false));
     };

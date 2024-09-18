@@ -21,7 +21,7 @@ const StyledIcon = styled(HiOutlineShare)`
 
 export const CopyIcon = () => {
     const { steamder } = useSteamderStore();
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.actions" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.actions" });
 
     const TooltipLabel = (message: string) =>
         <Tooltip id="share-steamder-tooltip">

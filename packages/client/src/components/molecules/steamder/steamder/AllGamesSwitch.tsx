@@ -18,7 +18,7 @@ interface AllGamesSwitchProps {
 }
 
 export const AllGamesSwitch: React.FC<AllGamesSwitchProps> = ({ active }) => {
-    const { t } = useTranslation("pages/steamder", { keyPrefix: "waitlist.actions" });
+    const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.actions" });
     return (
         <OverlayTrigger placement="left" overlay={TooltipLabel(t('switch_tooltip'))} trigger={['hover', 'focus']}>
             <StyledSwitch defaultChecked={active} inline className="text-dark" type="switch" id="all-games-switch" label={t('switch')} onChange={switchDisplayGames} />

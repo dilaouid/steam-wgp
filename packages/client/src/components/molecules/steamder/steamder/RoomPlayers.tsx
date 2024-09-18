@@ -6,11 +6,11 @@ import { useAuthStore } from "../../../../store/authStore";
 
 import { hasNoCommonGamesWithAnyone } from "../../../../utils/hasNoCommonGames";
 
-import { DangerIcon } from "../../../atoms/steamder/waitlist/DangerIcon";
-import { ProfilPicture } from "../../../atoms/steamder/waitlist/ProfilPicture";
-import { RoomAdminIcon } from "../../../atoms/steamder/waitlist/RoomAdminIcon";
-import { GamesInCommon } from "../../../atoms/steamder/waitlist/GamesInCommon";
-import { KickPlayerButton } from "../../../atoms/steamder/waitlist/KickPlayerButton";
+import { DangerIcon } from "../../../atoms/steamder/steamder/DangerIcon";
+import { ProfilPicture } from "../../../atoms/steamder/steamder/ProfilPicture";
+import { RoomAdminIcon } from "../../../atoms/steamder/steamder/RoomAdminIcon";
+import { GamesInCommon } from "../../../atoms/steamder/steamder/GamesInCommon";
+import { KickPlayerButton } from "../../../atoms/steamder/steamder/KickPlayerButton";
 
 import { IPlayer } from "../../../../types/ISteamder";
 
