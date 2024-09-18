@@ -11,6 +11,9 @@ importers:
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
+      pnpm:
+        specifier: 9.10.0
+        version: 9.10.0
 
   packages/client:
     dependencies:
@@ -262,6 +265,10 @@ importers:
       zod:
         specifier: ^3.x.x
         version: 3.23.8
+    devDependencies:
+      typescript:
+        specifier: ^4.x.x
+        version: 4.9.5
 
 packages:
 
@@ -2995,6 +3002,11 @@ packages:
     resolution: {integrity: sha512-nbkQb5+9YPhQRz/BeQmrWpEknAaqjpAqRK8NwJpmrX/JHu7JuZC5G1CeAwJDJfGes4h+YihC6in3Q2nGb+Y09w==}
     hasBin: true
 
+  pnpm@9.10.0:
+    resolution: {integrity: sha512-c6Ka+jag0JLs5Scd5Rd+y/gxjUVOzXATQxMbjrwMGpHEh9pGq3fI5ZbWrPFGHjWUztS+zt+JIbB0+9hlPtcFHA==}
+    engines: {node: '>=18.12'}
+    hasBin: true
+
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
@@ -3568,6 +3580,11 @@ packages:
   type-fest@0.20.2:
     resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
     engines: {node: '>=10'}
+
+  typescript@4.9.5:
+    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
 
   typescript@5.6.2:
     resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
@@ -6588,6 +6605,8 @@ snapshots:
       sonic-boom: 4.1.0
       thread-stream: 3.1.0
 
+  pnpm@9.10.0: {}
+
   postcss-value-parser@4.2.0: {}
 
   postcss@8.4.38:
@@ -7205,6 +7224,8 @@ snapshots:
       prelude-ls: 1.2.1
 
   type-fest@0.20.2: {}
+
+  typescript@4.9.5: {}
 
   typescript@5.6.2: {}
 
