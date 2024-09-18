@@ -15,7 +15,7 @@ export const joinSteamder = async (fastify: FastifyInstance, steamderId: string,
 
   if (playerInDb.length === 0) {
     // L'utilisateur n'est pas dans la liste d'attente en base de données
-    fastify.log.warn(`Player ${player.player_id} is not in waitlist ${steamderId} in the database.`);
+    fastify.log.warn(`Player ${player.player_id} is not in steamder ${steamderId} in the database.`);
     return false;
   }
 
@@ -31,7 +31,7 @@ export const joinSteamder = async (fastify: FastifyInstance, steamderId: string,
   if (existingPlayerIndex > -1) {
     steamder.players[existingPlayerIndex] = player;
   } else {
-    fastify.log.info(`Player ${player.player_id} joined waitlist ${steamderId}`);
+    fastify.log.info(`Player ${player.player_id} joined steamder ${steamderId}`);
     steamder.players.push(player);
   }
 

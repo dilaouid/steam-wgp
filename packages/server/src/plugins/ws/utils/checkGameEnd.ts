@@ -1,6 +1,6 @@
 import { Steamder } from "../types";
 
-export const checkGameEnd = (steamderId: string, gameId: number, steamder: Steamder): boolean => {
+export const checkGameEnd = (gameId: number, steamder: Steamder): boolean => {
   if (steamder && steamder.started && !steamder.ended) {
     const swipedGames = steamder.swipedGames[gameId];
     const players = steamder.players;

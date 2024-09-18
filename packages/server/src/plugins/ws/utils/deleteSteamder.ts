@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { steamders, steamdersPlayers } from "../../../infrastructure/data/schemas";
 import { eq } from "drizzle-orm";
 
-export const deleteWaitlist = async (fastify: FastifyInstance, steamderId: string, winner: number | undefined) => {
+export const deleteSteamder = async (fastify: FastifyInstance, steamderId: string, winner: number | undefined) => {
   const steamder: any = fastify.steamders.get(steamderId);
   if (!steamder) return;
 

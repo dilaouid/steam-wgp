@@ -3,7 +3,7 @@ import { PlayerInfo, Steamder } from "../types";
 import { steamders, steamdersPlayers } from "../../../infrastructure/data/schemas";
 import { and, eq } from "drizzle-orm";
 
-export const createWaitlist = async (fastify: FastifyInstance, steamderId: string, player: PlayerInfo, steamdersMap: Map<any, any>): Promise<void> => {
+export const createSteamder = async (fastify: FastifyInstance, steamderId: string, player: PlayerInfo, steamdersMap: Map<any, any>): Promise<void> => {
   fastify.log.info(`---------Creating steamder ${steamderId}---------`);
   const existingSteamder = await fastify.db.select()
     .from(steamders)

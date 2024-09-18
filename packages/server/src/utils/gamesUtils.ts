@@ -1,16 +1,16 @@
-interface WaitlistGamePlayer {
+interface SteamderGamePlayer {
   id: number;
   player_id: number;
 }
 
 /**
- * Removes duplicate elements from an array of WaitlistGamePlayer objects based on their 'id' property.
+ * Removes duplicate elements from an array of SteamderGamePlayer objects based on their 'id' property.
  *
- * @param allWaitlistGames - The array of WaitlistGamePlayer objects.
+ * @param allSteamderGames - The array of SteamderGamePlayer objects.
  * @returns An array of unique 'id' values from the input array.
  */
-export const removeDuplicates = (allWaitlistGames: WaitlistGamePlayer[]) => {
-  return allWaitlistGames.reduce((acc: number[], current: { id: number }) => {
+export const removeDuplicates = (allSteamderGames: SteamderGamePlayer[]) => {
+  return allSteamderGames.reduce((acc: number[], current: { id: number }) => {
     if (!acc.includes(current.id)) {
       acc.push(current.id);
     }
@@ -19,7 +19,7 @@ export const removeDuplicates = (allWaitlistGames: WaitlistGamePlayer[]) => {
 
 };
 
-export const getCommonGames = (gamesPlayers: WaitlistGamePlayer[]) => {
+export const getCommonGames = (gamesPlayers: SteamderGamePlayer[]) => {
   const gamesByPlayer = new Map();
 
   gamesPlayers.forEach(gamePlayer => {
@@ -40,7 +40,7 @@ export const getCommonGames = (gamesPlayers: WaitlistGamePlayer[]) => {
 /**
  * Retrieves the common games from an array of game players.
  *
- * @param gamesPlayers - An array of WaitlistGamePlayer objects.
+ * @param gamesPlayers - An array of SteamderGamePlayer objects.
  * @returns An array of common games.
  */
 export const getCommonGamesController = (gamesPlayers: Array<{ games: number[], player_id: string }>): number[] => {
