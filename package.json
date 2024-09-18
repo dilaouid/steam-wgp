@@ -19,7 +19,9 @@
       "lint": "pnpm run lint:client && pnpm run lint:server",
       "build": "pnpm run build:client && pnpm run build:server",
       "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
-      "preview": "concurrently \"pnpm run preview:client\" \"pnpm run dev:server\""
+      "preview": "concurrently \"pnpm run preview:client\" \"pnpm run dev:server\"",
+      "generate": "pnpm --filter steamwgp-server generate",
+      "migrate": "pnpm --filter steamwgp-server migrate"
     },
     "devDependencies": {
       "concurrently": "^8.2.2"
