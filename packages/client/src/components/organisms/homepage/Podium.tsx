@@ -33,7 +33,7 @@ export const Podium: React.FC = () => {
 
     return (
         <>
-            <Container>
+            { statsData?.podium.length > 0 && <Container>
                 <Row className="mb-5" data-aos="zoom-out">
                     <Col md={8} xl={6} className="text-center mx-auto">
                         <StyledTitle>{ t('title') }</StyledTitle>
@@ -44,16 +44,16 @@ export const Podium: React.FC = () => {
                 </Row>
                 <StyledPodium data-aos="zoom-out" data-aos-duration="800">
                     {/* Second place */}
-                    { <GameCard size="small" color="silver" score={isPending ? null : passScore(1) } /> }
+                    { statsData?.podium.length > 1 && <GameCard size="small" color="silver" score={isPending ? null : passScore(1) } /> }
                     
                     {/* First place */}
-                    { <GameCard size="large" color="gold" score={isPending ? null : passScore(0) } /> }
+                    { statsData?.podium.length > 0 && <GameCard size="large" color="gold" score={isPending ? null : passScore(0) } /> }
                     
                     {/* Third place */}
-                    { <GameCard size="small" color="#cd7f32" score={isPending ? null : passScore(2) } /> }
+                    { statsData?.podium.length > 2 && <GameCard size="small" color="#cd7f32" score={isPending ? null : passScore(2) } /> }
                 </StyledPodium>
-             </Container>
-            <hr />
+             </Container> }
+             { statsData?.podium.length > 0 && <hr /> }
         </>
     )
 };

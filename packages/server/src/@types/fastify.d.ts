@@ -24,7 +24,7 @@ export declare module 'fastify' {
     },
     db: PostgresJsDatabase<Record<string, never>>,
     websocket: FastifyWebsocket;
-    waitlists: Map<string, Set<WebSocket>>;
+    steamders: Map<string, Set<WebSocket>>;
   }
   interface FastifyRequest {
     userLanguage?: string;

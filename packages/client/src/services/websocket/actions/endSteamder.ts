@@ -9,7 +9,7 @@ export const endSteamder = () => {
 
     if (!user || !steamder) return;
     setSteamder(null);
-    setUser({ ...user, waitlist: null });
+    setUser({ ...user, steamder: null });
     queryClient.invalidateQueries({ queryKey: ["steamders"] });
     // check if the user is in the steamder room page
     if (router.matchRoute('/steamder'))

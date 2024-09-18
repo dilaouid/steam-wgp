@@ -1,9 +1,9 @@
-import { Waitlist } from "../types";
+import { Steamder } from "../types";
 
-export const calculateAllGames = (waitlistClients: Waitlist) => {
+export const calculateAllGames = (steamderClients: Steamder) => {
   const allGamesSet = new Set<number>();
 
-  Object.values(waitlistClients.playerGames).forEach((games: any) => {
+  Object.values(steamderClients.playerGames).forEach((games: any) => {
     games.forEach((game: number) => {
       allGamesSet.add(game);
     });

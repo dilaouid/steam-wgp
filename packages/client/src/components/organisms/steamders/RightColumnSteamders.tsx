@@ -76,15 +76,15 @@ export const RightColumnSteamders = () => {
                             <td>
                                 <Row className="gx-2 justify-content-center">
 
-                                    { user?.waitlist && user.waitlist !== steamder.id &&
+                                    { user?.steamder && user.steamder !== steamder.id &&
                                         <UnjoinableButton />
                                     }
 
-                                    { user && user.waitlist === steamder.id &&
+                                    { user && user.steamder === steamder.id &&
                                         <MySteamderButtons id={steamder.id} />
                                     }
 
-                                    { !user?.waitlist && 
+                                    { !user?.steamder && 
                                         <JoinButton id={steamder.id} />
                                     }
                                     

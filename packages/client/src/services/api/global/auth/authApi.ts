@@ -31,6 +31,8 @@ export const checkAuth = async () => {
     return response.json();
   } catch (err) {
     deleteCookie('token');
+    localStorage.removeItem('loadingLoginComplete')
+    localStorage.removeItem('postLoginRedirect');
     console.error("Erreur lors de la vérification de l'authentification :", err);
     throw new Error(err as string);
   }

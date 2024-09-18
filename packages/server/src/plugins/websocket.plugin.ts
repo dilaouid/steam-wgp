@@ -6,24 +6,24 @@ import { and, eq } from 'drizzle-orm';
 
 import jwt from 'jsonwebtoken';
 
-import { Games, Libraries, Players } from '../models';
+import { games, libraries, players } from '../infrastructure/data/schemas';
 
-import { createWaitlist, joinWaitlist } from './ws/utils';
+import { createSteamder, joinSteamder } from './ws/utils';
 import { PlayerInfo } from './ws/types';
 import { swipe, leave, kick, unswipe, update, allGamesSwitch } from './ws/actions';
 import { start } from './ws/actions/start';
 
 export const websocketPlugin = (fastify: FastifyInstance) => {
 
-  const waitlists = new Map();
+  const steamders = new Map();
   const userAuthMap = new Map();
 
-  fastify.decorate('waitlists', waitlists);
+  fastify.decorate('steamders', steamders);
 
-  const handleSocketClose = (waitlistId: string, socket: WebSocket, clientId: string) => {
-    const waitlistEntry = waitlists.get(waitlistId);
-    if (waitlistEntry)
-      waitlistEntry.sockets.delete(socket);
+  const handleSocketClose = (steamderId: string, socket: WebSocket, clientId: string) => {
+    const steamderEntry = steamders.get(steamderId);
+    if (steamderEntry)
+      steamderEntry.sockets.delete(socket);
     userAuthMap.delete(clientId);
   };
 
@@ -50,27 +50,27 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
     }
   }}).after(() => {
 
-    // websocket route for waitlist actions
-    fastify.get('/ws/:waitlistId', { websocket: true },
+    // websocket route for steamder actions
+    fastify.get('/ws/:steamderId', { websocket: true },
       async (connection, req) => {
-        const { waitlistId } = req.params as { waitlistId: string };
+        const { steamderId } = req.params as { steamderId: string };
         const clientId = req.socket.remoteAddress + ":" + req.socket.remotePort;
         if (!clientId) throw new Error('No user provided');
 
         const playerId = userAuthMap.get(clientId);
         const playerData = await fastify.db.selectDistinct()
-          .from(Players.model)
-          .rightJoin(Libraries.model,
+          .from(players)
+          .rightJoin(libraries,
             and(
-              eq(Players.model.id, Libraries.model.player_id),
-              eq(Libraries.model.hidden, false)
+              eq(players.id, libraries.player_id),
+              eq(libraries.hidden, false)
             )
           )
-          .rightJoin(Games.model, eq(Libraries.model.game_id, Games.model.id))
+          .rightJoin(games, eq(libraries.game_id, games.id))
           .where(
             and(
-              eq(Players.model.id, BigInt(playerId)),
-              eq(Games.model.is_selectable, true)
+              eq(players.id, BigInt(playerId)),
+              eq(games.is_selectable, true)
             )
           ).execute();
 
@@ -110,48 +110,48 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           profileurl: playerData[0].players.profileurl
         }
 
-        // create the waitlist if it doesn't exist yet
-        let waitlistEntry = waitlists.get(waitlistId);
+        // create the steamder if it doesn't exist yet
+        let steamderEntry = steamders.get(steamderId);
 
-        if (!waitlistEntry) {
-          await createWaitlist(fastify, waitlistId, player, waitlists);
-          waitlistEntry = waitlists.get(waitlistId);
-          if (!waitlistEntry) {
-            fastify.log.error(`Waitlist ${waitlistId} couldn't be created`);
+        if (!steamderEntry) {
+          await createSteamder(fastify, steamderId, player, steamders);
+          steamderEntry = steamders.get(steamderId);
+          if (!steamderEntry) {
+            fastify.log.error(`Steamder ${steamderId} couldn't be created`);
             connection.socket.close();
             return;
           }
         } else {
-          const joined = await joinWaitlist(fastify, waitlistId, player, waitlists);
+          const joined = await joinSteamder(fastify, steamderId, player, steamders);
           if (!joined) {
-            fastify.log.error(`Player ${playerId} couldn't join waitlist ${waitlistId}`);
+            fastify.log.error(`Player ${playerId} couldn't join steamder ${steamderId}`);
             connection.socket.close();
             return;
           }
         }
 
-        // add the socket to the waitlist
-        waitlistEntry.sockets.add(connection.socket);
+        // add the socket to the steamder
+        steamderEntry.sockets.add(connection.socket);
 
-        const waitlistClients = waitlists.get(waitlistId);
-        if (!waitlistClients)
-          throw new Error('waitlistClients is undefined');
-        waitlistEntry.sockets.add(connection.socket);
+        const steamderClients = steamders.get(steamderId);
+        if (!steamderClients)
+          throw new Error('steamderClients is undefined');
+        steamderEntry.sockets.add(connection.socket);
 
-        // inform every player that a new player joined the waitlist (except the new player)
-        waitlistEntry.sockets.forEach((client: any) => {
+        // inform every player that a new player joined the steamder (except the new player)
+        steamderEntry.sockets.forEach((client: any) => {
           if (client !== connection.socket) {
             client.send(JSON.stringify({ action: 'join', player }));
           }
         });
 
-        // get the all the swipped games from waitlistEntry of the player with the playerId
-        if (waitlistClients.started && !waitlistClients.ended && waitlistClients.swipedGames) {
-          const swipedGames = Object.keys(waitlistClients.swipedGames);
-          const swipedGamesPlayer = swipedGames.filter((gameId: string) => waitlistClients.swipedGames[gameId].includes(playerId));
-          waitlistClients.sockets.forEach((client: any) => {
+        // get the all the swipped games from steamderEntry of the player with the playerId
+        if (steamderClients.started && !steamderClients.ended && steamderClients.swipedGames) {
+          const swipedGames = Object.keys(steamderClients.swipedGames);
+          const swipedGamesPlayer = swipedGames.filter((gameId: string) => steamderClients.swipedGames[gameId].includes(playerId));
+          steamderClients.sockets.forEach((client: any) => {
             if (client === connection.socket) {
-              client.send(JSON.stringify({ action: 'retrieve', swipedGames: swipedGamesPlayer, endTime: waitlistClients.endTime }));
+              client.send(JSON.stringify({ action: 'retrieve', swipedGames: swipedGamesPlayer, endTime: steamderClients.endTime }));
             }
           });
         }
@@ -168,37 +168,37 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
           // when a player swipes a game
           case 'swipe':
-            swipe(fastify, waitlists, waitlistId, payload.gameId, playerId);
+            swipe(fastify, steamders, steamderId, payload.gameId, playerId);
             break;
 
-            // when the admin starts the waitlist
+            // when the admin starts the steamder
           case 'start':
-            start(fastify, waitlistClients, waitlistId, playerId, waitlists);
+            start(fastify, steamderClients, steamderId, playerId, steamders);
             break;
 
-            // when a player leaves the waitlist
+            // when a player leaves the steamder
           case 'leave': {
-            leave(fastify, waitlistId, waitlistClients, playerId);
+            leave(fastify, steamderId, steamderClients, playerId);
             break;
           }
-          // when a player is kicked from the waitlist
+          // when a player is kicked from the steamder
           case 'kick': {
-            kick(fastify, waitlistId, playerId, payload.playerId, waitlistClients);
+            kick(fastify, steamderId, playerId, payload.playerId, steamderClients);
             break;
           }
           // when a player unswipes a game
           case 'unswipe':
-            unswipe(fastify, waitlistClients, payload.gameId);
+            unswipe(fastify, steamderClients, payload.gameId);
             break;
 
           // when a player updates his library
           case 'update': {
-            update(fastify, waitlistClients, waitlistId, payload.publicGames, playerId);
+            update(fastify, steamderClients, steamderId, payload.publicGames, playerId);
             break;
           }
           // when the admin switch between common games and all games
           case 'allGamesSwitch':
-            allGamesSwitch(fastify, waitlistClients, waitlistId, playerId);
+            allGamesSwitch(fastify, steamderClients, steamderId, playerId);
             break;
 
           default:
@@ -209,7 +209,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
 
         connection.socket.on('close', () => {
           const clientId = req.socket.remoteAddress + ":" + req.socket.remotePort;
-          handleSocketClose(waitlistId, connection.socket, clientId);
+          handleSocketClose(steamderId, connection.socket, clientId);
         });
       });
 

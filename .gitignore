@@ -131,3 +131,4 @@ dist
 bs*
 .unotes/*
 steamdb.json
+*.sql

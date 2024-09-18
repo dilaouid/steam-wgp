@@ -119,15 +119,91 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  LibraryRoute,
-  CguLazyRoute,
-  LegalsLazyRoute,
-  LoginLazyRoute,
-  SteamdersLazyRoute,
-  SteamderSteamderIdRoute,
-})
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/library': typeof LibraryRoute
+  '/cgu': typeof CguLazyRoute
+  '/legals': typeof LegalsLazyRoute
+  '/login': typeof LoginLazyRoute
+  '/steamders': typeof SteamdersLazyRoute
+  '/steamder/$steamderId': typeof SteamderSteamderIdRoute
+}
+
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/library': typeof LibraryRoute
+  '/cgu': typeof CguLazyRoute
+  '/legals': typeof LegalsLazyRoute
+  '/login': typeof LoginLazyRoute
+  '/steamders': typeof SteamdersLazyRoute
+  '/steamder/$steamderId': typeof SteamderSteamderIdRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/library': typeof LibraryRoute
+  '/cgu': typeof CguLazyRoute
+  '/legals': typeof LegalsLazyRoute
+  '/login': typeof LoginLazyRoute
+  '/steamders': typeof SteamdersLazyRoute
+  '/steamder/$steamderId': typeof SteamderSteamderIdRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/library'
+    | '/cgu'
+    | '/legals'
+    | '/login'
+    | '/steamders'
+    | '/steamder/$steamderId'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/library'
+    | '/cgu'
+    | '/legals'
+    | '/login'
+    | '/steamders'
+    | '/steamder/$steamderId'
+  id:
+    | '__root__'
+    | '/'
+    | '/library'
+    | '/cgu'
+    | '/legals'
+    | '/login'
+    | '/steamders'
+    | '/steamder/$steamderId'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  LibraryRoute: typeof LibraryRoute
+  CguLazyRoute: typeof CguLazyRoute
+  LegalsLazyRoute: typeof LegalsLazyRoute
+  LoginLazyRoute: typeof LoginLazyRoute
+  SteamdersLazyRoute: typeof SteamdersLazyRoute
+  SteamderSteamderIdRoute: typeof SteamderSteamderIdRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  LibraryRoute: LibraryRoute,
+  CguLazyRoute: CguLazyRoute,
+  LegalsLazyRoute: LegalsLazyRoute,
+  LoginLazyRoute: LoginLazyRoute,
+  SteamdersLazyRoute: SteamdersLazyRoute,
+  SteamderSteamderIdRoute: SteamderSteamderIdRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 

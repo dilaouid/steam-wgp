@@ -1,5 +1,5 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { searchSteamders } from '../services/api/waitlists/search';
+import { searchSteamders } from '../services/api/steamders/search';
 
 export const useGetSteamders = (page: number) => {
   return useQuery({
