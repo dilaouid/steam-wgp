@@ -31,7 +31,7 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
           websocketActions.leaveSteamder(data.playerId);
           break;
         case "start":
-          websocketActions.startSteamder(data.endTime, data?.waitlistId);
+          websocketActions.startSteamder(data.endTime, data?.steamderId);
           break;
         case "kicked":
           websocketActions.kickSteamder(data.playerId);

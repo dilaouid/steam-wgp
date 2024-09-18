@@ -74,7 +74,6 @@ export const joinSteamder = async (
   return fastify.db
     .insert(steamdersPlayers)
     .values({ player_id: playerId, steamder_id: steamderId })
-    .returning()
     .execute();
 }
 

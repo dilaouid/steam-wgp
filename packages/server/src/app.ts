@@ -31,10 +31,6 @@ const initialize = async () => {
       if (err) fastify.log.error(err);
     });
 
-    plugins.languageHookPlugin(fastify).ready((err: Error | null) => {
-      if (err) fastify.log.error(err);
-    });
-
     plugins.websocketPlugin(fastify).ready((err: Error | null) => {
       if (err) fastify.log.error(err);
     });
