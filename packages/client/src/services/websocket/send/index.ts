@@ -1,17 +1,7 @@
-import { leaveWaitlist } from "./leaveWaitlist";
-import { startWaitlist } from "./startWaitlist";
-import { swipeCard } from "./swipeCard";
-import { updateLibraryWS } from "./updateLibrary";
-import { unswipeCard } from "./unswipeCard";
-import { switchDisplayGames } from "./switchDisplayGames";
-import { kickFromSteamderWS } from "./kick";
-
-export {
-    leaveWaitlist,
-    startWaitlist,
-    swipeCard,
-    updateLibraryWS,
-    unswipeCard,
-    switchDisplayGames,
-    kickFromSteamderWS
-}
+export * from './kick'
+export * from './leaveSteamder'
+export * from './startSteamder'
+export * from './swipeCard'
+export * from './switchDisplayGames'
+export * from './unswipeCard'
+export * from './updateLibrary'

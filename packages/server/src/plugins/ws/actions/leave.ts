@@ -1,38 +1,38 @@
 import { FastifyInstance } from "fastify";
 
 import { eq } from "drizzle-orm";
-import { Waitlists } from "../../../models";
-import { PlayerInfo, Waitlist } from "../types";
+import { steamders } from "../../../infrastructure/data/schemas";
+import { PlayerInfo, Steamder } from "../types";
 import { calculateAllGames, updateCommonGames } from "../utils";
 
-export const leave = async (fastify: FastifyInstance, waitlistId: string, waitlist: Waitlist, playerId: string) => {
-  const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
+export const leave = async (fastify: FastifyInstance, steamderId: string, steamder: Steamder, playerId: string) => {
+  const steamderDecorate: any = fastify.steamders.get(steamderId);
 
-  if (waitlist.started || waitlist.ended || !waitlistDecorate) return;
-  if (waitlist) {
-    waitlist.players = waitlist.players.filter((player: PlayerInfo) => player.player_id !== playerId);
-    delete waitlist.playerGames[playerId];
+  if (steamder.started || steamder.ended || !steamderDecorate) return;
+  if (steamder) {
+    steamder.players = steamder.players.filter((player: PlayerInfo) => player.player_id !== playerId);
+    delete steamder.playerGames[playerId];
   }
 
-  // update the waitlistClients.commonGames now that a player has left
-  updateCommonGames(waitlist);
+  // update the steamderClients.commonGames now that a player has left
+  updateCommonGames(steamder);
 
-  const all_games = calculateAllGames(waitlist);
+  const all_games = calculateAllGames(steamder);
 
   fastify.db
-    .update(Waitlists.model)
+    .update(steamders)
     .set(
       {
-        common_games: waitlist.commonGames.length,
+        common_games: steamder.commonGames.length,
         all_games: all_games.length
       }
     ).where(
-      eq(Waitlists.model.id, waitlistId)
+      eq(steamders.id, steamderId)
     ).execute();
 
   // send message to all players
-  waitlistDecorate.sockets.forEach((client: any) => {
-    const data = playerId === waitlist.adminId ? { action: 'end' } : { action: 'leave', playerId};
+  steamderDecorate.sockets.forEach((client: any) => {
+    const data = playerId === steamder.adminId ? { action: 'end' } : { action: 'leave', playerId};
     client.send(JSON.stringify(data));
   });
 }

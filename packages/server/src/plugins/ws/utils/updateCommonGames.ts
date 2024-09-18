@@ -1,16 +1,16 @@
-import { Waitlist } from "../types";
+import { Steamder } from "../types";
 
-export const updateCommonGames = (waitlist: Waitlist) => {
-  const playerIds = Object.keys(waitlist.playerGames);
+export const updateCommonGames = (steamder: Steamder) => {
+  const playerIds = Object.keys(steamder.playerGames);
 
-  let commonGamesSet = new Set<number>(waitlist.playerGames[playerIds[0]]);
+  let commonGamesSet = new Set<number>(steamder.playerGames[playerIds[0]]);
 
   playerIds.slice(1).forEach((playerId) => {
-    const gamesSet = new Set(waitlist.playerGames[playerId]);
+    const gamesSet = new Set(steamder.playerGames[playerId]);
     commonGamesSet = new Set(
       [...commonGamesSet].filter((game) => gamesSet.has(game))
     );
   });
   const common_games = Array.from(commonGamesSet);
-  waitlist.commonGames = common_games;
+  steamder.commonGames = common_games;
 };

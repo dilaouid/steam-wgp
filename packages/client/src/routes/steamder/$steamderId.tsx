@@ -62,16 +62,16 @@ function Steamder() {
     AOS.init();
     AOS.refresh();
 
-    if (user.waitlist) {
+    if (user.steamder) {
       getSteamderMutation.mutateAsync().then(steamder => {
         setSteamder({ ...steamder.data, swiped_games: [] });
-        setUser({ ...user, waitlist: steamder.data.id });
+        setUser({ ...user, steamder: steamder.data.id });
         connect(steamder.data.id, token);
       })
     } else {
       joinMutation.mutateAsync().then(steamder => {
         setSteamder({ ...steamder.data, swiped_games: [] });
-        setUser({ ...user, waitlist: steamder.data.id });
+        setUser({ ...user, steamder: steamder.data.id });
         connect(steamder.data.id, token);
       })
     }

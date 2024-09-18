@@ -2,39 +2,39 @@ import { FastifyInstance } from "fastify";
 
 import { eq } from "drizzle-orm";
 
-import { Waitlists } from "../../../models";
+import { steamders } from "../../../infrastructure/data/schemas";
 import { calculateAllGames, updateCommonGames } from "../utils";
-import { PlayerInfo, Waitlist } from "../types";
+import { PlayerInfo, Steamder } from "../types";
 
-export const kick = (fastify: FastifyInstance, waitlistId: string, playerId: string, playerToKick: string, waitlist: Waitlist) => {
+export const kick = (fastify: FastifyInstance, steamderId: string, playerId: string, playerToKick: string, steamder: Steamder) => {
   try {
-    if (waitlist.started || waitlist.ended) return;
-    if (playerId !== waitlist.adminId) return;
-    if (waitlist) {
-      waitlist.players = waitlist.players.filter((player: PlayerInfo) => player.player_id !== playerToKick);
-      delete waitlist.playerGames[playerToKick];
+    if (steamder.started || steamder.ended) return;
+    if (playerId !== steamder.adminId) return;
+    if (steamder) {
+      steamder.players = steamder.players.filter((player: PlayerInfo) => player.player_id !== playerToKick);
+      delete steamder.playerGames[playerToKick];
     }
 
-    const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
+    const steamderDecorate: any = fastify.steamders.get(steamderId);
 
-    // update the waitlistClients.commonGames now that a player has left
+    // update the steamderClients.commonGames now that a player has left
     // fillPlayerGamesList();
-    updateCommonGames(waitlist);
-    const all_games = calculateAllGames(waitlist);
+    updateCommonGames(steamder);
+    const all_games = calculateAllGames(steamder);
 
     fastify.db
-      .update(Waitlists.model)
+      .update(steamders)
       .set(
         {
-          common_games: waitlist.commonGames.length,
+          common_games: steamder.commonGames.length,
           all_games: all_games.length
         }
       ).where(
-        eq(Waitlists.model.id, waitlistId)
+        eq(steamders.id, steamderId)
       ).execute();
 
     // send message to all players
-    waitlistDecorate.sockets.forEach((client: any) => {
+    steamderDecorate.sockets.forEach((client: any) => {
       client.send(JSON.stringify({ action: 'kicked', playerId: playerToKick }));
     });
   } catch (error) {

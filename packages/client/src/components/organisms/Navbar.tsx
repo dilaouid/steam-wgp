@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
           <StyledNav className="ms-auto">
             <NavItem to="/">{t('homepage')}</NavItem>
             { isAuthenticated && <NavItem to="/library">{t('library')}</NavItem> }
-            { isAuthenticated && user?.waitlist && <NavItem to={`/steamder/${user.waitlist}`}>{t('my_steamder')}</NavItem> }
+            { isAuthenticated && user?.steamder && <NavItem to={`/steamder/${user.steamder}`}>{t('my_steamder')}</NavItem> }
             <NavItem to="/steamders">{t('steamders')}</NavItem>
             <NavItem to="https://ko-fi.com/dilaouid" flashy={true}>{t('donate')}</NavItem>
           </StyledNav>

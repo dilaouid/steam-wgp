@@ -1,21 +1,21 @@
 import { calculateAllGames } from "./calculateAllGames";
 import { updateCommonGames } from "./updateCommonGames";
 import { checkCommonGames } from "./checkCommonGames";
-import { deleteWaitlist } from "./deleteWaitlist";
+import { deleteSteamder } from "./deleteSteamder";
 import { checkGameEnd } from "./checkGameEnd";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
-import { startWaitlist } from "./startWaitlist";
-import { createWaitlist } from "./createWaitlist";
-import { joinWaitlist } from "./joinWaitlist";
+import { startSteamder } from "./startSteamder";
+import { createSteamder } from "./createSteamder";
+import { joinSteamder } from "./joinSteamder";
 
 export {
   calculateAllGames,
   updateCommonGames,
   checkCommonGames,
-  deleteWaitlist,
+  deleteSteamder,
   checkGameEnd,
   fillPlayerGamesList,
-  startWaitlist,
-  createWaitlist,
-  joinWaitlist
+  startSteamder,
+  createSteamder,
+  joinSteamder
 };

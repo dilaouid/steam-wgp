@@ -9,8 +9,8 @@ const WebSocketManager = () => {
   const token = getCookieValue('token');
 
   useEffect(() => {
-    if (user?.waitlist && token) {
-      connect(user.waitlist, token);
+    if (user?.steamder && token) {
+      connect(user.steamder, token);
     } else {
       disconnect();
     }

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { leaveSteamder } from "../services/api/waitlists/leave";
+import { leaveSteamder } from "../services/api/steamders/leave";
 
 export const useLeaveSteamder = () => {
     const queryClient = useQueryClient();

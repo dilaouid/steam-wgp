@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1726046883333,
+      "tag": "0000_melodic_zaladane",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726156944952,
+      "tag": "0001_fuzzy_shard",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726480333998,
+      "tag": "0002_exotic_mandroid",
+      "breakpoints": true
+    }
+  ]
+}

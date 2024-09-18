@@ -1,26 +1,25 @@
 import { FastifyInstance } from "fastify";
-import { deleteWaitlist, checkGameEnd } from "../utils";
-import { Waitlist } from "../types";
+import { deleteSteamder, checkGameEnd } from "../utils";
+import { Steamder } from "../types";
 
-export const swipe = async (fastify: FastifyInstance, waitlists: Map<any, any>, waitlistId: string, gameId: number, playerId: string) => {
+export const swipe = async (fastify: FastifyInstance, steamders: Map<any, any>, steamderId: string, gameId: number, playerId: string) => {
   try {
-    const waitlistDecorate: any = fastify.waitlists.get(waitlistId);
-    const waitlist: Waitlist = waitlists.get(waitlistId);
+    const steamderDecorate: any = fastify.steamders.get(steamderId);
+    const steamder: Steamder = steamders.get(steamderId);
 
-    if (waitlist && waitlist.started && !waitlist.ended && waitlist.commonGames.includes(gameId)) {
-      if (waitlist.swipedGames[gameId] && !waitlist.swipedGames[gameId].includes(playerId)) {
-        waitlist.swipedGames[gameId].push(playerId);
+    if (steamder && steamder.started && !steamder.ended && steamder.commonGames.includes(gameId)) {
+      if (steamder.swipedGames[gameId] && !steamder.swipedGames[gameId].includes(playerId)) {
+        steamder.swipedGames[gameId].push(playerId);
       } else {
-        waitlist.swipedGames[gameId] = [playerId];
+        steamder.swipedGames[gameId] = [playerId];
       }
     }
-
-    if (checkGameEnd(waitlistId, gameId, waitlist)) {
+    if (checkGameEnd(gameId, steamder)) {
       // get the game that is swiped by all the players
-      waitlistDecorate.sockets.forEach((client: any) => {
-        client.send(JSON.stringify({ action: 'gameEnd', choosed_game: waitlist.winner }));
+      steamderDecorate.sockets.forEach((client: any) => {
+        client.send(JSON.stringify({ action: 'gameEnd', choosed_game: steamder.winner }));
       });
-      deleteWaitlist(fastify, waitlistId, waitlist.winner);
+      deleteSteamder(fastify, steamderId, steamder.winner);
     }
 
   } catch (error) {
