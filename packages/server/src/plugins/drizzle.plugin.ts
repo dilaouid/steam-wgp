@@ -3,13 +3,13 @@ import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { FastifyInstance } from 'fastify';
 
-import * as schema from "../infrastructure/data/schemas"
+import * as schema from "../infrastructure/data/schemas";
 
 export const drizzlePlugin = fp(async (fastify: FastifyInstance, opts: any) => {
   // Create a database client and configure drizzle-orm for postgres
-  const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = opts;
+  const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID, DATABASE_URL } = opts;
 
-  const queryClient = postgres(opts.NODE_ENV === 'development' ? opts.DATABASE_URL : {
+  const queryClient = postgres(opts.NODE_ENV === 'development' ? DATABASE_URL : {
     host: PGHOST,
     database: PGDATABASE,
     username: PGUSER,
@@ -20,8 +20,9 @@ export const drizzlePlugin = fp(async (fastify: FastifyInstance, opts: any) => {
       options: `project=${ENDPOINT_ID}`,
     },
   });
+
   const db = drizzle(queryClient, {
-    schema
+    ...schema
   });
 
   // Decorate fastify with the database client

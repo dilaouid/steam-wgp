@@ -11,6 +11,7 @@ export const validateSteam = async (
 ) => {
   try {
     const player = profile._json;
+
     if (!player) {
       return done(null, null);
     }

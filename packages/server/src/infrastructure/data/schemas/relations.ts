@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { players, libraries, games, steamders, steamdersPlayers } from "./";
+import { players, libraries, games, steamders, steamdersPlayers, families } from "./";
 
 export const librariesRelations = relations(libraries, ({ one }) => ({
   player: one(players, {
@@ -42,4 +42,15 @@ export const playersRelations = relations(players, ({ many }) => ({
 
 export const gamesRelations = relations(games, ({ many }) => ({
   libraries: many(libraries),
+}));
+
+export const familyRelations = relations(families, ({ one }) => ({
+  player: one(players, {
+    fields: [families.player_id],
+    references: [players.id],
+  }),
+  familyMember: one(players, {
+    fields: [families.family_member],
+    references: [players.id],
+  }),
 }));
