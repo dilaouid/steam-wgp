@@ -1,11 +1,11 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { Player } from "../../../../domain/entities";
-import { APIResponse } from "../../../../utils/response";
+import { Player } from "@entities";
+import { APIResponse } from "@utils//response";
 
 import { steamderSchema } from "../../validations";
 
-import { isUserInSteamder } from "../../../../domain/services/steamderPlayerService";
-import { createSteamder } from "../../../../domain/services/steamderService";
+import { isUserInSteamder } from "@services/steamderPlayerService";
+import { createSteamder } from "@services/steamderService";
 
 export const newSteamder = async (request: FastifyRequest, reply: FastifyReply) => {
   const fastify = request.server as FastifyInstance;

@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { APIResponse } from "../../../../utils/response";
-import { countAvailableSteamders } from "../../../repositories";
+import { APIResponse } from "@utils/response";
+import { countAvailableSteamders } from "@repositories";
 
 export async function countSteamders(request: FastifyRequest, reply: FastifyReply): Promise<void> {
   const fastify = request.server as FastifyInstance;

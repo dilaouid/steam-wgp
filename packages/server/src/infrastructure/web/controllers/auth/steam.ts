@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { APIResponse } from "../../../../utils/response";
+import { APIResponse } from "@utils//response";
 
 /**
  * Handles the steam endpoint.

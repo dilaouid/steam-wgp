@@ -1,7 +1,7 @@
 import { HTTPMethods } from "fastify";
 import { isAuthenticated } from "../../../auth/mw";
-import { deleteAccount } from "../controllers";
-import { loadLibrary } from "../controllers/player/loginLoad";
+import { deleteAccount } from "@controllers/index";
+import { loadLibrary } from "@controllers/player/loginLoad";
 
 /**
  * Options for deleting a user, including the method, URL, handler, and preValidation.

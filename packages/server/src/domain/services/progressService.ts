@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { getGamesAccordingToList, getPlayerLibrary, insertGames, insertToLibrary } from "../../infrastructure/repositories";
+import { getGamesAccordingToList, getPlayerLibrary, insertGames, insertToLibrary } from "@repositories";
 
 export interface IProgressOpt {
     message: string;

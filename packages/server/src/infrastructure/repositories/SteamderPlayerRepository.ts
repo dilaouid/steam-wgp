@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { libraries, steamders, steamdersPlayers } from "../data/schemas";
+import { libraries, steamders, steamdersPlayers } from "@schemas";
 import { and, eq } from "drizzle-orm";
 
 export const isPlayerInASteamder = async (

@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { APIResponse } from "../../../../utils/response";
-import { leaveAndUpdateSteamder } from "../../../../domain/services/steamderService";
-import { Player } from "../../../../domain/entities";
+import { APIResponse } from "@utils//response";
+import { leaveAndUpdateSteamder } from "@services/steamderService";
+import { Player } from "@entities";
 
 
 /**

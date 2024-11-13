@@ -1,6 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAuthenticated } from "../../../auth/mw";
-import { getLibrary, updateHiddenGames } from "../controllers/library";
+import { getLibrary, updateHiddenGames } from "@controllers/library";
 
 export const getLibraryOpts = {
   method: 'GET' as HTTPMethods,

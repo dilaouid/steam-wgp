@@ -4,11 +4,11 @@ import {
   isPlayerInSteamder,
   deleteSteamder,
   leaveSteamder
-} from "../../../src/infrastructure/repositories";
+} from "../../../src/@repositories";
 
 import { updateGameLists } from "../../../src/domain/services/steamderService"
 
-jest.mock("../../../src/infrastructure/repositories");
+jest.mock("../../../src/@repositories");
 
 describe("leaveAndUpdateSteamder", () => {
   let fastify: FastifyInstance;

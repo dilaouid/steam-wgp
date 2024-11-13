@@ -1,9 +1,9 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { APIResponse } from "../../../../utils/response";
-import { updateGameLists } from "../../../../domain/services/steamderService";
+import { APIResponse } from "@utils//response";
+import { updateGameLists } from "@services/steamderService";
 import { canAdminKickFromSteamder, leaveSteamder } from "../../../repositories";
-import { Player } from "../../../../domain/entities";
+import { Player } from "@entities";
 
 interface Parameters {
     steamderId: string;

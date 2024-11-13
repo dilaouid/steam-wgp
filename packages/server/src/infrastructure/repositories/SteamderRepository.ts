@@ -5,7 +5,7 @@ import {
   libraries,
   steamders,
   steamdersPlayers
-} from "../data/schemas";
+} from "@schemas";
 import { and, count, desc, eq, ne, sql } from "drizzle-orm";
 
 export const insertSteamder = async (

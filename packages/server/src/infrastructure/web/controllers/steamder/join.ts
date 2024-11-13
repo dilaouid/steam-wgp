@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { APIResponse } from "../../../../utils/response";
-import { formatSteamderInfos, getSteamderInfos, isSteamderAvailable } from "../../../../domain/services/steamderService";
-import { Player } from "../../../../domain/entities";
-import { isUserInSteamder } from "../../../../domain/services/steamderPlayerService";
-import { joinSteamder } from "../../../repositories";
+import { APIResponse } from "@utils//response";
+import { formatSteamderInfos, getSteamderInfos, isSteamderAvailable } from "@services/steamderService";
+import { Player } from "@entities";
+import { isUserInSteamder } from "@services/steamderPlayerService";
+import { joinSteamder } from "@repositories";
 
 /**
  * Controller - Joins a steamder (if possible).

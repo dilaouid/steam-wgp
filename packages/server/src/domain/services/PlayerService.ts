@@ -3,8 +3,8 @@ import {
   getPlayerAccordingToId,
   insertPlayer,
   updatePlayer,
-} from "../../infrastructure/repositories";
-import { Player } from "../entities";
+} from "@repositories";
+import { Player } from "@entities";
 
 /**
  * Updates the avatar hash for a player.
