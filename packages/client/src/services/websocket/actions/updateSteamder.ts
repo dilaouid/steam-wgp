@@ -1,5 +1,5 @@
 import { queryClient } from "../../../main";
-import { useSteamderStore } from "../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 import { IPlayer } from "../../../types/ISteamder";
 import { calculateAllGames } from "../../../utils/calculateAllGames";
 

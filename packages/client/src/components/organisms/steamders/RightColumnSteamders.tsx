@@ -5,17 +5,17 @@ import { Col, Row, Table, Spinner } from "react-bootstrap";
 import { BsPeople, BsController } from "react-icons/bs";
 import { useTranslation, Trans } from "react-i18next";
 
-import { useAuthStore } from "../../../store/authStore";
-import { useGetSteamders } from "../../../hooks/useGetSteamders";
-import { useCountSteamders } from "../../../hooks/useCountSteamders";
+import { useAuthStore } from "@store/authStore";
+import { useGetSteamders } from "@hooks/useGetSteamders";
+import { useCountSteamders } from "@hooks/useCountSteamders";
 
 import { ISteamderSearch } from "../../../types/ISteamderSearch";
 
-import { LoadingTable } from "../../molecules/steamders/LoadingTable";
-import { UnjoinableButton } from "../../molecules/steamders/UnjoinableButton";
-import { JoinButton } from "../../molecules/steamders/JoinButton";
-import { MySteamderButtons } from "../../molecules/steamders/MySteamderButtons";
-import { PaginationSteamders } from "../../molecules/steamders/Pagination";
+import { LoadingTable } from "@molecules/steamders/LoadingTable";
+import { UnjoinableButton } from "@molecules/steamders/UnjoinableButton";
+import { JoinButton } from "@molecules/steamders/JoinButton";
+import { MySteamderButtons } from "@molecules/steamders/MySteamderButtons";
+import { PaginationSteamders } from "@molecules/steamders/Pagination";
 
 const StyledTitle = styled.h4`
     font-family: 'Archivo Narrow', sans-serif;

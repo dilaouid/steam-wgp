@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Col } from "react-bootstrap";
 import { BsFillExclamationDiamondFill } from "react-icons/bs";
-import { useAuthStore } from "../../../store/authStore";
+import { useAuthStore } from "@store/authStore";
 import { useTranslation, Trans } from "react-i18next";
 
 const ColumnLeft = styled(Col)`

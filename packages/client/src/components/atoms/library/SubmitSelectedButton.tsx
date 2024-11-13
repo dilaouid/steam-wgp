@@ -3,10 +3,10 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { BsCheckAll } from "react-icons/bs";
 
-import { updateLibrary } from "../../../services/api/players/updateLibraryApi";
-import { updateLibraryWS } from "../../../services/websocket/send";
+import { updateLibrary } from "@services/api/players/updateLibraryApi";
+import { updateLibraryWS } from "@services/websocket/send";
 
-import { useLibraryStore } from "../../../store/libraryStore";
+import { useLibraryStore } from "@store/libraryStore";
 import { drawToast } from "../../../utils/drawToast";
 
 interface SubmitSelectedButtonProps {

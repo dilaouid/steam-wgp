@@ -1,6 +1,6 @@
 import { queryClient } from "../../../main";
-import { useAuthStore } from "../../../store/authStore";
-import { useSteamderStore } from "../../../store/steamderStore";
+import { useAuthStore } from "@store/authStore";
+import { useSteamderStore } from "@store/steamderStore";
 import { calculateAllGames } from "../../../utils/calculateAllGames";
 import { calculateCommonGames } from "../../../utils/calculateCommonGames";
 

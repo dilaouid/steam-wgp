@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { Col, Container } from "react-bootstrap";
-import { SkeletonGameCard } from "../../atoms/library/SkeletonGameCard";
+import { SkeletonGameCard } from "@atoms/library/SkeletonGameCard";
 
 const StyledCol = styled(Col)`
     margin-bottom: 20px;

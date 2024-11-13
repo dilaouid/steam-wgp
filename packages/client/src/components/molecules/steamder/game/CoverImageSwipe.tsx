@@ -1,10 +1,10 @@
-import { TiltableImage } from "../../../atoms/steamder/TiltableImage";
+import { TiltableImage } from "@atoms/steamder/TiltableImage";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
-import { useBtnGameStore } from "../../../../store/hoverBtnGameStore";
+import { useSteamderStore } from "@store/steamderStore";
+import { useBtnGameStore } from "@store/hoverBtnGameStore";
 import { HoverLike } from "./HoverLike";
 import { HoverPass } from "./HoverPass";
-import { ImageContainer } from "../../../atoms/steamder/ImageContainer";
+import { ImageContainer } from "@atoms/steamder/ImageContainer";
 
 export const CoverImageSwipe = () => {
     const { hoverLike, hoverPass } = useBtnGameStore();

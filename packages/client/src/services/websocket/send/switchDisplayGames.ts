@@ -1,4 +1,4 @@
-import useWebSocketStore from "../../../store/websocketStore";
+import useWebSocketStore from "@store/websocketStore";
 
 export const switchDisplayGames = () => {
     const { sendMessage } = useWebSocketStore.getState();

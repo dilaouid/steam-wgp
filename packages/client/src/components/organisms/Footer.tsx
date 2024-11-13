@@ -4,13 +4,13 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { Modal, Button, Spinner } from "react-bootstrap";
 
-import { GithubIcon } from "../atoms/icons/footer/GithubIcon";
-import { CashIcon } from "../atoms/icons/footer/CashIcon";
+import { GithubIcon } from "@atoms/icons/footer/GithubIcon";
+import { CashIcon } from "@atoms/icons/footer/CashIcon";
 
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "@store/authStore";
 
-import { useDeleteUser } from "../../hooks/useDeleteUser";
-import { logout } from "../../services/api/global/auth/logoutApi";
+import { useDeleteUser } from "@hooks/useDeleteUser";
+import { logout } from "@services/api/global/auth/logoutApi";
 import { drawToast } from "../../utils/drawToast";
 
 const flags = {

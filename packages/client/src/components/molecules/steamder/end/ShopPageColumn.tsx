@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Col, Button } from "react-bootstrap";
 import { BsSteam } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 const StyledCol = styled(Col)`
     margin-top: 17px;

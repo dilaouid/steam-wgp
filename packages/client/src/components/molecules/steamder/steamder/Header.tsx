@@ -5,9 +5,9 @@ import { Trans, useTranslation } from "react-i18next";
 
 import Skeleton from "react-loading-skeleton";
 
-import { CopyIcon } from "../../../atoms/steamder/steamder/CopyIcon";
+import { CopyIcon } from "@atoms/steamder/steamder/CopyIcon";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 const StyledContainer = styled(Container)`
     background: #000000cc;

@@ -1,6 +1,6 @@
 import { Navigate } from "@tanstack/react-router";
 import { drawToast } from "../../../utils/drawToast";
-import { useSteamderStore } from "../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 import { queryClient } from "../../../main";
 
 export const startSteamder = (endTime: number, id?: string) => {

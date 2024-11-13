@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 import { useTranslation } from "react-i18next";
-import { useAuthStore } from "../../../../store/authStore";
-import { PlayersNotHavingGame } from "../../../molecules/steamder/end/PlayersNotHavingGame";
+import { useAuthStore } from "@store/authStore";
+import { PlayersNotHavingGame } from "@molecules/steamder/end/PlayersNotHavingGame";
 
 const HaventTheGameTitle = styled.p`
     margin-bottom: 0px;

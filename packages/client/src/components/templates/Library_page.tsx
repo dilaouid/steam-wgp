@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 
 import CoverImage from '../../assets/images/librarypage/cover.png';
-import { LeftColumnLibrary } from '../organisms/library/LeftColumnLibrary';
-import { RightColumnLibrary } from '../organisms/library/RightColumnLibrary';
-import { useLibraryStore } from '../../store/libraryStore';
-import { useGetLibrary } from '../../hooks/useLibrary';
+import { LeftColumnLibrary } from '@organisms/library/LeftColumnLibrary';
+import { RightColumnLibrary } from '@organisms/library/RightColumnLibrary';
+import { useLibraryStore } from '@store/libraryStore';
+import { useGetLibrary } from '@hooks/useLibrary';
 import { TGameLibrary } from '../../types/TGameLibrary';
 
 const LibrarySection = styled.section`

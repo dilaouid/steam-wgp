@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Row } from "react-bootstrap";
 
 import { IPlayer } from "../../../../types/ISteamder";
-import { PlayerNotHavingGame } from "../../../atoms/steamder/end/PlayerNotHavingGame";
+import { PlayerNotHavingGame } from "@atoms/steamder/end/PlayerNotHavingGame";
 
 const StyledRow = styled(Row)`
     background: #060606ab;

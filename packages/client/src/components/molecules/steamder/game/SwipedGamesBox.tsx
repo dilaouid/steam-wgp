@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
-import { SwipedGame } from "../../../atoms/steamder/game/SwipedGame";
+import { SwipedGame } from "@atoms/steamder/game/SwipedGame";
 
 const StyledBox = styled.div`
     overflow-y: scroll;

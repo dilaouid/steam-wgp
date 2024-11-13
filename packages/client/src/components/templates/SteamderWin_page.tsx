@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 import CoverImage from '../../assets/images/steamderpage/cover.jpg';
-import { GameWinRow } from "../organisms/steamder/end/GameWinRow";
-import { HaventTheGame } from "../organisms/steamder/end/HaventTheGame";
+import { GameWinRow } from "@organisms/steamder/end/GameWinRow";
+import { HaventTheGame } from "@organisms/steamder/end/HaventTheGame";
 
-import { useSteamderStore } from "../../store/steamderStore";
-import { useAuthStore } from "../../store/authStore";
+import { useSteamderStore } from "@store/steamderStore";
+import { useAuthStore } from "@store/authStore";
 
 const StyledSection = styled.section`
     padding-top: 9px;

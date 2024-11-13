@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import styled from "styled-components";
 
 import CoverImage from '../../assets/images/steamderpage/cover.jpg';
-import { Header } from "../molecules/steamder/game/Header";
-import { GameRow } from "../organisms/steamder/game/GameRow";
+import { Header } from "@molecules/steamder/game/Header";
+import { GameRow } from "@organisms/steamder/game/GameRow";
 
-import { useSteamderStore } from "../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 const StyledSection = styled.section`
     padding-top: 9px;

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import useWebSocketStore from '../../store/websocketStore';
+import useWebSocketStore from '@store/websocketStore';
 import { getCookieValue } from '../../utils/cookieUtils';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@store/authStore';
 
 const WebSocketManager = () => {
   const { connect, disconnect } = useWebSocketStore();

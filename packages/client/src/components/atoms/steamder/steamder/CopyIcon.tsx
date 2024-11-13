@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { HiOutlineShare } from "react-icons/hi";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 import { drawToast } from "../../../../utils/drawToast";
 import { useTranslation } from "react-i18next";

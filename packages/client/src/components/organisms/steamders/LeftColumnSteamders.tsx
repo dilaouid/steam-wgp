@@ -4,10 +4,10 @@ import { useTranslation, Trans } from "react-i18next";
 import { Col } from "react-bootstrap";
 import { BsDpad, BsInfoCircleFill } from "react-icons/bs";
 
-import { useAuthStore } from "../../../store/authStore";
+import { useAuthStore } from "@store/authStore";
 
-import { CreateSteamderForm } from "../../molecules/steamders/CreateSteamderForm";
-import { CannotCreateSteamder } from "../../atoms/steamders/CannotCreateSteamder";
+import { CreateSteamderForm } from "@molecules/steamders/CreateSteamderForm";
+import { CannotCreateSteamder } from "@atoms/steamders/CannotCreateSteamder";
 
 const StyledCol = styled(Col)`
     padding: 19px;

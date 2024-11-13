@@ -5,8 +5,8 @@ import { Modal, Button } from "react-bootstrap";
 import { BsPersonFillX } from "react-icons/bs";
 import { Trans, useTranslation } from "react-i18next";
 
-import { useKickSteamder } from "../../../../hooks/useKickSteamder";
-import { kickFromSteamderWS } from "../../../../services/websocket/send";
+import { useKickSteamder } from "@hooks/useKickSteamder";
+import { kickFromSteamderWS } from "@services/websocket/send";
 
 const StyledButton = styled.button`
     margin: 144px 108px 108px;

@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Col, ProgressBar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
-import useSSEQuery from "../../../services/sse/loginSSE";
-import { ProgressLabelComponent } from "../../atoms/login/ProgressLabel";
+import useSSEQuery from "@services/sse/loginSSE";
+import { ProgressLabelComponent } from "@atoms/login/ProgressLabel";
 import { useEffect } from "react";
 
 const RightBlock = styled.div`
