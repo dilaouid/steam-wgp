@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "npm run build && node dist/app.js",
+    "start": "npm run build && node -r tsconfig-paths/register dist/app.js",
     "test": "npx jest",
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/app.ts",
     "migrate": "tsx -r tsconfig-paths/register dotenv/config src/infrastructure/data/migrate.ts",
