@@ -5,7 +5,7 @@ import { useSteamderStore } from "@store/steamderStore";
 
 import { NotMatchingGames } from "@atoms/steamder/steamder/NotMatchingGames";
 
-import { findMismatchedPlayers } from "../../../../utils/findMismatchedPlayers";
+import { findMismatchedPlayers } from "@utils/findMismatchedPlayers";
 import { ISteamder } from "../../../../types/ISteamder";
 
 const NoMarginText = styled.p`

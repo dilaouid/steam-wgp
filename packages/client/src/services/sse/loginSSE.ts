@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getCookieValue } from '../../utils/cookieUtils';
+import { getCookieValue } from '@utils/cookieUtils';
 import { ISSEData } from '../../types/ISSEData';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

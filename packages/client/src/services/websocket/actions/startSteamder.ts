@@ -1,5 +1,5 @@
 import { Navigate } from "@tanstack/react-router";
-import { drawToast } from "../../../utils/drawToast";
+import { drawToast } from "@utils/drawToast";
 import { useSteamderStore } from "@store/steamderStore";
 import { queryClient } from "../../../main";
 

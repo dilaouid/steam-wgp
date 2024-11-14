@@ -1,7 +1,7 @@
 import { queryClient } from "../../../main";
 import { useSteamderStore } from "@store/steamderStore";
 import { IPlayer } from "../../../types/ISteamder";
-import { calculateAllGames } from "../../../utils/calculateAllGames";
+import { calculateAllGames } from "@utils/calculateAllGames";
 
 export const updateSteamder = (player: IPlayer, common_games: number[]) => {
     const { steamder, setSteamder } = useSteamderStore.getState();

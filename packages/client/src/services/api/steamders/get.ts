@@ -1,4 +1,4 @@
-import { getCookieValue } from "../../../utils/cookieUtils";
+import { getCookieValue } from "@utils/cookieUtils";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

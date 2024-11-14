@@ -8,7 +8,7 @@ import { ControllerIcon } from "@atoms/icons/stats/ControllerIcon";
 import { PersonHeartsIcon } from "@atoms/icons/stats/PersonHeartsIcon";
 import { DiagramIcon } from "@atoms/icons/stats/DiagramIcon";
 
-import LogoImage from '../../../assets/images/homepage/logo.png';
+import LogoImage from '@assets/images/homepage/logo.png';
 import { useStats } from "@hooks/useStatsApi";
 
 

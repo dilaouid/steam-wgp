@@ -6,7 +6,7 @@ import { ControllerIcon } from "@atoms/icons/features/ControllerIcon";
 import { PeopleIcon } from "@atoms/icons/features/PeopleIcon";
 import { Trans, useTranslation } from "react-i18next";
 
-import FeaturesImage from '../../../assets/images/homepage/features.png';
+import FeaturesImage from '@assets/images/homepage/features.png';
 
 const StyledFeaturesImage = styled.img`
     z-index: 10;

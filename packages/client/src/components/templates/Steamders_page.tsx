@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CoverImage from '../../assets/images/librarypage/cover.png';
+import CoverImage from '@assets/images/librarypage/cover.png';
 import { Container, Row } from 'react-bootstrap';
 import { LeftColumnSteamders } from '@organisms/steamders/LeftColumnSteamders';
 import { RightColumnSteamders } from '@organisms/steamders/RightColumnSteamders';

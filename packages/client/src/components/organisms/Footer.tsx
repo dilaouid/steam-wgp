@@ -11,7 +11,7 @@ import { useAuthStore } from "@store/authStore";
 
 import { useDeleteUser } from "@hooks/useDeleteUser";
 import { logout } from "@services/api/global/auth/logoutApi";
-import { drawToast } from "../../utils/drawToast";
+import { drawToast } from "@utils/drawToast";
 
 const flags = {
     fr: 'https://flagicons.lipis.dev/flags/4x3/fr.svg',

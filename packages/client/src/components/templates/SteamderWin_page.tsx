@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import CoverImage from '../../assets/images/steamderpage/cover.jpg';
+import CoverImage from '@assets/images/steamderpage/cover.jpg';
 import { GameWinRow } from "@organisms/steamder/end/GameWinRow";
 import { HaventTheGame } from "@organisms/steamder/end/HaventTheGame";
 

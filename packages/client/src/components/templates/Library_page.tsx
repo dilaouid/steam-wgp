@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 
-import CoverImage from '../../assets/images/librarypage/cover.png';
+import CoverImage from '@assets/images/librarypage/cover.png';
 import { LeftColumnLibrary } from '@organisms/library/LeftColumnLibrary';
 import { RightColumnLibrary } from '@organisms/library/RightColumnLibrary';
 import { useLibraryStore } from '@store/libraryStore';

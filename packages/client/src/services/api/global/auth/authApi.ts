@@ -1,4 +1,4 @@
-import { deleteCookie, getCookieValue, setCookieValue } from "../../../../utils/cookieUtils";
+import { deleteCookie, getCookieValue, setCookieValue } from "@utils/cookieUtils";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const SAME_SITE = import.meta.env.VITE_SAME_SITE;

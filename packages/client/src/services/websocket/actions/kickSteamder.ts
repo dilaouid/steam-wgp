@@ -1,9 +1,9 @@
 import { router, queryClient } from "../../../main";
 import { useAuthStore } from "@store/authStore";
 import { useSteamderStore } from "@store/steamderStore";
-import { drawToast } from "../../../utils/drawToast"
-import { calculateCommonGames } from "../../../utils/calculateCommonGames";
-import { calculateAllGames } from "../../../utils/calculateAllGames";
+import { drawToast } from "@utils/drawToast"
+import { calculateCommonGames } from "@utils/calculateCommonGames";
+import { calculateAllGames } from "@utils/calculateAllGames";
 
 export const kickSteamder = (playerId: string)  => {
     const { setSteamder, steamder } = useSteamderStore.getState();

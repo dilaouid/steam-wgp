@@ -1,8 +1,8 @@
 import { queryClient } from "../../../main";
 import { useSteamderStore } from "@store/steamderStore";
 import { IPlayer } from "../../../types/ISteamder";
-import { calculateAllGames } from "../../../utils/calculateAllGames";
-import { calculateCommonGames } from "../../../utils/calculateCommonGames";
+import { calculateAllGames } from "@utils/calculateAllGames";
+import { calculateCommonGames } from "@utils/calculateCommonGames";
 
 /**
  * A player join the steamder room

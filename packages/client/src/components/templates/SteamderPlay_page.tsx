@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import styled from "styled-components";
 
-import CoverImage from '../../assets/images/steamderpage/cover.jpg';
+import CoverImage from '@assets/images/steamderpage/cover.jpg';
 import { Header } from "@molecules/steamder/game/Header";
 import { GameRow } from "@organisms/steamder/game/GameRow";
 
