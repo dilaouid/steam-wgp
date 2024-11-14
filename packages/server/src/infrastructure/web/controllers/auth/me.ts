@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { APIResponse } from "../../../../utils/response";
-import { getUserSteamder } from "../../../../domain/services/AuthService";
-import { Player } from "../../../../domain/entities";
+import { APIResponse } from "@utils//response";
+import { getUserSteamder } from "@services/AuthService";
+import { Player } from "@entities";
 
 /**
  * Retrieves the current user's profile information.

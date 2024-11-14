@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import path from "path";
 import fs from "fs";
 import { FastifyInstance } from "fastify/types/instance";
-import { games } from "../../../data/schemas";
+import { games } from "@schemas";
 
 /**
  * [DEBUG - Works only in development] Seeds the database with games.

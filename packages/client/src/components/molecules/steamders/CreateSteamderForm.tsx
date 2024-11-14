@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import { Form, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { BsController, BsPersonHeart } from "react-icons/bs";
 
-import { useCreateSteamder } from "../../../hooks/useCreateSteamder";
+import { useCreateSteamder } from "@hooks/useCreateSteamder";
 import { useNavigate } from "@tanstack/react-router";
-import { useAuthStore } from "../../../store/authStore";
+import { useAuthStore } from "@store/authStore";
 
 const StyledForm = styled(Form)`
     font-family: 'Archivo Narrow', sans-serif;

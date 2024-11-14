@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getCookieValue } from "../../../utils/cookieUtils";
-import { drawToast } from "../../../utils/drawToast";
+import { getCookieValue } from "@utils/cookieUtils";
+import { drawToast } from "@utils/drawToast";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const deleteUser = async () => {

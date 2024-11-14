@@ -1,5 +1,5 @@
-import { useAuthStore } from "../../../store/authStore";
-import { useSteamderStore } from "../../../store/steamderStore";
+import { useAuthStore } from "@store/authStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 export const gameEnd = (choosed_game: number) => {
     const { setSteamder, steamder } = useSteamderStore.getState();

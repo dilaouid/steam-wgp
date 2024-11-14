@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { games } from "../data/schemas";
+import { games } from "@schemas";
 import { count, inArray } from "drizzle-orm";
 
 export const countGames = async (fastify: FastifyInstance): Promise<any> => {

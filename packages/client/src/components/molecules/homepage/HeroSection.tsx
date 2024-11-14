@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { Trans, useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
-import { useAuthStore } from '../../../store/authStore';
+import { useAuthStore } from '@store/authStore';
 
 const Section = styled.div`
     max-width: 522px;

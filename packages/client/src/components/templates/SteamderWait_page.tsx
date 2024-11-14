@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import CoverImage from '../../assets/images/steamderpage/cover.jpg';
-import { Header } from "../molecules/steamder/steamder/Header";
-import { RoomPlayers } from "../molecules/steamder/steamder/RoomPlayers";
-import { RoomInformations } from "../molecules/steamder/steamder/RoomInformations";
+import CoverImage from '@assets/images/steamderpage/cover.jpg';
+import { Header } from "@molecules/steamder/steamder/Header";
+import { RoomPlayers } from "@molecules/steamder/steamder/RoomPlayers";
+import { RoomInformations } from "@molecules/steamder/steamder/RoomInformations";
 
 const StyledSection = styled.section`
     padding-top: 9px;

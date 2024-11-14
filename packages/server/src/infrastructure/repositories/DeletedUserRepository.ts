@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { deletedUsers } from "../data/schemas";
+import { deletedUsers } from "@schemas";
 import { eq, sql } from "drizzle-orm";
 
 /**

@@ -4,7 +4,7 @@ import {
   countPlayers,
   countSteamders,
   getPopularGames,
-} from "../../infrastructure/repositories";
+} from "@repositories";
 
 /**
  * Retrieves statistics for the SteamWGP service: player count, game count, match count, steamder count, and 3 most popular games.

@@ -7,8 +7,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "npm run build && node dist/app.js",
     "test": "npx jest",
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/app.ts",
-    "migrate": "tsx -r dotenv/config src/infrastructure/data/migrate.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules -r tsconfig-paths/register src/app.ts",
+    "migrate": "tsx -r tsconfig-paths/register dotenv/config src/infrastructure/data/migrate.ts",
     "generate": "drizzle-kit generate --out src/infrastructure/data/migrations --schema src/infrastructure/data/schemas/index.ts --dialect postgresql",
     "studio": "drizzle-kit studio --config=src/config/drizzle.config.ts",
     "lint": "eslint . --ext .ts",
@@ -44,6 +44,8 @@
     "pino": "^8.21.0",
     "pino-pretty": "^10.3.1",
     "postgres": "^3.4.4",
+    "steamwgp-server": "file:",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
 
 import { eq } from "drizzle-orm";
-import { steamders } from "../../../infrastructure/data/schemas";
+import { steamders } from "@schemas";
 import { PlayerInfo, Steamder } from "../types";
-import { calculateAllGames, updateCommonGames } from "../utils";
+import { calculateAllGames, updateCommonGames } from "@plugins/ws/utils/";
 
 export const leave = async (fastify: FastifyInstance, steamderId: string, steamder: Steamder, playerId: string) => {
   const steamderDecorate: any = fastify.steamders.get(steamderId);

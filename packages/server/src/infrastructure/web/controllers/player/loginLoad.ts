@@ -1,8 +1,8 @@
 import { EventMessage, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { APIResponse, setSSEHeaders } from "../../../../utils/response";
+import { APIResponse, setSSEHeaders } from "@utils/response";
 import jwt from 'jsonwebtoken';
-import { Player } from "../../../../domain/entities";
-import { fetchingSteamLibrary, getGamesNotInDB, insertGamesInDatabase, insertGamesInLibrary, IProgressOpt, ISteamResponse, setInitialLibrary, updateProgress } from "../../../../domain/services/progressService";
+import { Player } from "@entities";
+import { fetchingSteamLibrary, getGamesNotInDB, insertGamesInDatabase, insertGamesInLibrary, IProgressOpt, ISteamResponse, setInitialLibrary, updateProgress } from "@services/progressService";
 
 export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token: string } }>, response: FastifyReply) => {
   const fastify = request.server as FastifyInstance;

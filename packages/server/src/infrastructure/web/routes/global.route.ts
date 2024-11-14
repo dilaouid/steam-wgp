@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import {
   getStats
-} from '../controllers/global';
+} from '@controllers/global';
 
 export default async function globalRouter(fastify: FastifyInstance) {
   fastify.register(async function (fastify) {

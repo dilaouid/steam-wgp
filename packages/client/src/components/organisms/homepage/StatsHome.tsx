@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 
 import CountUp from 'react-countup';
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { PersonWorkspaceIcon } from "../../atoms/icons/stats/PersonWorkspaceIcon";
-import { ControllerIcon } from "../../atoms/icons/stats/ControllerIcon";
-import { PersonHeartsIcon } from "../../atoms/icons/stats/PersonHeartsIcon";
-import { DiagramIcon } from "../../atoms/icons/stats/DiagramIcon";
+import { PersonWorkspaceIcon } from "@atoms/icons/stats/PersonWorkspaceIcon";
+import { ControllerIcon } from "@atoms/icons/stats/ControllerIcon";
+import { PersonHeartsIcon } from "@atoms/icons/stats/PersonHeartsIcon";
+import { DiagramIcon } from "@atoms/icons/stats/DiagramIcon";
 
-import LogoImage from '../../../assets/images/homepage/logo.png';
-import { useStats } from "../../../hooks/useStatsApi";
+import LogoImage from '@assets/images/homepage/logo.png';
+import { useStats } from "@hooks/useStatsApi";
 
 
 const StyledLogoSeparator = styled.img`

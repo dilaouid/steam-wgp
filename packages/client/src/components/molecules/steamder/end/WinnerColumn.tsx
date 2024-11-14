@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-import { ImageContainer } from "../../../atoms/steamder/ImageContainer";
-import { TiltableImage } from "../../../atoms/steamder/TiltableImage";
+import { ImageContainer } from "@atoms/steamder/ImageContainer";
+import { TiltableImage } from "@atoms/steamder/TiltableImage";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 import ConfettiExplosion from 'react-confetti-explosion';
 

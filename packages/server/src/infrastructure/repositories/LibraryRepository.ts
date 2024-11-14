@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { and, count, eq, inArray } from "drizzle-orm";
 
-import { games, libraries, players } from "../data/schemas";
-import { Library } from "../../domain/entities";
+import { games, libraries, players } from "@schemas";
+import { Library } from "@entities";
 
 /**
  * Retrieves the player's library from the database.

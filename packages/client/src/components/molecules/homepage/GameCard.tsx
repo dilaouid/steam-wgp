@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Spinner } from "react-bootstrap";
 import CountUp from "react-countup";
 
-import { Trophy } from "../../atoms/homepage/Trophy";
-import { GameImage } from "../../atoms/homepage/GameImage";
+import { Trophy } from "@atoms/homepage/Trophy";
+import { GameImage } from "@atoms/homepage/GameImage";
 
 const StyledGameCard = styled.div<{ size: "large" | "small" }>`
   padding: 20px;

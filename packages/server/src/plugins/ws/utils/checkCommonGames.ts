@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { Steamder } from "../types";
 import { inArray, eq, and } from "drizzle-orm";
-import { games } from "../../../infrastructure/data/schemas";
+import { games } from "@schemas";
 
 export const checkCommonGames = async (steamder: Steamder, steamderId: string, fastify: FastifyInstance) => {
   const initialGames = steamder.playerGames[steamder.players[0].player_id] || [];

@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, insertSteamder, isPlayerInSteamder, joinSteamder, leaveSteamder, updateSteamder } from "../../infrastructure/repositories";
-import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "../../utils/gamesUtils";
-import { SteamderInsert } from "../entities";
+import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, insertSteamder, isPlayerInSteamder, joinSteamder, leaveSteamder, updateSteamder } from "@repositories";
+import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "@utils//gamesUtils";
+import { SteamderInsert } from "@entities";
 
 interface ISteamderExistsReturns {
     success: boolean;

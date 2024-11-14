@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Skeleton from 'react-loading-skeleton';
 import { useIsMutating } from "@tanstack/react-query";
 
-import { useLibraryStore } from "../../../store/libraryStore";
+import { useLibraryStore } from "@store/libraryStore";
 
 const Cover = styled.img<{ $private: boolean, $isFallback: boolean }>`
     user-select: none;

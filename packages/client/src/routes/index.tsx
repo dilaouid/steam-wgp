@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
 import { createFileRoute } from '@tanstack/react-router'
-import { Homepage } from '../components/templates/Home_page';
+import { Homepage } from '@templates/Home_page';
 
 import AOS from 'aos';
-import { HelmetWrapper } from '../components/wrappers/HelmetWrapper';
+import { HelmetWrapper } from '@wrappers/HelmetWrapper';
 
 export const Route = createFileRoute("/")({
   component: Home,

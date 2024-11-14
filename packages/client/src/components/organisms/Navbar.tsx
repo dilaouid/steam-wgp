@@ -6,14 +6,14 @@ import { FaPowerOff, FaSteam } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@store/authStore';
 
 
-import { logout } from '../../services/api/global/auth/logoutApi';
-import { deleteCookie } from '../../utils/cookieUtils';
+import { logout } from '@services/api/global/auth/logoutApi';
+import { deleteCookie } from '@utils/cookieUtils';
 
-import NavbarLogo from '../../assets/images/navbar/logo.png';
-import NavItem from '../atoms/NavItem';
+import NavbarLogo from '@assets/images/navbar/logo.png';
+import NavItem from "@atoms/NavItem";
 
 const StyledNav = styled(Nav)`
     font-family: 'Abel', sans-serif;

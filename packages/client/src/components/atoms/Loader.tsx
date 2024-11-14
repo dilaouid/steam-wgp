@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Lottie from "lottie-react";
-import LoadingController from '../../assets/lottie/loader.json';
+import LoadingController from '@assets/lottie/loader.json';
 import { Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 

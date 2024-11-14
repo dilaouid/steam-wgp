@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
 import { PlayerInfo, Steamder } from "../types";
-import { libraries, steamders, steamdersPlayers } from "../../../infrastructure/data/schemas";
+import { libraries, steamders, steamdersPlayers } from "@schemas";
 import { and, eq } from "drizzle-orm";
 import { checkCommonGames } from "./checkCommonGames";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
-import { Game } from "../../../domain/entities";
+import { Game } from "@entities";
 
 export const startSteamder = async (fastify: FastifyInstance, steamder: Steamder, steamderId: string, allGames: number[], steamdersMap: Map<any, any>): Promise<void> => {
   if (!steamder || steamder.players.length < 2) return;

@@ -1,11 +1,11 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { Player } from "../../../../domain/entities";
-import { APIResponse } from "../../../../utils/response";
+import { Player } from "@entities";
+import { APIResponse } from "@utils//response";
 
 import {
   checkGamesInLibrary,
   toggleHiddenGames,
-} from "../../../../domain/services/libraryService";
+} from "@services/libraryService";
 
 interface IBody {
   games: string[];

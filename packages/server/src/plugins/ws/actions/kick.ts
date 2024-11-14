@@ -2,8 +2,8 @@ import { FastifyInstance } from "fastify";
 
 import { eq } from "drizzle-orm";
 
-import { steamders } from "../../../infrastructure/data/schemas";
-import { calculateAllGames, updateCommonGames } from "../utils";
+import { steamders } from "@schemas";
+import { calculateAllGames, updateCommonGames } from "@plugins/ws/utils/";
 import { PlayerInfo, Steamder } from "../types";
 
 export const kick = (fastify: FastifyInstance, steamderId: string, playerId: string, playerToKick: string, steamder: Steamder) => {

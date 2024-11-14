@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
-import { useLibraryStore } from "../../../store/libraryStore";
+import { useLibraryStore } from "@store/libraryStore";
 import { useTranslation } from "react-i18next";
-import { EmptyTab } from "../../molecules/library/EmptyTab";
-import { GameColumn } from "../../molecules/library/GameColumn";
+import { EmptyTab } from "@molecules/library/EmptyTab";
+import { GameColumn } from "@molecules/library/GameColumn";
 import { queryClient } from "../../../main";
-import { SkeletonGameLoad } from "../../molecules/library/SkeletonGameLoad";
+import { SkeletonGameLoad } from "@molecules/library/SkeletonGameLoad";
 
 const StyledTabs = styled(Tabs)`
     font-family: 'Archivo Narrow', sans-serif;

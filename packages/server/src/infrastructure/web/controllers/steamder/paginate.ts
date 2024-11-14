@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { paginateSteamder } from "../../../../domain/services/steamderService";
+import { paginateSteamder } from "@services/steamderService";
 import { paginateSchema } from "../../validations";
 
-import { APIResponse } from "../../../../utils/response";
+import { APIResponse } from "@utils/response";
 
 interface Parameters {
   offset: number;
