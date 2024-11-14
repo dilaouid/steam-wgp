@@ -1,6 +1,6 @@
 import { and, eq } from "drizzle-orm";
 import { FastifyInstance } from "fastify";
-import { steamdersPlayers } from "../../../infrastructure/data/schemas";
+import { steamdersPlayers } from "@schemas";
 import { PlayerInfo, Steamder } from "../types";
 import { fillPlayerGamesList } from "./fillPlayerGamesList";
 

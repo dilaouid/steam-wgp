@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
 import { APIResponse } from "@utils//response";
 import { updateGameLists } from "@services/steamderService";
-import { canAdminKickFromSteamder, leaveSteamder } from "../../../repositories";
+import { canAdminKickFromSteamder, leaveSteamder } from "@repositories";
 import { Player } from "@entities";
 
 interface Parameters {

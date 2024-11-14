@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { PlayerInfo, Steamder } from "../types";
-import { steamders, steamdersPlayers } from "../../../infrastructure/data/schemas";
+import { steamders, steamdersPlayers } from "@schemas";
 import { and, eq } from "drizzle-orm";
 
 export const createSteamder = async (fastify: FastifyInstance, steamderId: string, player: PlayerInfo, steamdersMap: Map<any, any>): Promise<void> => {

@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 
 import { eq } from "drizzle-orm";
 
-import { steamders } from "../../../infrastructure/data/schemas";
+import { steamders } from "@schemas";
 import { Steamder } from "../types";
 import { calculateAllGames, updateCommonGames } from "@plugins/ws/utils/";
 

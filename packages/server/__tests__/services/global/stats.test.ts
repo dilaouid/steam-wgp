@@ -5,9 +5,9 @@ import {
   countPlayers,
   countSteamders,
   getPopularGames,
-} from "../../../src/@repositories";
+} from "../../../src/infrastructure/repositories";
 
-jest.mock("../../../src/@repositories");
+jest.mock("../../../src/infrastructure/repositories");
 
 describe("SteamWGPStats", () => {
   let fastify: FastifyInstance;

@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { checkGamesInLibrary } from "../../../src/domain/services/libraryService";
-import { getPlayerAllLibrary } from "../../../src/@repositories";
+import { getPlayerAllLibrary } from "../../../src/infrastructure/repositories";
 
-jest.mock("../../../src/@repositories");
+jest.mock("../../../src/infrastructure/repositories");
 
 describe("checkGamesInLibrary", () => {
   let fastify: FastifyInstance;
