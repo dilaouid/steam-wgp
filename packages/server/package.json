@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
-    "start": "npm run build && node -r tsconfig-paths/register dist/app.js",
+    "start": "npm run build && node dist/app.js",
     "test": "npx jest",
     "dev": "concurrently -k \"tsc -w\" \"tsc-alias -w\" \"ts-node-dev --respawn --transpile-only --ignore-watch node_modules dist/app.js\"",
-    "migrate": "tsx -r tsconfig-paths/register dotenv/config src/infrastructure/data/migrate.ts",
+    "migrate": "tsx -r dotenv/config src/infrastructure/data/migrate.ts",
     "generate": "drizzle-kit generate --out src/infrastructure/data/migrations --schema src/infrastructure/data/schemas/index.ts --dialect postgresql",
     "studio": "drizzle-kit studio --config=src/config/drizzle.config.ts",
     "lint": "eslint . --ext .ts",
