@@ -1,8 +1,8 @@
 import { queryClient } from "../../../main";
-import { useAuthStore } from "../../../store/authStore";
-import { useSteamderStore } from "../../../store/steamderStore";
-import { calculateAllGames } from "../../../utils/calculateAllGames";
-import { calculateCommonGames } from "../../../utils/calculateCommonGames";
+import { useAuthStore } from "@store/authStore";
+import { useSteamderStore } from "@store/steamderStore";
+import { calculateAllGames } from "@utils/calculateAllGames";
+import { calculateCommonGames } from "@utils/calculateCommonGames";
 
 export const leaveSteamder = (playerId: string): void => {
     const { setSteamder, steamder } = useSteamderStore.getState();

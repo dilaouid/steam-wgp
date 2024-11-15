@@ -6,7 +6,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { IoIosClock } from "react-icons/io";
 import Countdown, { zeroPad } from "react-countdown";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 const StyledContainer = styled(Container)`
     background: #000000cc;

@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { eq } from "drizzle-orm";
 
 import { Steamder } from "../types";
-import { steamders } from "../../../infrastructure/data/schemas";
+import { steamders } from "@schemas";
 
 export const allGamesSwitch = async (fastify: FastifyInstance, steamder: Steamder, steamderId: string, playerId: string) => {
   if (playerId !== steamder.adminId)

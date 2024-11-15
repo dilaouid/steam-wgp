@@ -1,5 +1,5 @@
 {
-  "id": "9d461689-55b9-4034-a9b9-2541b952b0e5",
+  "id": "a8a90ee8-af2e-4b84-84f9-d1a97e8de82f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -33,7 +33,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true
         },
@@ -58,7 +58,8 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "player_id": {
           "name": "player_id",
@@ -169,7 +170,8 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "admin_id": {
           "name": "admin_id",

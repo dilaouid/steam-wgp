@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import * as websocketActions from '../services/websocket/actions';
+import * as websocketActions from '@services/websocket/actions';
 
 interface WebSocketState {
   socket: WebSocket | null;

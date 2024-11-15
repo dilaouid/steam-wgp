@@ -13,7 +13,18 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "node16"
+    "moduleResolution": "node16",
+    "baseUrl": "src",
+    "paths": {
+      "@plugins/*": ["plugins/*"],
+      "@controllers/*": ["infrastructure/web/controllers/*"],
+      "@services/*": ["domain/services/*"],
+      "@repositories": ["infrastructure/repositories"],
+      "@utils/*": ["utils/*"],
+      "@entities": ["domain/entities"],
+      "@schemas": ["infrastructure/data/schemas"],
+      "@types/*": ["types/*"],
+    }
   },
   "include": [
     "src/**/*"

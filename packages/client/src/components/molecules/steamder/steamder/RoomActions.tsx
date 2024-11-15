@@ -5,12 +5,12 @@ import { useTranslation } from "react-i18next";
 
 import { Row, Col, Button, Modal } from "react-bootstrap";
 
-import { useSteamderStore } from "../../../../store/steamderStore";
-import { useAuthStore } from "../../../../store/authStore";
-import { useLeaveSteamder } from "../../../../hooks/useLeaveSteamder";
+import { useSteamderStore } from "@store/steamderStore";
+import { useAuthStore } from "@store/authStore";
+import { useLeaveSteamder } from "@hooks/useLeaveSteamder";
 
 import { IPlayer } from "../../../../types/ISteamder";
-import { leaveSteamder, startSteamder } from "../../../../services/websocket/send";
+import { leaveSteamder, startSteamder } from "@services/websocket/send";
 
 const StyledRow = styled(Row)`
     height: 91px;

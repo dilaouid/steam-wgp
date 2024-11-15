@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { Player } from "../../../../domain/entities";
-import { APIResponse } from "../../../../utils/response";
-import { isUserInSpecificSteamder } from "../../../../domain/services/steamderPlayerService";
+import { Player } from "@entities";
+import { APIResponse } from "@utils//response";
+import { isUserInSpecificSteamder } from "@services/steamderPlayerService";
 
 import { uuidSchema } from "../../validations";
-import { formatSteamderInfos, getSteamderInfos } from "../../../../domain/services/steamderService";
+import { formatSteamderInfos, getSteamderInfos } from "@services/steamderService";
 
 interface Parameters {
   id: string;

@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import jwt from "jsonwebtoken";
-import { Player } from "../entities";
-import { getPlayerSteamder, isUserDeleted, unDeleteUser } from "../../infrastructure/repositories";
+import { Player } from "@entities";
+import { getPlayerSteamder, isUserDeleted, unDeleteUser } from "@repositories";
 
 type User = Player & { username: string };
 

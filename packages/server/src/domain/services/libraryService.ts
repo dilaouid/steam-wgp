@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { updateLibraryVisibility } from "../../infrastructure/repositories";
-import { getPlayerAllLibrary } from "../../infrastructure/repositories";
+import { updateLibraryVisibility } from "@repositories";
+import { getPlayerAllLibrary } from "@repositories";
 
 type Library = ILibraryGame[]
 

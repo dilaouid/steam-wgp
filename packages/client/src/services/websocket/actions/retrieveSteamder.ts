@@ -1,4 +1,4 @@
-import { useSteamderStore } from "../../../store/steamderStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 export const retrieveSteamder = (swipedGames: string[], endTime: number) => {
     const { setSteamder, steamder } = useSteamderStore.getState();

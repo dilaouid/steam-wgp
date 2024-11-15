@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
-import { useCheckAuth } from "../../hooks/useCheckAuth";
-import { useAuthStore } from "../../store/authStore";
-import { Loader } from "../atoms/Loader";
+import { useCheckAuth } from "@hooks/useCheckAuth";
+import { useAuthStore } from "@store/authStore";
+import { Loader } from "@atoms/Loader";
 
 
 type AuthWrapperProps = {

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Col, Row } from "react-bootstrap"
-import { FeatureHome } from "../../atoms/homepage/Feature";
-import { ClockHistoryIcon } from "../../atoms/icons/features/ClockHistoryIcon";
-import { ControllerIcon } from "../../atoms/icons/features/ControllerIcon";
-import { PeopleIcon } from "../../atoms/icons/features/PeopleIcon";
+import { FeatureHome } from "@atoms/homepage/Feature";
+import { ClockHistoryIcon } from "@atoms/icons/features/ClockHistoryIcon";
+import { ControllerIcon } from "@atoms/icons/features/ControllerIcon";
+import { PeopleIcon } from "@atoms/icons/features/PeopleIcon";
 import { Trans, useTranslation } from "react-i18next";
 
-import FeaturesImage from '../../../assets/images/homepage/features.png';
+import FeaturesImage from '@assets/images/homepage/features.png';
 
 const StyledFeaturesImage = styled.img`
     z-index: 10;

@@ -1,7 +1,7 @@
 import { router, queryClient } from "../../../main";
-import { useAuthStore } from "../../../store/authStore";
-import { useSteamderStore } from "../../../store/steamderStore";
-import { drawToast } from "../../../utils/drawToast"
+import { useAuthStore } from "@store/authStore";
+import { useSteamderStore } from "@store/steamderStore";
+import { drawToast } from "@utils/drawToast"
 
 export const endSteamder = () => {
     const { setSteamder, steamder } = useSteamderStore.getState();

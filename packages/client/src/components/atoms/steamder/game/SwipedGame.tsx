@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useSteamderStore } from "../../../../store/steamderStore";
-import { unswipeCard } from "../../../../services/websocket/send";
+import { useSteamderStore } from "@store/steamderStore";
+import { unswipeCard } from "@services/websocket/send";
 
 const StyledLikedGames = styled.img`
     object-fit: cover;

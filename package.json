@@ -24,6 +24,9 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "pnpm":"9.10.0"
+    "pnpm": "9.10.0"
+  },
+  "dependencies": {
+    "steamwgp-monorepo": "file:"
   }
 }

@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import jwt from 'jsonwebtoken';
 import { eq } from 'drizzle-orm';
 
-import { players } from '../infrastructure/data/schemas';
+import { players } from '@schemas';
 
 export async function isAuthenticated(req: FastifyRequest, res: FastifyReply) {
   try {

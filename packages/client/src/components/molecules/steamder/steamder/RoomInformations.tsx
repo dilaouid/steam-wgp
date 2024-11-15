@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Trans, useTranslation } from "react-i18next";
 
-import { useAuthStore } from "../../../../store/authStore";
-import { useSteamderStore } from "../../../../store/steamderStore";
+import { useAuthStore } from "@store/authStore";
+import { useSteamderStore } from "@store/steamderStore";
 
 import { RoomActions } from "./RoomActions";
 import { AllGamesSwitch } from "./AllGamesSwitch";

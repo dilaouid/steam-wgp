@@ -7,8 +7,8 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
 import Navbar from '../components/organisms/Navbar'
 import { Footer } from '../components/organisms/Footer'
-import { Loader } from '../components/atoms/Loader'
-import WebSocketManager from '../services/websocket/WebsocketManager'
+import { Loader } from '@atoms/Loader'
+import WebSocketManager from '@services/websocket/WebsocketManager'
 
 import "react-toastify/dist/ReactToastify.css";
 

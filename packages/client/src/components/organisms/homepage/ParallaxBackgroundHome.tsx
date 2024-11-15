@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Col, Container, Row } from "react-bootstrap";
 
-import { HeroSection } from '../../molecules/homepage/HeroSection';
-import ParallaxImage from '../../../assets/images/homepage/parallax.png';
+import { HeroSection } from '@molecules/homepage/HeroSection';
+import ParallaxImage from '@assets/images/homepage/parallax.png';
 
 const ParallaxHero = styled.div`
     height: 600px;

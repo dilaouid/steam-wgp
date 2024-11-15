@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { deleteSteamder, checkGameEnd } from "../utils";
+import { deleteSteamder, checkGameEnd } from "@plugins/ws/utils/";
 import { Steamder } from "../types";
 
 export const swipe = async (fastify: FastifyInstance, steamders: Map<any, any>, steamderId: string, gameId: number, playerId: string) => {

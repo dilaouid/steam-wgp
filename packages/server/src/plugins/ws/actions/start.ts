@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { Steamder } from "../types";
-import { calculateAllGames, deleteSteamder, startSteamder } from "../utils";
+import { calculateAllGames, deleteSteamder, startSteamder } from "@plugins/ws/utils/";
 
 export const start = async (fastify: FastifyInstance, steamder: Steamder, steamderId: string, playerId: string, steamders: Map<any, any>) => {
   try {

@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { and, count, eq } from "drizzle-orm";
 
-import { games, libraries, players } from "../data/schemas";
-import { Player } from "../../domain/entities";
+import { games, libraries, players } from "@schemas";
+import { Player } from "@entities";
 
 /**
  * Deletes a player from the database.

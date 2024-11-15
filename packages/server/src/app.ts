@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import * as plugins from './plugins';
+import * as plugins from '@plugins/index';
 import router from './infrastructure/web/routes';
 
 import fastifySession from '@fastify/session';

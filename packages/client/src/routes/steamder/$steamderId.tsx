@@ -3,25 +3,25 @@ import AOS from 'aos';
 
 import { createFileRoute, useParams } from '@tanstack/react-router'
 
-import { useAuthStore } from '../../store/authStore';
-import { useSteamderStore } from '../../store/steamderStore';
-import useWebSocketStore from '../../store/websocketStore';
+import { useAuthStore } from '@store/authStore';
+import { useSteamderStore } from '@store/steamderStore';
+import useWebSocketStore from '@store/websocketStore';
 
-import { SteamderWaitPage } from '../../components/templates/SteamderWait_page';
+import { SteamderWaitPage } from '@templates/SteamderWait_page';
 
-import { getCookieValue } from '../../utils/cookieUtils';
+import { getCookieValue } from '@utils/cookieUtils';
 
-import { SteamderPlayPage } from '../../components/templates/SteamderPlay_page';
-import { SteamderWinPage } from '../../components/templates/SteamderWin_page';
+import { SteamderPlayPage } from '@templates/SteamderPlay_page';
+import { SteamderWinPage } from '@templates/SteamderWin_page';
 
-import { useGetSteamder } from '../../hooks/useGetSteamder';
-import { useJoinSteamder } from '../../hooks/useJoinSteamder';
+import { useGetSteamder } from '@hooks/useGetSteamder';
+import { useJoinSteamder } from '@hooks/useJoinSteamder';
 import { useTranslation } from 'react-i18next';
-import { HelmetWrapper } from '../../components/wrappers/HelmetWrapper';
-import { Loader } from '../../components/atoms/Loader';
+import { HelmetWrapper } from '@wrappers/HelmetWrapper';
+import { Loader } from '@atoms/Loader';
 import styled from 'styled-components';
 
-import CoverImage from '../../assets/images/steamderpage/cover.jpg';
+import CoverImage from '@assets/images/steamderpage/cover.jpg';
 
 export const Route = createFileRoute("/steamder/$steamderId")({
   component: Steamder

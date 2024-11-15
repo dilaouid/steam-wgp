@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { isPlayerInASteamder, isPlayerInSteamder } from "../../infrastructure/repositories";
+import { isPlayerInASteamder, isPlayerInSteamder } from "@repositories";
 
 /**
  * Checks if a user is in the steamder.

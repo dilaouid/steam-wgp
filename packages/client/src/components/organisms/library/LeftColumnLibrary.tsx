@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Col, Row } from "react-bootstrap";
 import { Trans, useTranslation } from "react-i18next";
 
-import { useLibraryStore } from "../../../store/libraryStore";
+import { useLibraryStore } from "@store/libraryStore";
 
-import { Question } from "../../atoms/library/Question";
-import { SelectedCount } from "../../atoms/library/SelectedCount";
-import { SubmitSelectedButton } from "../../atoms/library/SubmitSelectedButton";
+import { Question } from "@atoms/library/Question";
+import { SelectedCount } from "@atoms/library/SelectedCount";
+import { SubmitSelectedButton } from "@atoms/library/SubmitSelectedButton";
 
 const StyledCol = styled(Col)`
     height: 50%;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BsShieldLockFill } from "react-icons/bs";
-import { GameCover } from "../../atoms/library/GameCover";
-import { useLibraryStore } from "../../../store/libraryStore";
+import { GameCover } from "@atoms/library/GameCover";
+import { useLibraryStore } from "@store/libraryStore";
 import { useIsMutating } from "@tanstack/react-query";
 
 const Container = styled.div<{ $selected?: boolean }>`

@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { Container, Row } from 'react-bootstrap';
 
-import BackgroundImage from '../../assets/images/loginpage/bg.png'
-import { LeftColumnLogin } from '../organisms/login/LeftColumnLogin';
-import { RightColumnLogin } from '../organisms/login/RightColumnLogin';
-import { useAuthStore } from '../../store/authStore';
+import BackgroundImage from '@assets/images/loginpage/bg.png'
+import { LeftColumnLogin } from '@organisms/login/LeftColumnLogin';
+import { RightColumnLogin } from '@organisms/login/RightColumnLogin';
+import { useAuthStore } from '@store/authStore';
 import { useNavigate } from '@tanstack/react-router';
 
 const LoginSection = styled.section`
