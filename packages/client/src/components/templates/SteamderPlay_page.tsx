@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import styled from "styled-components";
 
 import CoverImage from '@assets/images/steamderpage/cover.jpg';
@@ -19,15 +17,10 @@ const StyledSection = styled.section`
 `;
 
 export const SteamderPlayPage = () => {
-    const { steamder, setSteamder } = useSteamderStore();
+    const { steamder, shuffleGames } = useSteamderStore();
 
-    useEffect(() => {
-        if (steamder) {
-            const property = steamder.display_all_games ? 'all_games' : 'common_games';
-            setSteamder({ ...steamder, [property]: steamder[property].sort(() => Math.random() - 0.5) });
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    if (steamder)
+        shuffleGames();
 
     return (
         <StyledSection>

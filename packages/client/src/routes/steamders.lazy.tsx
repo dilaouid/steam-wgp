@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { SteamdersPage } from '@templates/Steamders_page';
 
@@ -10,13 +9,12 @@ export const Route = createLazyFileRoute("/steamders")({
 })
 
 function Steamders() {
-  useEffect(() => {
-    AOS.init({
-        once: true,
-        disableMutationObserver: true
-    });
-    AOS.refresh();
-  }, []);
+  AOS.init({
+      once: true,
+      disableMutationObserver: true
+  });
+  AOS.refresh();
+
   return (
   <HelmetWrapper keyPrefix='steamders' noindex={false}>
     <SteamdersPage />

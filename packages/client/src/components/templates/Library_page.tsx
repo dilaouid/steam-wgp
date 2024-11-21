@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 
 import CoverImage from '@assets/images/librarypage/cover.png';
@@ -7,7 +6,6 @@ import { LeftColumnLibrary } from '@organisms/library/LeftColumnLibrary';
 import { RightColumnLibrary } from '@organisms/library/RightColumnLibrary';
 import { useLibraryStore } from '@store/libraryStore';
 import { useGetLibrary } from '@hooks/useLibrary';
-import { TGameLibrary } from '../../types/TGameLibrary';
 
 const LibrarySection = styled.section`
     padding-top: 9px;
@@ -24,14 +22,9 @@ export const Librarypage = () => {
     const { library, setLibrary } = useLibraryStore();
     const { data, isError } = useGetLibrary();
 
-    useEffect(() => {
-        if (library.length > 0) return;
-        if (data && !isError) {
-            // filter data library by asc order (game_id)
-            data.sort((a: TGameLibrary, b: TGameLibrary) => a.game_id.localeCompare(b.game_id));
-            setLibrary(data);
-        }
-    }, [data, library, setLibrary, isError]);
+    if (!isError && data && library.length === 0) {
+        setLibrary(data);
+    }
 
     return (
     <LibrarySection>

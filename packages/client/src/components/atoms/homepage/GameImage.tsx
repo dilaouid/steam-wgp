@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 
 import { Link } from "@tanstack/react-router";
@@ -34,14 +34,12 @@ interface ImageContainerProps {
 
 export const GameImage: React.FC<ImageContainerProps> = ({ game_id, golden }) => {
   const imgRef = useRef<HTMLImageElement>(null);
-  const [ imageUrl, setImageUrl ] = useState(`https://steamcdn-a.akamaihd.net/steam/apps/${game_id}/library_600x900.jpg`);
-
-  useEffect(() => {
-    setImageUrl(`https://steamcdn-a.akamaihd.net/steam/apps/${game_id}/library_600x900.jpg`);
-  }, [game_id]);
+  const imageUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${game_id}/library_600x900.jpg`;
 
   const handleImageError = () => {
-    setImageUrl(`https://cdn.akamai.steamstatic.com/steam/apps/${game_id}/header.jpg`);
+    if (imgRef.current) {
+      imgRef.current.src = `https://cdn.akamai.steamstatic.com/steam/apps/${game_id}/header.jpg`;
+    }
   };
 
   return (

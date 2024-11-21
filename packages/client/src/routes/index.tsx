@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { createFileRoute } from '@tanstack/react-router'
 import { Homepage } from '@templates/Home_page';
 
@@ -11,12 +9,11 @@ export const Route = createFileRoute("/")({
 })
 
 function Home() {
-  useEffect(() => {
-    AOS.init({
-      once: true
-    });
-    AOS.refresh();
-  }, []);
+  AOS.init({
+    once: true
+  });
+  AOS.refresh();
+
   return (
     <HelmetWrapper keyPrefix='homepage' noindex={false}>
       <Homepage />

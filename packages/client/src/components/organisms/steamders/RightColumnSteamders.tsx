@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import styled from "styled-components";
 import { Col, Row, Table, Spinner } from "react-bootstrap";
@@ -29,15 +29,10 @@ export const RightColumnSteamders = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const { t } = useTranslation('pages/steamders', { keyPrefix: 'right_column' });
-    const page = new URLSearchParams(window.location.search).get('page');
 
     const { user } = useAuthStore();
-    const { data: steamders, isFetching: fetchingSteamders, refetch } = useGetSteamders(page ? parseInt(page) : 1);
+    const { data: steamders, isFetching: fetchingSteamders } = useGetSteamders(currentPage);
     const { data: count, isFetching: fetchingCount } = useCountSteamders();
-
-    useEffect(() => {
-        refetch();
-    }, [ currentPage, refetch ]);
 
     return (
         <Col sm={12} md={7} lg={8}>
@@ -68,7 +63,7 @@ export const RightColumnSteamders = () => {
                         </StyledTRow>
                     )}
 
-                    { steamders && steamders.map((steamder: ISteamderSearch) => (
+                    { !fetchingSteamders && steamders && steamders.map((steamder: ISteamderSearch) => (
                         <StyledTRow key={steamder.id}>
                             <td>{steamder.name}</td>
                             <td><BsPeople /> {steamder.player_count}</td>

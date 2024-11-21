@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import AOS from 'aos';
 
 import { createFileRoute, useParams } from '@tanstack/react-router'
 
@@ -58,9 +57,6 @@ function Steamder() {
       window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/steam`;
       return;
     }
-
-    AOS.init();
-    AOS.refresh();
 
     if (user.steamder) {
       getSteamderMutation.mutateAsync().then(steamder => {

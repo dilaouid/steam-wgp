@@ -170,23 +170,23 @@ importers:
         specifier: ^8.3.1
         version: 8.3.1
       '@types/jsonwebtoken':
-        specifier: ^9.0.6
+        specifier: ^9.0.7
         version: 9.0.7
       '@types/passport':
-        specifier: ^1.0.16
+        specifier: ^1.0.17
         version: 1.0.17
       '@types/passport-steam':
         specifier: ^1.0.6
         version: 1.0.6
       '@types/ws':
-        specifier: ^8.5.12
+        specifier: ^8.5.13
         version: 8.5.13
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
       drizzle-orm:
-        specifier: ^0.33.0
-        version: 0.33.0(@types/pg@8.11.10)(@types/react@18.3.12)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.36.3
+        version: 0.36.3(@types/pg@8.11.10)(@types/react@18.3.12)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1)
       fastify:
         specifier: ^4.28.1
         version: 4.28.1
@@ -200,7 +200,7 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2(fastify@4.28.1)
       i18next:
-        specifier: ^23.14.0
+        specifier: ^23.16.5
         version: 23.16.5
       jsonwebtoken:
         specifier: ^9.0.2
@@ -215,7 +215,7 @@ importers:
         specifier: ^1.0.18
         version: 1.0.18
       pg:
-        specifier: ^8.12.0
+        specifier: ^8.13.1
         version: 8.13.1
       pino:
         specifier: ^8.21.0
@@ -224,7 +224,7 @@ importers:
         specifier: ^10.3.1
         version: 10.3.1
       postgres:
-        specifier: ^3.4.4
+        specifier: ^3.4.5
         version: 3.4.5
       steamwgp-server:
         specifier: 'file:'
@@ -237,13 +237,13 @@ importers:
         specifier: ^20.1.4
         version: 20.1.4
       '@types/jest':
-        specifier: ^29.5.13
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^20.16.5
+        specifier: ^20.17.6
         version: 20.17.6
       '@types/pg':
-        specifier: ^8.11.8
+        specifier: ^8.11.10
         version: 8.11.10
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.21.0
@@ -258,13 +258,13 @@ importers:
         specifier: 0.24.2
         version: 0.24.2
       eslint:
-        specifier: ^8.57.0
+        specifier: ^8.57.1
         version: 8.57.1
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.6)(ts-node@10.9.2(@swc/core@1.9.2(@swc/helpers@0.5.15))(@types/node@20.17.6)(typescript@5.6.3))
       nodemon:
-        specifier: ^3.1.4
+        specifier: ^3.1.7
         version: 3.1.7
       ts-jest:
         specifier: ^29.2.5
@@ -279,10 +279,10 @@ importers:
         specifier: ^1.8.10
         version: 1.8.10
       tsx:
-        specifier: ^4.19.0
+        specifier: ^4.19.2
         version: 4.19.2
       typescript:
-        specifier: ^5.5.4
+        specifier: ^5.6.3
         version: 5.6.3
 
 packages:
@@ -2216,13 +2216,14 @@ packages:
     resolution: {integrity: sha512-nXOaTSFiuIaTMhS8WJC2d4EBeIcN9OSt2A2cyFbQYBAZbi7lRsVGJNqDpEwPqYfJz38yxbY/UtbvBBahBfnExQ==}
     hasBin: true
 
-  drizzle-orm@0.33.0:
-    resolution: {integrity: sha512-SHy72R2Rdkz0LEq0PSG/IdvnT3nGiWuRk+2tXZQ90GVq/XQhpCzu/EFT3V2rox+w8MlkBQxifF8pCStNYnERfA==}
+  drizzle-orm@0.36.3:
+    resolution: {integrity: sha512-ffQB7CcyCTvQBK6xtRLMl/Jsd5xFTBs+UTHrgs1hbk68i5TPkbsoCPbKEwiEsQZfq2I7VH632XJpV1g7LS2H9Q==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
-      '@electric-sql/pglite': '>=0.1.1'
-      '@libsql/client': '*'
+      '@electric-sql/pglite': '>=0.2.0'
+      '@libsql/client': '>=0.10.0'
+      '@libsql/client-wasm': '>=0.10.0'
       '@neondatabase/serverless': '>=0.1'
       '@op-engineering/op-sqlite': '>=2'
       '@opentelemetry/api': ^1.4.1
@@ -2237,7 +2238,7 @@ packages:
       '@xata.io/client': '*'
       better-sqlite3: '>=7'
       bun-types: '*'
-      expo-sqlite: '>=13.2.0'
+      expo-sqlite: '>=14.0.0'
       knex: '*'
       kysely: '*'
       mysql2: '>=2'
@@ -2255,6 +2256,8 @@ packages:
       '@electric-sql/pglite':
         optional: true
       '@libsql/client':
+        optional: true
+      '@libsql/client-wasm':
         optional: true
       '@neondatabase/serverless':
         optional: true
@@ -6390,7 +6393,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.33.0(@types/pg@8.11.10)(@types/react@18.3.12)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1):
+  drizzle-orm@0.36.3(@types/pg@8.11.10)(@types/react@18.3.12)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1):
     optionalDependencies:
       '@types/pg': 8.11.10
       '@types/react': 18.3.12

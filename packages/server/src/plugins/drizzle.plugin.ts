@@ -3,7 +3,7 @@ import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { FastifyInstance } from 'fastify';
 
-import * as schema from "../infrastructure/data/schemas";
+import * as schema from "@schemas";
 
 export const drizzlePlugin = fp(async (fastify: FastifyInstance, opts: any) => {
   // Create a database client and configure drizzle-orm for postgres
@@ -21,9 +21,7 @@ export const drizzlePlugin = fp(async (fastify: FastifyInstance, opts: any) => {
     },
   });
 
-  const db = drizzle(queryClient, {
-    ...schema
-  });
+  const db = drizzle({ client: queryClient, schema: schema });
 
   // Decorate fastify with the database client
   fastify.decorate('db', db);

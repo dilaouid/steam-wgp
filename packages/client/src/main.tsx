@@ -11,6 +11,8 @@ import { routeTree } from './routeTree.gen'
 
 import { AuthWrapper } from './components/wrappers/AuthWrapper.tsx'
 export const router = createRouter({ routeTree })
+import AOS from 'aos';
+
 
 import 'aos/dist/aos.css';
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -24,6 +26,9 @@ export const queryClient = new QueryClient({
     },
   },
 })
+
+AOS.init();
+AOS.refresh();
 
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {

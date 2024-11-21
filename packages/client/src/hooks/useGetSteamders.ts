@@ -24,7 +24,7 @@ export const useGetSteamders = (page: number) => {
       });
     }, */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    select: (data) => data.data,
+    select: (data: any) => data.data,
     placeholderData: keepPreviousData,
     staleTime: Infinity
   });

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 
 const StyledImage = styled.img<{ $hovered?: boolean, $zoom?: boolean }>`
@@ -46,11 +46,7 @@ interface TiltableImageProps {
 
 export const TiltableImage: React.FC<TiltableImageProps> = ({ gameId, hovered, alt, zoomAppears, ...props }) => {
     const imgRef = useRef<HTMLImageElement>(null);
-    const [ imageUrl, setImageUrl ] = useState(`https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/library_600x900.jpg`);
-
-    useEffect(() => {
-        setImageUrl(`https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/library_600x900.jpg`);
-    }, [gameId]);
+    const imageUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/library_600x900.jpg`;
     
     const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
         const img = imgRef.current;
@@ -73,8 +69,10 @@ export const TiltableImage: React.FC<TiltableImageProps> = ({ gameId, hovered, a
     };
 
     const handleImageError = () => {
-        setImageUrl(`https://cdn.akamai.steamstatic.com/steam/apps/${gameId}/header.jpg`);
-    };
+        if (imgRef.current) {
+          imgRef.current.src = `https://cdn.akamai.steamstatic.com/steam/apps/${gameId}/header.jpg`;
+        }
+    };    
 
     return (
         <StyledImage ref={imgRef} alt={alt} src={imageUrl} $zoom={zoomAppears} $hovered={hovered} {...props} onError={handleImageError} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} />

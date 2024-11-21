@@ -16,6 +16,11 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
   message: { action: '' },
 
   connect: (steamderId, token) => {
+    const currentSocket = get().socket;
+    if (currentSocket) {
+      currentSocket.close();
+    }
+
     const url = `${BASE_WS_URL}/ws/${steamderId}`;
     const ws = new WebSocket(url, [token]);
 
@@ -25,37 +30,16 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
     };
 
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      switch (data.action) {
-        case "leave":
-          websocketActions.leaveSteamder(data.playerId);
-          break;
-        case "start":
-          websocketActions.startSteamder(data.endTime, data?.steamderId);
-          break;
-        case "kicked":
-          websocketActions.kickSteamder(data.playerId);
-          break;
-        case "update":
-          websocketActions.updateSteamder(data.player, data.commonGames);
-          break;
-        case "join":
-          websocketActions.joinSteamder(data.player);
-          break;
-        case "end":
-          websocketActions.endSteamder();
-          break;
-        case "gameEnd":
-          websocketActions.gameEnd(data.choosed_game);
-          break;
-        case "allGamesSwitch":
-          websocketActions.switchDisplayGames(data.display_all_games);
-          break;
-        case "retrieve":
-          websocketActions.retrieveSteamder(data.swipedGames, data.endTime);
-          break;
-        default:
-          console.error("Unknown action", data);
+      try {
+        const data = JSON.parse(event.data);
+        const actionHandler = actionMapping[data.action];
+        if (actionHandler) {
+          actionHandler(data);
+        } else {
+          console.error("Unknown WebSocket action:", data.action);
+        }
+      } catch (err) {
+        console.error("WebSocket message parsing error:", err);
       }
     };
 
@@ -70,15 +54,37 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
   },
 
   disconnect: () => {
-    get().socket?.close();
+    const socket = get().socket;
+    if (socket) {
+      socket.close();
+      set({ socket: null });
+    }
   },
 
   sendMessage: (message: string) => {
-    const { socket } = get();
+    const socket = get().socket;
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(message);
+    } else {
+      console.warn("Cannot send message: WebSocket not connected");
     }
-  },
+  }
+
 }));
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const actionMapping: Record<string, (data: any) => void> = {
+  leave: (data) => websocketActions.leaveSteamder(data.playerId),
+  start: (data) => websocketActions.startSteamder(data.endTime, data?.steamderId),
+  kicked: (data) => websocketActions.kickSteamder(data.playerId),
+  update: (data) => websocketActions.updateSteamder(data.player, data.commonGames),
+  join: (data) => websocketActions.joinSteamder(data.player),
+  end: () => websocketActions.endSteamder(),
+  gameEnd: (data) => websocketActions.gameEnd(data.choosed_game),
+  allGamesSwitch: (data) =>
+    websocketActions.switchDisplayGames(data.display_all_games),
+  retrieve: (data) =>
+    websocketActions.retrieveSteamder(data.swipedGames, data.endTime),
+};
 
 export default useWebSocketStore;
