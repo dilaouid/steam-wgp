@@ -1,9 +1,9 @@
-import { pgTable, bigint, primaryKey } from 'drizzle-orm/pg-core';
+import { pgTable, bigint, unique, uuid } from 'drizzle-orm/pg-core';
 import { players } from './players';
 
 export const families = pgTable('families', {
-  player_id: bigint('player_id', { mode: 'bigint' }).references(() => players.id, { onDelete: 'cascade' }),
-  family_member: bigint('family_member', { mode: 'bigint' }).references(() => players.id, { onDelete: 'cascade' }),
-}, (family) => [
-  primaryKey({columns: [family.player_id, family.family_member] })
+  id: uuid("id").primaryKey().defaultRandom(),
+  adminId: bigint('admin_id', { mode: 'bigint' }).references(() => players.id, { onDelete: 'cascade' }),
+}, () => [
+  unique('admin_id')
 ]);

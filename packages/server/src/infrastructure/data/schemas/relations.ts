@@ -46,7 +46,7 @@ export const gamesRelations = relations(games, ({ many }) => ({
 
 export const familyRelations = relations(families, ({ one }) => ({
   player: one(players, {
-    fields: [families.player_id],
+    fields: [families.family_admin],
     references: [players.id],
   }),
   familyMember: one(players, {
