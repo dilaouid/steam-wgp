@@ -17,7 +17,7 @@ export const GamesInCommon: React.FC<{commonGames: number}> = ({ commonGames }) 
     const { t } = useTranslation('pages/steamder', { keyPrefix: 'steamder.players' });
 
     return (
-        <OverlayTrigger placement="bottom" overlay={LabelTooltip(t('games_in_common', { count: commonGames }))}>
+        <OverlayTrigger flip={true} placement="bottom" overlay={LabelTooltip(t('games_in_common', { count: commonGames }))}>
             <StyledText className={`lead text-center ${commonGames > 0 ? 'text-info' : 'text-danger'} user-select-none`}>
                 <strong> { commonGames } </strong>
                 <IoGameController />

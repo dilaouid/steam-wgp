@@ -81,12 +81,15 @@ const Navbar: React.FC = () => {
         <RBNavbar.Toggle aria-controls="responsive-navbar-nav" />
         <RBNavbar.Collapse id="responsive-navbar-nav">
           <StyledNav className="ms-auto">
-            <NavItem to="/">{t('homepage')}</NavItem>
-            { isAuthenticated && <NavItem to="/library">{t('library')}</NavItem> }
-            { isAuthenticated && user?.steamder && <NavItem to={`/steamder/${user.steamder}`}>{t('my_steamder')}</NavItem> }
-            <NavItem to="/steamders">{t('steamders')}</NavItem>
-            <NavItem to="https://ko-fi.com/dilaouid" flashy={true}>{t('donate')}</NavItem>
+            <ul className="navbar-nav mr-auto">
+              <NavItem to="/">{t('homepage')}</NavItem>
+              { isAuthenticated && <NavItem to="/library">{t('library')}</NavItem> }
+              { isAuthenticated && user?.steamder && <NavItem to={`/steamder/${user.steamder}`}>{t('my_steamder')}</NavItem> }
+              <NavItem to="/steamders">{t('steamders')}</NavItem>
+              <NavItem to="https://ko-fi.com/dilaouid" flashy={true}>{t('donate')}</NavItem>
+            </ul>
           </StyledNav>
+
           { isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="danger" onClick={handleAuthClick}><LogoutIcon /> | { loading ? <Spinner size='sm' /> :  t('logout') } </Button> }
           { !isAuthenticated && <Button style={{fontFamily: 'Abel'}} variant="info" href={ BASE_URL + "/auth/steam" }><SteamIcon /> | {t('login')}</Button> }
         </RBNavbar.Collapse>

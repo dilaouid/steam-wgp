@@ -30,7 +30,7 @@ export const StatsHome: React.FC = () => {
     return(
     <div data-aos="flip-down">
         <hr />
-        <StyledLogoSeparator className="img-fluid user-select-none" data-aos="flip-down" src={LogoImage} loading="lazy" />
+        <StyledLogoSeparator alt="SteamWGP logo for separator sections" className="img-fluid user-select-none" data-aos="flip-down" src={LogoImage} loading="lazy" />
         <StyledContainer className="py-4 py-xl-5">
             <Row className="gy-4 row-cols-2 row-cols-md-4">
 
