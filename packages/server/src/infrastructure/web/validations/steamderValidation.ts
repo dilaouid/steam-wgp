@@ -3,9 +3,10 @@ import { z } from "zod";
 export const steamderSchema = z.object({
   name: z
     .string()
-    .min(3, { message: "invalid_name" })
-    .max(40, { message: "invalid_name" })
-    .default("Steamder"),
+    .transform((value) => (value === "" || value === null || !value || value === undefined ? "Steamder" : value))
+    .refine((value) => value.length >= 3 && value.length <= 40, {
+      message: "invalid_name",
+    }),
   isPrivate: z.boolean().default(false),
 });
 
