@@ -16,16 +16,17 @@ export const newSteamder = async (request: FastifyRequest, reply: FastifyReply) 
     fastify.log.warn(`User ${id} want to create a steamder but is already in one`);
     return APIResponse(reply, null, "already_in_room", 400);
   }
+  let parsedBody;
 
   // Check if the request body is valid according to the zod schema
   try {
-    steamderSchema.parse(request.body);
+    parsedBody = steamderSchema.parse(request.body);
   } catch (e: any) {
     fastify.log.error(e.errors);
     return APIResponse(reply, e.errors, "invalid_steamder", 400);
   }
 
-  const { isPrivate, name } = request.body as { isPrivate: boolean; name: string };
+  const { isPrivate, name } = parsedBody;
 
   try {
     // Create the steamder
