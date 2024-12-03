@@ -46,11 +46,11 @@ export const gamesRelations = relations(games, ({ many }) => ({
 
 export const familyRelations = relations(families, ({ one }) => ({
   player: one(players, {
-    fields: [families.family_admin],
+    fields: [families.adminId],
     references: [players.id],
   }),
   familyMember: one(players, {
-    fields: [families.family_member],
+    fields: [families.adminId],
     references: [players.id],
   }),
 }));

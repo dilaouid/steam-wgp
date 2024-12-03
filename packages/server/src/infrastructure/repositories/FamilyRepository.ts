@@ -1,6 +1,30 @@
 import { FastifyInstance } from "fastify";
-import { families, players } from "@schemas";
+import { families, familyMembers, players } from "@schemas";
 import { eq } from "drizzle-orm";
+
+/**
+ * Check if a player is in a family (in the family_member column, not the family_admin column).
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {bigint} playerId - The ID of the player to check.
+ * @returns {Promise<boolean>} - A promise that resolves to true if the player is in a family, false otherwise.
+ * @throws {Error} - If there is an error while checking if the player is in a family.
+ */
+export const isPlayerInFamily = async (fastify: FastifyInstance, playerId: bigint) => {
+  try {
+    const { db } = fastify;
+    const [ family ] = await db
+      .select(players.id)
+      .from(familyMembers)
+      .where(eq(familyMembers.player_id, playerId))
+      .limit(1)
+      .execute();
+    return !!family;
+  } catch (err) {
+    fastify.log.error(err);
+    throw new Error(`Failed to check if player ${playerId} is in a family`);
+  }
+}
 
 /**
  * Retrieves the family members of a player.
@@ -15,14 +39,15 @@ export const getFamilyMembers = async (fastify: FastifyInstance, playerId: bigin
     const { db } = fastify;
     return await db
       .select({
-        id: families.family_member,
+        id: players.id,
         username: players.username,
         avatar_hash: players.avatar_hash,
         profileurl: players.profileurl,
+        status: familyMembers.status
       })
-      .from(families)
-      .leftJoin(players, eq(families.family_member, players.id))
-      .where(eq(families.player_id, playerId))
+      .from(familyMembers)
+      .leftJoin(players, eq(familyMembers.player_id, players.id))
+      .where(eq(familyMembers.player_id, playerId))
       .execute();
   } catch (err) {
     fastify.log.error(err);
@@ -48,14 +73,22 @@ export const addFamilyMember = async (fastify: FastifyInstance, playerId: bigint
     if (playerId === familyMemberId)
       throw new Error("Player cannot add themselves to family");
 
+    const isInFamily = await isPlayerInFamily(fastify, familyMemberId);
+    if (isInFamily)
+      throw new Error("Family member is already in a family");
+
+    const isPlayerAFamilyMember = await isPlayerInFamily(fastify, playerId);
+    if (isPlayerAFamilyMember)
+      throw new Error("You cannot add a family member if you're not a family admin");
+
     const [ familyMembers ] = await getFamilyMembers(fastify, playerId);
     if (familyMembers.length >= 5)
-      throw new Error("Player already has 5 family members");
+      throw new Error("The family is full (5 members)");
     if (familyMembers.some((member: any) => member.id === familyMemberId))
       throw new Error("Player is already in family");
     return db
       .insert(families)
-      .values({ player_id: playerId, family_member: familyMemberId })
+      .values({ family_admin: playerId, family_member: familyMemberId })
       .execute();
   } catch (err) {
     fastify.log.error(err);
