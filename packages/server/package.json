@@ -2,6 +2,7 @@
   "name": "steamwgp-server",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
@@ -24,6 +25,7 @@
     "@fastify/passport": "^2.5.0",
     "@fastify/rate-limit": "^9.1.0",
     "@fastify/session": "^10.9.0",
+    "@fastify/static": "^8.0.3",
     "@fastify/websocket": "^8.3.1",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/passport": "^1.0.16",
@@ -44,6 +46,8 @@
     "pino": "^8.21.0",
     "pino-pretty": "^10.3.1",
     "postgres": "^3.4.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "steamwgp-server": "file:",
     "zod": "^3.23.8"
   },

@@ -4,7 +4,7 @@ import { useLibraryStore } from "@store/libraryStore";
 import { useTranslation } from "react-i18next";
 import { EmptyTab } from "@molecules/library/EmptyTab";
 import { GameColumn } from "@molecules/library/GameColumn";
-import { queryClient } from "../../../main";
+import { queryClient } from "@services/api/queryClient";
 import { SkeletonGameLoad } from "@molecules/library/SkeletonGameLoad";
 
 const StyledTabs = styled(Tabs)`

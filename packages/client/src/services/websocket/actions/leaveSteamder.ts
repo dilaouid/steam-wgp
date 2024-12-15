@@ -1,4 +1,4 @@
-import { queryClient } from "../../../main";
+import { queryClient } from "@services/api/queryClient";
 import { useAuthStore } from "@store/authStore";
 import { useSteamderStore } from "@store/steamderStore";
 import { calculateAllGames } from "@utils/calculateAllGames";

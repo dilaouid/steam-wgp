@@ -21,4 +21,13 @@ export default defineConfig({
       ]
     })
   ],
+  build: {
+    ssr: 'src/entry-server.tsx',
+    outDir: '../server/dist/client'
+  },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3000'
+    }
+  }
 })

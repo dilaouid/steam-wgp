@@ -1,4 +1,4 @@
-import { queryClient } from "../../../main";
+import { queryClient } from "@services/api/queryClient";
 import { useSteamderStore } from "@store/steamderStore";
 
 export const switchDisplayGames = (display_all_games: boolean) => {

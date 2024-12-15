@@ -1,4 +1,5 @@
-import { router, queryClient } from "../../../main";
+import { router } from "../../../router"
+import { queryClient } from "@services/api/queryClient";
 import { useAuthStore } from "@store/authStore";
 import { useSteamderStore } from "@store/steamderStore";
 import { drawToast } from "@utils/drawToast"

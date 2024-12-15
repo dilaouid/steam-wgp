@@ -1,4 +1,4 @@
-import { queryClient } from "../../../main";
+import { queryClient } from "@services/api/queryClient";
 import { getCookieValue } from "@utils/cookieUtils";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
