@@ -8,6 +8,7 @@ import { PlayerInfo, Steamder } from "../types";
 
 export const kick = (fastify: FastifyInstance, steamderId: string, playerId: string, playerToKick: string, steamder: Steamder) => {
   try {
+    // can kick only if the steamder is started and the player requesting the action is the admin
     if (steamder.started || steamder.ended) return;
     if (playerId !== steamder.adminId) return;
     if (steamder) {

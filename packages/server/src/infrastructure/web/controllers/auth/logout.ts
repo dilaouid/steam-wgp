@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { APIResponse } from "@utils//response";
-import { logout } from "@services/AuthService";
+import { logout } from "@services/authService";
 
 /**
  * Logs out a user.

@@ -21,8 +21,10 @@ export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token
     if (!id)
       return APIResponse(response, null, 'need_to_be_logged_in', 401);
 
+    // send the response as a server-sent event (SSE)
     response.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
       try {
+        // yield each step of the process (for the progress bar client-side)
         yield updateProgress({ message: 'load_steam_library', type: 'info', complete: false, progress: 0 });
         const playerLibraryIds = await setInitialLibrary(fastify, id);
 
@@ -30,10 +32,13 @@ export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token
 
         const fetchedSteamLibrary = await fetchingSteamLibrary(fastify, playerLibraryIds, STEAM_GetOwnedGames as string, STEAM_API_KEY as string, id) as IProgressOpt & { library: ISteamResponse | null };
         yield updateProgress({ message: fetchedSteamLibrary.message, type: fetchedSteamLibrary.type, complete: fetchedSteamLibrary.complete, progress: fetchedSteamLibrary.progress});
+
+        // it can happen that the Steam API is not responding, so we stop the process here
         if (!fetchedSteamLibrary.library) return;
 
         const steamLibrary = fetchedSteamLibrary.library;
 
+        // differs the games that are not in the database yet from the player's library
         const { gamesToAddToLibrary, appIdsNotInDB } = await getGamesNotInDB(fastify, steamLibrary, playerLibraryIds);
 
         let gamesToAdd = 0;

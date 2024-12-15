@@ -23,10 +23,11 @@
       "@utils/*": ["utils/*"],
       "@entities": ["domain/entities"],
       "@schemas": ["infrastructure/data/schemas"],
-      "@types/*": ["types/*"],
+      "types": ["@types/jest", "node"]
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+  "__tests__/**/*.ts"
   ]
 }
