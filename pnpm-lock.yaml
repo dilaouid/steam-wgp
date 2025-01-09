@@ -84,9 +84,6 @@ importers:
       react-toastify:
         specifier: ^9.1.3
         version: 9.1.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      steamwgp-client:
-        specifier: 'file:'
-        version: 'link:'
       styled-components:
         specifier: ^6.1.8
         version: 6.1.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -229,9 +226,6 @@ importers:
       postgres:
         specifier: ^3.4.4
         version: 3.4.5
-      steamwgp-server:
-        specifier: 'file:'
-        version: 'link:'
       zod:
         specifier: ^3.23.8
         version: 3.23.8
