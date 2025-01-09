@@ -1,11 +1,12 @@
 {
   "name": "steamwgp-server",
   "version": "1.0.0",
+  "packageManager": "pnpm@9.15.3",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
-    "start": "npm run build && node -r tsconfig-paths/register dist/app.js",
+    "start": "ts-node -r tsconfig-paths/register --transpile-only src/app.ts",
     "test": "npx jest",
     "dev": "concurrently -k \"tsc -w\" \"tsc-alias -w\" \"ts-node-dev --respawn --transpile-only --ignore-watch node_modules dist/app.js\"",
     "migrate": "tsx -r dotenv/config src/infrastructure/data/migrate.ts",
