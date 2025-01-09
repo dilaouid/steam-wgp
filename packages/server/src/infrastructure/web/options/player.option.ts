@@ -22,7 +22,10 @@ export const getSteamLibraryOpts = {
   handler: loadLibrary,
   schema : {
     querystring: {
-      token: { type: 'string' }
+      type: "object",
+      properties: {
+        token: { type: 'string' }
+      }
     }
   }
 };

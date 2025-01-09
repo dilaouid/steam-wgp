@@ -1,0 +1,4 @@
+{
+    "build": "pnpm install && pnpm run build",
+    "start": "pnpm run start"
+}
