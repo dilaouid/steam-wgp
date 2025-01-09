@@ -6,8 +6,7 @@ COPY package.json pnpm-lock.yaml ./
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-RUN --mount=type=cache,id=cache-pnpm-store,target=/root/.pnpm-store \
-    pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
