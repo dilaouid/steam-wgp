@@ -2,15 +2,14 @@ FROM node:18
 
 WORKDIR /app
 
-COPY pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml ./
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-RUN --mount=type=cache,target=/root/.pnpm-store pnpm fetch
+RUN --mount=type=cache,id=s/pnpm-store-/root/.pnpm-store,target=/root/.pnpm-store \
+    pnpm install --frozen-lockfile
 
 COPY . .
-
-RUN --mount=type=cache,target=/root/.pnpm-store pnpm install --offline
 
 RUN pnpm run build
 
