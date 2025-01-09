@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
-import { Row, Col, Button, Modal } from "react-bootstrap";
+import { Row, Col, Button, Modal, Spinner } from "react-bootstrap";
 
 import { useSteamderStore } from "@store/steamderStore";
 import { useAuthStore } from "@store/authStore";
@@ -36,8 +36,13 @@ export const RoomActions: React.FC = () => {
         setShow(true);
     };
 
+    const isStartButtonDisabled = (): boolean => {
+        return loading || steamder.players?.length < 2 || (steamder.display_all_games && steamder.all_games.length == 0) || (!steamder.display_all_games && steamder.common_games.length == 0);
+    }
+
     const leaveRoom = () => {
         setLoading(true);
+        if (leaveMutation.isPending) return;
         leaveMutation.mutateAsync(steamder.id).then(() => {
             if (!user) return;
             leaveSteamder();
@@ -63,19 +68,18 @@ export const RoomActions: React.FC = () => {
                     <Button variant="secondary" onClick={handleClose}>
                         { t('modal.leave.no') }
                     </Button>
-                    <Button variant="warning" onClick={leaveRoom}>
-                        { t('modal.leave.yes') }
+                    <Button variant={leaveMutation.isPending ? "light" : "danger"} onClick={leaveRoom} disabled={leaveMutation.isPending}>
+                        { leaveMutation.isIdle ? t('modal.leave.yes') : <Spinner animation="border" size="sm" /> }
                     </Button>
                 </Modal.Footer>
             </Modal>
             <StyledRow className="justify-content-center">
                 { isAdmin && <Col sm={"auto"} className="align-self-center">
-                    <Button variant="outline-info" className="shadow" disabled={
-                        loading || steamder.players?.length < 2 || (steamder.display_all_games && steamder.all_games.length == 0) || (!steamder.display_all_games && steamder.common_games.length == 0)
-                    } onClick={() => { 
+                    <Button variant="outline-info" className="shadow" disabled={isStartButtonDisabled()} onClick={() => {
+                        if (isStartButtonDisabled()) return;
                         setLoading(true);
                         startSteamder();
-                    }} >{t('start')}</Button>
+                    }} >{ t('start') }</Button>
                 </Col> }
                 <Col sm={"auto"} className="align-self-center">
                     <Button variant="outline-danger" className="shadow" onClick={handleShow} disabled={loading}>{t('leave')}</Button>

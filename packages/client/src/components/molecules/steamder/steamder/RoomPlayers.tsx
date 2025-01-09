@@ -28,7 +28,7 @@ export const RoomPlayers = () => {
     const isAdmin = admin?.player_id == user?.id;
 
     return (
-        <StyledRow className="justify-content-center">
+        <StyledRow className="justify-content-center g-1">
             { steamder && steamder?.players?.map(player => {
                 const playerIsAdmin = admin?.player_id == player.player_id;
                 const isAuthenticatedPlayer = user && user.id == player.player_id;

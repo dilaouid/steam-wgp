@@ -6,6 +6,7 @@ const SAME_SITE = import.meta.env.VITE_SAME_SITE;
 export const checkAuth = async () => {
   let token: string | null = getCookieValue('token') as string;
 
+  // used in the case if the client and the server are not on the same domain, so the token is passed as a query parameter
   if (!SAME_SITE && !token) {
     const urlParams = new URLSearchParams(window.location.search);
     token = urlParams.get('token');

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
-    "start": "npm run build && node dist/app.js",
+    "start": "npm run build && node -r tsconfig-paths/register dist/app.js",
     "test": "npx jest",
     "dev": "concurrently -k \"tsc -w\" \"tsc-alias -w\" \"ts-node-dev --respawn --transpile-only --ignore-watch node_modules dist/app.js\"",
     "migrate": "tsx -r dotenv/config src/infrastructure/data/migrate.ts",
@@ -44,6 +44,7 @@
     "pino": "^8.21.0",
     "pino-pretty": "^10.3.1",
     "postgres": "^3.4.5",
+    "tsconfig-paths": "^4.2.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

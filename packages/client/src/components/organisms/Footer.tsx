@@ -72,14 +72,22 @@ export const Footer: React.FC = () => {
                     <li className="list-inline-item">
                         <a target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp/issues">{ t('bug') }</a>
                     </li>
-                    <br />
-                    { isAuthenticated && <li className="list-inline-item">
-                        <span onClick={() => setShow(true)} role="button" className="link-danger">{ t('delete.link') }</span>
-                    </li> }
                 </ul>
-                <ul className="list-inline">
-                    <a target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp"><GithubIcon /></a>
-                    <a target='_blank' className="link-secondary" href="https://ko-fi.com/dilaouid"><CashIcon /></a>
+
+                { isAuthenticated && 
+                    <ul>
+                        <li className="list-inline-item">
+                            <span onClick={() => setShow(true)} role="button" className="link-danger">{ t('delete.link') }</span>
+                        </li>
+                    </ul>
+                }
+                <ul className="list-inline" role="list">
+                    <li className="list-inline-item">
+                        <a title="Github repository" target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp"><GithubIcon /></a>
+                    </li>
+                    <li className="list-inline-item">
+                        <a title="Support the project through Ko-Fi" target='_blank' className="link-secondary" href="https://ko-fi.com/dilaouid"><CashIcon /></a>
+                    </li>
                 </ul>
                 <div className="flags-container">
                         {Object.entries(flags).map(([code, url]) => (

@@ -48,6 +48,7 @@ export const CreateSteamderForm = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (createSteamderMutation.isPending || (name.length > 0 && name.length < 3)) return;
         if (!user) return;
         createSteamderMutation.mutateAsync({ name, isPrivate }).then((data) => {
             setUser({ ...user, steamder: data.data.id });
@@ -63,7 +64,7 @@ export const CreateSteamderForm = () => {
         <StyledForm className="text-muted" onSubmit={handleSubmit}>
             <StyledLabel><BsController /> | { t('name') }</StyledLabel>
             <StyledInput type="text" placeholder={ t('placeholder') } aria-label={ t('placeholder') } value={name} onChange={e => setName(e.target.value)} disabled={createSteamderMutation.isPending} />
-            <OverlayTrigger placement="left" overlay={LabelTooltip(t('tooltip'))} trigger={['hover', 'focus']}>
+            <OverlayTrigger flip={true} placement="left" overlay={LabelTooltip(t('tooltip'))} trigger={['hover', 'focus']}>
                 <StyledSwitch type="switch" id="private-switch" label={ t('label') } checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)} disabled={createSteamderMutation.isPending} />
             </OverlayTrigger>
             <Button variant="info" type="submit" disabled={createSteamderMutation.isPending || (name.length > 0 && name.length < 3) }>

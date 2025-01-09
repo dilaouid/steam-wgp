@@ -52,6 +52,7 @@
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
+    "vite-plugin-static-copy": "^2.2.0",
     "vite-tsconfig-paths": "^5.1.2"
   }
 }

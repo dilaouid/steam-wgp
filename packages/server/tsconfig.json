@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 18",
-
   "_version": "18.2.0",
 
   "compilerOptions": {
@@ -9,11 +8,12 @@
     "lib": ["es2023"],
     "module": "CommonJS",
     "target": "es2022",
-    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
 
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": "src",
     "paths": {
       "@plugins/*": ["plugins/*"],
@@ -22,11 +22,16 @@
       "@repositories": ["infrastructure/repositories"],
       "@utils/*": ["utils/*"],
       "@entities": ["domain/entities"],
-      "@schemas": ["infrastructure/data/schemas"],
-      "@types/*": ["types/*"],
+      "@schemas": ["infrastructure/data/schemas"]
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "__tests__/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts"
   ]
 }

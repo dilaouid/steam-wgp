@@ -28,6 +28,7 @@ export const RightColumnLogin: React.FC = () => {
 
     useEffect(() => {
         if (data[data.length - 1]?.complete) {
+            // set loadingLoginComplete to true in localStorage if the user already logged in once
             localStorage.setItem('loadingLoginComplete', 'true');
             if (data[data.length - 1]?.type === 'success') {
                 // wait 3000ms before navigating to the home page

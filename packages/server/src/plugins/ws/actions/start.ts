@@ -4,6 +4,7 @@ import { calculateAllGames, deleteSteamder, startSteamder } from "@plugins/ws/ut
 
 export const start = async (fastify: FastifyInstance, steamder: Steamder, steamderId: string, playerId: string, steamders: Map<any, any>) => {
   try {
+    // cannot start if there are less than 2 players
     if (steamder.players.length < 2) return;
     // cannot start if the steamder is already started or ended
     if (steamder.started || steamder.ended) return;

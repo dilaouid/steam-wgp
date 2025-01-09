@@ -14,6 +14,7 @@ export const swipe = async (fastify: FastifyInstance, steamders: Map<any, any>, 
         steamder.swipedGames[gameId] = [playerId];
       }
     }
+
     if (checkGameEnd(gameId, steamder)) {
       // get the game that is swiped by all the players
       steamderDecorate.sockets.forEach((client: any) => {
