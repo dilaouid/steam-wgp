@@ -10,6 +10,8 @@ RUN pnpm install
 
 COPY . .
 
+RUN ls -R src/domain/services
+
 RUN pnpm run build
 
 RUN pnpm install -g ts-node tsconfig-paths
