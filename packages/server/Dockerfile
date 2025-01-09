@@ -2,10 +2,16 @@ FROM node:18
 
 WORKDIR /app
 
-RUN npm install -g pnpm
+COPY pnpm-lock.yaml ./
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+RUN --mount=type=cache,target=/root/.pnpm-store pnpm fetch
 
 COPY . .
 
-RUN --mount=type=cache,id=pnpm-cache,target=/root/.pnpm-store pnpm install && pnpm run build
+RUN --mount=type=cache,target=/root/.pnpm-store pnpm install --offline
+
+RUN pnpm run build
 
 CMD ["pnpm", "run", "start"]
