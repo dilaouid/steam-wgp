@@ -9,8 +9,8 @@ RUN pnpm install
 
 COPY . .
 
-RUN pnpm exec tsc -p tsconfig.json
+RUN pnpm run build
 
 RUN pnpm install -g ts-node tsconfig-paths
 
-CMD ["ts-node", "-r", "tsconfig-paths/register", "--transpile-only", "src/app.ts"]
+CMD ["pnpm", "start"]
