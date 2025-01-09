@@ -226,9 +226,6 @@ importers:
       postgres:
         specifier: ^3.4.5
         version: 3.4.5
-      steamwgp-server:
-        specifier: 'file:'
-        version: 'link:'
       zod:
         specifier: ^3.23.8
         version: 3.23.8

@@ -7,13 +7,13 @@
   "compilerOptions": {
     "outDir": "dist",
     "lib": ["es2023"],
-    "module": "Node16",
+    "module": "CommonJS",
     "target": "es2022",
+    "forceConsistentCasingInFileNames": true,
 
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "node16",
     "baseUrl": "src",
     "paths": {
       "@plugins/*": ["plugins/*"],
