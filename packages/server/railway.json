@@ -1,4 +1,9 @@
 {
-    "build": "pnpm install && pnpm run build",
-    "start": "pnpm run start"
-}
+    "services": [
+      {
+        "name": "server",
+        "build": "pnpm install && pnpm run build",
+        "start": "pnpm run start"
+      }
+    ]
+  }
