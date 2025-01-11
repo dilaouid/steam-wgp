@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { useSteamderStore } from "@store/steamderStore";
 
-import { NotMatchingGames } from "components/features/atoms/Steamder/steamder/NotMatchingGames/NotMatchingGames";
+import { NotMatchingGames } from "@features/atoms/Steamder/NotMatchingGames/NotMatchingGames";
 
 import { findMismatchedPlayers } from "@core/utils/findMismatchedPlayers";
 import { ISteamder } from "../../../../../core/types/ISteamder";

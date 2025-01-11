@@ -1,4 +1,4 @@
-import { getCookieValue } from "@core/utils/cookieUtils";
+import { getCookieValue } from "@core/utils/cookies";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const ELEMENTS_PER_PAGE = import.meta.env.VITE_STEAMDERS_PER_PAGE;
 

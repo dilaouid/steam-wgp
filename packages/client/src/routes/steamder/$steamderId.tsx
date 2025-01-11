@@ -8,7 +8,7 @@ import { createFileRoute, useParams } from '@tanstack/react-router'
 
 import { useAuthStore, useWebSocketStore, useSteamderStore } from '@store';
 
-import { getCookieValue } from '@core/utils/cookieUtils';
+import { getCookieValue } from '@core/utils/cookies';
 
 import { SteamderPlayPage } from '@layouts/templates/SteamderPlay_page';
 import { SteamderWinPage } from '@layouts/templates/SteamderWin_page';

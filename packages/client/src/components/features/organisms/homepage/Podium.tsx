@@ -3,8 +3,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Trans, useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 
-import { GameCard } from "components/features/molecules/Homepage/GameCard/GameCard";
-import { StyledTitle } from "components/features/atoms/Homepage/StyledTitle/StyledTitle";
+import { GameCard } from "@features/molecules/Homepage/GameCard/GameCard";
+import { StyledTitle } from "@features/atoms/Homepage/StyledTitle/StyledTitle";
 
 const StyledPodium = styled.div`
   text-align: center;

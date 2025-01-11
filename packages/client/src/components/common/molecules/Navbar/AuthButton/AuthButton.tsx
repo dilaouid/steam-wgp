@@ -3,10 +3,11 @@ import { Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from '@tanstack/react-router';
 import { useAuthStore } from '@store/authStore';
-import { logout } from '@core/services/api/global/auth/logoutApi';
-import { deleteCookie } from '@core/utils/cookieUtils';
-import { LogoutIcon } from 'components/common/atoms/Icons/Navbar/Logout/Logout';
-import { SteamIcon } from 'components/common/atoms/Icons/Navbar/Steam/Steam';
+import { logout } from '@core/services/API/global/auth/logout';
+import { deleteCookie } from '@core/utils/cookies';
+
+import { LogoutIcon } from '@ui/atoms/Icons/Navbar/Logout/Logout';
+import { SteamIcon } from '@ui/atoms/Icons/Navbar/Steam/Steam';
 
 import { StyledAuthButton } from './AuthButton.styled';
 

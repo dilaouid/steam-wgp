@@ -1,8 +1,4 @@
-import { StyledTrophy } from "./Trophy.styled";
-
-interface TrophyProps {
-  color?: string;
-}
+import { StyledTrophy, TrophyProps } from ".";
 
 export const Trophy: React.FC<TrophyProps> = ({ color }) => {
   return (

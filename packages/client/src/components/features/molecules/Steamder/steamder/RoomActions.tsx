@@ -10,7 +10,7 @@ import { useAuthStore } from "@store/authStore";
 import { useLeaveSteamder } from "core/hooks/useLeaveSteamder";
 
 import { IPlayer } from "../../../../../core/types/ISteamder";
-import { leaveSteamder, startSteamder } from "@core/services/websocket/send";
+import { leaveSteamder, startSteamder } from "@core/services/WebSockets/send";
 
 const StyledRow = styled(Row)`
     height: 91px;

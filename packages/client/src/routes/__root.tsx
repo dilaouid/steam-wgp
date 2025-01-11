@@ -9,7 +9,7 @@ import Navbar from '@ui/organisms/Navbar/Navbar'
 import { Footer } from '@ui/organisms/Footer/Footer'
 import { Loader } from '@ui/atoms/Loader/Loader'
 
-import WebSocketManager from '@core/services/websocket/WebsocketManager'
+import WebSocketManager from '@core/services/WebSockets/WebsocketManager'
 
 import "react-toastify/dist/ReactToastify.css";
 

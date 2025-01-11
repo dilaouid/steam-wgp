@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-import { ImageContainer } from "components/features/atoms/Steamder/ImageContainer/ImageContainer";
-import { TiltableImage } from "components/features/atoms/Steamder/TiltableImage/TiltableImage";
+import { ImageContainer } from "@features/atoms/Steamder/ImageContainer/ImageContainer";
+import { TiltableImage } from "@features/atoms/Steamder/TiltableImage/TiltableImage";
 
 import { useSteamderStore } from "@store/steamderStore";
 

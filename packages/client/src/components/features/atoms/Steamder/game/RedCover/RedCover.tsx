@@ -1,7 +1,3 @@
 import { RedDiv } from "./RedCover.styled"
 
-export const RedCover = () => {
-    return (
-        <RedDiv />
-    )
-}
+export const RedCover = () => <RedDiv />

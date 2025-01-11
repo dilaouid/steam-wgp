@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import CoverImage from '@assets/images/steamderpage/cover.jpg';
-import { GameWinRow } from "components/features/organisms/steamder/end/GameWinRow";
-import { HaventTheGame } from "components/features/organisms/steamder/end/HaventTheGame";
+import { GameWinRow } from "@features/organisms/Steamder/end/GameWinRow";
+import { HaventTheGame } from "@features/organisms/Steamder/end/HaventTheGame";
 
 import { useSteamderStore } from "@store/steamderStore";
 import { useAuthStore } from "@store/authStore";

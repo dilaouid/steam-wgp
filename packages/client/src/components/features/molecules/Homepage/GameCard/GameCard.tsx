@@ -1,15 +1,10 @@
 import { Spinner } from "react-bootstrap";
 import CountUp from "react-countup";
 
-import { Trophy } from "components/features/atoms/Homepage/Trophy/Trophy";
-import { GameImage } from "components/features/atoms/Homepage/GameImage/GameImage";
-import { StyledGameCard, StyledUpvotes } from "./GameCard.style";
+import { Trophy } from "@features/atoms/Homepage/Trophy/Trophy";
+import { GameImage } from "@features/atoms/Homepage/GameImage/GameImage";
 
-interface GameCardProps {
-    size: 'large' | 'small';
-    color: string;
-    score: { score: number, game_id: number } | null;
-}
+import { StyledGameCard, StyledUpvotes, GameCardProps } from ".";
 
 export const GameCard: React.FC<GameCardProps> = ({ size, color, score }) => {
   return (

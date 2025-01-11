@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getLibrary } from '@core/services/api/players/getLibraryApi';
+import { getLibrary } from '@core/services/API/players/getLibrary';
 
 export const useGetLibrary = () => {
     return useQuery({

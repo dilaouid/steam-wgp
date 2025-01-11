@@ -2,15 +2,17 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import CountUp from 'react-countup';
+
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import { PersonWorkspaceIcon } from "components/common/atoms/Icons/Stats/PersonWorkspace/PersonWorkspace";
-import { ControllerIcon } from "components/common/atoms/Icons/Stats/Controller/Controller";
-import { PersonHeartsIcon } from "components/common/atoms/Icons/Stats/PersonHearts/PersonHearts";
-import { DiagramIcon } from "components/common/atoms/Icons/Stats/Diagram/Diagram";
+
+import { PersonWorkspaceIcon } from "@ui/atoms/Icons/Stats/PersonWorkspace/PersonWorkspace";
+import { ControllerIcon } from "@ui/atoms/Icons/Stats/Controller/Controller";
+import { PersonHeartsIcon } from "@ui/atoms/Icons/Stats/PersonHearts/PersonHearts";
+import { DiagramIcon } from "@ui/atoms/Icons/Stats/Diagram/Diagram";
 
 import LogoImage from '@assets/images/homepage/logo.png';
-import { useStats } from "core/hooks/useStatsApi";
 
+import { useStats } from "@core/hooks/useStatsApi";
 
 const StyledLogoSeparator = styled.img`
     z-index: 0;

@@ -1,17 +1,7 @@
-import styled from "styled-components";
-import { BsFillCheckCircleFill } from "react-icons/bs";
 import { Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-interface SelectedCountProps {
-    type: 'public' | 'private';
-    count: number;
-}
-
-const StyledIcon = styled(BsFillCheckCircleFill)`
-    margin-top: -2px;
-    margin-right: 5px;
-`;
+import { SelectedCountProps, StyledIcon } from ".";
 
 export const SelectedCount: React.FC<SelectedCountProps> = ({ count, type }) => {
     const { t } = useTranslation('pages/library', { keyPrefix: 'left_column.selected_count' });

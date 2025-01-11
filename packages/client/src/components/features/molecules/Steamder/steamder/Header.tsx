@@ -5,7 +5,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import Skeleton from "react-loading-skeleton";
 
-import { CopyIcon } from "components/features/atoms/Steamder/steamder/CopyIcon/CopyIcon";
+import { CopyIcon } from "@features/atoms/Steamder/CopyIcon/CopyIcon";
 
 import { useSteamderStore } from "@store/steamderStore";
 

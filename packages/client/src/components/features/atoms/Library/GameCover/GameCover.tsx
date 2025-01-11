@@ -1,14 +1,9 @@
 import { useState } from "react";
 
 import { useIsMutating } from "@tanstack/react-query";
-
 import { useLibraryStore } from "@store/libraryStore";
-import { Cover, GoodSizedSkeleton } from "./GameCover.styled";
 
-interface GameCoverProps {
-    game_id: string;
-    hidden: boolean;
-}
+import { Cover, GameCoverProps, GoodSizedSkeleton } from ".";
 
 export const GameCover: React.FC<GameCoverProps> = ({ game_id, hidden }) => {
     const { setSelected, selected } = useLibraryStore();

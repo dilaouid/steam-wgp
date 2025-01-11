@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { StyledImage } from "./TiltableImage.styled"
-
-interface TiltableImageProps {
-    gameId: number;
-    hovered: boolean;
-    alt: string;
-    zoomAppears?: boolean;
-}
+import { StyledImage, TiltableImageProps } from "."
 
 export const TiltableImage: React.FC<TiltableImageProps> = ({ gameId, hovered, alt, zoomAppears, ...props }) => {
     const imgRef = useRef<HTMLImageElement>(null);

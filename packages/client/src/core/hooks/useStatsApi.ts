@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchStats } from '@core/services/api/global/stats/statsApi';
+import { fetchStats } from '@core/services/API/global/stats/fetchStats';
 
 export const useStats = () => {
     return useQuery({

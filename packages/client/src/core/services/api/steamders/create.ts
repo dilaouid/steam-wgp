@@ -1,4 +1,4 @@
-import { getCookieValue } from "@core/utils/cookieUtils";
+import { getCookieValue } from "@core/utils/cookies";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const createSteamder = async ({name, isPrivate}: { name: string, isPrivate: boolean }) => {

@@ -4,7 +4,7 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
 
-import { router } from '@core/.'
+import { router } from '@core'
 import { QueryClientWrapper, AuthWrapper } from '@layouts/wrappers'
 
 import 'aos/dist/aos.css';

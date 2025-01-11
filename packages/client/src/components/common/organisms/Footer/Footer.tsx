@@ -3,14 +3,12 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
 
 import { Modal, Button, Spinner } from "react-bootstrap";
-
-import { GithubIcon } from "components/common/atoms/Icons/Footer/Github/Github";
-import { CashIcon } from "components/common/atoms/Icons/Footer/Cash/Cash";
+import { BsCash, BsGithub } from "react-icons/bs";
 
 import { useAuthStore } from "@store/authStore";
 
-import { useDeleteUser } from "core/hooks/useDeleteUser";
-import { logout } from "@core/services/api/global/auth/logoutApi";
+import { useDeleteUser } from "@core/hooks/useDeleteUser";
+import { logout } from "@core/services/API/global/auth/logout";
 import { drawToast } from "@core/utils/drawToast";
 
 const flags = {
@@ -83,10 +81,10 @@ export const Footer: React.FC = () => {
                 }
                 <ul className="list-inline" role="list">
                     <li className="list-inline-item">
-                        <a title="Github repository" target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp"><GithubIcon /></a>
+                        <a title="Github repository" target='_blank' className="link-secondary" href="https://github.com/dilaouid/steam-wgp"><BsGithub /></a>
                     </li>
                     <li className="list-inline-item">
-                        <a title="Support the project through Ko-Fi" target='_blank' className="link-secondary" href="https://ko-fi.com/dilaouid"><CashIcon /></a>
+                        <a title="Support the project through Ko-Fi" target='_blank' className="link-secondary" href="https://ko-fi.com/dilaouid"><BsCash /></a>
                     </li>
                 </ul>
                 <div className="flags-container">

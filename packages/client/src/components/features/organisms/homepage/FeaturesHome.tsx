@@ -1,30 +1,20 @@
-import styled from "styled-components";
 import { Col, Row } from "react-bootstrap"
-import { FeatureHome } from "components/features/atoms/Homepage/Feature/Feature";
-import { ClockHistoryIcon } from "components/common/atoms/Icons/Features/ClockHistory/ClockHistory";
-import { ControllerIcon } from "components/common/atoms/Icons/Features/Controller/Controller";
-import { People } from "components/common/atoms/Icons/Features/People/People";
+
+import { FeatureHome } from "@features/atoms/Homepage/Features/Feature/Feature";
+import { FeaturesImage } from "@features/atoms/Homepage/Features/Image/FeaturesImage";
+
+import { ClockHistoryIcon } from "@ui/atoms/Icons/Features/ClockHistory/ClockHistory";
+import { ControllerIcon } from "@ui/atoms/Icons/Features/Controller/Controller";
+import { People } from "@ui/atoms/Icons/Features/People/People";
+
 import { Trans, useTranslation } from "react-i18next";
-
-import FeaturesImage from '@assets/images/homepage/features.png';
-
-const StyledFeaturesImage = styled.img`
-    z-index: 10;
-    min-height: 300px !important;
-    margin-top: -130px;
-    border-bottom-right-radius: 90px;
-    border-bottom-left-radius: 90px;
-    object-fit: cover;
-`;
 
 export const FeaturesHome: React.FC = () => {
     const { t } = useTranslation('pages/homepage');
     return (
     <div className="container-sm py-4 py-xl-5">
         <Row className="row-cols-1 row-cols-md-2">
-            <Col style={{ zIndex: 2 }}>
-                <StyledFeaturesImage alt="Group of person enjoying the view of a controller, teasing the happiness when using SteamWGP" className="img-fluid w-100 h-100 fit-cover user-select-none" data-aos="fade-up" data-aos-duration="500" id="features_image" src={FeaturesImage} />
-            </Col>
+            <FeaturesImage />
             <Col sm={'auto'} className="text-muted d-flex flex-column justify-content-center p-4">
                 <FeatureHome>
                     <ClockHistoryIcon />

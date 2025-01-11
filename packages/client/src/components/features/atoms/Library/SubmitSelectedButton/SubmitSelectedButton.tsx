@@ -3,15 +3,13 @@ import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { BsCheckAll } from "react-icons/bs";
 
-import { updateLibrary } from "@core/services/api/players/updateLibraryApi";
-import { updateLibraryWS } from "@core/services/websocket/send";
+import { updateLibrary } from "@core/services/API/players/updateLibrary";
+import { updateLibraryWS } from "@core/services/WebSockets/send";
 
 import { useLibraryStore } from "@store/libraryStore";
 import { drawToast } from "@core/utils/drawToast";
 
-interface SubmitSelectedButtonProps {
-    count: number;
-}
+import type { SubmitSelectedButtonProps } from "./SubmitSelectedButton.props";
 
 export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ count }) => {
     const { t } = useTranslation('pages/library', { keyPrefix: 'left_column.submit_selected_button' });

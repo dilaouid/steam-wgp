@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { countSteamders } from "@core/services/api/steamders/count";
+import { countSteamders } from "@core/services/API/steamders/count";
 
 export const useCountSteamders = () => {
     return useQuery({

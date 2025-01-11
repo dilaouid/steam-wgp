@@ -6,10 +6,10 @@ import { useRouterState } from '@tanstack/react-router';
 
 import { useAuthStore } from '@store/authStore';
 
-import NavItem from "components/common/atoms/Navbar/NavItem/NavItem";
-import { AuthButton } from 'components/common/molecules/Navbar/AuthButton/AuthButton';
-import { NavBrand } from 'components/common/atoms/Navbar/Brand/Brand';
-import { NavComponent } from 'components/common/atoms/Navbar/NavComponent/NavComponent';
+import NavItem from "@ui/atoms/Navbar/NavItem/NavItem";
+import { AuthButton } from '@ui/molecules/Navbar/AuthButton/AuthButton';
+import { NavBrand } from '@ui/atoms/Navbar/Brand/Brand';
+import { NavComponent } from '@ui/atoms/Navbar/NavComponent/NavComponent';
 
 const Navbar: React.FC = () => {
   const router = useRouterState();

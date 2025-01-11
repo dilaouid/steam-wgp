@@ -1,6 +1,6 @@
 export * from "./calculateAllGames";
 export * from "./calculateCommonGames";
 export * from "./drawToast"
-export * from "./cookieUtils";
+export * from "./cookies";
 export * from "./findMismatchedPlayers";
 export * from "./hasNoCommonGames";

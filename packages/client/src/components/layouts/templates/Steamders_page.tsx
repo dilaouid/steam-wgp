@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import CoverImage from '@assets/images/librarypage/cover.png';
 import { Container, Row } from 'react-bootstrap';
-import { LeftColumnSteamders } from 'components/features/organisms/steamders/LeftColumnSteamders';
-import { RightColumnSteamders } from 'components/features/organisms/steamders/RightColumnSteamders';
+import { LeftColumnSteamders } from '@features/organisms/SteamdersList/LeftColumnSteamders';
+import { RightColumnSteamders } from '@features/organisms/SteamdersList/RightColumnSteamders';
 
 const SteamdersSection = styled.section`
     padding-top: 9px;

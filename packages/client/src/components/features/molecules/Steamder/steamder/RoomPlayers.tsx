@@ -6,11 +6,11 @@ import { useAuthStore } from "@store/authStore";
 
 import { hasNoCommonGamesWithAnyone } from "@core/utils/hasNoCommonGames";
 
-import { DangerIcon } from "@features/atoms/Steamder/steamder/DangerIcon/DangerIcon";
-import { ProfilPicture } from "@features/atoms/Steamder/steamder/ProfilePicture/ProfilPicture";
-import { RoomAdminIcon } from "@features/atoms/Steamder/steamder/RoomAdminIcon/RoomAdminIcon";
-import { GamesInCommon } from "@features/atoms/Steamder/steamder/GamesInCommon/GamesInCommon";
-import { KickPlayerButton } from "@features/atoms/Steamder/steamder/KickPlayerButton/KickPlayerButton";
+import { DangerIcon } from "@features/atoms/Steamder/DangerIcon/DangerIcon";
+import { ProfilPicture } from "@features/atoms/Steamder/ProfilePicture/ProfilPicture";
+import { RoomAdminIcon } from "@features/atoms/Steamder/RoomAdminIcon/RoomAdminIcon";
+import { GamesInCommon } from "@features/molecules/Steamder/GamesInCommon/GamesInCommon";
+import { KickPlayerButton } from "@features/atoms/Steamder/KickPlayerButton/KickPlayerButton";
 
 import { IPlayer } from "@core/types/ISteamder";
 

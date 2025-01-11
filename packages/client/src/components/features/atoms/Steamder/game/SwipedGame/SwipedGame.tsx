@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { useSteamderStore } from "@store/steamderStore";
-import { unswipeCard } from "@core/services/websocket/send";
-import { StyledLikedGames } from "./SwipedGame.styled";
-
-interface SwipedGameProps {
-    game_id: number;
-}
+import { unswipeCard } from "@core/services/WebSockets/send";
+import { StyledLikedGames, SwipedGameProps } from ".";
 
 export const SwipedGame: React.FC<SwipedGameProps> = ({ game_id }) => {
     const [ imageUrl, setImageUrl ] = useState(`https://steamcdn-a.akamaihd.net/steam/apps/${game_id}/library_600x900.jpg`);
@@ -31,7 +27,13 @@ export const SwipedGame: React.FC<SwipedGameProps> = ({ game_id }) => {
     };
 
     return (
-        <StyledLikedGames onError={handleImageError} className="user-select-none" onClick={() => unsSwipeGame()} src={imageUrl} alt={`Game cover for liked game: ${game_id}`} />
+        <StyledLikedGames 
+            onError={handleImageError}
+            className="user-select-none"
+            onClick={() => unsSwipeGame()}
+            src={imageUrl}
+            alt={`Game cover for liked game: ${game_id}`}
+        />
     );
 
 };

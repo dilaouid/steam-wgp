@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createSteamder } from "@core/services/api/steamders/create";
+import { createSteamder } from "@core/services/API/steamders/create";
 
 export const useCreateSteamder = () => {
     const queryClient = useQueryClient();

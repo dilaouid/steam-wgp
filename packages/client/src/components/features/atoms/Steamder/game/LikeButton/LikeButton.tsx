@@ -2,7 +2,7 @@ import { Button } from "react-bootstrap";
 import { IoHeart } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 
-import { swipeCard } from "@core/services/websocket/send";
+import { swipeCard } from "@core/services/WebSockets/send";
 
 import { useSteamderStore } from "@store/steamderStore";
 import { useBtnGameStore } from "@store/hoverBtnGameStore";

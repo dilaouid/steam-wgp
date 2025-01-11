@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import { switchDisplayGames } from "@core/services/websocket/send";
+import { switchDisplayGames } from "@core/services/WebSockets/send";
 
 const StyledSwitch = styled(Form.Check)`
     font-family: Abel, sans-serif;

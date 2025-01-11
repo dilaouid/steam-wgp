@@ -4,9 +4,9 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { useLibraryStore } from "@store/libraryStore";
 
-import { Question } from "components/features/atoms/Library/Question/Question";
-import { SelectedCount } from "components/features/atoms/Library/SelectedCount/SelectedCount";
-import { SubmitSelectedButton } from "components/features/atoms/Library/SubmitSelectedButton/SubmitSelectedButton";
+import { Question } from "@features/atoms/Library/Question/Question";
+import { SelectedCount } from "@features/atoms/Library/SelectedCount/SelectedCount";
+import { SubmitSelectedButton } from "@features/atoms/Library/SubmitSelectedButton/SubmitSelectedButton";
 
 const StyledCol = styled(Col)`
     height: 50%;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSteamderStore } from "@store/steamderStore";
 import { useTranslation } from "react-i18next";
 import { useAuthStore } from "@store/authStore";
-import { PlayersNotHavingGame } from "components/features/molecules/Steamder/end/PlayersNotHavingGame";
+import { PlayersNotHavingGame } from "@features/molecules/Steamder/end/PlayersNotHavingGame";
 
 const HaventTheGameTitle = styled.p`
     margin-bottom: 0px;

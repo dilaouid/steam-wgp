@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Col, Container, Row } from "react-bootstrap";
 
-import { HeroSection } from 'components/features/molecules/Homepage/HeroSection/HeroSection';
+import { HeroSection } from '@features/molecules/Homepage/HeroSection/HeroSection';
 import ParallaxImage from '@assets/images/homepage/parallax.png';
 
 const ParallaxHero = styled.div`

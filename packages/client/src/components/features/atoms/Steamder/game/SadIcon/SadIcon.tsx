@@ -1,7 +1,3 @@
 import { StyledSad } from "./SadIcon.styled";
 
-export const SadIcon = () => {
-    return (
-        <StyledSad />
-    )
-};
+export const SadIcon = () => <StyledSad />

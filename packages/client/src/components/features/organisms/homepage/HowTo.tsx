@@ -1,12 +1,14 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { SteamIcon } from "components/common/atoms/Icons/HowTo/SteamIcon";
-import { RocketIcon } from "components/common/atoms/Icons/HowTo/RocketIcon";
-import { PeopleIcon } from "components/common/atoms/Icons/HowTo/PeopleIcon";
-import { ControllerIcon } from "components/common/atoms/Icons/HowTo/ControllerIcon";
+
+import { SteamIcon } from "@ui/atoms/Icons/HowTo/SteamIcon";
+import { RocketIcon } from "@ui/atoms/Icons/HowTo/RocketIcon";
+import { PeopleIcon } from "@ui/atoms/Icons/HowTo/PeopleIcon";
+import { ControllerIcon } from "@ui/atoms/Icons/HowTo/ControllerIcon";
+
+import { StyledTitle } from "@features/atoms/Homepage/StyledTitle/StyledTitle";
 
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
-import { StyledTitle } from "components/features/atoms/Homepage/StyledTitle/StyledTitle";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

@@ -1,8 +1,4 @@
-import { Container } from "./ImageContainer.styled";
-
-interface IImageContainer {
-    children: React.ReactNode;
-}
+import { Container, IImageContainer } from ".";
 
 export const ImageContainer: React.FC<IImageContainer> = ({ children }) => {
     return (

@@ -1,12 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import Skeleton from "react-loading-skeleton";
-import { StyledImage } from "./GameImage.styled";
-
-interface ImageContainerProps {
-  game_id: number;
-  golden?: boolean;
-}
+import { StyledImage, ImageContainerProps } from ".";
 
 export const GameImage: React.FC<ImageContainerProps> = ({ game_id, golden }) => {
   const imgRef = useRef<HTMLImageElement>(null);

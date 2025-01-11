@@ -3,11 +3,12 @@ import { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 
 import CoverImage from '@assets/images/librarypage/cover.png';
-import { LeftColumnLibrary } from 'components/features/organisms/library/LeftColumnLibrary';
-import { RightColumnLibrary } from 'components/features/organisms/library/RightColumnLibrary';
+import { LeftColumnLibrary } from '@features/organisms/Library/LeftColumnLibrary';
+import { RightColumnLibrary } from '@features/organisms/Library/RightColumnLibrary';
 import { useLibraryStore } from '@store/libraryStore';
-import { useGetLibrary } from 'core/hooks/useLibrary';
-import { TGameLibrary } from '../../../core/types/TGameLibrary';
+import { useGetLibrary } from '@core/hooks/useLibrary';
+
+import type { TGameLibrary } from '@core/types/TGameLibrary';
 
 const LibrarySection = styled.section`
     padding-top: 9px;
