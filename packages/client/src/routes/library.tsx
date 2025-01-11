@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 
 import { createFileRoute } from '@tanstack/react-router';
-import { Librarypage } from '../components/templates/Library_page';
+
+import { Librarypage } from '@layouts/templates/Library_page';
+import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper';
 
 import AOS from 'aos';
 import { useAuthStore } from '@store/authStore';
-import { HelmetWrapper } from '../components/wrappers/HelmetWrapper';
 
 export const Route = createFileRoute("/library")({
   component: Library,

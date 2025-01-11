@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { TGameLibrary } from '../types/TGameLibrary';
+import { TGameLibrary } from '../core/types/TGameLibrary';
 
 type LibraryStore = {
     library: TGameLibrary[];

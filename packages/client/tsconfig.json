@@ -25,16 +25,25 @@
     "esModuleInterop": true,
     "baseUrl": "./src",
     "paths": {
+      // Core aliases
+      "@core/*": ["core/*"],
       "@assets/*": ["assets/*"],
-      "@atoms/*": ["components/atoms/*"],
-      "@molecules/*": ["components/molecules/*"],
-      "@organisms/*": ["components/organisms/*"],
-      "@templates/*": ["components/templates/*"],
-      "@wrappers/*": ["components/wrappers/*"],
-      "@hooks/*": ["hooks/*"],
-      "@services/*": ["services/*"],
       "@store/*": ["store/*"],
-      "@utils/*": ["utils/*"],
+      "@i18n/*": ["i18n/*"],
+
+      // Components aliases
+      "@ui/*": ["components/common/*"],
+      "@features/*": ["components/features/*"],
+      "@layouts/*": ["components/layouts/*"],
+
+      // Types aliases
+      "@types/*": ["types/*"],
+
+      // Shortcuts barrel
+      "@core": ["core/index.ts"],
+      "@utils": ["core/utils/index.ts"],
+      "@types": ["core/types/index.ts"],
+      "@store": ["store/index.ts"],
     }
   },
   "include": ["src"],

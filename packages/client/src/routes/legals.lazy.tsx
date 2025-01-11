@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { Legalpage } from '@templates/Legal_page'
-import { HelmetWrapper } from '@wrappers/HelmetWrapper';
+import { Legalpage } from '@layouts/templates/Legal_page'
+import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper';
 
 export const Route = createLazyFileRoute("/legals")({
   component: Legals,

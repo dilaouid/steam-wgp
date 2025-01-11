@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { SteamdersPage } from '@templates/Steamders_page';
+import { SteamdersPage } from '@layouts/templates/Steamders_page';
 
 import AOS from 'aos';
-import { HelmetWrapper } from '@wrappers/HelmetWrapper';
+import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper';
 
 export const Route = createLazyFileRoute("/steamders")({
   component: Steamders

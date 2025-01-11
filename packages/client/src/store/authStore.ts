@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IUser } from '../types/IUser';
+import { IUser } from '../core/types/IUser';
 
 type AuthStore = {
     isAuthenticated: boolean;
