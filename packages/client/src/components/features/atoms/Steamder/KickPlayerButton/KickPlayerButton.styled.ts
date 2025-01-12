@@ -1,7 +1,7 @@
 import { BsPersonFillX } from "react-icons/bs";
 import styled from "styled-components";
 
-export const StyledButton = styled.button`
+export const StyledKickButton = styled.button`
     margin: 144px 108px 108px;
     margin-left: 92px;
     z-index: 1;
@@ -9,6 +9,6 @@ export const StyledButton = styled.button`
     position: absolute;
 `;
 
-export const StyledIcon = styled(BsPersonFillX)`
+export const StyledKickIcon = styled(BsPersonFillX)`
     font-size: 29px;
 `;

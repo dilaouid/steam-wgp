@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCookieValue } from '@core/utils/cookies';
 
 import type { ISSEData } from '@core/types/ISSEData';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { BASE_URL } from '@core/environment';
 
 const useSSEQuery = () => {
   // State to check if the SSE is complete and update the UI accordingly

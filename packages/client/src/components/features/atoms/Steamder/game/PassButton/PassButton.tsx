@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { useBtnGameStore } from "@store/hoverBtnGameStore";
 import { useSteamderStore } from "@store/steamderStore";
-import { StyledParagraph } from "./PassButton.styled";
+import { StyledParagraphPassButton } from "./PassButton.styled";
 
 export const PassButton = () => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "game.actions" });
@@ -41,7 +41,7 @@ export const PassButton = () => {
     };
 
     return (
-        <StyledParagraph className="text-center text-sm-center text-md-start">
+        <StyledParagraphPassButton className="text-center text-sm-center text-md-start">
             <Button variant="secondary" style={{ width: 165+'px', textAlign: 'left' }} 
                 onMouseEnter={() => setHoverPass(true)}
                 onMouseLeave={() => setHoverPass(false)}
@@ -50,6 +50,6 @@ export const PassButton = () => {
             >
                 <IoSadOutline />&nbsp; | { t('pass') }
             </Button>
-        </StyledParagraph>
+        </StyledParagraphPassButton>
     )
 };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { HiOutlineShare } from "react-icons/hi";
 
-export const StyledIcon = styled(HiOutlineShare)`
+export const StyledOutlineShareIcon = styled(HiOutlineShare)`
   font-size: 24px;
   cursor: pointer;
   transition: .5s;

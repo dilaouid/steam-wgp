@@ -1,6 +1,6 @@
 import { getCookieValue } from "@core/utils/cookies";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { BASE_URL } from '@core/environment';
 
 export const kickSteamder = (steamderId: string, playerId: string) => {
     const token = getCookieValue('token');

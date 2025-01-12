@@ -1,10 +1,10 @@
-import { QuestionProps, StyledIcon } from "./";
+import { QuestionProps, StyledQuestionIcon } from "./";
 
 export const Question: React.FC<QuestionProps> = ({ children }) => {
     return(
         <>
             <strong className="text-primary user-select-none">
-                <StyledIcon />{ children }
+                <StyledQuestionIcon />{ children }
             </strong><br />
         </>
     )

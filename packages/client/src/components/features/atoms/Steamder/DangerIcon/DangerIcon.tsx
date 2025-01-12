@@ -1,3 +1,3 @@
-import { StyledIcon } from ".";
+import { StyledExclamationIcon } from ".";
 
-export const DangerIcon: React.FC = () => <StyledIcon className="text-danger" />
+export const DangerIcon: React.FC = () => <StyledExclamationIcon className="text-danger" />

@@ -1,9 +1,9 @@
-import { Container, IImageContainer } from ".";
+import { ImageContainerSteamder, IImageContainer } from ".";
 
 export const ImageContainer: React.FC<IImageContainer> = ({ children }) => {
     return (
-        <Container>
+        <ImageContainerSteamder>
             { children }
-        </Container>
+        </ImageContainerSteamder>
     )
 };

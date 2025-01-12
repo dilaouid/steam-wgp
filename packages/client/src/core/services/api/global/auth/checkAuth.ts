@@ -1,7 +1,6 @@
 import { deleteCookie, getCookieValue, setCookieValue } from "@core/utils/cookies";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const SAME_SITE = import.meta.env.VITE_SAME_SITE;
+import { BASE_URL, SAME_SITE } from '@core/environment';
 
 export const checkAuth = async () => {
   let token: string | null = getCookieValue('token') as string;

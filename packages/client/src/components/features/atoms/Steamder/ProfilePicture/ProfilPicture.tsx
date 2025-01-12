@@ -1,7 +1,8 @@
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "@tanstack/react-router";
-import { IPlayer } from "../../../../../core/types/ISteamder";
-import { StyledImage } from "./ProfilePicture.styled";
+import { StyledProfileImage } from "./ProfilePicture.styled";
+
+import type { IPlayer } from "@core/types/ISteamder";
 
 const LabelTooltip = (message: string) => 
     <Tooltip id="switch-tooltip">
@@ -18,7 +19,7 @@ export const ProfilPicture: React.FC<ProfilPictureProps> = ({ disable, isOtherPl
     return(
         <Link to={player.profileurl} target="_blank">
             <OverlayTrigger placement="top" overlay={LabelTooltip(player.username)} trigger={['hover', 'focus']}>
-                <StyledImage src={`https://avatars.akamai.steamstatic.com/${player.avatar_hash}_full.jpg`} loading="lazy" fluid $isOtherPlayer={isOtherPlayer} $disabled={disable} />
+                <StyledProfileImage src={`https://avatars.akamai.steamstatic.com/${player.avatar_hash}_full.jpg`} loading="lazy" fluid $isOtherPlayer={isOtherPlayer} $disabled={disable} />
             </OverlayTrigger>
         </Link>
     )

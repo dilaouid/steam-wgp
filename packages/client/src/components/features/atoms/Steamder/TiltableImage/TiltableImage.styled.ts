@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledImage = styled.img<{ $hovered?: boolean, $zoom?: boolean }>`
+export const StyledTiltableImage = styled.img<{ $hovered?: boolean, $zoom?: boolean }>`
     transition: transform 0.3s, filter 0.3s ease-in-out;
     transform-style: preserve-3d;
     width: 317px;

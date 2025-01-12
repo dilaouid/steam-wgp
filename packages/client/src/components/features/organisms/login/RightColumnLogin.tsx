@@ -1,10 +1,11 @@
+import { useEffect } from "react";
+
 import styled from "styled-components";
 import { Col, ProgressBar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import useSSEQuery from "@core/services/SSE/login";
 import { ProgressLabelComponent } from "@ui/atoms";
-import { useEffect } from "react";
 
 const RightBlock = styled.div`
     background: #060606d2;

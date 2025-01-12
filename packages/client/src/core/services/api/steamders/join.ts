@@ -1,7 +1,7 @@
 import { queryClient } from "@core";
 import { getCookieValue } from "@core/utils/cookies";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { BASE_URL } from '@core/environment';
 
 export const joinSteamder = (steamderId: string) => {
     const token = getCookieValue('token');

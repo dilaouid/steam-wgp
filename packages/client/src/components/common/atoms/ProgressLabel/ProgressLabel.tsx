@@ -2,13 +2,7 @@ import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { BsCheck2All, BsExclamationTriangleFill } from "react-icons/bs";
 
-interface ProgressLabelComponentProps {
-    type: string;
-    message: string;
-    last: boolean;
-    complete: boolean;
-    count?: number;
-}
+import { ProgressLabelComponentProps } from ".";
 
 export const ProgressLabelComponent: React.FC<ProgressLabelComponentProps> = ({ type, message, last, complete, count }) => {
     const { t } = useTranslation('pages/login', { keyPrefix: 'loading', i18n: i18next});

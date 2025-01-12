@@ -1,6 +1,5 @@
 import { getCookieValue } from "@core/utils/cookies";
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const ELEMENTS_PER_PAGE = import.meta.env.VITE_STEAMDERS_PER_PAGE;
+import { BASE_URL, ELEMENTS_PER_PAGE } from '@core/environment';
 
 export const searchSteamders = async (page: number) => {
     const limit = ELEMENTS_PER_PAGE;

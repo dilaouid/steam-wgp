@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import styled from "styled-components";
 
 import CoverImage from '@assets/images/steamderpage/cover.jpg';
-import { Header } from "components/features/molecules/Steamder/game/Header";
-import { GameRow } from "@features/organisms/Steamder/game/GameRow";
+import { Header } from "@features/molecules/Steamder/Playing/Header/Header";
+import { GameRow } from "@features/organisms/Steamder/GameRow/GameRow";
 
 import { useSteamderStore } from "@store/steamderStore";
 

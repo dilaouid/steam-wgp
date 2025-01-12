@@ -6,7 +6,7 @@ import { swipeCard } from "@core/services/WebSockets/send";
 
 import { useSteamderStore } from "@store/steamderStore";
 import { useBtnGameStore } from "@store/hoverBtnGameStore";
-import { StyledParagraph } from "./LikeButton.styled";
+import { StyledParagraphLikeBtn } from "./LikeButton.styled";
 
 export const LikeButton = () => {
     const { steamder, setSteamder } = useSteamderStore();
@@ -46,7 +46,7 @@ export const LikeButton = () => {
     };
 
     return (
-        <StyledParagraph className="text-center text-sm-center text-md-start">
+        <StyledParagraphLikeBtn className="text-center text-sm-center text-md-start">
             <Button variant="danger" style={{ width: 165+'px', textAlign: 'left' }} onClick={swipeGame} 
                 onMouseEnter={() => setHoverLike(true)}
                 onMouseLeave={() => setHoverLike(false)}
@@ -54,6 +54,6 @@ export const LikeButton = () => {
             >
                 <IoHeart />&nbsp; | { t('like') }
             </Button>
-        </StyledParagraph>
+        </StyledParagraphLikeBtn>
     )
 };

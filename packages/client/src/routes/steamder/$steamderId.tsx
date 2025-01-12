@@ -9,7 +9,7 @@ import { createFileRoute, useParams } from '@tanstack/react-router'
 import { useAuthStore, useWebSocketStore, useSteamderStore } from '@store';
 
 import { getCookieValue } from '@core/utils/cookies';
-
+import { BASE_URL } from '@core/environment';
 import { SteamderPlayPage } from '@layouts/templates/SteamderPlay_page';
 import { SteamderWinPage } from '@layouts/templates/SteamderWin_page';
 import { SteamderWaitPage } from '@layouts/templates/SteamderWait_page';
@@ -54,7 +54,7 @@ function Steamder() {
   useEffect(() => {
     if (!isAuthenticated || !user) {
       localStorage.setItem('postLoginRedirect', '/steamder/' + steamderId);
-      window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/steam`;
+      window.location.href = `${BASE_URL}/auth/steam`;
       return;
     }
 

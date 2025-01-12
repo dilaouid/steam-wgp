@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { BsShieldLockFill } from "react-icons/bs";
 
-export const Container = styled.div<{ $selected?: boolean }>`
+export const GameHomepageContainer = styled.div<{ $selected?: boolean }>`
     position: relative;
     display: inline-block;
     width: 145px;

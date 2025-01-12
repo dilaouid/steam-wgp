@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { StyledImage, TiltableImageProps } from "."
+import { StyledTiltableImage, TiltableImageProps } from "."
 
 export const TiltableImage: React.FC<TiltableImageProps> = ({ gameId, hovered, alt, zoomAppears, ...props }) => {
     const imgRef = useRef<HTMLImageElement>(null);
@@ -34,6 +34,6 @@ export const TiltableImage: React.FC<TiltableImageProps> = ({ gameId, hovered, a
     };
 
     return (
-        <StyledImage ref={imgRef} alt={alt} src={imageUrl} $zoom={zoomAppears} $hovered={hovered} {...props} onError={handleImageError} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} />
+        <StyledTiltableImage ref={imgRef} alt={alt} src={imageUrl} $zoom={zoomAppears} $hovered={hovered} {...props} onError={handleImageError} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} />
     );
 };

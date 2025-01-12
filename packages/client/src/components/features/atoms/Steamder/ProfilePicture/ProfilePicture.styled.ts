@@ -1,7 +1,7 @@
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
 
-export const StyledImage = styled(Image)<{ $isOtherPlayer: boolean, $disabled: boolean }>`
+export const StyledProfileImage = styled(Image)<{ $isOtherPlayer: boolean, $disabled: boolean }>`
     width: 120px;
     box-shadow: 0px 0px 19px 0px var(--bs-warning);
     border-radius: 23px;

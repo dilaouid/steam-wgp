@@ -5,7 +5,7 @@ import { useSteamderStore } from "@store/steamderStore";
 import { drawToast } from "@core/utils/drawToast";
 import { useTranslation } from "react-i18next";
 
-import { StyledIcon } from ".";
+import { StyledOutlineShareIcon } from ".";
 
 export const CopyIcon = () => {
     const { steamder } = useSteamderStore();
@@ -24,7 +24,7 @@ export const CopyIcon = () => {
 
     return (<OverlayTrigger placement="right" overlay={TooltipLabel( t('share') )} trigger={['hover', 'focus']}>
             <span>
-              <StyledIcon onClick={copySteamderLink} />
+              <StyledOutlineShareIcon onClick={copySteamderLink} />
             </span>
         </OverlayTrigger>)
 };

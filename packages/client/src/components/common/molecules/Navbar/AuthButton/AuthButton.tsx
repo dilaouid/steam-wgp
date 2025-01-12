@@ -6,11 +6,11 @@ import { useAuthStore } from '@store/authStore';
 import { logout } from '@core/services/API/global/auth/logout';
 import { deleteCookie } from '@core/utils/cookies';
 
-import { LogoutIcon, SteamIcon } from '@ui/atoms';
+import { BASE_URL } from '@core/environment';
+
+import { LogoutIcon, SteamIconNavbar } from '@ui/atoms';
 
 import { StyledAuthButton } from './AuthButton.styled';
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface AuthButtonProps {
   className?: string;
@@ -56,7 +56,7 @@ export const AuthButton: React.FC<AuthButtonProps> = ({ className }) => {
       href={`${BASE_URL}/auth/steam`}
       className={className}
     >
-      <SteamIcon /> | {t('login')}
+      <SteamIconNavbar /> | {t('login')}
     </StyledAuthButton>
   );
 };

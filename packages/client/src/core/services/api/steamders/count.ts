@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { BASE_URL } from '@core/environment';
 
 export const countSteamders = () => {
     return fetch(`${BASE_URL}/steamder/count`, {

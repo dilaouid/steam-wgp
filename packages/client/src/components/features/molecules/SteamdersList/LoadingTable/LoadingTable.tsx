@@ -1,7 +1,7 @@
 import Skeleton from "react-loading-skeleton";
 import { BsPeople, BsController } from "react-icons/bs";
 
-const ELEMENTS_PER_PAGE = import.meta.env.VITE_STEAMDERS_PER_PAGE;
+import { ELEMENTS_PER_PAGE } from "@core/environment";
 
 export const LoadingTable: React.FC = () => {
     

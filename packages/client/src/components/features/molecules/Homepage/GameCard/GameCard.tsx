@@ -1,8 +1,7 @@
 import { Spinner } from "react-bootstrap";
 import CountUp from "react-countup";
 
-import { Trophy } from "@features/atoms/Homepage/Trophy/Trophy";
-import { GameImage } from "@features/atoms/Homepage/GameImage/GameImage";
+import { Trophy, GameImage } from "@features/atoms/Homepage";
 
 import { StyledGameCard, StyledUpvotes, GameCardProps } from ".";
 

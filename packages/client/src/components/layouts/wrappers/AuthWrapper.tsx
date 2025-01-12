@@ -3,7 +3,6 @@ import { useCheckAuth } from "@core/hooks/useCheckAuth";
 import { useAuthStore } from "@store/authStore";
 import { Loader } from "@ui/molecules";
 
-
 type AuthWrapperProps = {
     children: ReactNode;
 };

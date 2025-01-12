@@ -1,2 +1,2 @@
 export * from "./SubmitSelectedButton"
-export * from "./SubmitSelectedButton.props"
+export * from "./SubmitSelectedButton.props.d"

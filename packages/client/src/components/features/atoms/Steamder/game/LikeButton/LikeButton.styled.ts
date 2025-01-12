@@ -1,5 +1,5 @@
 import styled from "styled-components";
 
-export const StyledParagraph = styled.p`
+export const StyledParagraphLikeBtn = styled.p`
     margin-left: 12px;
 `;

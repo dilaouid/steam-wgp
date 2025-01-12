@@ -5,7 +5,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { useKickSteamder } from "core/hooks/useKickSteamder";
 import { kickFromSteamderWS } from "@core/services/WebSockets/send";
-import { StyledButton, StyledIcon, KickPlayerButtonProps } from ".";
+import { StyledKickButton, StyledKickIcon, KickPlayerButtonProps } from ".";
 
 export const KickPlayerButton: React.FC<KickPlayerButtonProps> = ({ playerId, steamderId, username }) => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.actions.modal.kick" });
@@ -42,9 +42,9 @@ export const KickPlayerButton: React.FC<KickPlayerButtonProps> = ({ playerId, st
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <StyledButton className="btn btn-danger btn-sm shadow" onClick={handleShow}>
-                <StyledIcon />
-            </StyledButton>
+            <StyledKickButton className="btn btn-danger btn-sm shadow" onClick={handleShow}>
+                <StyledKickIcon />
+            </StyledKickButton>
         </>
     );
 };

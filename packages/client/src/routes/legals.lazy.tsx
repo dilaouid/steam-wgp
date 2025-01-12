@@ -8,7 +8,8 @@ export const Route = createLazyFileRoute("/legals")({
 
 function Legals() {
   return (
-  <HelmetWrapper keyPrefix='legals' noindex={false}>
-    <Legalpage />
-  </HelmetWrapper>);
+    <HelmetWrapper keyPrefix='legals' noindex={false}>
+      <Legalpage />
+    </HelmetWrapper>
+  );
 }

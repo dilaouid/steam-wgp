@@ -2,9 +2,9 @@ import { Link } from '@tanstack/react-router';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button } from 'react-bootstrap';
 import { useAuthStore } from '@store/authStore';
-import { PinkText, PinkTextWhiteBackground, Section } from './HeroSection.style';
+import { PinkText, PinkTextWhiteBackground, Section } from '.';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { BASE_URL } from '@core/environment';
 
 export const HeroSection = () => {
     const { t } = useTranslation('pages/homepage');

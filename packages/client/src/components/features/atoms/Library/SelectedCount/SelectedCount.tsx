@@ -1,7 +1,7 @@
 import { Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-import { SelectedCountProps, StyledIcon } from ".";
+import { SelectedCountProps, StyledCheckIcon } from ".";
 
 export const SelectedCount: React.FC<SelectedCountProps> = ({ count, type }) => {
     const { t } = useTranslation('pages/library', { keyPrefix: 'left_column.selected_count' });
@@ -9,7 +9,7 @@ export const SelectedCount: React.FC<SelectedCountProps> = ({ count, type }) => 
     return (
         <Col className="user-select-none">
             <p className={count > 0 ? 'fw-bolder text-info' : 'text-body-secondary'}>
-                { count > 0 && <StyledIcon /> }
+                { count > 0 && <StyledCheckIcon /> }
                 { message }
             </p>
         </Col>

@@ -1,8 +1,8 @@
-import { FeaturesHome } from "@features/organisms/Homepage/FeaturesHome"
-import { HowTo } from "@features/organisms/Homepage/HowTo"
-import { ParallaxBackgroundHome } from "@features/organisms/Homepage/ParallaxBackgroundHome"
-import { Podium } from "@features/organisms/Homepage/Podium"
-import { StatsHome } from "@features/organisms/Homepage/StatsHome"
+import { FeaturesHome } from "@features/organisms/Homepage/FeaturesHome/FeaturesHome"
+import { HowTo } from "@features/organisms/Homepage/HowTo/HowTo"
+import { ParallaxBackgroundHome } from "@features/organisms/Homepage/ParallaxBackground/ParallaxBackgroundHome"
+import { Podium } from "@features/organisms/Homepage/Podium/Podium"
+import { StatsHome } from "@features/organisms/Homepage/StatsHome/StatsHome"
 
 export const Homepage = () => {
     return (

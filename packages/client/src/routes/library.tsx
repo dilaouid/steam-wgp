@@ -7,6 +7,7 @@ import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper';
 
 import AOS from 'aos';
 import { useAuthStore } from '@store/authStore';
+import { BASE_URL } from '@core/environment';
 
 export const Route = createFileRoute("/library")({
   component: Library,
@@ -14,7 +15,7 @@ export const Route = createFileRoute("/library")({
     const { isAuthenticated } = useAuthStore.getState();
     if (!isAuthenticated) {
       localStorage.setItem('postLoginRedirect', '/library');
-      window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/steam`;
+      window.location.href = `${BASE_URL}/auth/steam`;
       return;
     }
   }

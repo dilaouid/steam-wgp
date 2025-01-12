@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import * as websocketActions from '@core/services/WebSockets/actions';
+import { BASE_WS_URL } from '@core/environment';
 
 interface WebSocketState {
   socket: WebSocket | null;
@@ -8,8 +9,6 @@ interface WebSocketState {
   sendMessage: (message: string) => void;
   disconnect: () => void;
 }
-
-const BASE_WS_URL = import.meta.env.VITE_BASE_WS_URL;
 
 export const useWebSocketStore = create<WebSocketState>((set, get) => ({
   socket: null,
