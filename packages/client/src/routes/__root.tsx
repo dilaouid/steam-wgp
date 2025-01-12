@@ -5,9 +5,8 @@ import { ToastContainer } from 'react-toastify'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
-import Navbar from '@ui/organisms/Navbar/Navbar'
-import { Footer } from '@ui/organisms/Footer/Footer'
-import { Loader } from '@ui/atoms/Loader/Loader'
+import { Footer, Navbar } from '@ui/organisms'
+import { Loader } from '@ui/molecules'
 
 import WebSocketManager from '@core/services/WebSockets/WebsocketManager'
 

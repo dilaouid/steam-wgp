@@ -3,7 +3,7 @@ import { Col, ProgressBar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import useSSEQuery from "@core/services/SSE/login";
-import { ProgressLabelComponent } from "@ui/atoms/ProgressLabel/ProgressLabel";
+import { ProgressLabelComponent } from "@ui/atoms";
 import { useEffect } from "react";
 
 const RightBlock = styled.div`

@@ -5,10 +5,7 @@ import CountUp from 'react-countup';
 
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 
-import { PersonWorkspaceIcon } from "@ui/atoms/Icons/Stats/PersonWorkspace/PersonWorkspace";
-import { ControllerIcon } from "@ui/atoms/Icons/Stats/Controller/Controller";
-import { PersonHeartsIcon } from "@ui/atoms/Icons/Stats/PersonHearts/PersonHearts";
-import { DiagramIcon } from "@ui/atoms/Icons/Stats/Diagram/Diagram";
+import { DiagramIcon, PersonHeartsIcon, PersonWorkspaceIcon, ControllerIcon } from "@ui/atoms";
 
 import LogoImage from '@assets/images/homepage/logo.png';
 

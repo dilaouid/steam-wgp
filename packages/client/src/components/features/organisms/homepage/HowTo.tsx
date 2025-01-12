@@ -1,9 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 
-import { SteamIcon } from "@ui/atoms/Icons/HowTo/SteamIcon";
-import { RocketIcon } from "@ui/atoms/Icons/HowTo/RocketIcon";
-import { PeopleIcon } from "@ui/atoms/Icons/HowTo/PeopleIcon";
-import { ControllerIcon } from "@ui/atoms/Icons/HowTo/ControllerIcon";
+import { SteamIcon, RocketIcon, PeopleIcon, ControllerIcon } from "@ui/atoms";
 
 import { StyledTitle } from "@features/atoms/Homepage/StyledTitle/StyledTitle";
 

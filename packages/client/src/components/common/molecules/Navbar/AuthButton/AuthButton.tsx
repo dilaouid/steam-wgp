@@ -6,8 +6,7 @@ import { useAuthStore } from '@store/authStore';
 import { logout } from '@core/services/API/global/auth/logout';
 import { deleteCookie } from '@core/utils/cookies';
 
-import { LogoutIcon } from '@ui/atoms/Icons/Navbar/Logout/Logout';
-import { SteamIcon } from '@ui/atoms/Icons/Navbar/Steam/Steam';
+import { LogoutIcon, SteamIcon } from '@ui/atoms';
 
 import { StyledAuthButton } from './AuthButton.styled';
 

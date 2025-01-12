@@ -3,9 +3,7 @@ import { Col, Row } from "react-bootstrap"
 import { FeatureHome } from "@features/atoms/Homepage/Features/Feature/Feature";
 import { FeaturesImage } from "@features/atoms/Homepage/Features/Image/FeaturesImage";
 
-import { ClockHistoryIcon } from "@ui/atoms/Icons/Features/ClockHistory/ClockHistory";
-import { ControllerIcon } from "@ui/atoms/Icons/Features/Controller/Controller";
-import { People } from "@ui/atoms/Icons/Features/People/People";
+import { People, ControllerIcon, ClockHistoryIcon } from "@ui/atoms";
 
 import { Trans, useTranslation } from "react-i18next";
 

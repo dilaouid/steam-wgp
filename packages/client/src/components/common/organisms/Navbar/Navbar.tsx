@@ -6,12 +6,10 @@ import { useRouterState } from '@tanstack/react-router';
 
 import { useAuthStore } from '@store/authStore';
 
-import NavItem from "@ui/atoms/Navbar/NavItem/NavItem";
-import { AuthButton } from '@ui/molecules/Navbar/AuthButton/AuthButton';
-import { NavBrand } from '@ui/atoms/Navbar/Brand/Brand';
-import { NavComponent } from '@ui/atoms/Navbar/NavComponent/NavComponent';
+import { NavComponent, NavItem } from '@ui/atoms';
+import { AuthButton, Brand } from '@ui/molecules';
 
-const Navbar: React.FC = () => {
+export const Navbar: React.FC = () => {
   const router = useRouterState();
 
   const { isAuthenticated, user } = useAuthStore();
@@ -21,9 +19,7 @@ const Navbar: React.FC = () => {
     router.location.pathname === '/login' ? <></> : <RBNavbar expand="md" variant="dark" bg="black" sticky="top" className="bg-opacity-75 py-3">
       <Container>
 
-        <RBNavbar.Brand className='user-select-none'>
-          <NavBrand />
-        </RBNavbar.Brand>
+        <Brand />
 
         <RBNavbar.Toggle aria-controls="responsive-navbar-nav" />
         <RBNavbar.Collapse id="responsive-navbar-nav">
@@ -41,5 +37,3 @@ const Navbar: React.FC = () => {
     </RBNavbar>
   );
 };
-
-export default Navbar;

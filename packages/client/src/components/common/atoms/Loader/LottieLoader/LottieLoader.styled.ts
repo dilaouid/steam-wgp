@@ -1,5 +1,5 @@
-import Lottie from "lottie-react";
 import styled from "styled-components";
+import Lottie from "lottie-react";
 
 export const StyledLottie = styled(Lottie)`
     width: 450px;
@@ -11,10 +11,4 @@ export const StyledLottie = styled(Lottie)`
     display: block;
     z-index: 1;
     position: relative;
-`;
-
-export const StyledLoaderText = styled.p`
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 80px;
 `;

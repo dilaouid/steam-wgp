@@ -18,7 +18,7 @@ import { useGetSteamder } from '@core/hooks/useGetSteamder';
 import { useJoinSteamder } from '@core/hooks/useJoinSteamder';
 
 import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper';
-import { Loader } from '@ui/atoms/Loader/Loader';
+import { Loader } from '@ui/molecules';
 
 import CoverImage from '@assets/images/steamderpage/cover.jpg';
 

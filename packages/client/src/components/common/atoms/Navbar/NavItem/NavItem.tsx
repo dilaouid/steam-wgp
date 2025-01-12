@@ -1,17 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { StyledNavItem } from './NavItem.styled';
+import { NavItemProps, StyledNavItem } from '.';
 
 import 'animate.css';
 
-interface NavItemProps {
-  to: string;
-  children: React.ReactNode;
-  flashy?: boolean;
-}
-
-const NavItem: React.FC<NavItemProps> = ({ to, children, flashy }) => {
+export const NavItem: React.FC<NavItemProps> = ({ to, children, flashy }) => {
   const { t } = useTranslation();
   if (!children) {
     return null;
