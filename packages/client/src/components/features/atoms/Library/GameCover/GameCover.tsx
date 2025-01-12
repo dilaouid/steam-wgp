@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useIsMutating } from "@tanstack/react-query";
 import { useLibraryStore } from "@store/libraryStore";
 
+import { LockIcon } from "@features/molecules";
 import { Cover, GameCoverProps, GoodSizedSkeleton } from ".";
 
 export const GameCover: React.FC<GameCoverProps> = ({ game_id, hidden }) => {
@@ -23,5 +24,10 @@ export const GameCover: React.FC<GameCoverProps> = ({ game_id, hidden }) => {
     if (isMutating)
         return <GoodSizedSkeleton enableAnimation height={215} highlightColor="#444" baseColor="#333" borderRadius={20+'px'} inline={false} />;    
 
-    return <Cover onClick={handleClick} $isFallback={isFallback} $private={hidden} src={imageUrl} alt={`Game cover for ${game_id}`} onError={handleImageError} />;
+    return (
+        <>
+            { hidden && <LockIcon /> }
+            <Cover onClick={handleClick} $isFallback={isFallback} $private={hidden} src={imageUrl} alt={`Game cover for ${game_id}`} onError={handleImageError} />
+        </>
+    );
 };

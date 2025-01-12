@@ -1,4 +1,4 @@
-import { GrayCover, SadIcon } from "components/features/atoms/Steamder"
+import { GrayCover, SadIcon } from "@features/atoms/Steamder"
 
 export const HoverPass = () => {
     return (

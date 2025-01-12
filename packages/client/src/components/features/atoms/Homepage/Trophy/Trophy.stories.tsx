@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Trophy } from './Trophy';
 
 const meta: Meta<typeof Trophy> = {
-  title: 'Atoms/Homepage/Trophy',
+  title: 'Features/Atoms/Homepage/Trophy', // Chemin d'accès dans Storybook
   component: Trophy,
   tags: ['autodocs'], // Permet de générer automatiquement la documentation
   parameters: {

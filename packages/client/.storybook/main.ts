@@ -35,9 +35,8 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     return mergeConfig(config, {
       resolve: {
-        '@atoms': resolve(__dirname, '../src/components/atoms'),
-        '@molecules': resolve(__dirname, '../src/components/molecules'),
-        '@organisms': resolve(__dirname, '../src/components/organisms'),
+        '@ui': resolve(__dirname, '../src/components/common'),
+        '@features': resolve(__dirname, '../src/components/features'),
       },
       plugins: [tsconfigPaths()],
       optimizeDeps: {

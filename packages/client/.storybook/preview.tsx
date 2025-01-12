@@ -6,11 +6,23 @@ import {
   Route, 
   RootRoute 
 } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-loading-skeleton/dist/skeleton.css"; 
 import React from "react";
 
 // Créer une route racine
 const rootRoute = new RootRoute();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 // Créer une route par défaut pour les stories
 const indexRoute = new Route({
@@ -49,10 +61,10 @@ declare module '@tanstack/react-router' {
 // Décorateur global pour le router
 const withRouter = (StoryFn: React.ComponentType) => {
   return (
-    <div>
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
       <StoryFn />
-    </div>
+    </QueryClientProvider>
   );
 };
 

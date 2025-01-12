@@ -1,10 +1,9 @@
-import { TiltableImage } from "components/features/atoms/Steamder/TiltableImage/TiltableImage";
+import { TiltableImage, ImageContainer } from "@features/atoms/Steamder";
 
 import { useSteamderStore } from "@store/steamderStore";
 import { useBtnGameStore } from "@store/hoverBtnGameStore";
 import { HoverLike } from "../HoverLike/HoverLike";
 import { HoverPass } from "../HoverPass/HoverPass";
-import { ImageContainer } from "components/features/atoms/Steamder/ImageContainer/ImageContainer";
 
 export const CoverImageSwipe = () => {
     const { hoverLike, hoverPass } = useBtnGameStore();

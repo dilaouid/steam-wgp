@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { GameImage } from './GameImage';
 
 const meta: Meta<typeof GameImage> = {
-  title: 'Atoms/Homepage/GameImage',
+  title: 'Features/Atoms/Homepage/GameImage',
   component: GameImage,
   tags: ['autodocs'],
   parameters: {
