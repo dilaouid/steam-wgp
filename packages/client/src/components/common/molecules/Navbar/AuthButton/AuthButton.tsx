@@ -13,14 +13,14 @@ import { LogoutIcon, SteamIconNavbar } from '@ui/atoms';
 import { StyledAuthButton } from './AuthButton.styled';
 
 interface AuthButtonProps {
-  className?: string;
+  isAuthenticated: boolean;
 }
 
-export const AuthButton: React.FC<AuthButtonProps> = ({ className }) => {
+export const AuthButton: React.FC<AuthButtonProps> = ({ isAuthenticated }) => {
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation('global/navbar');
-  const { isAuthenticated, toggleAuth, setUser } = useAuthStore();
+  const { toggleAuth, setUser } = useAuthStore();
 
   const handleLogout = async () => {
     try {
@@ -43,9 +43,8 @@ export const AuthButton: React.FC<AuthButtonProps> = ({ className }) => {
       <StyledAuthButton
         variant="danger"
         onClick={handleLogout}
-        className={className}
       >
-        <LogoutIcon /> | {loading ? <Spinner size="sm" /> : t('logout')}
+        <LogoutIcon /> | { loading ? <Spinner size="sm" /> : t('logout') }
       </StyledAuthButton>
     );
   }
@@ -54,9 +53,8 @@ export const AuthButton: React.FC<AuthButtonProps> = ({ className }) => {
     <StyledAuthButton
       variant="info"
       href={`${BASE_URL}/auth/steam`}
-      className={className}
     >
-      <SteamIconNavbar /> | {t('login')}
+      <SteamIconNavbar /> | { t('login') }
     </StyledAuthButton>
   );
 };

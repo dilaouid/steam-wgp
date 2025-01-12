@@ -4,6 +4,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { join, dirname, resolve } from "path";
 import { mergeConfig } from "vite";
 
+
+console.log('__dirname:' + resolve(__dirname, '..', 'src'))
+
 /**
  * This function is used to resolve the absolute path of a package.
  * It is needed in projects that use Yarn PnP or are set up within a monorepo.
@@ -35,8 +38,28 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     return mergeConfig(config, {
       resolve: {
-        '@ui': resolve(__dirname, '../src/components/common'),
-        '@features': resolve(__dirname, '../src/components/features'),
+        alias: [
+          {
+            find: '@',
+            replacement: resolve(__dirname, '..', 'src'),
+          },
+          {
+            find: '@store',
+            replacement: resolve(__dirname, '..', 'src/store'),
+          },
+          {
+            find: '@features',
+            replacement: resolve(__dirname, '..', 'src/components/features'),
+          },
+          {
+            find: '@common',
+            replacement: resolve(__dirname, '..', 'src/components/common'),
+          },
+          {
+            find: '@assets',
+            replacement: resolve(__dirname, '..', 'src/assets'),
+          }
+        ]
       },
       plugins: [tsconfigPaths()],
       optimizeDeps: {

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { GameImage } from './GameImage';
 
 const meta: Meta<typeof GameImage> = {
-  title: 'Features/Atoms/Homepage/GameImage',
+  title: 'Features/Homepage/Atoms/GameImage',
   component: GameImage,
   tags: ['autodocs'],
   parameters: {
@@ -23,6 +23,7 @@ export const DefaultGameImage: Story = {};
 export const GoldenGameImage: Story = {
   args: {
     golden: true,
+    game_id: 10
   },
 };
 

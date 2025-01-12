@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { FeaturesImage } from './FeaturesImage';
 
 const meta: Meta<typeof FeaturesImage> = {
-  title: 'Features/Atoms/Homepage/FeaturesImage',
+  title: 'Features/Homepage/Atoms/FeaturesImage',
   component: FeaturesImage,
   tags: ['autodocs'],
   parameters: {

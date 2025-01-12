@@ -3,9 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Question } from './Question';
 
 const meta: Meta<typeof Question> = {
-  title: 'Features/Atoms/Library/Question',
+  title: 'Features/Library/Atoms/Question',
   component: Question,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
@@ -22,5 +21,3 @@ export const QuestionDocumentationLibrary: Story = {
     children: 'Question',
   },
 };
-
-export const DefaultQuestionDocumentation: Story = {};

@@ -4,7 +4,7 @@ import { BsCheck2All, BsExclamationTriangleFill } from "react-icons/bs";
 
 import { ProgressLabelComponentProps } from ".";
 
-export const ProgressLabelComponent: React.FC<ProgressLabelComponentProps> = ({ type, message, last, complete, count }) => {
+export const ProgressLabel: React.FC<ProgressLabelComponentProps> = ({ type, message, last, complete, count }) => {
     const { t } = useTranslation('pages/login', { keyPrefix: 'loading', i18n: i18next});
     
     if (!last) {

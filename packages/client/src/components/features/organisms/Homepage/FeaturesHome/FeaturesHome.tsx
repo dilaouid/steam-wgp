@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap"
 import { FeatureHome } from "@features/atoms/Homepage/Features/Feature/Feature";
 import { FeaturesImage } from "@features/atoms/Homepage/Features/Image/FeaturesImage";
 
-import { People, ControllerIcon, ClockHistoryIcon } from "@ui/atoms";
+import { People, FeaturesControllerIcon, ClockHistoryIcon } from "@ui/atoms";
 
 import { Trans, useTranslation } from "react-i18next";
 
@@ -24,7 +24,7 @@ export const FeaturesHome: React.FC = () => {
                     </div>
                 </FeatureHome>
                 <FeatureHome>
-                    <ControllerIcon />
+                    <FeaturesControllerIcon />
                     <div>
                         <h4>{ t('features.2.title') }</h4>
                         <p>

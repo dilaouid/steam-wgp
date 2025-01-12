@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
             <NavItem to="https://ko-fi.com/dilaouid" flashy={true}>{t('donate')}</NavItem>
           </NavComponent>
 
-          <AuthButton />
+          <AuthButton isAuthenticated={isAuthenticated} />
         </RBNavbar.Collapse>
       </Container>
     </RBNavbar>

@@ -1,14 +1,11 @@
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import { useSteamderStore } from "@store/steamderStore";
-
 import { drawToast } from "@core/utils/drawToast";
 import { useTranslation } from "react-i18next";
 
 import { StyledOutlineShareIcon } from ".";
 
-export const CopyIcon = () => {
-    const { steamder } = useSteamderStore();
+export const CopyIcon: React.FC<{ steamderId: string }> = ({ steamderId }) => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.actions" });
 
     const TooltipLabel = (message: string) =>
@@ -17,9 +14,8 @@ export const CopyIcon = () => {
         </Tooltip>
     
     const copySteamderLink = () => {
-        if (!steamder) return;
         drawToast("link_copied", 'info');
-        navigator.clipboard.writeText(`${window.location.origin}/steamder/${steamder.id}`);
+        navigator.clipboard.writeText(`${window.location.origin}/steamder/${steamderId}`);
     };
 
     return (<OverlayTrigger placement="right" overlay={TooltipLabel( t('share') )} trigger={['hover', 'focus']}>

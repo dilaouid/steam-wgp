@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { GameCover } from './GameCover';
 
 const meta: Meta<typeof GameCover> = {
-  title: 'Features/Atoms/Library/GameCover',
+  title: 'Features/Library/Atoms/GameCover',
   component: GameCover,
   tags: ['autodocs'],
   parameters: {
@@ -18,7 +18,11 @@ const meta: Meta<typeof GameCover> = {
 export default meta;
 type Story = StoryObj<typeof GameCover>;
 
-export const PublicGame: Story = {};
+export const PublicGame: Story = {
+  args: {
+    game_id: "10"
+  }
+};
 
 export const PrivateGame: Story = {
   args: {

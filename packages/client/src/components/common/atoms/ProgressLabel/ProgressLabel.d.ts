@@ -1,5 +1,5 @@
 export interface ProgressLabelComponentProps {
-    type: string;
+    type: 'info' | 'danger' | 'success';
     message: string;
     last: boolean;
     complete: boolean;

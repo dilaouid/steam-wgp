@@ -5,7 +5,7 @@ import { Col, ProgressBar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import useSSEQuery from "@core/services/SSE/login";
-import { ProgressLabelComponent } from "@ui/atoms";
+import { ProgressLabel } from "@ui/atoms";
 
 const RightBlock = styled.div`
     background: #060606d2;
@@ -49,7 +49,7 @@ export const RightColumnLogin: React.FC = () => {
                 <Progress variant={data[data.length - 1]?.type ?? 'info'} striped animated now={ data[data.length - 1]?.progress ?? 0 } />
                 <ul className="list-unstyled">
                 {data && data.map((msg, index) => (
-                    <ProgressLabelComponent key={index} message={msg.message} type={msg.type} last={index === data.length - 1} complete={msg.complete} count={msg?.count} />
+                    <ProgressLabel key={index} message={msg.message} type={msg.type} last={index === data.length - 1} complete={msg.complete} count={msg?.count} />
                 ))}
                 </ul>
             </RightBlock>

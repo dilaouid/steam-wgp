@@ -28,7 +28,7 @@ export const Header = () => {
     return(
         <StyledContainer>
             <StyledTitle className="display-5 text-center text-warning">{
-                steamder ? <>{ steamder.name } <CopyIcon /></> : <Skeleton highlightColor="#444" baseColor="#333" width={50+'%'} enableAnimation />
+                steamder ? <>{ steamder.name } <CopyIcon steamderId={steamder.id} /></> : <Skeleton highlightColor="#444" baseColor="#333" width={50+'%'} enableAnimation />
             }</StyledTitle>
             <p className="font-monospace text-center">
                 <Trans t={t} i18nKey="header" components={{ 1: <strong /> }} />
