@@ -22,6 +22,6 @@ type Story = StoryObj<typeof Comp>;
 
 export const GameWinRow: Story = {
   args: {
-    printShop: true
+    printShop: false
   }
 };

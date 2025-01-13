@@ -1,2 +1,2 @@
-export * from './LeftColumnLibrary'
+export * from './Informations/Informations'
 export * from './RightColumnLibrary'

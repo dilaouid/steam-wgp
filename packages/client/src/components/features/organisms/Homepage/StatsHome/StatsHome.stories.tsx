@@ -6,8 +6,7 @@ const meta: Meta<typeof StatsHome> = {
   title: 'Features/Homepage/Organisms/Stats',
   component: StatsHome,
   parameters: {
-    layout: 'centered',
-    
+    layout: 'fullwidth'
   }
 };
 

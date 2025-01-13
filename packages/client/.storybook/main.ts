@@ -4,9 +4,6 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { join, dirname, resolve } from "path";
 import { mergeConfig } from "vite";
 
-
-console.log('__dirname:' + resolve(__dirname, '..', 'src'))
-
 /**
  * This function is used to resolve the absolute path of a package.
  * It is needed in projects that use Yarn PnP or are set up within a monorepo.
@@ -18,6 +15,7 @@ const config: StorybookConfig = {
   stories: [
     '../src/components/**/*.stories.@(js|jsx|ts|tsx)',
   ],
+  staticDirs: ['../public'],
   addons: [
     getAbsolutePath("@storybook/addon-onboarding"),
     getAbsolutePath("@storybook/addon-links"),
@@ -30,10 +28,15 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
-    options: {},
+    options: {
+      builder: {
+        viteConfigPath: 'vite.config.ts'
+      }
+    },
   },
   core: {
-    builder: getAbsolutePath("@storybook/builder-vite")
+    builder: getAbsolutePath("@storybook/builder-vite"),
+    disableTelemetry: true
   },
   viteFinal: async (config) => {
     return mergeConfig(config, {
@@ -63,8 +66,11 @@ const config: StorybookConfig = {
       },
       plugins: [tsconfigPaths()],
       optimizeDeps: {
-        include: ['react', 'react-dom'], // Ajoutez les modules nécessaires
+        include: ['react', 'react-dom'],
       },
+      build: {
+        sourcemap: true
+      }
     });
   },
 };

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 
 import CoverImage from '@assets/images/librarypage/cover.png';
-import { LeftColumnLibrary, RightColumnLibrary } from '@features/organisms/Library';
+import { Informations, RightColumnLibrary } from '@features/organisms/Library';
 import { useLibraryStore } from '@store/libraryStore';
 import { useGetLibrary } from '@core/hooks/useLibrary';
 
@@ -37,7 +37,7 @@ export const Librarypage = () => {
     <LibrarySection>
         <LibraryContainer>
             <Row className='g-3'>
-                <LeftColumnLibrary />
+                <Informations />
                 <RightColumnLibrary />
             </Row>
         </LibraryContainer>

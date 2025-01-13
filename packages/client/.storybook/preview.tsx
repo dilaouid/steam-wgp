@@ -1,11 +1,12 @@
+import React, { useEffect } from "react";
+import styled from "styled-components";
 import type { Preview } from "@storybook/react";
 import { 
   RouterProvider, 
   createRouter, 
   createMemoryHistory,
   Route, 
-  RootRoute, 
-  Outlet
+  RootRoute
 } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -15,49 +16,56 @@ import { useLibraryStore } from '@store/libraryStore';
 import { useSteamderStore } from '@store/steamderStore';
 import { useWebSocketStore } from '@store/websocketStore';
 
-import './cyborg.min.css'
+import './preview.css';
 import "react-loading-skeleton/dist/skeleton.css"; 
-import React, { useEffect } from "react";
 
-// Créer une route racine
+import { defaultSteamderStore, defaultAuthStore } from "./default/store";
+import { defaultStatsQuery, defaultSSEQuery } from "./default/query";
+
+const StoryWrapper = styled.div`
+  position: relative;
+  width: 300px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FullWidthWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  min-width: 768px;
+  min-height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const rootRoute = new RootRoute();
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
-// Créer une route par défaut pour les stories
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/',
   component: () => <></>
 });
 
-// Créer une route pour les liens externes Steam
 const steamRoute = new Route({
   getParentRoute: () => rootRoute,
   path: 'store.steampowered.com',
   component: () => null,
 });
 
-// Définir l'arbre de routes
 const routeTree = rootRoute.addChildren([indexRoute, steamRoute]);
 
 const memoryHistory = createMemoryHistory({
-  initialEntries: ['/'], // URL initiale
+  initialEntries: ['/'],
 });
 
-// Créer le router
 const router = createRouter({
   routeTree,
   history: memoryHistory,
 });
 
-// Déclarer le router pour TypeScript
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
@@ -78,38 +86,11 @@ const withZustand = (StoryFn: React.ComponentType, context: any) => {
   useEffect(() => {
     initializeStore();
     return () => {
-      useAuthStore.setState({ 
-        isAuthenticated: false,
-        toggleAuth: () => {},
-        user: null,
-        setUser: () => {}
-      });
-      useBtnGameStore.setState({ /* état initial */ });
+      useAuthStore.setState(defaultAuthStore);
+      useBtnGameStore.setState({  });
       useLibraryStore.setState({ library: [], selected: [] });
-      useSteamderStore.setState({
-        steamder: {
-          id: 'ac2e8e2d-3f7c-4c5e-8d6b-1c4b2c3b8c6d',
-          name: 'Steamder Name',
-
-          admin_id: '7823654',
-          all_games: [10, 20, 30, 40, 50, 60, 70, 80, 240, 300, 320, 360],
-          common_games: [10, 20, 30, 40, 50, 60, 70, 80, 240, 300, 320, 360],
-          swiped_games: [10, 320, 360],
-          choosed_game: 320,
-
-          display_all_games: true,
-          private: false,
-          started: false,
-
-          complete: false,
-           // Date in 10 minutes
-          endTime: Date.now() + 600000,
-
-          created_at: new Date(),
-          updated_at: new Date()
-        }
-      });
-      useWebSocketStore.setState({ /* état initial */ });
+      useSteamderStore.setState(defaultSteamderStore);
+      useWebSocketStore.setState({  });
     };
   }, [context.story]);
 
@@ -117,10 +98,33 @@ const withZustand = (StoryFn: React.ComponentType, context: any) => {
 };
 
 
-const withRouter = (StoryFn: React.ComponentType) => {
+const withRouter = (StoryFn: React.ComponentType, context: any) => {
+  const layout = context.parameters.layout || "centered"; 
+  const Wrapper = layout === "fullwidth" ? FullWidthWrapper : StoryWrapper;
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+      },
+    },
+  });
+
+  queryClient.setQueryData(['stats'], defaultStatsQuery);
+  queryClient.setQueryData(['login_sse'], defaultSSEQuery);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} defaultComponent={() => <StoryFn />} />
+      <RouterProvider 
+        router={router} 
+        defaultComponent={() => 
+            <Wrapper>
+              <StoryFn />
+            </Wrapper>
+        }
+      />
     </QueryClientProvider>
   );
 };

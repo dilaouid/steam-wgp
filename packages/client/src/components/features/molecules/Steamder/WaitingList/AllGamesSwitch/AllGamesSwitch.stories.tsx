@@ -6,7 +6,7 @@ const meta: Meta<typeof Form> = {
   title: 'Features/Steamder/Molecules/WaitingList',
   component: Form,
   parameters: {
-    layout: 'centered',
+    layout: 'fullwidth',
   },
   args: {
     active: true

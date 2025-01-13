@@ -1,11 +1,6 @@
 import { Pagination } from "react-bootstrap";
-
-interface IPaginationProps {
-    totalItems: number;
-    itemsPerPage: number;
-    currentPage: number;
-    onPageChange: (page: number) => void;
-}
+import { IPaginationProps } from "./Pagination.props";
+import { PaginateItem } from "./Pagination.styled";
 
 export const PaginationSteamders: React.FC<IPaginationProps> = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -16,13 +11,13 @@ export const PaginationSteamders: React.FC<IPaginationProps> = ({ totalItems, it
         <Pagination className="d-xxl-flex justify-content-xxl-center" size="sm">
             { totalItems >= 8 && <Pagination.First onClick={() => onPageChange(1)} /> }
             { pages.map(page => (
-                <Pagination.Item
+                <PaginateItem
                     key={page}
                     active={page === currentPage}
                     onClick={() => onPageChange(page)}
                 >
                     {page}
-                </Pagination.Item>
+                </PaginateItem>
             )) }
             { totalItems >= 8 && <Pagination.Last onClick={() => onPageChange(totalPages)} /> }
         </Pagination>

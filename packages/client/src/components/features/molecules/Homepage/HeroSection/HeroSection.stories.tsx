@@ -6,7 +6,7 @@ const meta: Meta<typeof HeroSection> = {
   title: 'Features/Homepage/Molecules/HeroSection',
   component: HeroSection,
   parameters: {
-    layout: 'centered'
+    layout: 'fullwidth'
   }
 };
 

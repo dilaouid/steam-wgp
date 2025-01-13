@@ -1,31 +1,10 @@
-import styled from "styled-components";
-import { Col } from "react-bootstrap";
 import { BsFillExclamationDiamondFill } from "react-icons/bs";
 import { useAuthStore } from "@store/authStore";
 import { useTranslation, Trans } from "react-i18next";
 
-const ColumnLeft = styled(Col)`
-    background: #060606d2;
-    padding: 27px;
-    border-radius: 20px;
-`;
+import { ColumnLeft, ActorFont, Hello, ProfilePicture } from "./Informations.styled";
 
-const ProfilePicture = styled.img`
-    width: 181px;
-    border-radius: 21px;
-`;
-
-const Hello = styled.p`
-    font-family: Abel, sans-serif;
-    margin-top: 8px;
-    font-size: 20px;
-`;
-
-const ActorFont = styled.p`
-    font-family: Actor, sans-serif;
-`;
-
-export const LeftColumnLogin: React.FC = () => {
+export const InformationsLogin: React.FC = () => {
     const { t } = useTranslation('pages/login');
     const { user } = useAuthStore();
 

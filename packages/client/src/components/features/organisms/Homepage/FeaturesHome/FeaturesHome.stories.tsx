@@ -6,7 +6,7 @@ const meta: Meta<typeof FeaturesHome> = {
   title: 'Features/Homepage/Organisms/Features',
   component: FeaturesHome,
   parameters: {
-    layout: 'centered'
+    layout: 'fullwidth'
   }
 };
 

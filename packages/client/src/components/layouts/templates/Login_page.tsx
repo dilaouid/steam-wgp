@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Container, Row } from 'react-bootstrap';
 
 import BackgroundImage from '@assets/images/loginpage/bg.png'
-import { LeftColumnLogin, RightColumnLogin } from '@features/organisms/Login';
+import { InformationsLogin, ProgressLogin } from '@features/organisms/Login';
 import { useAuthStore } from '@store/authStore';
 import { useNavigate } from '@tanstack/react-router';
 
@@ -32,8 +32,8 @@ export const Loginpage = () => {
     <LoginSection>
         <LoginContainer>
             <Row>
-                <LeftColumnLogin />
-                <RightColumnLogin />
+                <InformationsLogin />
+                <ProgressLogin />
             </Row>
         </LoginContainer>
     </LoginSection>)

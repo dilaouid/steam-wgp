@@ -6,7 +6,7 @@ const meta: Meta<typeof Comp> = {
   title: 'Features/SteamdersList/Molecules',
   component: Comp,
   parameters: {
-    layout: 'centered',
+    layout: 'fullwidth',
   }
 };
 

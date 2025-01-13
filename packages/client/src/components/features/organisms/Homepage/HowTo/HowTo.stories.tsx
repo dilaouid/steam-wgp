@@ -6,7 +6,7 @@ const meta: Meta<typeof HowTo> = {
   title: 'Features/Homepage/Organisms/Tutorial',
   component: HowTo,
   parameters: {
-    layout: 'centered'
+    layout: 'fullwidth'
   }
 };
 

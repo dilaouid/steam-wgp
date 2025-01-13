@@ -1,28 +1,13 @@
 import { useEffect } from "react";
 
-import styled from "styled-components";
-import { Col, ProgressBar } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import useSSEQuery from "@core/services/SSE/login";
 import { ProgressLabel } from "@ui/atoms";
+import { RightBlock, Progress, Title } from "./Progress.styled";
 
-const RightBlock = styled.div`
-    background: #060606d2;
-    padding: 36px;
-    border-radius: 26px;
-`;
-
-const Title = styled.h4`
-    font-family: Agdasima, sans-serif;
-`;
-
-const Progress = styled(ProgressBar)`
-    margin-top: 23px;
-    margin-bottom: 7px;
-`;
-
-export const RightColumnLogin: React.FC = () => {
+export const ProgressLogin: React.FC = () => {
     const { t } = useTranslation('pages/login');
     const { data } = useSSEQuery();
     const navigate = useNavigate();

@@ -6,15 +6,7 @@ const meta: Meta<typeof Navbar> = {
   title: 'Common/Organisms/Navbar',
   component: Navbar,
   parameters: {
-    layout: 'centered',
-    zustand: {
-        authStore: {
-            isAuthenticated: false,
-            toggleAuth: () => {},
-            user: null,
-            setUser: () => {}
-        }
-    }
+    layout: 'fullwidth'
   }
 };
 
@@ -34,6 +26,10 @@ export const NavbarLogOut: Story = {
     }};
 
 export const NavbarLoggedIn: Story = {
+    args: {
+        isLoggedIn: false
+    },
+
     parameters: {
         zustand: {
             authStore: {

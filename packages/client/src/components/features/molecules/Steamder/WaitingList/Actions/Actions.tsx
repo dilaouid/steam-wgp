@@ -1,9 +1,8 @@
-import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
-import { Row, Col, Button, Modal, Spinner } from "react-bootstrap";
+import { Col, Button, Modal, Spinner } from "react-bootstrap";
 
 import { useSteamderStore } from "@store/steamderStore";
 import { useAuthStore } from "@store/authStore";
@@ -12,10 +11,7 @@ import { useLeaveSteamder } from "@core/hooks/useLeaveSteamder";
 import { leaveSteamder, startSteamder } from "@core/services/WebSockets/send";
 
 import type { IPlayer } from "@core/types/ISteamder";
-
-const StyledRow = styled(Row)`
-    height: 91px;
-`;
+import { Row } from "./Actions.styled";
 
 export const RoomActions: React.FC = () => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.actions" });
@@ -74,7 +70,7 @@ export const RoomActions: React.FC = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <StyledRow className="justify-content-center">
+            <Row className="justify-content-center">
                 { isAdmin && <Col sm={"auto"} className="align-self-center">
                     <Button variant="outline-info" className="shadow" disabled={isStartButtonDisabled()} onClick={() => {
                         if (isStartButtonDisabled()) return;
@@ -85,7 +81,7 @@ export const RoomActions: React.FC = () => {
                 <Col sm={"auto"} className="align-self-center">
                     <Button variant="outline-danger" className="shadow" onClick={handleShow} disabled={loading}>{t('leave')}</Button>
                 </Col>
-            </StyledRow>
+            </Row>
         </>
     );
 };

@@ -1,2 +1,2 @@
-export * from './LeftColumnLogin'
-export * from './RightColumnLogin'
+export * from './Informations/Informations'
+export * from './Progress/Progress'

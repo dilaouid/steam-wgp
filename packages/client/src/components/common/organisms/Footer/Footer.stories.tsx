@@ -7,7 +7,7 @@ const meta: Meta<typeof Footer> = {
   component: Footer,
   tags: ['autodocs'],
   parameters: {
-    layout: 'centered',
+    layout: 'fullwidth',
     zustand: {
         authStore: {
             isAuthenticated: false,

@@ -6,13 +6,7 @@ const meta: Meta<typeof Comp> = {
   title: 'Features/Steamder/Molecules/WaitingList',
   component: Comp,
   parameters: {
-    layout: 'centered',
-    zustand: {
-        steamderStore: {
-            id: "65cuf89-4f5d-4f5d-4f5d-4f5d",
-            name: "Steamder Storybook"
-        }
-    }
+    layout: 'fullwidth'
   }
 };
 

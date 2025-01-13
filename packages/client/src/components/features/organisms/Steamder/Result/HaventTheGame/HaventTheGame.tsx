@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { useSteamderStore } from "@store/steamderStore";
 import { useAuthStore } from "@store/authStore";
-import { PlayersNotHavingGame } from "@features/molecules/Steamder/Result/PlayersNotHavingGame";
+import { PlayersNotHavingGame } from "@features/molecules/Steamder/Result/PlayersNotHavingGame/PlayersNotHavingGame";
 
 import { DoesntHaveTheGame, HaventTheGameTitle } from "./HaventTheGame.styled";
 

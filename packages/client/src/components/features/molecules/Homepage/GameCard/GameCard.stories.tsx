@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { GameCard } from './GameCard';
 
 const meta: Meta<typeof GameCard> = {
-  title: 'Features/Steamder/Molecules/GameCard',
+  title: 'Features/Homepage/Molecules/GameCard',
   component: GameCard,
   parameters: {
     layout: 'centered',
