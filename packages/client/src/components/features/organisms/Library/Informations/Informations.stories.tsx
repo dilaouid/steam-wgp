@@ -3,10 +3,27 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Informations as Comp } from './Informations';
 
 const meta: Meta<typeof Comp> = {
-  title: 'Features/Steamder/Molecules/WaitingList',
+  title: 'Features/Library/Organisms',
   component: Comp,
   parameters: {
     layout: 'fullwidth',
+  },
+  args: {
+    count: 0,
+    type: 'public'
+  },
+  argTypes: {
+    count: {
+      control: {
+        type: 'number'
+      }
+    },
+    type: {
+      control: {
+        type: 'select',
+        options: ['public', 'private']
+      }
+    }
   }
 };
 

@@ -9,9 +9,9 @@ import { ErrorsList } from "../ErrorsList";
 
 import type { IPlayer } from "@core/types/ISteamder";
 
-import { NoMarginTopText, Container } from "./Informations.styled";
+import { NoMarginTopText, Container } from "./SteamderInformations.styled";
 
-export const Informations: React.FC = () => {
+export const SteamderInformations: React.FC = () => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder.informations" });
 
     const { steamder } = useSteamderStore();

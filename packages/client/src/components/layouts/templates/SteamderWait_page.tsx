@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CoverImage from '@assets/images/steamderpage/cover.jpg';
 import { Header } from "@features/molecules/Steamder/WaitingList/Header/Header";
 import { RoomPlayers } from "@features/molecules/Steamder/WaitingList/RoomPlayers";
-import { Informations } from "@features/molecules/Steamder/WaitingList/Informations/Informations";
+import { SteamderInformations } from "@features/molecules/Steamder/WaitingList/SteamderInformations/SteamderInformations";
 
 const StyledSection = styled.section`
     padding-top: 9px;
@@ -20,7 +20,7 @@ export const SteamderWaitPage = () => {
         <StyledSection>
             <Header />
             <RoomPlayers />
-            <Informations />
+            <SteamderInformations />
         </StyledSection>
     );
 };

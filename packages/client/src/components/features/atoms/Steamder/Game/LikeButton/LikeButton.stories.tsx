@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { InformationsLogin as Comp } from './Informations';
+import { LikeButton as Comp } from './LikeButton';
 
 const meta: Meta<typeof Comp> = {
-  title: "Features/Login/Organisms",
+  title: 'Features/Steamder/Atoms/Game',
   component: Comp,
   parameters: {
-    layout: "fullwidth"
-  },
+    layout: 'centered',
+  }
 };
 
 export default meta;
 type Story = StoryObj<typeof Comp>;
 
-export const Informations: Story = {};
+export const LikeButton: Story = {};
