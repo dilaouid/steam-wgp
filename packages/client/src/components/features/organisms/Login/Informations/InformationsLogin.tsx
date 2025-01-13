@@ -2,7 +2,7 @@ import { BsFillExclamationDiamondFill } from "react-icons/bs";
 import { useAuthStore } from "@store/authStore";
 import { useTranslation, Trans } from "react-i18next";
 
-import { ColumnLeft, ActorFont, Hello, ProfilePicture } from "./Informations.styled";
+import { ColumnLeft, ActorFont, Hello, ProfilePicture } from "./InformationsLogin.styled";
 
 export const InformationsLogin: React.FC = () => {
     const { t } = useTranslation('pages/login');
