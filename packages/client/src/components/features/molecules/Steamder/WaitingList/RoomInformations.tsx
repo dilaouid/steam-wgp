@@ -5,7 +5,7 @@ import { useAuthStore } from "@store/authStore";
 import { useSteamderStore } from "@store/steamderStore";
 
 import { RoomActions } from "./RoomActions";
-import { AllGamesSwitch } from "./AllGamesSwitch";
+import { AllGamesSwitch } from "./AllGamesSwitch/AllGamesSwitch";
 import { ErrorsList } from "./ErrorsList";
 
 import type { IPlayer } from "@core/types/ISteamder";

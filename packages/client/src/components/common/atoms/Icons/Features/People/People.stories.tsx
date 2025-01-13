@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { People } from './People';
+import { People as Icon } from './People';
 
-const meta: Meta<typeof People> = {
+const meta: Meta<typeof Icon> = {
   title: 'Common/Atoms/Icons/Features',
-  component: People,
+  component: Icon,
   parameters: {
     layout: 'centered'
   }
 };
 
 export default meta;
-type Story = StoryObj<typeof People>;
+type Story = StoryObj<typeof Icon>;
 
-export const PeopleIcon: Story = {};
+export const People: Story = {};

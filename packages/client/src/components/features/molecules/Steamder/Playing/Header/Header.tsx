@@ -1,6 +1,3 @@
-import styled from "styled-components";
-import { Container } from "react-bootstrap";
-
 import { Trans, useTranslation } from "react-i18next";
 
 import { IoIosClock } from "react-icons/io";
@@ -8,23 +5,7 @@ import Countdown, { zeroPad } from "react-countdown";
 
 import { useSteamderStore } from "@store/steamderStore";
 
-const StyledContainer = styled(Container)`
-    background: #000000cc;
-    margin-top: 21px;
-`;
-
-const StyledTitle = styled.h3`
-    height: 76.5938px;
-    padding-top: 8px;
-    font-family: Abel, sans-serif;
-    margin-bottom: -7px;
-`;
-
-const StyledCountdownText = styled.p`
-    margin-top: 18px;
-    color: #8dd1f1;
-    padding-bottom: 23px;
-`;
+import { StyledContainer, StyledCountdownText, StyledTitle } from "./Header.styled";
 
 export const Header = () => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "game" });

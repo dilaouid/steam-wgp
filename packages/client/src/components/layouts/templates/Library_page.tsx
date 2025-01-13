@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 
 import CoverImage from '@assets/images/librarypage/cover.png';
-import { LeftColumnLibrary } from '@features/organisms/Library/LeftColumnLibrary';
-import { RightColumnLibrary } from '@features/organisms/Library/RightColumnLibrary';
+import { LeftColumnLibrary, RightColumnLibrary } from '@features/organisms/Library';
 import { useLibraryStore } from '@store/libraryStore';
 import { useGetLibrary } from '@core/hooks/useLibrary';
 

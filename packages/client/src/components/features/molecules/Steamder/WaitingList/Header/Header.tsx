@@ -1,6 +1,3 @@
-import styled from "styled-components";
-import { Container } from "react-bootstrap";
-
 import { Trans, useTranslation } from "react-i18next";
 
 import Skeleton from "react-loading-skeleton";
@@ -8,18 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import { CopyIcon } from "@features/atoms/Steamder/CopyIcon/CopyIcon";
 
 import { useSteamderStore } from "@store/steamderStore";
-
-const StyledContainer = styled(Container)`
-    background: #000000cc;
-    margin-top: 21px;
-`;
-
-const StyledTitle = styled.h3`
-    height: 76.5938px;
-    padding-top: 8px;
-    font-family: Abel, sans-serif;
-    margin-bottom: -7px;
-`;
+import { StyledContainer, StyledTitle } from "./Header.styled";
 
 export const Header = () => {
     const { t } = useTranslation("pages/steamder", { keyPrefix: "steamder" });

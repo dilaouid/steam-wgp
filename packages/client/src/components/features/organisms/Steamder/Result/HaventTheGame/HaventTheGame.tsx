@@ -1,24 +1,10 @@
-import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 import { useSteamderStore } from "@store/steamderStore";
-import { useTranslation } from "react-i18next";
 import { useAuthStore } from "@store/authStore";
 import { PlayersNotHavingGame } from "@features/molecules/Steamder/Result/PlayersNotHavingGame";
 
-const HaventTheGameTitle = styled.p`
-    margin-bottom: 0px;
-    background: var(--bs-body-bg);
-    height: 58px;
-    padding-top: 11px;
-    font-size: 25px;
-    font-family: Abel, sans-serif;
-`;
-
-const DoesntHaveTheGame = styled.p`
-    background: var(--bs-body-bg);
-    height: 35px;
-    padding: 5px;
-`;
+import { DoesntHaveTheGame, HaventTheGameTitle } from "./HaventTheGame.styled";
 
 export const HaventTheGame = () => {
     const { user } = useAuthStore();

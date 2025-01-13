@@ -1,12 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-
-import { Row } from "react-bootstrap";
 import { ShopPageColumn, WinnerColumn } from "@features/molecules/Steamder/Result";
-
-const StyledRow = styled(Row)`
-    margin-bottom: 17px;
-`;
+import { StyledRow } from "./GameWinRow.styled";
 
 interface GameWinRowProps {
     printShop: boolean;

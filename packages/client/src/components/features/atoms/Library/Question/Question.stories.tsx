@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Question } from './Question';
+import { Question as Comp } from './Question';
 
-const meta: Meta<typeof Question> = {
-  title: 'Features/Library/Atoms/Question',
-  component: Question,
+const meta: Meta<typeof Comp> = {
+  title: 'Features/Library/Atoms',
+  component: Comp,
   parameters: {
     layout: 'centered',
   },
@@ -14,10 +14,6 @@ const meta: Meta<typeof Question> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Question>;
+type Story = StoryObj<typeof Comp>;
 
-export const QuestionDocumentationLibrary: Story = {
-  args: {
-    children: 'Question',
-  },
-};
+export const QuestionDocumentationLibrary: Story = {};

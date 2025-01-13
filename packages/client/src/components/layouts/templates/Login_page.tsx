@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import { Container, Row } from 'react-bootstrap';
 
 import BackgroundImage from '@assets/images/loginpage/bg.png'
-import { LeftColumnLogin } from '@features/organisms/Login/LeftColumnLogin';
-import { RightColumnLogin } from '@features/organisms/Login/RightColumnLogin';
+import { LeftColumnLogin, RightColumnLogin } from '@features/organisms/Login';
 import { useAuthStore } from '@store/authStore';
 import { useNavigate } from '@tanstack/react-router';
 

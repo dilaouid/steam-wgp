@@ -1,6 +1,6 @@
-export * from './AllGamesSwitch'
+export * from './AllGamesSwitch/AllGamesSwitch'
 export * from './ErrorsList'
-export { Header as SteamderHeader } from './Header'
+export { Header as SteamderHeader } from './Header/Header'
 export * from './RoomActions'
 export * from './RoomInformations'
 export * from './RoomPlayers'

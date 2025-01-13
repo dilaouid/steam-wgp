@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Loader } from './Loader';
+import { Loader as Comp } from './Loader';
 
-const meta: Meta<typeof Loader> = {
+const meta: Meta<typeof Comp> = {
   title: 'Common/Molecules/Loader',
-  component: Loader,
+  component: Comp,
   parameters: {
     layout: 'centered',
   }
 };
 
 export default meta;
-type Story = StoryObj<typeof Loader>;
+type Story = StoryObj<typeof Comp>;
 
-export const LoaderExample: Story = {};
+export const Loader: Story = {};

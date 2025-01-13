@@ -1,3 +1,3 @@
 export interface TrophyProps {
-    color?: string;
+    color?: "gold" | "silver" | "#cd7f32";
 }

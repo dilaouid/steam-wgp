@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import CoverImage from '@assets/images/steamderpage/cover.jpg';
-import { Header } from "@features/molecules/Steamder/WaitingList/Header";
+import { Header } from "@features/molecules/Steamder/WaitingList/Header/Header";
 import { RoomPlayers } from "@features/molecules/Steamder/WaitingList/RoomPlayers";
 import { RoomInformations } from "@features/molecules/Steamder/WaitingList/RoomInformations";
 

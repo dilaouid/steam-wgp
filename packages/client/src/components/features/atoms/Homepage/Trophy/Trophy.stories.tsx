@@ -11,7 +11,6 @@ const meta: Meta<typeof Trophy> = {
   },
   args: {
     color: 'gold', // Valeur par défaut pour les props
-
   },
 };
 

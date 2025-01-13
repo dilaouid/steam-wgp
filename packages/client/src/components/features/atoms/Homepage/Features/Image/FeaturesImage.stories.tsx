@@ -1,17 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { FeaturesImage } from './FeaturesImage';
+import { FeaturesImage as Comp } from './FeaturesImage';
 
-const meta: Meta<typeof FeaturesImage> = {
+const meta: Meta<typeof Comp> = {
   title: 'Features/Homepage/Atoms/FeaturesImage',
-  component: FeaturesImage,
-  tags: ['autodocs'],
+  component: Comp,
   parameters: {
     layout: 'centered',
   }
 };
 
 export default meta;
-type Story = StoryObj<typeof FeaturesImage>;
+type Story = StoryObj<typeof Comp>;
 
-export const DefaultFeaturesImage: Story = {};
+export const FeaturesImage: Story = {};

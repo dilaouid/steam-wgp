@@ -1,9 +1,8 @@
 import { useState } from "react";
 
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { FormLabel } from "@features/atoms/SteamdersList/FormLabel";
 
@@ -12,22 +11,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useAuthStore } from "@store/authStore";
 import { SubmitButton } from "@features/atoms/SteamdersList/SubmitButton";
 
-const StyledForm = styled(Form)`
-    font-family: 'Archivo Narrow', sans-serif;
-    font-size: 21px;
-    margin-bottom: 47px;
-`;
-
-const StyledInput = styled(Form.Control)`
-    width: 79%;
-    font-family: Abel, sans-serif;
-    margin-bottom: 11px;
-`;
-
-const StyledSwitch = styled(Form.Check)`
-    font-family: Abel, sans-serif;
-    margin-bottom: 11px;
-`;
+import { StyledForm, StyledInput, StyledSwitch } from "./CreateSteamderForm.styled";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LabelTooltip = (message: string) => 

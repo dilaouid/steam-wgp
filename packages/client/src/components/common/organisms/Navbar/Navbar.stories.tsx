@@ -5,7 +5,6 @@ import { Navbar } from './Navbar';
 const meta: Meta<typeof Navbar> = {
   title: 'Common/Organisms/Navbar',
   component: Navbar,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
     zustand: {
