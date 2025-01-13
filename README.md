@@ -30,7 +30,7 @@ SteamWGP (*What are We Going to Play*) is a web-based platform that provides too
 SteamWGP is structured as a monorepo (pnpm workspace) consisting of two main packages:
 
 - `client`: Contains all frontend code, hosted on Netlify. It provides the user interface through which users interact with the platform.
-  - **Stack**: React, TypeScript, Zustand, Tanstack, Bootstrap, and i18next.
+  - **Stack**: React, TypeScript, Zustand, Tanstack, Bootstrap, Storybook and i18next.
 - `server`: Contains all backend code, hosted on Railway, using Fastify with TypeScript and Drizzle ORM over PostgreSQL to handle data management and API services.
   - **Stack**: Fastify, TypeScript, Drizzle ORM, PostgreSQL, and JWT.
 

@@ -8,9 +8,16 @@
     "build": "tsc && vite build",
     "build:prod": "cross-env VITE_BASE_URL=https://api.steamwgp.fr VITE_BASE_WS_URL=wss://api.steamwgp.fr vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite build --watch & vite preview"
+    "preview": "vite build --watch & vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@storybook/addon-a11y": "^8.4.7",
+    "@storybook/addon-links": "^8.4.7",
+    "@storybook/addon-storysource": "^8.4.7",
+    "@storybook/addon-viewport": "^8.4.7",
+    "@storybook/builder-vite": "^8.4.7",
     "@tanstack/react-query": "^5.32.0",
     "@tanstack/react-router": "^1.29.2",
     "animate.css": "^4.1.1",
@@ -36,6 +43,14 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "3.2.3",
+    "@storybook/addon-essentials": "8.4.7",
+    "@storybook/addon-interactions": "8.4.7",
+    "@storybook/addon-onboarding": "8.4.7",
+    "@storybook/blocks": "8.4.7",
+    "@storybook/react": "8.4.7",
+    "@storybook/react-vite": "8.4.7",
+    "@storybook/test": "8.4.7",
     "@tanstack/router-devtools": "^1.29.2",
     "@tanstack/router-vite-plugin": "^1.30.0",
     "@types/aos": "^3.0.7",
@@ -49,7 +64,9 @@
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "eslint-plugin-storybook": "^0.11.2",
     "prettier": "^3.2.5",
+    "storybook": "8.4.7",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
     "vite-plugin-static-copy": "^2.2.0",

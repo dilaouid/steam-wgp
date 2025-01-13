@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Librarypage } from '../components/templates/Library_page';
+
+import { Librarypage } from '@layouts/templates/Library_page';
+import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper';
 
 import { useAuthStore } from '@store/authStore';
-import { HelmetWrapper } from '../components/wrappers/HelmetWrapper';
+import { BASE_URL } from '@core/environment';
 
 export const Route = createFileRoute("/library")({
   component: Library,
@@ -10,7 +12,7 @@ export const Route = createFileRoute("/library")({
     const { isAuthenticated } = useAuthStore.getState();
     if (!isAuthenticated) {
       localStorage.setItem('postLoginRedirect', '/library');
-      window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/steam`;
+      window.location.href = `${BASE_URL}/auth/steam`;
       return;
     }
   }

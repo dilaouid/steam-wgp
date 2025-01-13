@@ -1,0 +1,24 @@
+{
+    "directory": [
+      "./src/components/common",
+      "./src/components/features",
+      "./src/core/hooks"
+    ],
+    "delete": true,
+    "exclude": [
+      "__tests__",
+      "__stories__",
+      ".test.",
+      ".spec."
+    ],
+    "include": [
+      ".ts",
+      ".tsx",
+      ".d.ts"
+    ],
+    "location": "all",
+    "structure": "flat",
+    "singleQuotes": true,
+    "noHeader": true,
+    "exportAll": true
+}

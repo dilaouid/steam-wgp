@@ -1,0 +1,5 @@
+export * from './FeaturesHome'
+export * from './HowTo'
+export * from './ParallaxBackground/ParallaxBackgroundHome'
+export * from './Podium/Podium'
+export * from './StatsHome/StatsHome'

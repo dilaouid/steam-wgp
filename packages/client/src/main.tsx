@@ -1,45 +1,25 @@
 import './i18n/i18n.ts'
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
 
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
+import { RouterProvider } from '@tanstack/react-router'
 
-import { AuthWrapper } from './components/wrappers/AuthWrapper.tsx'
-export const router = createRouter({ routeTree })
-import AOS from 'aos';
-
+import { router } from '@core'
+import { QueryClientWrapper, AuthWrapper } from '@layouts/wrappers'
 
 import 'aos/dist/aos.css';
 import 'react-loading-skeleton/dist/skeleton.css'
-
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-      retry: false
-    },
-  },
-})
-
-AOS.init();
-AOS.refresh();
 
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <QueryClientProvider client={queryClient}>
-      <AuthWrapper> 
-        <RouterProvider router={router} />
-      </AuthWrapper>
-      </QueryClientProvider>
+      <QueryClientWrapper>
+        <AuthWrapper> 
+          <RouterProvider router={router} />
+        </AuthWrapper>
+      </QueryClientWrapper>
     </StrictMode>,
   )
 }

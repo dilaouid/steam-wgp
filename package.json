@@ -20,7 +20,8 @@
     "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
     "preview": "concurrently \"pnpm run preview:client\" \"pnpm run dev:server\"",
     "generate": "pnpm --filter steamwgp-server generate",
-    "migrate": "pnpm --filter steamwgp-server migrate"
+    "migrate": "pnpm --filter steamwgp-server migrate",
+    "storybook": "pnpm --filter steamwgp-client storybook"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

@@ -28,3 +28,4 @@ export const CGUpage = () => {
     <ReactMarkdown children={markdown} />
   </Container>;
 };
+

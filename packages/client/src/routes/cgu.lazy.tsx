@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { CGUpage } from '@templates/CGU_page'
-import { HelmetWrapper } from '@wrappers/HelmetWrapper'
+import { CGUpage } from '@layouts/templates/CGU_page'
+import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper'
 
 export const Route = createLazyFileRoute("/cgu")({
   component: CGU,
