@@ -3,11 +3,10 @@ import { StyledNav } from './NavComponent.styled';
 
 interface NavProps {
   children: React.ReactNode;
-  className?: string;
 }
 
-export const NavComponent: React.FC<NavProps> = ({ children, className }) => (
-  <StyledNav className={`ms-auto ${className || ''}`}>
+export const NavComponent: React.FC<NavProps> = ({ children }) => (
+  <StyledNav className="ms-auto">
     <ul className="navbar-nav mr-auto">
       {children}
     </ul>

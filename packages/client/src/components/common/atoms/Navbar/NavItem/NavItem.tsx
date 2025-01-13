@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { NavItemProps, StyledNavItem } from '.';
+import { NavItemProps, StyledNavItem } from './';
 
 import 'animate.css';
 
@@ -42,5 +42,3 @@ export const NavItem: React.FC<NavItemProps> = ({ to, children, flashy }) => {
     </li>
   );
 };
-
-export default NavItem;
