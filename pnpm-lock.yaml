@@ -230,8 +230,8 @@ importers:
         specifier: ^16.4.5
         version: 16.4.7
       drizzle-orm:
-        specifier: ^0.33.0
-        version: 0.33.0(@types/pg@8.11.10)(@types/react@18.3.18)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1)
+        specifier: ^0.36.3
+        version: 0.36.4(@types/pg@8.11.10)(@types/react@18.3.18)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1)
       fastify:
         specifier: ^4.28.1
         version: 4.29.0
@@ -245,7 +245,7 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2(fastify@4.29.0)
       i18next:
-        specifier: ^23.14.0
+        specifier: ^23.16.8
         version: 23.16.8
       jsonwebtoken:
         specifier: ^9.0.2
@@ -285,7 +285,7 @@ importers:
         specifier: ^29.5.14
         version: 29.5.14
       '@types/node':
-        specifier: ^20.16.5
+        specifier: ^20.17.6
         version: 20.17.12
       '@types/pg':
         specifier: ^8.11.10
@@ -309,7 +309,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.17.12)(ts-node@10.9.2(@swc/core@1.10.4(@swc/helpers@0.5.15))(@types/node@20.17.12)(typescript@5.7.3))
       nodemon:
-        specifier: ^3.1.4
+        specifier: ^3.1.7
         version: 3.1.9
       ts-jest:
         specifier: ^29.2.5
@@ -327,7 +327,7 @@ importers:
         specifier: ^4.19.2
         version: 4.19.2
       typescript:
-        specifier: ^5.5.4
+        specifier: ^5.6.3
         version: 5.7.3
 
 packages:
@@ -7547,7 +7547,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.33.0(@types/pg@8.11.10)(@types/react@18.3.18)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1):
+  drizzle-orm@0.36.4(@types/pg@8.11.10)(@types/react@18.3.18)(pg@8.13.1)(postgres@3.4.5)(react@18.3.1):
     optionalDependencies:
       '@types/pg': 8.11.10
       '@types/react': 18.3.18
