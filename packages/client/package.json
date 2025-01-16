@@ -2,7 +2,7 @@
   "name": "steamwgp-client",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://dilaouid.github.io/steam-wgp",
+  "homepage": "https://steamwgp.fr",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
