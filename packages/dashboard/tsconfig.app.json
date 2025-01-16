@@ -20,7 +20,25 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": "./src",
+    "paths": {
+      // Core aliases
+      "@core/*": ["core/*"],
+      "@assets/*": ["assets/*"],
+
+      // Components aliases
+      "@ui/*": ["components/common/*"],
+      "@features/*": ["components/features/*"],
+      "@layouts/*": ["components/layouts/*"],
+
+      // Types aliases
+      "@types/*": ["types/*"],
+
+      // Shortcuts barrel
+      "@core": ["core/index.ts"],
+      "@utils": ["core/utils/index.ts"]
+    }
   },
   "include": ["src"]
 }
