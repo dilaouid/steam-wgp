@@ -1,6 +1,7 @@
 import { queryClient } from "@core";
 
-import { useSteamderStore, useAuthStore } from "@store";
+import { useAuthStore } from "@steamwgp/shared-ui";
+import { useSteamderStore } from "@store";
 import { calculateAllGames, calculateCommonGames } from "@utils";
 
 export const leaveSteamder = (playerId: string): void => {

@@ -12,9 +12,13 @@ export const useCheckAuth = (config: IAuthConfig): UseQueryResult<IUser, Error> 
   return useQuery({
     queryKey: ['auth', 'user'],
     queryFn: async () => {
-      const response = await checkAuth(config);
-      return response.data;
+      try {
+        const response = await checkAuth(config);
+        return response;
+      } catch (error) {
+        throw new Error(error as string);
+      }
     },
-    select: (data: IAuthResponse) => data.data
+    select: (response) => response.data
   });
 };

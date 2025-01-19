@@ -2,7 +2,7 @@ import { fastifyCors } from '@fastify/cors'
 
 export const corsPlugin = (fastify: any) => {
   return fastify.register(fastifyCors, {
-    origin: fastify.config.ORIGIN,
+    origin: [fastify.config.ORIGIN, fastify.config.DASHBOARD],
     methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept'],
     credentials: true,

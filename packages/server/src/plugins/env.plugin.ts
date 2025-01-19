@@ -47,6 +47,10 @@ const schema = {
       type: 'string',
       default: 'http://localhost:3000'
     },
+    DASHBOARD: {
+      type: 'string',
+      default: 'http://localhost:5174'
+    },
     DOMAIN: {
       type: 'string',
       default: 'localhost'

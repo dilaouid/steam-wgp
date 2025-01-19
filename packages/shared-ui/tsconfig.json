@@ -20,6 +20,8 @@
       "@utils": ["core/utils/index.ts"],
       "@types": ["core/types/index.ts"],
       "@store": ["store/index.ts"],
+
+      "@wrappers": ["wrappers/index.ts"],
     },
     "declaration": true,
     "outDir": "./dist",

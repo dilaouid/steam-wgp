@@ -8,7 +8,8 @@ import { useTranslation } from "react-i18next";
 
 import { BsBoxArrowInDown, BsDoorOpen } from "react-icons/bs"
 
-import { useAuthStore, useSteamderStore } from "@store";
+import { useAuthStore } from "@steamwgp/shared-ui";
+import { useSteamderStore } from "@store";
 
 import { useLeaveSteamder } from "@core/hooks/useLeaveSteamder";
 import { leaveSteamder } from "@core/services/WebSockets/send";

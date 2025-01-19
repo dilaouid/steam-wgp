@@ -1,5 +1,5 @@
 {
-  "id": "a8a90ee8-af2e-4b84-84f9-d1a97e8de82f",
+  "id": "68a1e8e4-9569-4d32-aa33-368702832054",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -140,6 +140,13 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
+        },
+        "admin": {
+          "name": "admin",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         }
       },
       "indexes": {},

@@ -1,6 +1,7 @@
-import * as React from 'react'
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { Sidebar } from '@ui/organisms/Sidebar'
+import { Navbar } from '@ui/organisms/Navbar/Navbar'
+import { Suspense } from 'react'
 
 export const Route = createRootRoute({
   component: RootComponent
@@ -8,11 +9,16 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <React.Fragment>
+    <Suspense fallback={<></>}>
+      <Navbar />
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Sidebar />
-        <Outlet />
+        <div className="flex">
+          <Sidebar />
+          <main className="flex-1 p-8 lg:ml-64">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </React.Fragment>
+    </Suspense>
   )
 }
