@@ -6,7 +6,7 @@ import { Librarypage } from '@layouts/templates/Library_page';
 import { HelmetWrapper } from '@layouts/wrappers/HelmetWrapper';
 
 import AOS from 'aos';
-import { useAuthStore } from '@store/authStore';
+import { useAuthStore } from '@steamwgp/shared-ui';
 import { BASE_URL } from '@core/environment';
 
 export const Route = createFileRoute("/library")({

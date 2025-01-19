@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "baseUrl": "./src",
+    "paths": {
+      // Core aliases
+      "@core/*": ["core/*"],
+      "@assets/*": ["assets/*"],
+      "@store/*": ["store/*"],
+
+      // Types aliases
+      "@types/*": ["types/*"],
+
+      // Shortcuts barrel
+      "@core": ["core/index.ts"],
+      "@utils": ["core/utils/index.ts"],
+      "@types": ["core/types/index.ts"],
+      "@store": ["store/index.ts"],
+    },
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

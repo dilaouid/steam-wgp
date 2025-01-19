@@ -8,7 +8,7 @@ import { FormLabel } from "@features/atoms/SteamdersList/FormLabel";
 
 import { useCreateSteamder } from "@core/hooks/useCreateSteamder";
 import { useNavigate } from "@tanstack/react-router";
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 import { SubmitButton } from "@features/atoms/SteamdersList/SubmitButton";
 
 import { StyledForm, StyledInput, StyledSwitch } from "./CreateSteamderForm.styled";

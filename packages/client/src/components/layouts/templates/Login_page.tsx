@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { Container, Row } from 'react-bootstrap';
+import { useAuthStore } from '@steamwgp/shared-ui';
 
 import BackgroundImage from '@assets/images/loginpage/bg.png'
 import { InformationsLogin, ProgressLogin } from '@features/organisms/Login';
-import { useAuthStore } from '@store/authStore';
 import { useNavigate } from '@tanstack/react-router';
 
 const LoginSection = styled.section`

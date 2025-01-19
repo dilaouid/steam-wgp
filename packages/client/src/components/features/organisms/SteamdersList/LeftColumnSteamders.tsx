@@ -4,7 +4,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { Col } from "react-bootstrap";
 import { BsDpad, BsInfoCircleFill } from "react-icons/bs";
 
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 
 import { CreateSteamderForm } from "@features/molecules/SteamdersList/CreateSteamderForm/CreateSteamderForm";
 import { CannotCreateSteamder } from "@features/atoms/SteamdersList/CannotCreateSteamder/CannotCreateSteamder";

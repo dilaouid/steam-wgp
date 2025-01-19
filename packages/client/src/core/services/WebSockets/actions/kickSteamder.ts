@@ -1,5 +1,6 @@
 import { router, queryClient } from "@core";
-import { useAuthStore, useSteamderStore } from "@store";
+import { useAuthStore } from "@steamwgp/shared-ui";
+import { useSteamderStore } from "@store";
 import { drawToast, calculateCommonGames, calculateAllGames } from "@utils"
 
 export const kickSteamder = (playerId: string)  => {

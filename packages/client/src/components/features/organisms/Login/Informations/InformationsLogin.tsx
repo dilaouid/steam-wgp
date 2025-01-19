@@ -1,5 +1,5 @@
 import { BsFillExclamationDiamondFill } from "react-icons/bs";
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 import { useTranslation, Trans } from "react-i18next";
 
 import { ColumnLeft, ActorFont, Hello, ProfilePicture } from "./InformationsLogin.styled";

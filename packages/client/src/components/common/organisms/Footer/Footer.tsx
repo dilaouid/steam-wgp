@@ -5,11 +5,12 @@ import { Trans, useTranslation } from "react-i18next";
 import { Modal, Button, Spinner } from "react-bootstrap";
 import { BsCash, BsGithub } from "react-icons/bs";
 
-import { useAuthStore } from "@store/authStore";
+import { logout, useAuthStore } from "@steamwgp/shared-ui"
 
 import { useDeleteUser } from "@core/hooks/useDeleteUser";
-import { logout } from "@core/services/API/global/auth/logout";
 import { drawToast } from "@core/utils/drawToast";
+
+import { BASE_URL } from "@core/environment";
 
 const flags = {
     fr: 'https://flagicons.lipis.dev/flags/4x3/fr.svg',
@@ -37,7 +38,7 @@ export const Footer: React.FC = () => {
             handleClose();
             toggleAuth(false);
             setUser(null);
-            logout();
+            logout(BASE_URL);
             navigate({ to: '/' });
             drawToast('account_deleted', 'success');
         })

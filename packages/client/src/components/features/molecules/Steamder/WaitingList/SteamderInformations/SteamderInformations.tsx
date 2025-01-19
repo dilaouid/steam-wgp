@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from "react-i18next";
 
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 import { useSteamderStore } from "@store/steamderStore";
 
 import { RoomActions } from "../Actions/Actions";

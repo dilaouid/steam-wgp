@@ -5,7 +5,7 @@ import { GameWinRow } from "@features/organisms/Steamder/Result/GameWinRow/GameW
 import { HaventTheGame } from "@features/organisms/Steamder/Result/HaventTheGame/HaventTheGame";
 
 import { useSteamderStore } from "@store/steamderStore";
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 
 const StyledSection = styled.section`
     padding-top: 9px;

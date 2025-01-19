@@ -5,7 +5,7 @@ import { Col, Row, Table, Spinner } from "react-bootstrap";
 import { BsPeople, BsController } from "react-icons/bs";
 import { useTranslation, Trans } from "react-i18next";
 
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 import { useGetSteamders } from "@core/hooks/useGetSteamders";
 import { useCountSteamders } from "@core/hooks/useCountSteamders";
 

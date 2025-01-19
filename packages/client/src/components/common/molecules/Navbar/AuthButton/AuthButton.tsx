@@ -2,8 +2,7 @@ import React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from '@tanstack/react-router';
-import { useAuthStore } from '@store/authStore';
-import { logout } from '@core/services/API/global/auth/logout';
+import { logout, useAuthStore } from "@steamwgp/shared-ui"
 import { deleteCookie } from '@core/utils/cookies';
 
 import { BASE_URL } from '@core/environment';
@@ -25,7 +24,7 @@ export const AuthButton: React.FC<AuthButtonProps> = ({ isAuthenticated }) => {
   const handleLogout = async () => {
     try {
       setLoading(true);
-      await logout();
+      await logout(BASE_URL);
       deleteCookie('token');
       toggleAuth(false);
       setUser(null);

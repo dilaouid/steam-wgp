@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
 
 import { useSteamderStore } from "@store/steamderStore";
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 
 import { hasNoCommonGamesWithAnyone } from "@core/utils/hasNoCommonGames";
 

@@ -8,6 +8,7 @@
     "preview:client": "pnpm --filter steamwgp-client preview",
     "build:client": "pnpm --filter steamwgp-client build",
     "build:client:prod": "pnpm --filter steamwgp-client build:prod",
+    "build:shared-ui": "pnpm --filter @steamwgp/shared-ui build",
     "lint:client": "pnpm --filter steamwgp-client lint",
     "deploy:client": "pnpm --filter steamwgp-client deploy",
     "dev:server": "pnpm --filter steamwgp-server dev",

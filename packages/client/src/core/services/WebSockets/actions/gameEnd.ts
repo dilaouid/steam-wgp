@@ -1,4 +1,5 @@
-import { useAuthStore, useSteamderStore } from "@store";
+import { useAuthStore } from "@steamwgp/shared-ui";
+import { useSteamderStore } from "@store";
 
 export const gameEnd = (choosed_game: number) => {
     const { setSteamder, steamder } = useSteamderStore.getState();

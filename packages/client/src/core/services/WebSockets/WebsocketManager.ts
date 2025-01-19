@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import { useAuthStore } from '@steamwgp/shared-ui';
 import { getCookieValue } from '@utils';
-import { useAuthStore, useWebSocketStore } from '@store';
+import { useWebSocketStore } from '@store';
 
 const WebSocketManager = () => {
   const { connect, disconnect } = useWebSocketStore();

@@ -1,5 +1,6 @@
 import { router, queryClient } from "@core";
-import { useAuthStore, useSteamderStore } from "@store";
+import { useSteamderStore } from "@store";
+import { useAuthStore } from "@steamwgp/shared-ui";
 
 import { drawToast } from "@core/utils"
 

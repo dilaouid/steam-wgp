@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button } from 'react-bootstrap';
-import { useAuthStore } from '@store/authStore';
+import { useAuthStore } from "@steamwgp/shared-ui"
 import { PinkText, PinkTextWhiteBackground, Section } from '.';
 
 import { BASE_URL } from '@core/environment';

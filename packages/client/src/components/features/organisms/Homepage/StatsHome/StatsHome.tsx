@@ -2,16 +2,21 @@ import { useTranslation } from "react-i18next";
 import CountUp from 'react-countup';
 
 import { Col, Row, Spinner } from "react-bootstrap";
+import { useStats } from "@steamwgp/shared-ui";
+
 
 import LogoImage from '@assets/images/homepage/logo.png';
 import { DiagramIcon, PersonHeartsIcon, PersonWorkspaceIcon, StatsControllerIcon } from "@ui/atoms";
 
-import { useStats } from "@core/hooks/useStatsApi";
 import { StyledLogoSeparator, StyledContainer } from ".";
+
+import { BASE_URL } from "@core/environment";
 
 export const StatsHome: React.FC = () => {
     const { t } = useTranslation('pages/homepage');
-    const { data, isPending } = useStats();
+    const { data, isPending } = useStats({
+        baseUrl: BASE_URL
+    });
 
     return(
     <div data-aos="flip-down">
@@ -26,7 +31,7 @@ export const StatsHome: React.FC = () => {
                         <div className="px-3">
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
-                                { !isPending &&
+                                { !isPending && data &&
                                     <CountUp separator=" " start={ 0 } end={ data.players } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>
@@ -43,7 +48,7 @@ export const StatsHome: React.FC = () => {
                         <div className="px-3">
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
-                                { !isPending &&
+                                { !isPending && data &&
                                     <CountUp separator=" " start={ 0 } end={ data.games } duration={ 3 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>
@@ -62,7 +67,7 @@ export const StatsHome: React.FC = () => {
                         <div className="px-3">
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
-                                { !isPending &&
+                                { !isPending && data &&
                                     <CountUp separator=" " start={ 0 } end={ data.matches } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>
@@ -79,7 +84,7 @@ export const StatsHome: React.FC = () => {
                         <div className="px-3">
                             <h2 className="fw-bold mb-0">
                                 { isPending && <Spinner animation="border" /> }
-                                { !isPending &&
+                                { !isPending && data &&
                                     <CountUp separator=" " start={ 0 } end={ data.steamders } duration={ 5 } enableScrollSpy={true} scrollSpyOnce={true} scrollSpyDelay={250}>
                                         {({ countUpRef }) => <span ref={countUpRef} />}
                                     </CountUp>

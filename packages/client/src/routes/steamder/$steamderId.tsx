@@ -6,7 +6,8 @@ import styled from 'styled-components';
 
 import { createFileRoute, useParams } from '@tanstack/react-router'
 
-import { useAuthStore, useWebSocketStore, useSteamderStore } from '@store';
+import { useAuthStore } from '@steamwgp/shared-ui';
+import { useWebSocketStore, useSteamderStore } from '@store';
 
 import { getCookieValue } from '@core/utils/cookies';
 import { BASE_URL } from '@core/environment';

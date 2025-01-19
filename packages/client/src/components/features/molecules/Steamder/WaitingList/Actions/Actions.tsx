@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Col, Button, Modal, Spinner } from "react-bootstrap";
 
 import { useSteamderStore } from "@store/steamderStore";
-import { useAuthStore } from "@store/authStore";
+import { useAuthStore } from "@steamwgp/shared-ui"
 import { useLeaveSteamder } from "@core/hooks/useLeaveSteamder";
 
 import { leaveSteamder, startSteamder } from "@core/services/WebSockets/send";

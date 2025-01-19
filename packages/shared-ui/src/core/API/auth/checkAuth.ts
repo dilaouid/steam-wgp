@@ -1,12 +1,12 @@
-import { deleteCookie, getCookieValue, setCookieValue } from "@core/utils/cookies";
+import { deleteCookie, getCookieValue, setCookieValue } from "@core/utils";
+import { IAuthConfig } from "@core/types";
 
-import { BASE_URL, SAME_SITE } from '@core/environment';
-
-export const checkAuth = async () => {
+export const checkAuth = async (config: IAuthConfig) => {
   let token: string | null = getCookieValue('token') as string;
+  const { baseUrl, sameSite } = config;
 
   // used in the case if the client and the server are not on the same domain, so the token is passed as a query parameter
-  if (!SAME_SITE && !token) {
+  if (!sameSite && !token) {
     const urlParams = new URLSearchParams(window.location.search);
     token = urlParams.get('token');
     if (token) {
@@ -19,7 +19,7 @@ export const checkAuth = async () => {
     throw new Error('Aucun token d\'authentification trouvé');
 
   try {
-    const response = await fetch(`${BASE_URL}/auth/me`, {
+    const response = await fetch(`${baseUrl}/auth/me`, {
       headers: {
         'Authorization': 'Bearer ' + token
       },

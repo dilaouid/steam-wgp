@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { useAuthStore } from '@store/authStore';
+import { useAuthStore } from '@steamwgp/shared-ui';
 import { useBtnGameStore } from '@store/hoverBtnGameStore';
 import { useLibraryStore } from '@store/libraryStore';
 import { useSteamderStore } from '@store/steamderStore';

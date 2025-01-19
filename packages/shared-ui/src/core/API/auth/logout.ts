@@ -1,8 +1,6 @@
-import { BASE_URL } from '@core/environment';
-
-export const logout = async () => {
+export const logout = async (baseUrl: string) => {
     try {
-        const response = await fetch(`${BASE_URL}/auth/logout`, {
+        const response = await fetch(`${baseUrl}/auth/logout`, {
             credentials: "include",
             method: "GET"
         });

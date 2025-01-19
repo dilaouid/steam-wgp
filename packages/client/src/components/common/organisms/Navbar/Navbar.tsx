@@ -4,7 +4,7 @@ import { Container, Navbar as RBNavbar } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
-import { useAuthStore } from '@store/authStore';
+import { useAuthStore } from "@steamwgp/shared-ui"
 
 import { NavComponent, NavItem } from '@ui/atoms';
 import { AuthButton, Brand } from '@ui/molecules';
