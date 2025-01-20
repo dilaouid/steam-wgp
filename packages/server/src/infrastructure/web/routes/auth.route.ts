@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import fastifyPassport from '@fastify/passport';
-import { isAuthenticated } from '../../../auth/mw';
+import { isAuthenticated } from "@auth/middlewares";
 import { getMe, logoutUser, steam, steamCallback } from '@controllers/auth';
-import { configureSteamStrategy } from '../../auth/steamStrategy';
+import { configureSteamStrategy } from '@auth/steamStrategy';
 
 export default async function authRouter(fastify: FastifyInstance) {
   fastify.register(fastifyPassport.initialize());

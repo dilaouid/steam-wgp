@@ -22,7 +22,9 @@
       "@repositories": ["infrastructure/repositories"],
       "@utils/*": ["utils/*"],
       "@entities": ["domain/entities"],
-      "@schemas": ["infrastructure/data/schemas"]
+      "@schemas": ["infrastructure/data/schemas"],
+      "@auth/*": ["infrastructure/auth/*"],
+      "@options/*": ["infrastructure/web/options"],
     }
   },
   "include": [

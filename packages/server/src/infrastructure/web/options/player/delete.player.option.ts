@@ -1,7 +1,6 @@
 import { HTTPMethods } from "fastify";
-import { isAuthenticated } from "../../../auth/mw";
+import { isAuthenticated } from "@auth/middlewares";
 import { deleteAccount } from "@controllers/index";
-import { loadLibrary } from "@controllers/player/loginLoad";
 
 /**
  * Options for deleting a user, including the method, URL, handler, and preValidation.
@@ -14,18 +13,4 @@ export const deleteUserOpts = {
   url: "/",
   handler: deleteAccount,
   preValidation: [isAuthenticated]
-};
-
-export const getSteamLibraryOpts = {
-  method: 'GET' as HTTPMethods,
-  url: '/library-checker',
-  handler: loadLibrary,
-  schema : {
-    querystring: {
-      type: "object",
-      properties: {
-        token: { type: 'string' }
-      }
-    }
-  }
 };

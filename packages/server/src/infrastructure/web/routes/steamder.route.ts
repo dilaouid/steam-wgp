@@ -8,7 +8,7 @@ import {
   getSteamderWithPlayersOpts,
   getSteamdersOpts,
   createSteamderOpts
-} from "../options/steamder.option";
+} from "@options/steamder";
 
 export default async function steamderRouter(fastify: FastifyInstance) {
   fastify.register(async function (fastify: FastifyInstance) {
