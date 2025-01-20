@@ -7,8 +7,7 @@ export const Navbar = () => {
   const { user } = useAuthStore();
   
   const handleLogout = () => {
-    // Implémenter la logique de déconnexion
-    console.log('Logout clicked');
+    // redirect to logout (todo)
   };
 
   return (
