@@ -24,8 +24,9 @@ export interface INormalized {
  * @param {string} message - The message to be included in the response.
  * @param {number} status - The status code of the response. Default is 200.
  */
-export const APIResponse = (res: FastifyReply, data: any, message: string, status: number = 200) => {
-  res.code(status).send({ data: data, message: message });
+export const APIResponse = (res: FastifyReply, normalized: INormalized) => {
+  const { statusCode, data, message } = normalized;
+  return res.code(statusCode).send({ data, message });
 };
 
 /**
