@@ -179,3 +179,26 @@ export const updateLibraryVisibility = async (
     throw new Error("Failed to update library visibility");
   }
 };
+
+export const deleteGameLibrary = async (
+  fastify: FastifyInstance,
+  userId: bigint,
+  gameId: number
+) => {
+  try {
+    const { db } = fastify;
+    return db
+      .delete()
+      .from(libraries)
+      .where(
+        and(
+          eq(libraries.player_id, userId),
+          eq(libraries.game_id, gameId)
+        )
+      )
+      .execute();
+  } catch (err) {
+    fastify.log.error(err);
+    throw new Error("Failed to delete game from library");
+  }
+};
