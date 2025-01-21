@@ -8,7 +8,7 @@ import {
   steamders,
   steamdersPlayers,
   players,
-} from "../../../data/schemas";
+} from "@schemas";
 
 
 /**

@@ -1,10 +1,10 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Player } from "@entities";
-import { APIResponse } from "@utils//response";
+import { APIResponse } from "@utils/response";
 import { isUserInSpecificSteamder } from "@services/steamderPlayerService";
 
-import { uuidSchema } from "../../validations";
 import { formatSteamderInfos, getSteamderInfos } from "@services/steamderService";
+import { uuidSchema } from "@validations/typeValidation";
 
 interface Parameters {
   id: string;
@@ -18,23 +18,23 @@ export async function getSteamderWithPlayers(request: FastifyRequest<{ Params: P
   try {
     uuidSchema.parse(id);
   } catch (e) {
-    return APIResponse(reply, null, "invalid_uuid", 400);
+    return APIResponse(reply, { message: "invalid_uuid", statusCode: 400 });
   }
 
   try {
     // Check if the user is in the steamder, if not return an error
     const inSteamder = await isUserInSpecificSteamder(fastify, player.id, id);
-    if (!inSteamder) return APIResponse(reply, null, "not_in_room", 401);
+    if (!inSteamder) return APIResponse(reply, { message: "not_in_room", statusCode: 401 });
 
     // Retrieve the steamder infos (players, games, etc.)
     const steamderInfos = await getSteamderInfos(fastify, id);
-    if (!steamderInfos) return APIResponse(reply, null, "room_does_not_exist", 404);
+    if (!steamderInfos) return APIResponse(reply, { message: "room_does_not_exist", statusCode: 404 });
 
     // Format the steamder infos to return only the necessary data and with the correct format
     const steamder = formatSteamderInfos(steamderInfos);
-    return APIResponse(reply, steamder, "retrieved_room", 200);
+    return APIResponse(reply, { data: steamder, message: "retrieved_room", statusCode: 200 });
   } catch (err) {
     fastify.log.error(err);
-    return APIResponse(reply, null, "internal_server_error", 500);
+    return APIResponse(reply, { message: "internal_server_error", statusCode: 500 });
   }
 }

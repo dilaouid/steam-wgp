@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { APIResponse } from "@utils//response";
+import { APIResponse, errorResponse } from "@utils/response";
 import { leaveAndUpdateSteamder } from "@services/steamderService";
 import { Player } from "@entities";
 
@@ -19,9 +19,9 @@ export const leave = async (request: FastifyRequest<{ Params: { id: string } }>,
 
   try {
     const { status, message } = await leaveAndUpdateSteamder(fastify, id, BigInt(user.id));
-    return APIResponse(response, null, message as string, status);
+    return APIResponse(response, { message: message as string, statusCode: status });
   } catch (err) {
     fastify.log.error(err);
-    return APIResponse(response, null, 'internal_server_error', 500);
+    return APIResponse(response, errorResponse(err));
   }
 }

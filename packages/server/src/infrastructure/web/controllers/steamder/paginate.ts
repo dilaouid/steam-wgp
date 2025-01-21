@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { paginateSteamder } from "@services/steamderService";
-import { paginateSchema } from "../../validations";
 
-import { APIResponse } from "@utils/response";
+import { APIResponse, errorResponse } from "@utils/response";
+import { paginateSchema } from "@validations/steamderValidation";
 
 interface Parameters {
   offset: number;
@@ -26,14 +26,14 @@ export const getSteamders = async (request: FastifyRequest<{ Querystring: Parame
     paginateSchema.parse({ offset, limit });
   } catch (e: any) {
     fastify.log.error(e.errors);
-    return APIResponse(reply, e.errors, "invalid_params", 400);
+    return APIResponse(reply, { message: "invalid_params", statusCode: 400 });
   }
 
   try {
     const steamders = await paginateSteamder(fastify, offset, limit);
-    return APIResponse(reply, steamders, "OK", 200);
+    return APIResponse(reply, { data: steamders, statusCode: 200, message: "OK" });
   } catch (err) {
     fastify.log.error(err);
-    return APIResponse(reply, null, err as string, 500);
+    return APIResponse(reply, errorResponse(err));
   }
 };

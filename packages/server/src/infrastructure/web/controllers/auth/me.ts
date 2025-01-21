@@ -11,8 +11,8 @@ import { Player } from "@entities";
  */
 export const getMe = (fastify: FastifyInstance) => async (request: FastifyRequest, reply: FastifyReply) => {
   if (!request.user)
-    return APIResponse(reply, null, "logged_in_to_view_profile", 401);
+    return APIResponse(reply, { message: "logged_in_to_view_profile", statusCode: 401 });
   const user = request.user as Player & { username: string };
   const steamder = await getUserSteamder(fastify, BigInt(user.id));
-  return APIResponse(reply, { id: user.id, username: user.username, steamder, avatar_hash: user.avatar_hash }, 'logged_in', 200);
+  return APIResponse(reply, { data: { id: user.id, username: user.username, steamder, avatar_hash: user.avatar_hash }, message: "logged_in", statusCode: 200 });
 };

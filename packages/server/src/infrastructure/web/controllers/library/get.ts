@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Player } from "@entities";
-import { APIResponse } from "@utils//response";
+import { APIResponse } from "@utils/response";
 import { getPlayerAllLibrary } from "@repositories";
 
 interface getLibraryParams {
@@ -24,7 +24,7 @@ export async function getLibrary(request: FastifyRequest<{ Params: getLibraryPar
     const libraryObject = await getPlayerAllLibrary(fastify, BigInt(userId));
     const libraryArray = Object.values(libraryObject);
     if (libraryArray.length === 0) {
-      return APIResponse(reply, [], "OK", 200);
+      return APIResponse(reply, { message: "OK", statusCode: 200 });
     }
 
     const replyData: Library = libraryArray.map((game) => ({
@@ -32,7 +32,7 @@ export async function getLibrary(request: FastifyRequest<{ Params: getLibraryPar
       hidden: game.hidden,
     }));
 
-    return APIResponse(reply, replyData, "OK", 200);
+    return APIResponse(reply, { data: replyData, message: "OK", statusCode: 200 });
   } catch (error: any) {
     const errorMappings: Record<
       string,
@@ -53,6 +53,6 @@ export async function getLibrary(request: FastifyRequest<{ Params: getLibraryPar
     };
     const { messageKey, statusCode } = errorMappings[error.message] || errorMappings.default;
     fastify.log.error(error);
-    return APIResponse(reply, null, messageKey, statusCode);
+    return APIResponse(reply, { message: messageKey, statusCode });
   }
 }

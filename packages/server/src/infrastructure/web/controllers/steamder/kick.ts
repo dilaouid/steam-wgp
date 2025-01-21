@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { APIResponse } from "@utils//response";
+import { APIResponse, errorResponse } from "@utils/response";
 import { updateGameLists } from "@services/steamderService";
 import { canAdminKickFromSteamder, leaveSteamder } from "@repositories";
 import { Player } from "@entities";
@@ -22,7 +22,7 @@ export const kickSteamder = async (request: FastifyRequest<{ Params: Parameters 
   const user = request.user as Player & { username: string }
 
   if (!steamderId || !playerId) {
-    return APIResponse(response, null, 'invalid_parameters', 400);
+    return APIResponse(response, { message: "invalid_parameters", statusCode: 400 });
   }
 
   const fastify = request.server as FastifyInstance;
@@ -30,13 +30,13 @@ export const kickSteamder = async (request: FastifyRequest<{ Params: Parameters 
     // Check if the authenticated user is an admin of the steamder so they can kick the player
     const inSteamder = await canAdminKickFromSteamder(fastify, steamderId, user.id, BigInt(playerId));
     if (inSteamder.length === 0)
-      return APIResponse(response, null, 'not_room_admin', 401);
+      return APIResponse(response, { message: "not_room_admin", statusCode: 401 });
     // if the authenticated user is the admin of the steamder, kick the player
     await leaveSteamder(fastify, BigInt(playerId), steamderId);
     await updateGameLists(fastify, steamderId);
-    return APIResponse(response, null, 'player_kicked', 200);
+    return APIResponse(response, { message: "player_kicked", statusCode: 200 });
   } catch (err) {
     fastify.log.error(err);
-    return APIResponse(response, null, 'internal_server_error', 500);
+    return APIResponse(response, errorResponse(err));
   }
 };

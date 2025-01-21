@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { Player } from "@entities";
-import { APIResponse } from "@utils//response";
+import { APIResponse } from "@utils/response";
 
 import {
   checkGamesInLibrary,
@@ -23,8 +23,7 @@ export async function updateHiddenGames(request: FastifyRequest<{ Body: IBody }>
 
     // Toggle hidden status of the games
     await toggleHiddenGames(fastify, userId, gameIds, library)
-
-    return APIResponse(reply, null, "updated_library", 200);
+    return APIResponse(reply, { message: "updated_library", statusCode: 200 });
   } catch (error: any) {
     const messageKey = ["logged_in_to_access_library", "invalid_id"].includes(
       error.message
@@ -37,6 +36,6 @@ export async function updateHiddenGames(request: FastifyRequest<{ Body: IBody }>
       ? 401
       : 500;
     fastify.log.error(error);
-    return APIResponse(reply, null, messageKey, statusCode);
+    return APIResponse(reply, { message: messageKey, statusCode });
   }
 }

@@ -12,14 +12,14 @@ export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token
     const decoded = jwt.verify(token, SECRET_KEY);
 
     if (!decoded) {
-      return APIResponse(response, null, 'forbidden_access', 401);
+      return APIResponse(response, { message: 'forbidden_access', statusCode: 401 });
     }
 
     const { id } = decoded as Player;
     response.raw.writeHead(200, setSSEHeaders(ORIGIN as string));
 
     if (!id)
-      return APIResponse(response, null, 'need_to_be_logged_in', 401);
+      return APIResponse(response, { message: 'invalid_id', statusCode: 401 });
 
     // send the response as a server-sent event (SSE)
     response.sse((async function* (): EventMessage | AsyncIterable<EventMessage> {
@@ -66,8 +66,8 @@ export const loadLibrary = async (request: FastifyRequest<{ Querystring: { token
     // if the error is due to an expired token
     if (error.type === "TokenExpiredError") {
       response.clearCookie("token");
-      return APIResponse(response, null, "session_expired", 401);
+      return APIResponse(response, { message: 'session_expired', statusCode: 401 });
     }
-    return APIResponse(response, null, "forbidden_access", 401);
+    return APIResponse(response, { message: 'forbidden_access', statusCode: 401 });
   }
 };

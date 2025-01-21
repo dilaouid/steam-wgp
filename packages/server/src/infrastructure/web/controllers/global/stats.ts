@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { FastifyInstance } from "fastify/types/instance";
 
 import { SteamWGPStats } from "@services/globalService";
-import { APIResponse } from "@utils//response";
+import { APIResponse, errorResponse } from "@utils//response";
 
 /**
  * Retrieves the statistics from SteamWGP and returns an API response.
@@ -15,9 +15,9 @@ export const getStats = async (request: FastifyRequest, reply: FastifyReply) => 
   const fastify = request.server as FastifyInstance;
   try {
     const stats = await SteamWGPStats(fastify);
-    return APIResponse(reply, stats, "OK", 200);
+    return APIResponse(reply, { statusCode: 200, data: stats, message: "OK." });
   } catch (err: any) {
     fastify.log.error(err);
-    return APIResponse(reply, null, err.message, 500);
+    return APIResponse(reply, errorResponse(err))
   }
 };

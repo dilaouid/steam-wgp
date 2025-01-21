@@ -10,6 +10,6 @@ import { APIResponse } from "@utils//response";
  */
 export const steam = async (request: FastifyRequest, reply: FastifyReply) => {
   if (!request.user)
-    return APIResponse(reply, null, "logged_in_to_view_profile", 401);
-  return APIResponse(reply, request.user, "logged_in", 200);
+    return APIResponse(reply, { message: "logged_in_to_view_profile", statusCode: 401 });
+  return APIResponse(reply, { message: "logged_in", statusCode: 200 });
 };

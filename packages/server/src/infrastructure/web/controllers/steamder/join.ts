@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { APIResponse } from "@utils//response";
+import { APIResponse, errorResponse } from "@utils/response";
 import { formatSteamderInfos, getSteamderInfos, isSteamderAvailable } from "@services/steamderService";
 import { Player } from "@entities";
 import { isUserInSteamder } from "@services/steamderPlayerService";
@@ -20,11 +20,11 @@ export const join = async (request: FastifyRequest<{ Params: { id: string } }>, 
   try {
     const isAvailable = await isSteamderAvailable(fastify, id);
     if (!isAvailable.success)
-      return APIResponse(response, null, isAvailable.message as string, isAvailable.status);
+      return APIResponse(response, { message: isAvailable.message as string, statusCode: isAvailable.status });
 
     const inSteamder = await isUserInSteamder(fastify, user.id);
     if (inSteamder) {
-      return APIResponse(response, null, 'already_in_room', 400);
+      return APIResponse(response, { message: "already_in_room", statusCode: 400 });
     }
 
     await joinSteamder(fastify, user.id, id);
@@ -33,10 +33,10 @@ export const join = async (request: FastifyRequest<{ Params: { id: string } }>, 
     // Format the steamder infos to return only the necessary data and with the correct format
     const steamder = formatSteamderInfos(steamderInfos);
 
-    return APIResponse(response, steamder, 'joined_the_room', 200);
+    return APIResponse(response, { data: steamder, message: "joined_the_room", statusCode: 200 });
   } catch (err) {
     fastify.log.error('------- Error in join Controller -------');
     fastify.log.error(err);
-    return APIResponse(response, null, 'internal_server_error', 500);
+    return APIResponse(response, errorResponse(err));
   }
 };

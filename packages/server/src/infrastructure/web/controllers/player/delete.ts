@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { APIResponse } from "@utils//response";
-import { Player } from "../../../../domain/entities";
+import { APIResponse, errorResponse } from "@utils//response";
+import { Player } from "@entities";
 import { isUserInSteamder } from "@services/steamderPlayerService";
-import { deletePlayer, deleteUser } from "../../../repositories";
+import { deletePlayer, deleteUser } from "@repositories";
 
 /**
  * Deletes a user account.
@@ -18,13 +18,13 @@ export const deleteAccount = async (request: FastifyRequest, response: FastifyRe
   try {
     const inSteamder = await isUserInSteamder(fastify, id);
     if (inSteamder) {
-      return APIResponse(response, null, "user_in_steamder_cannot_kick", 400);
+      return APIResponse(response, { message: "user_in_steamder_cannot_kick", statusCode: 400 });
     }
     await deletePlayer(fastify, id);
     await deleteUser(fastify, id);
-    return APIResponse(response, null, "user_deleted", 200);
+    return APIResponse(response, { message: "user_deleted", statusCode: 200 });
   } catch (err) {
     fastify.log.error(err);
-    return APIResponse(response, null, "Internal server error", 500);
+    return APIResponse(response, errorResponse(err));
   }
 };

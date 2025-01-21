@@ -12,5 +12,5 @@ import { logout } from "@services/authService";
  */
 export const logoutUser = (fastify: FastifyInstance) => async (request: FastifyRequest, reply: FastifyReply) => {
   logout(fastify, reply, request);
-  return APIResponse(reply, null, 'logged_out', 200);
+  return APIResponse(reply, { message: "logged_out", statusCode: 200 });
 };
