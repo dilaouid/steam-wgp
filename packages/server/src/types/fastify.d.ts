@@ -29,4 +29,10 @@ export declare module 'fastify' {
   interface FastifyRequest {
     userLanguage?: string;
   }
+  interface IHttpErrorConstructor {
+    message: string;
+    statusCode?: number;
+    name?: string;
+    additionalInfo?: any;
+}
 }
