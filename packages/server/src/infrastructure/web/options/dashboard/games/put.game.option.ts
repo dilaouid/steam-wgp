@@ -1,5 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { gamesController } from "@controllers/dashboard/game.controller";
 
 /**
  * Options for updating an existing game.
@@ -9,10 +10,10 @@ import { isAdmin } from "@auth/middlewares";
 export const updateGameOpts = {
   method: "PUT" as HTTPMethods,
   url: "/:id",
-  handler: () => {},
+  handler: gamesController.updateGame,
   preValidation: [isAdmin],
   schema: {
-    param: {
+    params: {
       type: "object",
       required: ["id"],
       properties: {
@@ -21,8 +22,9 @@ export const updateGameOpts = {
     },
     body: {
       type: "object",
+      required: ["is_selectable"],
       properties: {
-        selectable: { type: "boolean" },
+        is_selectable: { type: "boolean" },
       },
     },
   },

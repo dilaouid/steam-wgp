@@ -14,8 +14,8 @@ export const getAllSteamdersOpts = {
     querystring: {
       type: "object",
       properties: {
-        page: { type: "number" },
-        limit: { type: "number" },
+        page: { type: "integer" },
+        limit: { type: "integer" },
         search: { type: "string" },
         sort: { type: "string" },
         order: { type: "string" },

@@ -8,22 +8,23 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const addGameToLibraryOpts = {
   method: "POST" as HTTPMethods,
-  url: "/library/:playerId",
+  url: "/:playerId",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
-    param: {
+    params: {
       type: "object",
-      required: ["id"],
+      required: ["playerId"],
       properties: {
-        id: { type: "string" },
+        playerId: { type: "string" },
       },
     },
     body: {
       type: "object",
+      required: ["game_id", "hidden"],
       properties: {
         hidden: { type: "boolean" },
-        game_id: { type: "int" },
+        game_id: { type: "integer" },
       },
     },
   },

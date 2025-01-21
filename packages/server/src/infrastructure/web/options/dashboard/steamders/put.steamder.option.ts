@@ -27,10 +27,10 @@ export const updateSteamderOpts = {
         started: { type: "boolean" },
         private: { type: "boolean" },
         complete: { type: "boolean" },
-        selected: { type: "number" },
+        selected: { type: "integer" },
         displayAllGames: { type: "boolean" },
-        commonGames: { type: "number" },
-        allGames: { type: "number" },
+        commonGames: { type: "integer" },
+        allGames: { type: "integer" },
         name: { type: "string" }
       },
     },

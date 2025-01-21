@@ -9,7 +9,7 @@ export const updatePlayerOpts = {
     query: {
       type: "object",
       properties: {
-        id: { type: "uuid" },
+        id: { type: "string" },
       },
     },
     body: {

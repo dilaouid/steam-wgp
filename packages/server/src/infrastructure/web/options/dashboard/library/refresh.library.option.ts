@@ -8,7 +8,7 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const refreshSteamLibraryOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/library/refresh/:playerId",
+  url: "/refresh/:playerId",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {

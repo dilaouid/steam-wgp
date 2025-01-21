@@ -1,5 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { gamesController } from "@controllers/dashboard/game.controller";
 
 /**
  * Options for creating a game manually.
@@ -9,17 +10,16 @@ import { isAdmin } from "@auth/middlewares";
 export const createGameOpts = {
   method: "POST" as HTTPMethods,
   url: "/",
-  handler: () => {},
+  handler: gamesController.createGame,
   preValidation: [isAdmin],
   schema: {
     body: {
       type: "object",
+      required: ["id", "is_selectable"],
       properties: {
-        id: {
-          type: "bigint",
-        },
-        selectable: { type: "boolean" },
-      },
-    },
+        id: { type: "integer" },
+        is_selectable: { type: "boolean" }
+      }
+    }
   },
 };

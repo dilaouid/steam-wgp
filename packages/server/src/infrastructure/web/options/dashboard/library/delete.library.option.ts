@@ -8,7 +8,7 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const deleteGameFromLibraryOpts = {
   method: "DELETE" as HTTPMethods,
-  url: "/library/:playerId/:gameId",
+  url: "/:playerId/:gameId",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
@@ -17,7 +17,7 @@ export const deleteGameFromLibraryOpts = {
       required: ["id"],
       properties: {
         playerId: { type: "string" },
-        gameId: { type: "int" }
+        gameId: { type: "string" }
       },
     }
   },

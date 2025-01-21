@@ -8,11 +8,11 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const updateLibraryOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/library/:playerId",
+  url: "/:playerId",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
-    param: {
+    params: {
       type: "object",
       required: ["id"],
       properties: {
@@ -23,7 +23,7 @@ export const updateLibraryOpts = {
       type: "object",
       properties: {
         hidden: { type: "boolean" },
-        game_id: { type: "int" },
+        game_id: { type: "integer" },
       },
     },
   },

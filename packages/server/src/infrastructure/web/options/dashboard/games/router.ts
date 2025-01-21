@@ -1,6 +1,6 @@
 /* eslint-disable no-multi-spaces */
 import { FastifyInstance } from 'fastify';
-import { getGamesOpts, createGameOpts, updateGameOpts } from '@options/dashboard';
+import { getGamesOpts, createGameOpts, updateGameOpts, getGameOpts } from '@options/dashboard';
 
 /**
  * The router for the dashboard games.
@@ -9,6 +9,7 @@ import { getGamesOpts, createGameOpts, updateGameOpts } from '@options/dashboard
 export default async function dashboardGamesRouter(fastify: FastifyInstance) {
   fastify.register(async function (fastify) {
     fastify.route(getGamesOpts);      // :GET     /dashboard/games
+    fastify.route(getGameOpts);       // :GET     /dashboard/games/:id
     fastify.route(createGameOpts);    // :POST    /dashboard/games
     fastify.route(updateGameOpts);    // :PUT     /dashboard/games/:id
   });

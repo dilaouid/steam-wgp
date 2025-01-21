@@ -8,7 +8,7 @@ export const deletePlayerOpts = {
   schema: {
     params: {
       properties: {
-        id: { type: "uuid" }
+        id: { type: "string" }
       },
     },
   },
