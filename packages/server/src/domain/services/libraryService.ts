@@ -2,12 +2,11 @@ import { FastifyInstance } from "fastify";
 import { updateLibraryVisibility } from "@repositories";
 import { getPlayerAllLibrary } from "@repositories";
 
-type Library = ILibraryGame[]
-
 interface ILibraryGame {
-    id: string;
-    hidden: boolean | null;
+  id: string;
+  hidden: boolean | null;
 }
+type Library = ILibraryGame[]
 
 export async function toggleHiddenGames(
   fastify: FastifyInstance,
