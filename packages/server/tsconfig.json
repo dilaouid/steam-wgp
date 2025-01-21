@@ -25,6 +25,7 @@
       "@schemas": ["infrastructure/data/schemas"],
       "@auth/*": ["infrastructure/auth/*"],
       "@options/*": ["infrastructure/web/options"],
+      "@validations/*": ["infrastructure/web/validations/*"],
     }
   },
   "include": [
