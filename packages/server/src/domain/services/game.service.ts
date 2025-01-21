@@ -22,6 +22,7 @@ export const paginateGames = async (
   limit: number,
   options: { onlyIsSelectable?: boolean; onlyNotSelectable?: boolean }
 ): Promise<any[]> => {
+  fastify.log.info(options)
   if (options.onlyIsSelectable && options.onlyNotSelectable) {
     throw new HttpError({
       message: "Les options onlyIsSelectable et onlyNotSelectable sont mutuellement exclusives",
@@ -47,6 +48,14 @@ export const getGame = async (
   id: number
 ): Promise<any> => {
   try {
+
+    if (id <= 0) {
+      throw new HttpError({
+        message: "invalid_game_id",
+        statusCode: 400
+      });
+    }
+
     return await getGameById(fastify, id);
   } catch (error) {
     throw new HttpError({
@@ -94,14 +103,14 @@ export const addGame = async (
  * Update a game (switch selectable status).
  * @param {FastifyInstance} fastify - The Fastify instance.
  * @param {number} id - The ID of the game.
- * @param {boolean} isSelectable - The new selectable status.
+ * @param {object} game - The game to update.
  * @returns {Promise<any>} - A promise that resolves to the updated game.
  */
 export const updateGameStatus = async (
   fastify: FastifyInstance,
-  id: number,
-  isSelectable: boolean
+  game: { id: number; is_selectable: boolean }
 ): Promise<any> => {
+  const { id, is_selectable } = game;
   try {
     const game = await getGameById(fastify, id);
     if (!game) {
@@ -111,7 +120,7 @@ export const updateGameStatus = async (
       });
     }
 
-    return await updateGame(fastify, id, isSelectable);
+    return await updateGame(fastify, id, is_selectable);
   } catch (error) {
     throw new HttpError({
       message: "Erreur lors de la mise à jour du jeu",
