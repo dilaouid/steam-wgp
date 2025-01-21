@@ -34,5 +34,17 @@ export declare module 'fastify' {
     statusCode?: number;
     name?: string;
     additionalInfo?: any;
-}
+  }
+  type ControllerContext = {
+    fastify: FastifyInstance;
+    query: any;
+    params: any;
+    body: any;
+  };
+  type ControllerHandler = {
+    statusCode?: number;
+    data?: any;
+    message: string;
+  };
+  type Controller = (context: ControllerContext) => Promise<ControllerHandler>;
 }
