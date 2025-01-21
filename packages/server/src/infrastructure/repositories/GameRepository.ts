@@ -68,16 +68,16 @@ export const getGameById = async (
  *
  * @param {FastifyInstance} fastify - The Fastify instance.
  * @param {int} id - The game Steam id.
- * @param {boolean} isSelectable - Whether the game is selectable in a Steamder
+ * @param {object} game - The game object. It should contain the id and is_selectable fields.
  * @returns {Promise<any>} - A promise that resolves to the created game.
  */
 export const createGame = async (
   fastify: FastifyInstance,
-  id: number,
-  is_selectable: boolean
+  game: { id: number; is_selectable: boolean }
 ): Promise<any> => {
   try {
     const { db } = fastify;
+    const { id, is_selectable } = game;
     return db.insert(games).values({ id, is_selectable }).returning().execute();
   } catch (err) {
     fastify.log.error(err);
@@ -89,27 +89,30 @@ export const createGame = async (
  * Get a list of games according to the search query.
  *
  * @param {FastifyInstance} fastify - The Fastify instance.
- * @param {string} search - The search query.
  * @param {number} page - The page number.
  * @param {number} limit - The number of games per page.
+ * @param {object} options - The options for the pagination (search query, only selectable, only not selectable ...)
  * @returns {Promise<any[]>} - A promise that resolves to the list of games.
  */
 export const searchGames = async (
   fastify: FastifyInstance,
-  onlyIsSelectable: boolean,
-  onlyNotSelectable: boolean,
-  limit: number,
-  offset: number
+  options: {
+    onlyIsSelectable?: boolean;
+    onlyNotSelectable?: boolean;
+    limit?: number;
+    offset?: number;
+  }
 ): Promise<any[]> => {
   try {
+    const { onlyIsSelectable, onlyNotSelectable, limit, offset } = options;
     const { db } = fastify;
     return db
       .select()
       .from(games)
       .where(
         and(
-          eq(games.is_selectable, onlyIsSelectable),
-          eq(games.is_selectable, onlyNotSelectable)
+          eq(games.is_selectable, onlyIsSelectable || false),
+          eq(games.is_selectable, onlyNotSelectable || false)
         )
       )
       .limit(limit)
