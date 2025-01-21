@@ -1,4 +1,7 @@
 export * from "./delete.steamder.option"
 export * from "./delete.steamder.option"
 export * from "./get.steamders.option"
+export * from "./get.steamder.options"
 export * from "./put.steamder.option"
+export * from "./kick.steamder.option"
+export * from "./router"

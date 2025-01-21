@@ -12,7 +12,7 @@ export const refreshSteamLibraryOpts = {
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
-    param: {
+    params: {
       type: "object",
       required: ["id"],
       properties: {

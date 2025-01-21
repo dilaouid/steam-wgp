@@ -10,9 +10,8 @@ export const getAllSteamdersOpts = {
   method: "GET" as HTTPMethods,
   url: "/steamders",
   handler: () => {},
-  preValidation: [isAdmin],
   schema: {
-    query: {
+    querystring: {
       type: "object",
       properties: {
         page: { type: "number" },
@@ -23,4 +22,5 @@ export const getAllSteamdersOpts = {
       },
     },
   },
+  preValidation: [isAdmin]
 };

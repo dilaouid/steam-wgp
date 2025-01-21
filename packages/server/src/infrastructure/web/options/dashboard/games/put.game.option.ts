@@ -4,11 +4,11 @@ import { isAdmin } from "@auth/middlewares";
 /**
  * Options for updating an existing game.
  * Route: PUT - /games/:id
- * @example fastify.route(updateGame);
+ * @example fastify.route(updateGameOpts);
  */
-export const updateGame = {
+export const updateGameOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/games/:id",
+  url: "/:id",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {

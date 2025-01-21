@@ -2,13 +2,13 @@ import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
 
 /**
- * Options for deleting a game to a player's library.
- * Route: DELETE - /library/:playerId/:gameId
- * @example fastify.route(deleteGameFromLibraryOpts);
+ * Options for deleting a Steamder.
+ * Route: DELETE - /steamders/:id/kick/:playerId
+ * @example fastify.route(deleteSteamderOpts);
  */
-export const deleteGameFromLibraryOpts = {
+export const kickSteamderOpts = {
   method: "DELETE" as HTTPMethods,
-  url: "/library/:playerId/:gameId",
+  url: "/steamders/:id/kick/:playerId",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
@@ -16,8 +16,8 @@ export const deleteGameFromLibraryOpts = {
       type: "object",
       required: ["id"],
       properties: {
+        id: { type: "string" },
         playerId: { type: "string" },
-        gameId: { type: "int" }
       },
     }
   },

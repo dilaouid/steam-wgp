@@ -12,7 +12,7 @@ export const deleteSteamderOpts = {
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
-    param: {
+    params: {
       type: "object",
       required: ["id"],
       properties: {

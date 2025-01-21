@@ -6,8 +6,7 @@ export const getPlayersOpts = {
   url: "/players",
   handler: () => {},
   schema: {
-    query: {
-      type: "object",
+    querystring: {
       properties: {
         page: { type: "number" },
         limit: { type: "number" },

@@ -1,3 +1,5 @@
 export * from "./get.player.option"
 export * from "./get.players.option"
 export * from "./put.player.option"
+export * from "./delete.player.option"
+export * from "./router"

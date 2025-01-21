@@ -4,11 +4,11 @@ import { isAdmin } from "@auth/middlewares";
 /**
  * Options for creating a game manually.
  * Route: POST - /games
- * @example fastify.route(createGame);
+ * @example fastify.route(createGameOpts);
  */
-export const createGame = {
+export const createGameOpts = {
   method: "POST" as HTTPMethods,
-  url: "/games",
+  url: "/",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
