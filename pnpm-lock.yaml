@@ -360,6 +360,9 @@ importers:
       pg:
         specifier: ^8.12.0
         version: 8.13.1
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
       pino:
         specifier: ^8.21.0
         version: 8.21.0
