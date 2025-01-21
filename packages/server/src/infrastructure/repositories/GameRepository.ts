@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { games } from "@schemas";
-import { and, count, eq, inArray } from "drizzle-orm";
+import { count, eq, inArray } from "drizzle-orm";
 
 export const countGames = async (fastify: FastifyInstance): Promise<any> => {
   const { db } = fastify;
@@ -110,10 +110,11 @@ export const searchGames = async (
       .select()
       .from(games)
       .where(
-        and(
-          eq(games.is_selectable, onlyIsSelectable || false),
-          eq(games.is_selectable, onlyNotSelectable || false)
-        )
+        onlyIsSelectable === undefined && onlyNotSelectable === undefined
+          ? undefined
+          : options.onlyIsSelectable
+            ? eq(games.is_selectable, true)
+            : eq(games.is_selectable, false)
       )
       .limit(limit)
       .offset(offset);
