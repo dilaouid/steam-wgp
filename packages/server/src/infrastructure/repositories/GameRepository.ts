@@ -45,7 +45,7 @@ export const insertGames = async (
   gamesToAdd: { id: number; is_selectable: boolean }[]
 ): Promise<any> => {
   const { db } = fastify;
-  return db.insert(games).values(gamesToAdd).returning().execute();
+  return db.insert(games).values(gamesToAdd).onConflictDoNothing().returning().execute();
 };
 
 /**
@@ -78,7 +78,7 @@ export const createGame = async (
   try {
     const { db } = fastify;
     const { id, is_selectable } = game;
-    return db.insert(games).values({ id, is_selectable }).returning().execute();
+    return db.insert(games).values({ id, is_selectable }).onConflictDoNothing().returning().execute();
   } catch (err) {
     fastify.log.error(err);
     throw new Error("Failed to create game");

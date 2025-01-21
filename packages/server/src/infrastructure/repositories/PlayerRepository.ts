@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { and, count, eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 
-import { games, libraries, players } from "@schemas";
+import { players } from "@schemas";
 import { Player } from "@entities";
 
 /**
@@ -19,27 +19,6 @@ export const deletePlayer = async (fastify: FastifyInstance, id: bigint) => {
   } catch (err) {
     fastify.log.error(err);
     throw new Error("Failed to delete player");
-  }
-};
-
-/**
- * Retrieves a player from the database based on their Steam ID.
- *
- * @param {FastifyInstance} fastify - The Fastify instance.
- * @param {bigint} steamid - The Steam ID of the player.
- * @returns {Promise<any>} - A promise that resolves to the player data.
- * @throws {Error} - If there is an error retrieving the player.
- */
-export const getPlayerAccordingToSteamId = async (
-  fastify: FastifyInstance,
-  steamid: bigint
-) => {
-  try {
-    const { db } = fastify;
-    return db.select().from(players).where(eq(players.id, steamid)).execute();
-  } catch (err) {
-    fastify.log.error(err);
-    throw new Error("Failed to get player");
   }
 };
 
@@ -142,41 +121,5 @@ export const countPlayers = async (fastify: FastifyInstance) => {
   } catch (err) {
     fastify.log.error(err);
     throw new Error("Failed to count players");
-  }
-};
-
-/**
- * Retrieves distinct players based on the provided player ID.
- *
- * @param {FastifyInstance} fastify - The Fastify instance.
- * @param {bigint} playerId - The ID of the player.
- * @returns {Promise<any>} - A promise that resolves to the distinct players.
- * @throws {Error} - If there is an error retrieving the distinct players.
- */
-export const getDistinctPlayers = async (
-  fastify: FastifyInstance,
-  playerId: bigint
-) => {
-  try {
-    const { db } = fastify;
-    return db
-      .selectDistinct()
-      .from(players)
-      .rightJoin(
-        libraries,
-        and(
-          eq(players.id, libraries.player_id), eq(libraries.hidden, false)
-        )
-      )
-      .rightJoin(games, eq(libraries.game_id, games.id))
-      .where(
-        and(
-          eq(players.id, BigInt(playerId)), eq(games.is_selectable, true)
-        )
-      )
-      .execute();
-  } catch (err) {
-    fastify.log.error(err);
-    throw new Error("Failed to get distinct players");
   }
 };
