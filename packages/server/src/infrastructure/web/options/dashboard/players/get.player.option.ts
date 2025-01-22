@@ -1,15 +1,16 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { playerController } from "@controllers/dashboard/player.controller";
 
 export const getPlayerOpts = {
   method: "GET" as HTTPMethods,
-  url: "/players/:id",
-  handler: () => {},
+  url: "/:player_id",
+  handler: playerController.get,
   schema: {
     params: {
       type: "object",
       properties: {
-        id: { type: "string" }
+        player_id: { type: "string" }
       },
     },
   },

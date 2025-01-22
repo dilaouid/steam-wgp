@@ -1,10 +1,12 @@
 import { FastifyInstance } from "fastify";
 import {
+  getPlayer,
   getPlayerAccordingToId,
   insertPlayer,
   updatePlayer,
 } from "@repositories";
 import { Player } from "@entities";
+import { HttpError } from "domain/HttpError";
 
 /**
  * Updates the avatar hash for a player.
@@ -113,3 +115,21 @@ export const retrieveUserById = async (
     return user;
   }
 };
+
+export const getUserInfo = async (
+  fastify: FastifyInstance,
+  id: bigint
+) => {
+  try {
+    const player = await getPlayer(fastify, id);
+
+    return player;
+  } catch (err: any) {
+    if (err instanceof HttpError)
+      throw err;
+    throw new HttpError({
+      message: "player_not_found",
+      statusCode: 404
+    });
+  }
+}
