@@ -141,17 +141,13 @@ export const getPlayerSteamder = async (
  */
 export const completeSteamder = async (
   fastify: FastifyInstance,
-  playerId: bigint,
   steamderId: string
 ): Promise<any> => {
   return fastify.db
     .update(steamdersPlayers)
     .set({ status: 'completed', completed_at: new Date() })
     .where(
-      and(
-        eq(steamdersPlayers.player_id, playerId),
-        eq(steamdersPlayers.steamder_id, steamderId)
-      )
+      eq(steamdersPlayers.steamder_id, steamderId)
     )
     .execute();
 }
