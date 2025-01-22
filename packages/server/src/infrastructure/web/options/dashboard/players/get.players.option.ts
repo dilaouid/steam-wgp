@@ -3,7 +3,7 @@ import { isAdmin } from "@auth/middlewares";
 
 export const getPlayersOpts = {
   method: "GET" as HTTPMethods,
-  url: "/players",
+  url: "/",
   handler: () => {},
   schema: {
     querystring: {

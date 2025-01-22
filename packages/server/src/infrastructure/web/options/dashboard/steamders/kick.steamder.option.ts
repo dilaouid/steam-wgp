@@ -8,7 +8,7 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const kickSteamderOpts = {
   method: "DELETE" as HTTPMethods,
-  url: "/steamders/:id/kick/:playerId",
+  url: "/:id/kick/:playerId",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {

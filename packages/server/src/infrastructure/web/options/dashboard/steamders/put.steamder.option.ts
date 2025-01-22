@@ -8,7 +8,7 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const updateSteamderOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/steamders/:id",
+  url: "/:id",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {

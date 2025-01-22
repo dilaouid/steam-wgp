@@ -8,7 +8,7 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const deleteSteamderOpts = {
   method: "DELETE" as HTTPMethods,
-  url: "/steamders/:id",
+  url: "/:id",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {

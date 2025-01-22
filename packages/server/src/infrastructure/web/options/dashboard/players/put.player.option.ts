@@ -3,7 +3,7 @@ import { isAdmin } from "@auth/middlewares";
 
 export const updatePlayerOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/players/:id",
+  url: "/:id",
   handler: () => {},
   schema: {
     query: {

@@ -2,8 +2,8 @@ import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
 
 export const deletePlayerOpts = {
-  method: "DELETE" as HTTPMethods,
-  url: "/:id",
+  method: "PUT" as HTTPMethods,
+  url: "/activation/:id",
   handler: () => {},
   schema: {
     params: {

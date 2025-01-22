@@ -8,7 +8,7 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const getAllSteamdersOpts = {
   method: "GET" as HTTPMethods,
-  url: "/steamders",
+  url: "/",
   handler: () => {},
   schema: {
     querystring: {
