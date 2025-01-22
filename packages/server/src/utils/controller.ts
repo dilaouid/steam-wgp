@@ -1,9 +1,13 @@
 import { Controller, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import pc from "picocolors";
 import { APIResponse, errorResponse } from "./response";
+
 
 export const createController = (controller: Controller) => {
   return async (req: FastifyRequest, res: FastifyReply) => {
     const fastify = req.server as FastifyInstance;
+    fastify.log.debug(pc.greenBright(`Request received by ${req.ip}`))
+    fastify.log.debug(pc.bgYellowBright(`[${req.method}]`) + pc.bgBlue(` - ${req.url}`));
     try {
       const result = await controller({
         fastify,
@@ -18,7 +22,6 @@ export const createController = (controller: Controller) => {
         message: result.message
       });
     } catch (err: any) {
-      fastify.log.error(err);
       APIResponse(res, errorResponse(err));
     }
   };

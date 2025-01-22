@@ -21,6 +21,14 @@ export const logger = pino({
         singleLine: true
       }
     }, {
+      level: 'debug',
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        messageFormat: '{msg}',
+        singleLine: true
+      }
+    }, {
       level: 'trace',
       target: 'pino/file',
       options: {
