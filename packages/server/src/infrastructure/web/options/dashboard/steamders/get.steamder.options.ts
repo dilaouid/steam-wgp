@@ -1,23 +1,23 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { steamderController } from "@controllers/dashboard/steamder.controller";
 
 /**
  * Options for getting informations about a Steamder.
- * Route: GET - /steamders/:id
+ * Route: GET - /steamders/:steamder_id
  * @example fastify.route(getSteamderOpts);
  */
 export const getSteamderOpts = {
   method: "GET" as HTTPMethods,
-  url: "/:id",
-  handler: () => {},
-  preValidation: [isAdmin],
+  url: "/:steamder_id",
+  handler: steamderController.get,
   schema: {
     params: {
       type: "object",
-      required: ["id"],
       properties: {
-        id: { type: "string" },
+        steamder_id: { type: "string" },
       },
     },
   },
+  preValidation: [isAdmin],
 };

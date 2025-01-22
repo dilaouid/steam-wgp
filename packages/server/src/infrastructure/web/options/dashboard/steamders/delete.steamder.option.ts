@@ -1,5 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { steamderController } from "@controllers/dashboard/steamder.controller";
 
 /**
  * Options for deleting a Steamder.
@@ -9,7 +10,7 @@ import { isAdmin } from "@auth/middlewares";
 export const deleteSteamderOpts = {
   method: "DELETE" as HTTPMethods,
   url: "/:id",
-  handler: () => {},
+  handler: steamderController.delete,
   preValidation: [isAdmin],
   schema: {
     params: {

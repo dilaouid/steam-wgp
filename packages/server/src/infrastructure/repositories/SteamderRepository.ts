@@ -6,7 +6,61 @@ import {
   steamders,
   steamdersPlayers
 } from "@schemas";
-import { and, count, desc, eq, ne, sql } from "drizzle-orm";
+import { and, count, desc, eq, ilike, ne, sql } from "drizzle-orm";
+
+export type TGetSteamdersOptions = {
+  page: number;
+  limit: number;
+  sort?: {
+    field: 'name' | 'players_count' | 'created_at';
+    order: 'asc' | 'desc';
+  };
+  filters?: {
+    search?: string; // search by steamder name
+    isPrivate?: boolean;
+    isComplete?: boolean;
+  };
+};
+
+type TSteamderResult = {
+  id: string;
+  name: string;
+  created_at: Date;
+  private: boolean;
+  complete: boolean;
+  players_count: number;
+  common_games: number;
+  all_games: number;
+  admin_id: string;
+  admin_username: string;
+  admin_avatar: string;
+}
+
+type TGetSteamdersResult = {
+  steamders: {
+    id: string;
+    name: string;
+    created_at: Date;
+    private: boolean;
+    complete: boolean;
+    stats: {
+      players_count: number;
+      common_games: number;
+      all_games: number;
+    };
+    admin: {
+      id: string;
+      username: string;
+      avatar_hash: string;
+    };
+  }[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    total_pages: number;
+  };
+};
 
 export const insertSteamder = async (
   fastify: FastifyInstance,
@@ -44,13 +98,17 @@ export const getSteamderWithPlayers = async (
  */
 export const getSteamderPlayersAndGames = async (
   fastify: FastifyInstance,
-  steamderId: string
+  steamderId: string,
+  onlyActive: boolean = true
 ): Promise<any> => {
   const { db } = fastify;
   return db
-    .select({ steamder: steamders, players, games })
+    .select(onlyActive
+      ? { steamder: steamders, players, games }
+      : { steamder: steamders, complete: steamders.complete, players, games }
+    )
     .from(steamders)
-    .leftJoin(steamdersPlayers,
+    .innerJoin(steamdersPlayers,
       and(
         eq(steamders.id, steamdersPlayers.steamder_id)
       )
@@ -71,11 +129,13 @@ export const getSteamderPlayersAndGames = async (
       )
     )
     .where(
-      and(
-        eq(steamders.id, steamderId),
-        eq(steamders.complete, false)
-      )
-    );
+      onlyActive
+        ? and(
+          eq(steamders.id, steamderId),
+          eq(steamders.complete, false)
+        )
+        : eq(steamders.id, steamderId)
+    ).execute();
 };
 
 /**
@@ -271,4 +331,130 @@ export const updateSteamder = async (
     .set(data)
     .where(eq(steamders.id, steamderId))
     .execute();
+};
+
+export const getSteamderByID = async (
+  fastify: FastifyInstance,
+  steamderId: string
+): Promise<any> => {
+  const { db } = fastify;
+  return db
+    .select()
+    .from(steamders)
+    .where(eq(steamders.id, steamderId))
+    .execute();
+};
+
+export const getSteamders = async (
+  fastify: FastifyInstance,
+  options: TGetSteamdersOptions
+): Promise<TGetSteamdersResult> => {
+  try {
+    const { db } = fastify;
+    const { page = 1, limit = 20, sort, filters } = options;
+    const offset = (page - 1) * limit;
+
+    let query = db
+      .select({
+        id: steamders.id,
+        name: steamders.name,
+        created_at: steamders.created_at,
+        private: steamders.private,
+        complete: steamders.complete,
+        // Stats
+        players_count: sql<number>`COUNT(DISTINCT ${steamdersPlayers.player_id})`,
+        common_games: steamders.common_games,
+        all_games: steamders.all_games,
+        // Admin info
+        admin_id: sql`${steamders.admin_id}::text`,
+        admin_username: players.username,
+        admin_avatar: players.avatar_hash,
+      })
+      .from(steamders)
+      .innerJoin(steamdersPlayers, eq(steamders.id, steamdersPlayers.steamder_id))
+      .innerJoin(players, eq(steamders.admin_id, players.id));
+
+    if (filters) {
+      if (filters.search) {
+        query = query.where(ilike(steamders.name, `%${filters.search}%`));
+      }
+      if (filters.isPrivate !== undefined) {
+        query = query.where(eq(steamders.private, filters.isPrivate));
+      }
+      if (filters.isComplete !== undefined) {
+        query = query.where(eq(steamders.complete, filters.isComplete));
+      }
+    }
+
+    query = query.groupBy(
+      steamders.id,
+      players.id
+    );
+
+    // Sorting according to the provided options
+    if (sort) {
+      const order = sort.order === 'desc' ? sql`DESC` : sql`ASC`;
+      switch (sort.field) {
+      case 'name':
+        query = query.orderBy(sql`${steamders.name} ${order}`);
+        break;
+      case 'players_count':
+        query = query.orderBy(sql`COUNT(DISTINCT ${steamdersPlayers.player_id}) ${order}`);
+        break;
+      case 'created_at':
+        query = query.orderBy(sql`${steamders.created_at} ${order}`);
+        break;
+      }
+    }
+
+    // Count for pagination
+    const countQuery = db
+      .select({
+        count: sql<number>`COUNT(DISTINCT ${steamders.id})`
+      })
+      .from(steamders)
+      .innerJoin(steamdersPlayers, eq(steamders.id, steamdersPlayers.steamder_id));
+
+    const [steamders_data, count_result] = await Promise.all([
+      query
+        .limit(limit)
+        .offset(offset)
+        .execute(),
+      countQuery.execute()
+    ]);
+
+    const total = Number(count_result[0].count);
+    const total_pages = Math.ceil(total / limit);
+
+    const formatted_steamders = steamders_data.map((steamder: TSteamderResult) => ({
+      id: steamder.id,
+      name: steamder.name,
+      created_at: steamder.created_at,
+      private: steamder.private,
+      complete: steamder.complete,
+      stats: {
+        players_count: Number(steamder.players_count),
+        common_games: steamder.common_games,
+        all_games: steamder.all_games
+      },
+      admin: {
+        id: steamder.admin_id,
+        username: steamder.admin_username,
+        avatar_hash: steamder.admin_avatar
+      }
+    }));
+
+    return {
+      steamders: formatted_steamders,
+      pagination: {
+        total,
+        page,
+        limit,
+        total_pages
+      }
+    };
+  } catch (err) {
+    fastify.log.error(err);
+    throw new Error("cannot_get_steamders");
+  }
 };

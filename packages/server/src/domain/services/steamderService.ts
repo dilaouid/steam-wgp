@@ -1,7 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderPlayersAndGames, getSteamdersPagination, insertSteamder, isPlayerInSteamder, joinSteamder, leaveSteamder, updateSteamder } from "@repositories";
+import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderByID, getSteamderPlayersAndGames, getSteamders, getSteamdersPagination, insertSteamder, isPlayerInSteamder, joinSteamder, leaveSteamder, TGetSteamdersOptions, updateSteamder } from "@repositories";
 import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "@utils//gamesUtils";
 import { SteamderInsert } from "@entities";
+import { HttpError } from "domain/HttpError";
+import { WebSocketService } from "./websocket.service";
+import { GetSteamdersQuery } from "@validations/dashboard/steamders.validations";
 
 interface ISteamderExistsReturns {
     success: boolean;
@@ -63,9 +66,9 @@ export const updateGameLists = async (fastify: FastifyInstance, steamderId: stri
  * @param steamderId - The Steamder ID.
  * @returns The Steamder information or null if an error occurs.
  */
-export const getSteamderInfos = async (fastify: FastifyInstance, steamderId: string) => {
+export const getSteamderInfos = async (fastify: FastifyInstance, steamderId: string, onlyActive: boolean = true) => {
   try {
-    const steamder = await getSteamderPlayersAndGames(fastify, steamderId);
+    const steamder = await getSteamderPlayersAndGames(fastify, steamderId, onlyActive);
     return steamder;
   } catch (err) {
     fastify.log.error(err);
@@ -175,4 +178,97 @@ export const createSteamder = async (fastify: FastifyInstance, playerId: bigint,
   const [ steamder ] = await insertSteamder(fastify, data);
   await joinSteamder(fastify, playerId, steamder.id);
   return { ...steamder, admin_id: playerId.toString() };
+};
+
+/**
+ * Simply delete the Steamder, without checking if the player is the admin or not
+ * This also clears the WebSockets map of the Steamder for caching performance purposes
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} steamderId - The ID of the Steamder to delete.
+ * @returns {Promise<void>} - A promise that resolves when the Steamder is deleted.
+ * @throws {Error} - If there is an error while deleting the Steamder.
+ */
+export const deleteSteamderById = async (fastify: FastifyInstance, steamderId: string) => {
+  const [ steamder ] = await getSteamderByID(fastify, steamderId);
+  if (!steamder) {
+    throw new HttpError({
+      message: "steamder_not_found",
+      statusCode: 404
+    })
+  }
+
+  if (!steamder.completed) {
+    WebSocketService.closeSteamderConnections(fastify, steamderId);
+  }
+
+  await deleteSteamder(fastify, steamderId);
+  return;
+};
+
+/**
+ * Get all the informations about a Steamder
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} steamderId - The ID of the Steamder to get the informations from.
+ * @returns {Promise<any>} - A promise that resolves to the Steamder informations.
+ * @throws {HttpError} - If the Steamder is not found.
+ */
+export const getSteamderById = async (fastify: FastifyInstance, steamderId: string) => {
+  const steamder = await getSteamderInfos(fastify, steamderId, false);
+  if (!steamder.length) {
+    throw new HttpError({
+      message: "steamder_not_found",
+      statusCode: 404
+    });
+  }
+
+  const formattedSteamder = formatSteamderInfos(steamder);
+
+  return formattedSteamder;
+};
+
+export const getSteamdersInfo = async (
+  fastify: FastifyInstance,
+  query: GetSteamdersQuery
+) => {
+  try {
+    const options: TGetSteamdersOptions = {
+      page: query.page,
+      limit: query.limit,
+      sort: query.sort_field && query.sort_order
+        ? {
+          field: query.sort_field,
+          order: query.sort_order
+        }
+        : undefined,
+      filters: {
+        search: query.search,
+        isPrivate: query.is_private,
+        isComplete: query.is_complete
+      }
+    };
+
+    // clean undefined filters to avoid errors
+    if (options.filters) {
+      Object.keys(options.filters).forEach(key => {
+        if (options.filters![key as keyof typeof options.filters] === undefined) {
+          delete options.filters![key as keyof typeof options.filters];
+        }
+      });
+
+      if (Object.keys(options.filters).length === 0) {
+        delete options.filters;
+      }
+    }
+
+    const steamders = await getSteamders(fastify, options);
+    return steamders;
+
+  } catch (err: any) {
+    if (err instanceof HttpError) throw err;
+
+    throw new HttpError({
+      message: "failed_to_get_steamders",
+      statusCode: 500
+    });
+  }
 };
