@@ -183,7 +183,7 @@ export const websocketPlugin = (fastify: FastifyInstance) => {
           }
           // when a player is kicked from the steamder
           case 'kick': {
-            kick(fastify, steamderId, playerId, payload.playerId, steamderClients);
+            await kick(fastify, steamderId, playerId, payload.playerId, steamderClients);
             break;
           }
           // when a player unswipes a game
