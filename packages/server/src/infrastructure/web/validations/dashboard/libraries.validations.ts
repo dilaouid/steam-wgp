@@ -10,11 +10,6 @@ export const addToLibrarySchema = z.object({
     .default(false)
 });
 
-export const validPlayerId = z.object({
-  player_id: z.coerce
-    .bigint({ message: "invalid_id" })
-});
-
 export const updateLibrarySchema = z.array(
   z.coerce
     .number()
