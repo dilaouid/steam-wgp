@@ -1,4 +1,4 @@
 export interface GameCoverProps {
-    game_id: string;
+    game_id: number;
     hidden: boolean;
 }

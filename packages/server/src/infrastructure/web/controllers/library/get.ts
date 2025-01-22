@@ -10,7 +10,7 @@ interface getLibraryParams {
 type Library = ILibraryGame[]
 
 interface ILibraryGame {
-    game_id: string;
+    id: number;
     hidden: boolean | null;
 }
 
@@ -28,7 +28,7 @@ export async function getLibrary(request: FastifyRequest<{ Params: getLibraryPar
     }
 
     const replyData: Library = libraryArray.map((game) => ({
-      game_id: game.id.toString(),
+      id: game.id,
       hidden: game.hidden,
     }));
 

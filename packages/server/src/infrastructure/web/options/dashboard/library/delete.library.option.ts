@@ -1,5 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { libraryController } from "@controllers/dashboard/library.controller";
 
 /**
  * Options for deleting a game to a player's library.
@@ -9,7 +10,7 @@ import { isAdmin } from "@auth/middlewares";
 export const deleteGameFromLibraryOpts = {
   method: "DELETE" as HTTPMethods,
   url: "/:playerId/:gameId",
-  handler: () => {},
+  handler: libraryController.deleteGame,
   preValidation: [isAdmin],
   schema: {
     params: {

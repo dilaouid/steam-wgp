@@ -1,4 +1,5 @@
 import { FastifyInstance } from "fastify";
+import { steamService } from "./steam.service";
 import { getGamesAccordingToList, getPlayerLibrary, insertGames, insertToLibrary } from "@repositories";
 
 export interface IProgressOpt {
@@ -12,29 +13,11 @@ export interface IProgressOpt {
 interface ILibrary { appid: number; game_id?: number }
 export interface ISteamResponse { games: { appid: number; }[]; }
 
-// Fetch the game details from the steam api (is multiplayer or not, essentially)
-async function fetchGameDetails(f: FastifyInstance, appId: number): Promise<any> {
-  const gameDetailsResponse = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appId}`);
-  const gameDetails = await gameDetailsResponse?.json() as any || null;
-  if (!gameDetails) {
-    f.log.warn(`Game ${appId} is not selectable - Steam API is not responding in https://store.steampowered.com/api/appdetails?appids=${appId}...`);
-    return null;
-  }
-
-  const isSelectable = gameDetails[appId].data.categories?.some((category: any) => [1, 49, 36].includes(category.id));
-  f.log.info(`Game ${appId} is ${isSelectable ? 'selectable' : 'not selectable'}`);
-  return { id: appId, is_selectable: Boolean(isSelectable) };
-}
-
 async function getAppIdsNotInDB(fastify: FastifyInstance, steamAppIds: number[]) {
   const existingGames = await getGamesAccordingToList(fastify, steamAppIds);
   const existingAppIds = new Set(existingGames.map((game: any) => game.id));
 
   return steamAppIds.filter(id => !existingAppIds.has(id));
-}
-
-export const requestSteamAPILibrary = (baseUrl: string, API_KEY: string, playerId: bigint) => {
-  return fetch(`${baseUrl}/?key=${API_KEY}&steamid=${playerId}&include_appinfo=true&include_played_free_games=true&format=json`)
 }
 
 export const updateProgress = (opts: IProgressOpt) => {
@@ -48,12 +31,12 @@ export async function setInitialLibrary(f: FastifyInstance, playerId: bigint): P
 
 export async function fetchingSteamLibrary(f: FastifyInstance, library: any, baseUrl: string, API_KEY: string, playerId: bigint): Promise<Partial<IProgressOpt & { library: ISteamResponse | null}>> {
   f.log.info(`Fetching Steam library for player ${playerId}...`);
-  const steamLibraryRequest = await requestSteamAPILibrary(baseUrl, API_KEY, playerId);
+  const steamLibraryRequest = await steamService.getLibrary({ playerId, baseUrl, API_KEY });
   if (steamLibraryRequest == null || steamLibraryRequest.status !== 200) {
     f.log.warn(`Steam API is not responding...`);
     return { complete: true, library: null, progress: 0, type: 'danger', message: "steam_library_not_accessible_yet" };
   }
-  const steamLibrary = await steamLibraryRequest.json() as ISteamResponse & { response: { games: { appid: number; }[] } };
+  const steamLibrary = await steamService.formatAPIResponse(steamLibraryRequest);
 
   if (steamLibrary.response && !steamLibrary.response?.games) {
     const complete = library.size > 0;
@@ -85,12 +68,12 @@ export const getGamesNotInDB = async (f: FastifyInstance, steamLibrary: ISteamRe
 
 export const insertGamesInDatabase = async (f: FastifyInstance, appIdsNotInDB: number[]) => {
   f.log.info(`Inserting games into the database...`);
-  const gamesToAdd = await Promise.all(appIdsNotInDB.map(async appId => await fetchGameDetails(f, appId).catch(err => {
+  const gamesToAdd = await Promise.all(appIdsNotInDB.map(async appId => await steamService.getGameDetails({ f, appId }).catch(err => {
     f.log.error(err);
     return { id: appId, is_selectable: false }
   })));
 
-  const filteredGamesToAdd = gamesToAdd.filter((game: number) => game !== null);
+  const filteredGamesToAdd = gamesToAdd.filter((game) => game !== null);
   f.log.info(`\n--- We are about to insert ${filteredGamesToAdd.length} games into the database...\n`);
   await insertGames(f, filteredGamesToAdd);
   return gamesToAdd.length;

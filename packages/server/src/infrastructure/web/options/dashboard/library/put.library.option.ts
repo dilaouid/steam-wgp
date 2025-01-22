@@ -8,22 +8,25 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const updateLibraryOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/:playerId",
+  url: "/:player_id",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
     params: {
       type: "object",
-      required: ["id"],
+      required: ["player_id"],
       properties: {
-        id: { type: "string" },
+        player_id: { type: "string" },
       },
     },
     body: {
       type: "object",
+      required: ["games"],
       properties: {
-        hidden: { type: "boolean" },
-        game_id: { type: "integer" },
+        games: {
+          type: "array",
+          items: { type: "number" },
+        },
       },
     },
   },

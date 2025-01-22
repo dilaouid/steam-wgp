@@ -1,5 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { libraryController } from "@controllers/dashboard/library.controller";
 
 /**
  * Options for adding a game to a player's library.
@@ -8,15 +9,15 @@ import { isAdmin } from "@auth/middlewares";
  */
 export const addGameToLibraryOpts = {
   method: "POST" as HTTPMethods,
-  url: "/:playerId",
-  handler: () => {},
+  url: "/:player_id",
+  handler: libraryController.addGame,
   preValidation: [isAdmin],
   schema: {
     params: {
       type: "object",
-      required: ["playerId"],
+      required: ["player_id"],
       properties: {
-        playerId: { type: "string" },
+        player_id: { type: "string" },
       },
     },
     body: {
