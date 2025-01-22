@@ -2,11 +2,14 @@ import { FastifyInstance } from "fastify";
 import {
   getPlayer,
   getPlayerAccordingToId,
+  getPlayers,
   insertPlayer,
+  TGetPlayersOptions,
   updatePlayer,
 } from "@repositories";
 import { Player } from "@entities";
 import { HttpError } from "domain/HttpError";
+import { TGetPlayersQuery } from "@validations/dashboard";
 
 /**
  * Updates the avatar hash for a player.
@@ -132,4 +135,52 @@ export const getUserInfo = async (
       statusCode: 404
     });
   }
-}
+};
+
+export const getPlayersInfo = async (
+  fastify: FastifyInstance,
+  query: TGetPlayersQuery
+) => {
+  try {
+    const options: TGetPlayersOptions = {
+      page: query.page,
+      limit: query.limit,
+      sort: query.sort_field && query.sort_order
+        ? {
+          field: query.sort_field,
+          order: query.sort_order
+        }
+        : undefined,
+      filters: {
+        search: query.search,
+        isAdmin: query.is_admin,
+        hasActiveSteamder: query.has_active_steamder,
+        minGamesInLibrary: query.min_games
+      }
+    };
+
+    if (options.filters) {
+      Object.keys(options.filters).forEach(key => {
+        if (options.filters![key as keyof typeof options.filters] === undefined) {
+          delete options.filters![key as keyof typeof options.filters];
+        }
+      });
+
+      if (Object.keys(options.filters).length === 0) {
+        delete options.filters;
+      }
+    }
+
+    const players = await getPlayers(fastify, options);
+    return players;
+
+  } catch (err: any) {
+    if (err instanceof HttpError) throw err;
+
+    throw new HttpError({
+      message: "failed_to_get_players",
+      statusCode: 500
+    });
+  }
+};
+

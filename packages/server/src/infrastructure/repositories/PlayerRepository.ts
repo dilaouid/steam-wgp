@@ -1,9 +1,52 @@
 import { FastifyInstance } from "fastify";
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, count, eq, ilike, sql } from "drizzle-orm";
 import { alias } from "drizzle-orm/pg-core";
 
 import { deletedUsers, libraries, players, steamders, steamdersPlayers } from "@schemas";
 import { Player } from "@entities";
+
+export type TGetPlayersOptions = {
+  page: number;
+  limit: number;
+  sort?: {
+    field: 'username' | 'steamders_completed' | 'library_size' | 'created_at';
+    order: 'asc' | 'desc';
+  };
+  filters?: {
+    search?: string; // Recherche par username
+    isAdmin?: boolean;
+    hasActiveSteamder?: boolean;
+    minGamesInLibrary?: number;
+  };
+};
+
+type PlayerResult = {
+  id: string;
+  username: string;
+  avatar_hash: string;
+  library_size: number;
+  steamders_completed: number;
+  has_active_steamder: boolean;
+}
+
+type TGetPlayersResult = {
+  players: Array<{
+    id: string;
+    username: string;
+    avatar_hash: string;
+    stats: {
+      library_size: number;
+      steamders_completed: number;
+      has_active_steamder: boolean;
+    };
+  }>;
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    total_pages: number;
+  };
+};
 
 /**
  * Deletes a player from the database.
@@ -257,5 +300,130 @@ export const getPlayer = async (fastify: FastifyInstance, id: bigint) => {
 
   } catch (err) {
     throw new Error("Failed to get player");
+  }
+};
+
+/**
+ * Get a paginated list of players with their basic information and statistics.
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {GetPlayersOptions} options - Options for pagination, sorting and filtering.
+ * @returns {Promise<GetPlayersResult>} - A promise that resolves to the paginated players data.
+ */
+export const getPlayers = async (
+  fastify: FastifyInstance,
+  options: TGetPlayersOptions
+): Promise<TGetPlayersResult> => {
+  try {
+    const { db } = fastify;
+    const { page = 1, limit = 20, sort, filters } = options;
+    const offset = (page - 1) * limit;
+
+    let query = db
+      .select({
+        id: sql`${players.id}::text`,
+        username: players.username,
+        avatar_hash: players.avatar_hash,
+        // statistics count
+        library_size: sql<number>`
+          COUNT(DISTINCT ${libraries.id})
+        `,
+        steamders_completed: sql<number>`
+          COUNT(DISTINCT CASE WHEN ${steamdersPlayers.status} = 'completed' THEN ${steamdersPlayers.steamder_id} END)
+        `,
+        has_active_steamder: sql<boolean | null>`
+          CASE
+            WHEN COUNT(CASE WHEN ${steamdersPlayers.status} = 'active' THEN 1 END) > 0 THEN true
+            WHEN COUNT(${steamdersPlayers.steamder_id}) = 0 THEN false
+            ELSE false
+          END
+        `
+
+      })
+      .from(players)
+      .leftJoin(libraries, eq(libraries.player_id, players.id))
+      .leftJoin(steamdersPlayers, eq(steamdersPlayers.player_id, players.id));
+
+    // apply query filters
+    if (filters) {
+      if (filters.search) {
+        query = query.where(
+          ilike(players.username, `%${filters.search}%`)
+        );
+      }
+      if (filters.isAdmin !== undefined) {
+        query = query.where(eq(players.isAdmin, filters.isAdmin));
+      }
+      if (filters.hasActiveSteamder !== undefined) {
+        query = query.having(
+          sql`BOOL_OR(${steamdersPlayers.status} = 'active') = ${filters.hasActiveSteamder}`
+        );
+      }
+      if (filters.minGamesInLibrary !== undefined) {
+        query = query.having(
+          sql`COUNT(DISTINCT ${libraries.id}) >= ${filters.minGamesInLibrary}`
+        );
+      }
+    }
+
+    query = query.groupBy(players.id);
+
+    // apply sorting from options query if any
+    if (sort) {
+      const order = sort.order === 'desc' ? sql`DESC` : sql`ASC`;
+      switch (sort.field) {
+      case 'username':
+        query = query.orderBy(sql`${players.username} ${order}`);
+        break;
+      case 'steamders_completed':
+        query = query.orderBy(sql`COUNT(DISTINCT CASE WHEN ${steamdersPlayers.status} = 'completed' THEN ${steamdersPlayers.steamder_id} END) ${order}`);
+        break;
+      case 'library_size':
+        query = query.orderBy(sql`COUNT(DISTINCT ${libraries.id}) ${order}`);
+        break;
+      }
+    }
+
+    // count for pagination
+    const countQuery = db
+      .select({
+        count: sql<number>`COUNT(DISTINCT ${players.id})`
+      })
+      .from(players);
+
+    // exec both queries in parallels
+    const [players_data, count_result] = await Promise.all([
+      query
+        .limit(limit)
+        .offset(offset)
+        .execute(),
+      countQuery.execute()
+    ]);
+
+    const total = Number(count_result[0].count);
+    const total_pages = Math.ceil(total / limit);
+
+    const formatted_players = players_data.map((player: PlayerResult) => ({
+      id: player.id,
+      username: player.username,
+      avatar_hash: player.avatar_hash,
+      stats: {
+        library_size: Number(player.library_size),
+        steamders_completed: Number(player.steamders_completed),
+        has_active_steamder: player.has_active_steamder
+      }
+    }));
+
+    return {
+      players: formatted_players,
+      pagination: {
+        total,
+        page,
+        limit,
+        total_pages
+      }
+    };
+  } catch (err) {
+    fastify.log.error(err);
+    throw new Error("cannot_get_players");
   }
 };

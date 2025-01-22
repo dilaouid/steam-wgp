@@ -6,8 +6,10 @@ import { APIResponse, errorResponse } from "./response";
 export const createController = (controller: Controller) => {
   return async (req: FastifyRequest, res: FastifyReply) => {
     const fastify = req.server as FastifyInstance;
+
     fastify.log.debug(pc.greenBright(`Request received by ${req.ip}`))
-    fastify.log.debug(pc.bgYellowBright(`[${req.method}]`) + pc.bgBlue(` - ${req.url}`));
+    fastify.log.debug(pc.bgYellowBright(`[${req.method}]`) + pc.bgBlue(` - ${req.url}${pc.reset(' ')}`) + pc.reset('  '));
+    fastify.log.debug(pc.reset('------'));
     try {
       const result = await controller({
         fastify,
