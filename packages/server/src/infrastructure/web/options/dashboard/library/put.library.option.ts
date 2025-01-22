@@ -1,5 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { libraryController } from "@controllers/dashboard/library.controller";
 
 /**
  * Options for updating a player's library.
@@ -9,7 +10,7 @@ import { isAdmin } from "@auth/middlewares";
 export const updateLibraryOpts = {
   method: "PUT" as HTTPMethods,
   url: "/:player_id",
-  handler: () => {},
+  handler: libraryController.updateGames,
   preValidation: [isAdmin],
   schema: {
     params: {
