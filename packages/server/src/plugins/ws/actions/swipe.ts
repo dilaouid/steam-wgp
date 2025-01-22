@@ -20,7 +20,7 @@ export const swipe = async (fastify: FastifyInstance, steamders: Map<any, any>, 
       steamderDecorate.sockets.forEach((client: any) => {
         client.send(JSON.stringify({ action: 'gameEnd', choosed_game: steamder.winner }));
       });
-      deleteSteamder(fastify, steamderId, steamder.winner);
+      deleteSteamder(fastify, steamderId, steamder.winner as number);
     }
 
   } catch (error) {
