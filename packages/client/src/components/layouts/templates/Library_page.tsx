@@ -28,7 +28,7 @@ export const Librarypage = () => {
         if (library.length > 0) return;
         if (data && !isError) {
             // filter data library by asc order (game_id)
-            data.sort((a: TGameLibrary, b: TGameLibrary) => a.game_id.localeCompare(b.game_id));
+            data.sort((a: TGameLibrary, b: TGameLibrary) => a.id > b.id);
             setLibrary(data);
         }
     }, [data, library, setLibrary, isError]);

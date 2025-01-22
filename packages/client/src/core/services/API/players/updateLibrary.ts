@@ -2,7 +2,7 @@
 import { getCookieValue } from "@core/utils/cookies";
 import { BASE_URL } from '@core/environment';
 
-export const updateLibrary = async (games: string[]) => {
+export const updateLibrary = async (games: number[]) => {
     try {
         const token = getCookieValue('token');
         const response = await fetch(`${BASE_URL}/library`, {

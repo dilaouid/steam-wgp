@@ -5,8 +5,8 @@ type LibraryStore = {
     library: TGameLibrary[];
     setLibrary: (games: TGameLibrary[]) => void;
 
-    selected: string[];
-    setSelected: (selected: string[]) => void;
+    selected: number[];
+    setSelected: (selected: number[]) => void;
 };
 
 export const useLibraryStore = create<LibraryStore>((set) => ({

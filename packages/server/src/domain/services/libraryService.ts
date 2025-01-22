@@ -3,7 +3,7 @@ import { updateLibraryVisibility } from "@repositories";
 import { getPlayerAllLibrary } from "@repositories";
 
 interface ILibraryGame {
-  id: string;
+  id: number;
   hidden: boolean | null;
 }
 type Library = ILibraryGame[]
@@ -11,13 +11,13 @@ type Library = ILibraryGame[]
 export async function toggleHiddenGames(
   fastify: FastifyInstance,
   userId: bigint,
-  gameIds: string[],
+  gameIds: number[],
   library: Library
 ): Promise<void> {
   // split games into hidden and visible
   const { hiddenGames, visibleGames } = library.reduce(
     (acc, game) => {
-      if (gameIds.includes(game.id.toString())) {
+      if (gameIds.includes(game.id)) {
         game.hidden = !game.hidden; // bascule l'état caché
         if (game.hidden) {
           acc.hiddenGames.push(game);
@@ -41,12 +41,12 @@ export async function toggleHiddenGames(
   }
 }
 
-export const checkGamesInLibrary = async (fastify: FastifyInstance, userId: bigint, gameIds: string[]) => {
+export const checkGamesInLibrary = async (fastify: FastifyInstance, userId: bigint, gameIds: number[]) => {
   const library = (await getPlayerAllLibrary(
     fastify,
     userId
   )) as unknown as Library;
-  const libraryIds = library.map((game) => game.id.toString());
+  const libraryIds = library.map((game) => game.id);
   const isAllIdInLibrary = gameIds.every((id) => libraryIds.includes(id));
 
   if (!isAllIdInLibrary) {

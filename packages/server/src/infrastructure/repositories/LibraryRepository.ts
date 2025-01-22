@@ -2,7 +2,6 @@ import { FastifyInstance } from "fastify";
 import { and, count, eq, inArray } from "drizzle-orm";
 
 import { games, libraries, players } from "@schemas";
-import { Library } from "@entities";
 
 /**
  * Retrieves the player's library from the database.
@@ -44,7 +43,7 @@ export const getPlayerLibrary = async (
 export async function getPlayerAllLibrary(
   fastify: FastifyInstance,
   playerId: bigint
-): Promise<Library[]> {
+): Promise<{ id: number, hidden: boolean }[]> {
   const result = fastify.db
     .select({
       id: libraries.game_id,
@@ -156,7 +155,7 @@ export const insertToLibrary = async (
 export const updateLibraryVisibility = async (
   fastify: FastifyInstance,
   userId: bigint,
-  gameIds: { id: string; hidden: boolean | null }[],
+  gameIds: { id: number; hidden: boolean | null }[],
   hidden: boolean
 ) => {
   try {
@@ -169,7 +168,7 @@ export const updateLibraryVisibility = async (
           eq(libraries.player_id, userId),
           inArray(
             libraries.game_id,
-            gameIds.map(game => parseInt(game.id))
+            gameIds.map(game => game.id)
           )
         )
       )

@@ -8,7 +8,7 @@ import {
 } from "@services/libraryService";
 
 interface IBody {
-  games: string[];
+  games: number[];
 }
 
 export async function updateHiddenGames(request: FastifyRequest<{ Body: IBody }>, reply: FastifyReply) {
@@ -17,7 +17,7 @@ export async function updateHiddenGames(request: FastifyRequest<{ Body: IBody }>
     if (!request.user) throw new Error("logged_in_to_access_library");
 
     const { id: userId } = request.user as Player;
-    const gameIds: string[] = request.body.games;
+    const gameIds: number[] = request.body.games;
 
     const library = await checkGamesInLibrary(fastify, userId, gameIds);
 

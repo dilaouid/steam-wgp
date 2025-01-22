@@ -37,7 +37,7 @@ export const RightColumnLibrary: React.FC = () => {
                 <Tab eventKey="all_games" title={t('tabs_title.all_games', { count: library.length })}>
                     <TabRow className="g-0">
                         { state?.status == 'success' && library.map(game => (
-                            <GameColumn game={game} key={'all_' + game.game_id} />
+                            <GameColumn game={game} key={'all_' + game.id} />
                         )) }
                         { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }
                     </TabRow>
@@ -49,7 +49,7 @@ export const RightColumnLibrary: React.FC = () => {
                         { state?.status == 'success' && publics.length === 0 && <EmptyTab>{t('no_public_games')}</EmptyTab> }
 
                         { state?.status == 'success' && publics.map(game => (
-                            <GameColumn game={game} key={'public_' + game.game_id} />
+                            <GameColumn game={game} key={'public_' + game.id} />
                         )) }
                         
                         { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }
@@ -62,7 +62,7 @@ export const RightColumnLibrary: React.FC = () => {
                         { state?.status == 'success' && privates.length === 0 && <EmptyTab>{t('no_private_games')}</EmptyTab> }
 
                         { state?.status == 'success' && privates.map(game => (
-                            <GameColumn game={game} key={'private_' + game.game_id} />
+                            <GameColumn game={game} key={'private_' + game.id} />
                         )) }
 
                         { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }
@@ -74,8 +74,8 @@ export const RightColumnLibrary: React.FC = () => {
 
                         { state?.status == 'success' && selected.length === 0 && <EmptyTab>{t('no_selected_games')}</EmptyTab> }
 
-                        { state?.status == 'success' && library.filter(game => selected.includes(game.game_id)).map(game => (
-                            <GameColumn game={game} key={'selected_' + game.game_id} />
+                        { state?.status == 'success' && library.filter(game => selected.includes(game.id)).map(game => (
+                            <GameColumn game={game} key={'selected_' + game.id} />
                         )) }
 
                         { (state?.status == 'pending' || state?.status == 'error') && Array.from({length: 10}, (_, i) => <SkeletonGameLoad key={i} /> ) }

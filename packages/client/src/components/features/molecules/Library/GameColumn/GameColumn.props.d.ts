@@ -1,6 +1,6 @@
 export interface GameColumnProps {
     game: {
-        game_id: string;
+        id: number;
         hidden: boolean;
     };
 }

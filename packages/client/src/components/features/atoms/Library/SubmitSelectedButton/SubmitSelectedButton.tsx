@@ -21,10 +21,10 @@ export const SubmitSelectedButton: React.FC<SubmitSelectedButtonProps> = ({ coun
         try {
             if (count === 0 || updateMutation.isPending) return;
             updateMutation.mutateAsync(selected).then((data) => {
-                const newLibrary = library.map(game => selected.includes(game.game_id) ? { ...game, hidden: !game.hidden } : game);
+                const newLibrary = library.map(game => selected.includes(game.id) ? { ...game, hidden: !game.hidden } : game);
                 setLibrary(newLibrary);
                 setSelected([]);
-                const publicGames = newLibrary.filter(game => !game.hidden).map(game => game.game_id);                
+                const publicGames = newLibrary.filter(game => !game.hidden).map(game => game.id);                
                 updateLibraryWS(publicGames);
                 drawToast(data.message, "success");
             }).catch((err) => { 

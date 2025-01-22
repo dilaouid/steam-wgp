@@ -1,4 +1,4 @@
 export type TGameLibrary = {
-    game_id: string;
+    id: number;
     hidden: boolean;
 };

@@ -13,7 +13,7 @@ export const updateHiddenGamesOpts = {
       properties: {
         games: {
           type: "array",
-          items: { type: "string" },
+          items: { type: "number" },
         },
       },
     },

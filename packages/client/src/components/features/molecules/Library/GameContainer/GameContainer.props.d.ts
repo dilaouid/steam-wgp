@@ -1,4 +1,4 @@
 export interface GameContainerProps {
-    game_id: string;
+    id: number;
     hidden: boolean;
 }
