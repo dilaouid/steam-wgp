@@ -1,9 +1,12 @@
 import { FastifyInstance } from "fastify";
 import {
+  deletePlayer,
   getPlayer,
   getPlayerAccordingToId,
   getPlayers,
+  getPlayerSteamder,
   insertPlayer,
+  leaveSteamder,
   TGetPlayersOptions,
   updatePlayer,
 } from "@repositories";
@@ -184,3 +187,47 @@ export const getPlayersInfo = async (
   }
 };
 
+export const deleteUser = async (
+  fastify: FastifyInstance,
+  id: bigint
+) => {
+  try {
+    const [ playerExists ] = await getPlayer(fastify, id);
+    if (!playerExists) {
+      throw new HttpError({
+        message: "player_not_found",
+        statusCode: 404
+      })
+    }
+
+    const [ playerSteamder ] = await getPlayerSteamder(fastify, id);
+    if (playerSteamder) {
+      await leaveSteamder(fastify, id, playerSteamder.id);
+    }
+
+    await deletePlayer(fastify, id);
+
+    // also update steamders live in websockets (todo)
+    // const steamders = fastify.steamders.get(id.toString());
+  } catch (err: any) {
+    if (err instanceof HttpError) throw err;
+
+    throw new HttpError({
+      message: "failed_to_delete_player",
+      statusCode: 500
+    });
+  }
+};
+
+export const update = async (fastify: FastifyInstance, id: bigint, data: Partial<Player>) => {
+  try {
+    await updatePlayer(fastify, id, data);
+  } catch (err) {
+    if (err instanceof HttpError) throw err;
+
+    throw new HttpError({
+      message: "failed_to_update_player",
+      statusCode: 500
+    });
+  }
+};

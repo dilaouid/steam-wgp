@@ -19,4 +19,11 @@ export const getPlayersQuerySchema = z.object({
   min_games: z.number().int().min(0).optional(),
 });
 
+export const updatePlayerBodySchema = z.object({
+  avatar_hash: z.string().optional(),
+  username: z.string().optional(),
+  profileurl: z.string().optional(),
+  isAdmin: z.boolean().optional()
+});
+
 export type TGetPlayersQuery = z.infer<typeof getPlayersQuerySchema>;

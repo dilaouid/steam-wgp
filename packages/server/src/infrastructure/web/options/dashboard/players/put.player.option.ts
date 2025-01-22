@@ -1,10 +1,11 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { playerController } from "@controllers/dashboard/player.controller";
 
 export const updatePlayerOpts = {
   method: "PUT" as HTTPMethods,
   url: "/:id",
-  handler: () => {},
+  handler: playerController.update,
   schema: {
     query: {
       type: "object",
