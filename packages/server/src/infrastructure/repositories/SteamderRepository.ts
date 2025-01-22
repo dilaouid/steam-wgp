@@ -139,7 +139,8 @@ export const canAdminKickFromSteamder = async (fastify: FastifyInstance, steamde
       steamdersPlayers,
       and(
         eq(steamdersPlayers.steamder_id, steamderId),
-        eq(steamdersPlayers.player_id, BigInt(userId))
+        eq(steamdersPlayers.player_id, BigInt(userId)),
+        eq(steamdersPlayers.status, "active")
       )
     )
     .execute();

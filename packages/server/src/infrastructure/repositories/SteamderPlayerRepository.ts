@@ -9,7 +9,12 @@ export const isPlayerInASteamder = async (
   return fastify.db
     .select()
     .from(steamdersPlayers)
-    .where(eq(steamdersPlayers.player_id, playerId))
+    .where(
+      and(
+        eq(steamdersPlayers.player_id, playerId),
+        eq(steamdersPlayers.status, 'active')
+      )
+    )
     .limit(1)
     .execute();
 };
@@ -25,7 +30,8 @@ export const isPlayerInSteamder = async (
     .where(
       and(
         eq(steamdersPlayers.player_id, playerId),
-        eq(steamdersPlayers.steamder_id, steamderId)
+        eq(steamdersPlayers.steamder_id, steamderId),
+        eq(steamdersPlayers.status, 'active')
       )
     )
     .leftJoin(steamders, eq(steamders.id, steamdersPlayers.steamder_id))
@@ -95,7 +101,8 @@ export const leaveSteamder = async (
     .where(
       and(
         eq(steamdersPlayers.player_id, playerId),
-        eq(steamdersPlayers.steamder_id, steamderId)
+        eq(steamdersPlayers.steamder_id, steamderId),
+        eq(steamdersPlayers.status, 'active')
       )
     )
     .execute();
@@ -115,6 +122,36 @@ export const getPlayerSteamder = async (
   return fastify.db
     .select({id: steamdersPlayers.steamder_id})
     .from(steamdersPlayers)
-    .where(eq(steamdersPlayers.player_id, playerId))
+    .where(
+      and(
+        eq(steamdersPlayers.player_id, playerId),
+        eq(steamdersPlayers.status, 'active')
+      )
+    )
+    .execute();
+}
+
+/**
+ * Update the Steamder Player status to completed.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {bigint} playerId - The ID of the player.
+ * @param {string} steamderId - The ID of the steamder.
+ * @returns {Promise<any>} - A promise that resolves to the result of the update operation.
+ */
+export const completeSteamder = async (
+  fastify: FastifyInstance,
+  playerId: bigint,
+  steamderId: string
+): Promise<any> => {
+  return fastify.db
+    .update(steamdersPlayers)
+    .set({ status: 'completed', completed_at: new Date() })
+    .where(
+      and(
+        eq(steamdersPlayers.player_id, playerId),
+        eq(steamdersPlayers.steamder_id, steamderId)
+      )
+    )
     .execute();
 }
