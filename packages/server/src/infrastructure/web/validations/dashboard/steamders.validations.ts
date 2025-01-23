@@ -6,6 +6,14 @@ export const validSteamderId = z.object({
     .uuid({ message: "invalid_id" })
 });
 
+export const validKickSteamderId = z.object({
+  steamder_id: z.coerce
+    .string()
+    .uuid({ message: "invalid_id" }),
+  player_id: z.coerce
+    .bigint({ message: "invalid_id" })
+});
+
 export const getSteamdersQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(20),

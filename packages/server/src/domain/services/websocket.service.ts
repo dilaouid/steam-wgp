@@ -41,6 +41,7 @@ export const WebSocketService = {
     const steamderEntry = fastify.steamders.get(steamderId);
     if (steamderEntry) {
       const steamder = steamderEntry as unknown as Steamder;
+      fastify.log.info(steamder.players);
       steamder.players = steamder.players.filter(p => p.player_id !== playerId);
       delete steamder.playerGames[playerId];
       updateCommonGames(steamder);

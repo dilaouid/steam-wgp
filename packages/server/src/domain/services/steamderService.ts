@@ -272,3 +272,48 @@ export const getSteamdersInfo = async (
     });
   }
 };
+
+/**
+ * Service to kick a player from a Steamder (only the admin can call this service)
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} steamderId - The ID of the Steamder.
+ * @param {string} playerId - The ID of the player to kick.
+ * @returns {Promise<void>} - A promise that resolves when the player is kicked.
+ * @throws {HttpError} - If the player is not in the Steamder or if the Steamder is already started.
+ */
+export const kickPlayerFromSteamder = async (
+  fastify: FastifyInstance,
+  steamderId: string,
+  playerId: bigint
+) => {
+  try {
+    const [ steamder ] = await isPlayerInSteamder(fastify, playerId, steamderId);
+    if (!steamder) {
+      throw new HttpError({
+        message: "player_not_in_steamder",
+        statusCode: 404
+      });
+    }
+
+    if (steamder.started) {
+      throw new HttpError({
+        message: "steamder_already_started",
+        statusCode: 400
+      });
+    }
+
+    await leaveAndUpdateSteamder(fastify, steamderId, BigInt(playerId));
+    WebSocketService.removePlayerFromSteamder(fastify, steamderId, playerId.toString());
+    WebSocketService.notifyPlayersInSteamder(fastify, steamderId, { action: "kicked", playerId: playerId.toString() });
+
+    return;
+  } catch (err: any) {
+    if (err instanceof HttpError) throw err;
+    fastify.log.error(err);
+
+    throw new HttpError({
+      message: "failed_to_kick_player",
+      statusCode: 500
+    });
+  }
+};

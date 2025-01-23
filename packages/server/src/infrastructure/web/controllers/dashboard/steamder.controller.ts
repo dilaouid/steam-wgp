@@ -1,6 +1,6 @@
-import { deleteSteamderById, getSteamderById, getSteamdersInfo } from "@services/steamderService";
+import { deleteSteamderById, getSteamderById, getSteamdersInfo, kickPlayerFromSteamder } from "@services/steamderService";
 import { createController } from "@utils/controller";
-import { getSteamdersQuerySchema, validSteamderId } from "@validations/dashboard/steamders.validations";
+import { getSteamdersQuerySchema, validKickSteamderId, validSteamderId } from "@validations/dashboard/steamders.validations";
 import { uuidSchema } from "@validations/typeValidation";
 
 export const steamderController = {
@@ -32,6 +32,15 @@ export const steamderController = {
       data,
       statusCode: 200
     }
+  }),
+  kick: createController(async ({ fastify, params }) => {
+    const { steamder_id, player_id } = validKickSteamderId.parse(params);
+
+    await kickPlayerFromSteamder(fastify, steamder_id, player_id);
+    return {
+      message: "player_kicked",
+      statusCode: 200
+    };
   }),
   /* update: createController(async ({ fastify, params, body }) => {
 
