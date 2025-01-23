@@ -1,7 +1,15 @@
-export * from "./delete.steamder.option"
-export * from "./delete.steamder.option"
-export * from "./get.steamders.option"
-export * from "./get.steamder.options"
-export * from "./put.steamder.option"
-export * from "./kick.steamder.option"
-export * from "./router"
+import { deleteSteamderOpts } from "./delete.steamder.option";
+import { getSteamderOpts } from "./get.steamder.options";
+import { getAllSteamdersOpts } from "./get.steamders.option";
+import { kickSteamderOpts } from "./kick.steamder.option";
+import { promoteSteamderOpts } from "./promote.steamder.option";
+import { updateSteamderOpts } from "./put.steamder.option";
+
+export const dashboardSteamderOpts = {
+  delete: deleteSteamderOpts,
+  get: getSteamderOpts,
+  list: getAllSteamdersOpts,
+  kick: kickSteamderOpts,
+  promote: promoteSteamderOpts,
+  update: updateSteamderOpts
+}

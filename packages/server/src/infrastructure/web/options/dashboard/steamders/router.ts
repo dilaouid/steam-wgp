@@ -1,11 +1,7 @@
 /* eslint-disable no-multi-spaces */
 import { FastifyInstance } from "fastify";
 import {
-  deleteSteamderOpts,
-  getSteamderOpts,
-  getAllSteamdersOpts,
-  updateSteamderOpts,
-  kickSteamderOpts
+  dashboardSteamderOpts
 } from "@options/dashboard";
 
 /**
@@ -14,10 +10,17 @@ import {
  */
 export default async function dashboardSteamdersRouter(fastify: FastifyInstance) {
   fastify.register(async function (fastify) {
-    fastify.route(getAllSteamdersOpts); // :GET     /dashboard/steamders                    (Get all steamders)
-    fastify.route(getSteamderOpts);     // :GET     /dashboard/steamders/:id                (Get a steamder)
-    fastify.route(deleteSteamderOpts);  // :DELETE  /dashboard/steamders/:id                (Delete a steamder)
-    fastify.route(kickSteamderOpts);    // :DELETE  /dashboard/steamders/:id/kick/:playerId (Kick a player from a steamder)
-    fastify.route(updateSteamderOpts);  // :PUT     /dashboard/steamders/:id                (Update a steamder)
+    // Create a steamder
+    fastify.route(dashboardSteamderOpts.list);    // :GET     /dashboard/steamders
+    // Get a steamder
+    fastify.route(dashboardSteamderOpts.get);     // :GET     /dashboard/steamders/:id
+    // Delete a steamder
+    fastify.route(dashboardSteamderOpts.delete);  // :DELETE  /dashboard/steamders/:id
+    // Kick a player from a steamder
+    fastify.route(dashboardSteamderOpts.kick);    // :DELETE  /dashboard/steamders/:id/kick/:playerId
+    // Update a steamder
+    fastify.route(dashboardSteamderOpts.update);  // :PUT     /dashboard/steamders/:id
+    // Promote a player to admin
+    fastify.route(dashboardSteamderOpts.promote); // :PUT     /dashboard/steamders/:id/promote/:playerId
   });
 }

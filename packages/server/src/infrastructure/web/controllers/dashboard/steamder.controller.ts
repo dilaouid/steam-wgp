@@ -1,7 +1,7 @@
-import { deleteSteamderById, getSteamderById, getSteamdersInfo, kickPlayerFromSteamder, updateSteamderInformations } from "@services/steamderService";
+import { changeSteamderAdmin, deleteSteamderById, getSteamderById, getSteamdersInfo, kickPlayerFromSteamder, updateSteamderInformations } from "@services/steamderService";
 import { createController } from "@utils/controller";
 
-import { getSteamdersQuerySchema, updateSteamderSchema, validKickSteamderId, validSteamderId } from "@validations/dashboard/steamders.validations";
+import { getSteamdersQuerySchema, updateSteamderSchema, validSteamderId, validSteamderRequestId } from "@validations/dashboard/steamders.validations";
 import { uuidSchema } from "@validations/typeValidation";
 
 export const steamderController = {
@@ -38,7 +38,7 @@ export const steamderController = {
   }),
 
   kick: createController(async ({ fastify, params }) => {
-    const { steamder_id, player_id } = validKickSteamderId.parse(params);
+    const { steamder_id, player_id } = validSteamderRequestId.parse(params);
 
     await kickPlayerFromSteamder(fastify, steamder_id, player_id);
     return {
@@ -56,5 +56,15 @@ export const steamderController = {
       message: "steamder_updated",
       statusCode: 200
     }
+  }),
+
+  promote: createController(async ({ fastify, params }) => {
+    const { steamder_id, player_id } = validSteamderRequestId.parse(params);
+
+    await changeSteamderAdmin(fastify, steamder_id, player_id);
+    return {
+      message: "player_promoted",
+      statusCode: 200
+    };
   })
 };

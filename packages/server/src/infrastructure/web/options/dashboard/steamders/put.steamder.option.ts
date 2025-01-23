@@ -1,5 +1,6 @@
 import { HTTPMethods } from "fastify";
 import { isAdmin } from "@auth/middlewares";
+import { steamderController } from "@controllers/dashboard/steamder.controller";
 
 /**
  * Options for updating an existing game.
@@ -9,7 +10,7 @@ import { isAdmin } from "@auth/middlewares";
 export const updateSteamderOpts = {
   method: "PUT" as HTTPMethods,
   url: "/:steamder_id",
-  handler: () => {},
+  handler: steamderController.update,
   preValidation: [isAdmin],
   schema: {
     params: {

@@ -429,3 +429,55 @@ export const updateSteamderInformations = async (
     });
   }
 }
+
+/**
+ * Promote a player to admin of a Steamder
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} steamderId - The ID of the Steamder.
+ * @param {bigint} playerId - The ID of the player to promote.
+ * @returns {Promise<void>} - A promise that resolves when the player is promoted.
+ * @throws {HttpError} - If the player is already the admin, if the Steamder is already completed or if the player is not in the Steamder.
+ */
+export const changeSteamderAdmin = async (
+  fastify: FastifyInstance,
+  steamderId: string,
+  playerId: bigint
+) => {
+  try {
+    const steamder = await getSteamderById(fastify, steamderId);
+    if (steamder.admin_id === playerId.toString()) {
+      throw new HttpError({
+        message: "player_already_admin",
+        statusCode: 400
+      });
+    }
+
+    if (steamder.complete) {
+      throw new HttpError({
+        message: "steamder_already_completed",
+        statusCode: 400
+      });
+    }
+
+    const playerInSteamder = steamder.players.find((p: any) => p.player_id === playerId.toString());
+    if (!playerInSteamder) {
+      throw new HttpError({
+        message: "player_not_in_steamder",
+        statusCode: 404
+      });
+    }
+
+    await updateSteamder(fastify, steamderId, { admin_id: playerId });
+    // TODO WS ACTION TO NOTIFY PLAYERS
+
+    return;
+  } catch (err: any) {
+    if (err instanceof HttpError) throw err;
+    fastify.log.error(err);
+
+    throw new HttpError({
+      message: "failed_to_change_admin",
+      statusCode: 500
+    });
+  }
+};

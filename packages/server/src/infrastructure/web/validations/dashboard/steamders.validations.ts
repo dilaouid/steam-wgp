@@ -6,7 +6,7 @@ export const validSteamderId = z.object({
     .uuid({ message: "invalid_id" })
 });
 
-export const validKickSteamderId = z.object({
+export const validSteamderRequestId = z.object({
   steamder_id: z.coerce
     .string()
     .uuid({ message: "invalid_id" }),
