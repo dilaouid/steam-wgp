@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { checkSteamderExists, countPlayerGamesLibrary, deleteSteamder, getSteamderByID, getSteamderPlayersAndGames, getSteamders, getSteamdersPagination, insertSteamder, isPlayerInSteamder, joinSteamder, leaveSteamder, TGetSteamdersOptions, updateSteamder } from "@repositories";
+import { activateSteamder, checkSteamderExists, completeSteamder, countPlayerGamesLibrary, deleteSteamder, getGameById, getSteamderByID, getSteamderPlayersAndGames, getSteamders, getSteamdersPagination, insertSteamder, isPlayerInSteamder, joinSteamder, leaveSteamder, TGetSteamdersOptions, updateSteamder } from "@repositories";
 import { formatPlayers, getCommonGames, getCommonGamesController, removeDuplicates, removeDuplicatesController } from "@utils//gamesUtils";
 import { SteamderInsert } from "@entities";
 import { HttpError } from "domain/HttpError";
@@ -317,3 +317,115 @@ export const kickPlayerFromSteamder = async (
     });
   }
 };
+
+export const updateSteamderInformations = async (
+  fastify: FastifyInstance,
+  steamderId: string,
+  body: { name?: string; private_steamder?: boolean; complete?: boolean; selected?: number; display_all_games?: boolean }
+) => {
+  try {
+    const steamder = await getSteamderById(fastify, steamderId);
+
+    if (body.complete) {
+      // Cannot end a steamder with no game selected as winner
+      if (!body.selected && !steamder.selected) {
+        throw new HttpError({
+          message: "game_not_selected",
+          statusCode: 400
+        });
+      }
+
+      // Cannot complete a steamder with only one player
+      if (steamder.players.length < 2) {
+        throw new HttpError({
+          message: "not_enough_players",
+          statusCode: 400
+        });
+      }
+
+      // Cannot complete a steamder with no games at all
+      if (steamder.all_games.length === 0) {
+        throw new HttpError({
+          message: "no_games",
+          statusCode: 400
+        });
+      }
+
+      // Cannot complete a steamder with no games in common if steamder.display_all_games is false
+      if (steamder.common_games.length === 0 && (!body.display_all_games && !steamder.display_all_games)) {
+        throw new HttpError({
+          message: "no_common_games",
+          statusCode: 400
+        });
+      }
+    }
+
+    if (steamder.complete && body.complete === false) {
+      body.selected = 0;
+    }
+
+    if (body.selected) {
+      const [ game ] = await getGameById(fastify, body.selected);
+      if (!game) {
+        throw new HttpError({
+          message: "game_not_found",
+          statusCode: 404
+        });
+      }
+
+      // Check if the game is selectable
+      if (game.is_selectable === false) {
+        throw new HttpError({
+          message: "game_not_selectable",
+          statusCode: 400
+        });
+      }
+
+      // Check if the game is in the steamder
+      if (steamder.all_games.findIndex((g: any) => g.id === body.selected) === -1) {
+        throw new HttpError({
+          message: "game_not_in_steamder",
+          statusCode: 400
+        });
+      }
+
+      // Check if the game is in common games and if the steamder is not displaying all games
+      if (!body.display_all_games && steamder.common_games.findIndex((g: any) => g.id === body.selected) === -1) {
+        throw new HttpError({
+          message: "game_not_in_common_games",
+          statusCode: 400
+        });
+      }
+
+    }
+
+    const data = {
+      ...(body.name && { name: body.name }),
+      ...(body.private_steamder !== undefined && { private: body.private_steamder }),
+      ...(body.complete !== undefined && { complete: body.complete }),
+      ...(body.selected !== undefined && { selected: body.selected }),
+      ...(body.display_all_games !== undefined && { display_all_games: body.display_all_games })
+    };
+
+    await updateSteamder(fastify, steamderId, data);
+
+    if (data.complete) {
+      // Complete the steamder to the players
+      await completeSteamder(fastify, steamderId);
+      WebSocketService.notifyPlayersInSteamder(fastify, steamderId, { action: 'gameEnd', choosed_game: data.selected });
+      WebSocketService.closeSteamderConnections(fastify, steamderId);
+    } else if (!data.complete && steamder.complete) {
+      // Uncomplete the steamder to the players
+      await activateSteamder(fastify, steamderId);
+    }
+
+
+    return;
+  } catch (err: any) {
+    fastify.log.error(err);
+    throw new HttpError({
+      message: "failed_to_update_steamder",
+      statusCode: 500
+    });
+  }
+}

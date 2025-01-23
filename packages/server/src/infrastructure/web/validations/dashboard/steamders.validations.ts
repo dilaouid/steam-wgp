@@ -14,6 +14,14 @@ export const validKickSteamderId = z.object({
     .bigint({ message: "invalid_id" })
 });
 
+export const updateSteamderSchema = z.object({
+  name: z.coerce.string().min(3).max(255).optional(),
+  private_steamder: z.coerce.boolean().optional(),
+  complete: z.coerce.boolean().optional(),
+  selected: z.coerce.number().int().optional(),
+  display_all_games: z.coerce.boolean().optional()
+});
+
 export const getSteamdersQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(20),

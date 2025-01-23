@@ -3,34 +3,29 @@ import { isAdmin } from "@auth/middlewares";
 
 /**
  * Options for updating an existing game.
- * Route: PUT - /steamders/:id
+ * Route: PUT - /steamders/:steamder_id
  * @example fastify.route(updateSteamderOpts);
  */
 export const updateSteamderOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/:id",
+  url: "/:steamder_id",
   handler: () => {},
   preValidation: [isAdmin],
   schema: {
     params: {
       type: "object",
-      required: ["id"],
+      required: ["steamder_id"],
       properties: {
-        id: { type: "string" },
+        steamder_id: { type: "string" },
       },
     },
     body: {
       type: "object",
       properties: {
-        selectable: { type: "boolean" },
-        adminId: { type: "string" },
-        started: { type: "boolean" },
-        private: { type: "boolean" },
+        private_steamder: { type: "boolean" },
         complete: { type: "boolean" },
         selected: { type: "integer" },
-        displayAllGames: { type: "boolean" },
-        commonGames: { type: "integer" },
-        allGames: { type: "integer" },
+        display_all_games: { type: "boolean" },
         name: { type: "string" }
       },
     },

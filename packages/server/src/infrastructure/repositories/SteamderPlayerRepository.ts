@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { libraries, steamders, steamdersPlayers } from "@schemas";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 export const isPlayerInASteamder = async (
   fastify: FastifyInstance,
@@ -149,5 +149,44 @@ export const completeSteamder = async (
     .where(
       eq(steamdersPlayers.steamder_id, steamderId)
     )
+    .execute();
+}
+
+/**
+ * Update the Steamder status to active.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} steamderId - The ID of the steamder.
+ * @returns {Promise<any>} - A promise that resolves to the result of the update operation.
+ */
+export const activateSteamder = async (
+  fastify: FastifyInstance,
+  steamderId: string
+): Promise<any> => {
+  return fastify.db
+    .update(steamdersPlayers)
+    .set({ status: 'active', completed_at: null })
+    .where(
+      eq(steamdersPlayers.steamder_id, steamderId)
+    )
+    .execute();
+}
+
+
+/**
+ * Count players inside a steamder.
+ *
+ * @param {FastifyInstance} fastify - The Fastify instance.
+ * @param {string} steamderId - The ID of the steamder.
+ * @returns {Promise<any>} - A promise that resolves to the number of players in the steamder.
+ */
+export const countPlayersInSteamder = async (
+  fastify: FastifyInstance,
+  steamderId: string
+): Promise<any> => {
+  return fastify.db
+    .select({ count: sql<number>`count(*)` })
+    .from(steamdersPlayers)
+    .where(eq(steamdersPlayers.steamder_id, steamderId))
     .execute();
 }
