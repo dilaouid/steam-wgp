@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { useGameMutations } from '@/core/API/games/mutations';
 import { useToast } from '@/hooks/use-toast';
@@ -20,11 +21,9 @@ export const useGameModal = () => {
                 description: "Jeu ajouté avec succès",
                 className: "bg-emerald-500 text-white"
             });
-        } catch (error) {
-            console.error(error);
-            
+        } catch (error: any) {
             toast({
-                description: "Erreur lors de l'ajout du jeu",
+                description: error.message,
                 variant: "destructive"
             });
         }

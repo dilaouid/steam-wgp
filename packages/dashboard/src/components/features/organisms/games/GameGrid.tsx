@@ -68,9 +68,9 @@ export const GamesGrid = () => {
                 isSelectable={game.is_selectable}
                 onToggle={() =>
                     updateGame.mutate({
-                    id: game.id,
-                    is_selectable: !game.is_selectable,
-                  })
+                        id: game.id,
+                        is_selectable: !game.is_selectable,
+                    })
                 }
                 isLoading={updateGame.isPending}
               />

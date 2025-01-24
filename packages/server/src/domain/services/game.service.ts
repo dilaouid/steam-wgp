@@ -81,17 +81,30 @@ export const addGame = async (
       `https://store.steampowered.com/api/appdetails?appids=${game.id}`
     );
     const gameDetails = ((await gameDetailsResponse?.json()) as any) || null;
-    if (!gameDetails) {
+    if (!gameDetails || !gameDetails[game.id]?.success) {
       fastify.log.warn(
         `Game ${game.id} is not selectable - Steam API is not responding in https://store.steampowered.com/api/appdetails?appids=${game.id}...`
       );
-      throw Error(
-        `Game ${game.id} is not selectable - Steam API is not responding in https://store.steampowered.com/api/appdetails?appids=${game.id}...`
-      );
+      throw new HttpError({
+        message: "Le jeu n'existe pas dans la base de données Steam",
+        statusCode: 404
+      });
+    }
+
+    // Check if the game is already in the database
+    const [ existingGame ] = await getGameById(fastify, game.id);
+    if (existingGame) {
+      throw new HttpError({
+        message: "Le jeu existe déjà en base de données",
+        statusCode: 400
+      });
     }
 
     return await createGame(fastify, game);
   } catch (error) {
+    if (error instanceof HttpError)
+      throw error;
+
     throw new HttpError({
       message: "Erreur lors de la création du jeu",
       additionalInfo: error,

@@ -59,9 +59,7 @@ export const gameQueries = {
     
         if (!response.ok) {
             const errorDetails = await response.json();
-            console.error(errorDetails);
-    
-            throw new Error(`Erreur lors de la création d'un jeu: HTTP error! Status: ${response.status}`);
+            throw new Error(errorDetails.message);
         }
         return response.json();
     },
@@ -81,9 +79,7 @@ export const gameQueries = {
     
         if (!response.ok) {
             const errorDetails = await response.json();
-            console.error(errorDetails);
-    
-            throw new Error(`Erreur lors de la mise à jour d'un d'un jeu: HTTP error! Status: ${response.status}`);
+            throw new Error(errorDetails.message);
         }
         return response.json();
     }
