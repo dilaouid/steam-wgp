@@ -45,9 +45,10 @@ export const gamesController = {
   /*
     * Update a game by its ID (switching isSelectable)
   */
-  updateGame: createController(async ({ fastify, params }) => {
+  updateGame: createController(async ({ fastify, params, body }) => {
     const { id } = isValidGameId.parse(params);
-    const { is_selectable } = isValidSelectable.parse(params);
+    const { is_selectable } = isValidSelectable.parse(body);
+    fastify.log.info(`Updating game ${id} with is_selectable: ${is_selectable}`);
 
     const data = await updateGameStatus(fastify, { id, is_selectable });
     return {

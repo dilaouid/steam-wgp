@@ -1,6 +1,17 @@
 import { FastifyInstance } from "fastify";
 import { games } from "@schemas";
-import { count, eq, inArray } from "drizzle-orm";
+import { count, eq, inArray, sql } from "drizzle-orm";
+import { Game } from "@entities";
+
+export type TPaginationGamesResult = {
+  data: Game[];
+  meta: {
+    total: number;
+    offset: number;
+    limit: number;
+    pageCount: number;
+  };
+};
 
 export const countGames = async (fastify: FastifyInstance): Promise<any> => {
   const { db } = fastify;
@@ -92,32 +103,54 @@ export const createGame = async (
  * @param {number} page - The page number.
  * @param {number} limit - The number of games per page.
  * @param {object} options - The options for the pagination (search query, only selectable, only not selectable ...)
- * @returns {Promise<any[]>} - A promise that resolves to the list of games.
+ * @returns {Promise<TPaginationResult>} - A promise that resolves to the list of games.
  */
 export const searchGames = async (
   fastify: FastifyInstance,
-  options: {
+  { onlyIsSelectable, onlyNotSelectable, limit = 10, offset = 0 }: {
     onlyIsSelectable?: boolean;
     onlyNotSelectable?: boolean;
     limit?: number;
     offset?: number;
   }
-): Promise<any[]> => {
+): Promise<TPaginationGamesResult> => {
   try {
-    const { onlyIsSelectable, onlyNotSelectable, limit, offset } = options;
     const { db } = fastify;
-    return db
+    const [{ count }] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(games)
+      .where(
+        !onlyIsSelectable && !onlyNotSelectable
+          ? undefined
+          : onlyIsSelectable
+            ? eq(games.is_selectable, true)
+            : eq(games.is_selectable, false)
+      )
+      .execute();
+
+    const data = await db
       .select()
       .from(games)
       .where(
-        onlyIsSelectable === undefined && onlyNotSelectable === undefined
+        !onlyIsSelectable && !onlyNotSelectable
           ? undefined
-          : options.onlyIsSelectable
+          : onlyIsSelectable
             ? eq(games.is_selectable, true)
             : eq(games.is_selectable, false)
       )
       .limit(limit)
-      .offset(offset);
+      .offset(offset)
+      .orderBy(games.id, "asc")
+      .execute();
+    return {
+      data,
+      meta: {
+        total: Number(count),
+        offset,
+        limit,
+        pageCount: Math.ceil(Number(count) / limit)
+      }
+    };
   } catch (err) {
     fastify.log.error(err);
     throw new Error("Failed to search games");
