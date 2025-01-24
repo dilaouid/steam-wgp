@@ -13,12 +13,10 @@ export const getGamesOpts = {
         offset: {
           type: "integer",
           minimum: 0,
-          maximum: 1000
         },
         limit: {
           type: "integer",
           minimum: 1,
-          maximum: 100
         },
         onlyIsSelectable: { type: "boolean" },
         onlyNotSelectable: { type: "boolean" },

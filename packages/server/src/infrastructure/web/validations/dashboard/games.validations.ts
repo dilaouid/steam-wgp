@@ -3,8 +3,7 @@ import { z } from "zod";
 export const paginateGamesSchema = z.object({
   offset: z.coerce
     .number()
-    .min(0, { message: "invalid_offset" })
-    .max(1000, { message: "invalid_offset" }),
+    .min(0, { message: "invalid_offset" }),
   limit: z.coerce
     .number()
     .min(1, { message: "invalid_limit" })

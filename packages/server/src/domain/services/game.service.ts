@@ -4,7 +4,8 @@ import {
   getGameById,
   createGame,
   searchGames,
-  updateGame
+  updateGame,
+  TPaginationGamesResult
 } from "@repositories";
 
 /**
@@ -21,8 +22,7 @@ export const paginateGames = async (
   offset: number,
   limit: number,
   options: { onlyIsSelectable?: boolean; onlyNotSelectable?: boolean }
-): Promise<any[]> => {
-  fastify.log.info(options)
+): Promise<TPaginationGamesResult> => {
   if (options.onlyIsSelectable && options.onlyNotSelectable) {
     throw new HttpError({
       message: "Les options onlyIsSelectable et onlyNotSelectable sont mutuellement exclusives",
