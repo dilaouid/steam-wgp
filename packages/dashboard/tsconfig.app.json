@@ -23,6 +23,10 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": "./src",
     "paths": {
+      "@/*": [
+        "./*"
+      ],
+      
       // Core aliases
       "@core/*": ["core/*"],
       "@assets/*": ["assets/*"],
