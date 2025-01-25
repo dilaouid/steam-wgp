@@ -72,7 +72,7 @@ export const Sidebar = () => {
                 <NavLink
                   key={item.to}
                   {...item}
-                  isActive={location.pathname === item.to}
+                  isActive={location.pathname === item.to || location.pathname.startsWith(item.to) && item.to !== '/'}
                   collapsed={collapsed}
                 />
               ))}

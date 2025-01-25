@@ -19,7 +19,7 @@ export const PlayerCard = ({
 
   
   return (
-    <Link to={`/player/${id}`}>
+    <Link to={`/players/${id}`}>
       <div
         className={cn(
           "group relative p-4 rounded-xl",

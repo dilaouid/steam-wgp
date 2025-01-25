@@ -10,11 +10,11 @@ export const PlayerStats = ({
   <div className="flex gap-3 text-sm text-gray-500 dark:text-gray-400">
     <div className="flex items-center gap-1">
       <Gamepad className="w-4 h-4" />
-      <span>{library_size} jeux</span>
+      <span>{library_size} jeu{library_size > 1 ? "x" : ""}</span>
     </div>
     <div className="flex items-center gap-1">
       <Users className="w-4 h-4" />
-      <span>{steamders_completed} steamders</span>
+      <span>{steamders_completed} steamder{steamders_completed > 1 ? "s" : ""}</span>
     </div>
   </div>
 );

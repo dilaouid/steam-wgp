@@ -7,15 +7,21 @@ export const useGameMutations = (): IUseGameMutationsReturn => {
     return {
         createGame: useMutation({
             mutationFn: gameQueries.create,
-            onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['games'] })
+            onSuccess: async () => {
+                await Promise.all([
+                    queryClient.invalidateQueries({ queryKey: ['games'] }),
+                    queryClient.invalidateQueries({ queryKey: ['player'] })
+                ]);
             }
         }),
 
         updateGame: useMutation({
             mutationFn: gameQueries.update,
-            onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['games'] })
+            onSuccess: async () => {
+                await Promise.all([
+                    queryClient.invalidateQueries({ queryKey: ['games'] }),
+                    queryClient.invalidateQueries({ queryKey: ['player'] })
+                ]);
             }
         })
     };

@@ -6,7 +6,7 @@ import { IPlayerFiltersProps } from "./PlayerFilters.props";
 
 import { debounce } from "lodash";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TQueryParams } from "@/core/API/players/types";
+import { TQueryParams } from "@core/API/players/types";
 
 export const PlayerFilters = ({
   onFilterChange,
@@ -54,7 +54,6 @@ export const PlayerFilters = ({
               Steamders complétés
             </SelectItem>
             <SelectItem value="library_size">Taille bibliothèque</SelectItem>
-            <SelectItem value="created_at">Date d'inscription</SelectItem>
           </SelectContent>
         </Select>
 

@@ -23,10 +23,10 @@ export const PlayersPage = () => {
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Joueurs
+            Joueur{data?.pagination.total > 1 && "s"}
           </h1>
           <p className="text-gray-500 dark:text-gray-400">
-            {data?.pagination.total ?? 0} joueurs inscrits
+            {data?.pagination.total ?? 0} joueur{data?.pagination.total > 1 && "s"} inscrit{data?.pagination.total > 1 && "s"}
           </p>
         </div>
 

@@ -5,6 +5,7 @@ export const usePlayer = (id: number) => {
     return useQuery({
         queryKey: ['player', id],
         queryFn: () => playerQueries.get(id),
-        retry: 1
+        retry: 1,
+        select: (data) => data.data,
     });
 }
