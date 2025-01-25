@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { and, count, eq, ilike, sql } from "drizzle-orm";
 import { alias } from "drizzle-orm/pg-core";
 
-import { deletedUsers, libraries, players, steamders, steamdersPlayers } from "@schemas";
+import { deletedUsers, games, libraries, players, steamders, steamdersPlayers } from "@schemas";
 import { Player } from "@entities";
 
 export type TGetPlayersOptions = {
@@ -210,7 +210,14 @@ export const getPlayer = async (fastify: FastifyInstance, id: bigint) => {
         hidden: libraries.hidden,
       })
       .from(libraries)
-      .where(eq(libraries.player_id, id))
+      .leftJoin(games, eq(games.id, libraries.game_id))
+      .where(
+        and(
+          eq(libraries.player_id, id),
+          eq(games.is_selectable, true)
+        )
+      )
+      .orderBy(games.id)
       .execute();
 
     // Récupérer l'historique des steamders
@@ -364,9 +371,7 @@ export const getPlayers = async (
         username: players.username,
         avatar_hash: players.avatar_hash,
         // statistics count
-        library_size: sql<number>`
-          COUNT(DISTINCT ${libraries.id})
-        `,
+        library_size: sql<number>`COUNT(DISTINCT CASE WHEN ${games.is_selectable} = true THEN ${libraries.id} END)`, // Filtre ajouté ici
         steamders_completed: sql<number>`
           COUNT(DISTINCT CASE WHEN ${steamdersPlayers.status} = 'completed' THEN ${steamdersPlayers.steamder_id} END)
         `,
@@ -381,6 +386,10 @@ export const getPlayers = async (
       })
       .from(players)
       .leftJoin(libraries, eq(libraries.player_id, players.id))
+      .leftJoin(
+        games,
+        and(eq(games.id, libraries.game_id), eq(games.is_selectable, true)) // Condition ajoutée ici
+      )
       .leftJoin(steamdersPlayers, eq(steamdersPlayers.player_id, players.id))
       .groupBy(players.id, players.username, players.avatar_hash, players.isAdmin);
 
@@ -429,6 +438,10 @@ export const getPlayers = async (
       })
       .from(players)
       .leftJoin(libraries, eq(libraries.player_id, players.id))
+      .leftJoin(
+        games,
+        and(eq(games.id, libraries.game_id), eq(games.is_selectable, true)) // Condition ajoutée ici
+      )
       .leftJoin(steamdersPlayers, eq(steamdersPlayers.player_id, players.id))
       .where(filters?.search ? ilike(players.username, `%${filters.search}%`) : undefined)
       .where(filters?.isAdmin !== undefined ? eq(players.isAdmin, filters.isAdmin) : undefined)

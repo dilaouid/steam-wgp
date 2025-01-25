@@ -53,6 +53,7 @@ export async function getPlayerAllLibrary(
     .leftJoin(players, eq(libraries.player_id, players.id))
     .leftJoin(games, eq(libraries.game_id, games.id))
     .where(and(eq(players.id, playerId), eq(games.is_selectable, true)))
+    .orderBy(games.id)
     .execute();
 
   return result;
