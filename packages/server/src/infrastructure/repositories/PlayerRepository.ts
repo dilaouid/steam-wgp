@@ -27,6 +27,7 @@ type PlayerResult = {
   library_size: number;
   steamders_completed: number;
   has_active_steamder: boolean;
+  is_admin: boolean;
 }
 
 type TGetPlayersResult = {
@@ -38,6 +39,7 @@ type TGetPlayersResult = {
       library_size: number;
       steamders_completed: number;
       has_active_steamder: boolean;
+      is_admin: boolean;
     };
   }>;
   pagination: {
@@ -204,7 +206,6 @@ export const getPlayer = async (fastify: FastifyInstance, id: bigint) => {
     // Récupérer la bibliothèque
     const library = await db
       .select({
-        id: libraries.id,
         game_id: libraries.game_id,
         hidden: libraries.hidden,
       })
@@ -217,13 +218,52 @@ export const getPlayer = async (fastify: FastifyInstance, id: bigint) => {
       .select({
         steamder_id: steamdersPlayers.steamder_id,
         completed_at: steamdersPlayers.completed_at,
+        name: steamders.name,
+        private: steamders.private,
+        selected: steamders.selected,
+        total_games: sql<number>`
+     CASE 
+       WHEN ${steamders.display_all_games} THEN ${steamders.all_games}
+       ELSE ${steamders.common_games}
+     END
+   `,
+        admin_id: sql`${steamders.admin_id}::text`,
+        members: sql<Array<{ id: string; username: string; avatar_hash: string }>>`
+     json_agg(
+       json_build_object(
+         'id', sp_members.player_id::text,
+         'username', p_members.username,
+         'avatar_hash', p_members.avatar_hash
+       )
+     )
+   `
       })
       .from(steamdersPlayers)
+      .innerJoin(steamders, eq(steamders.id, steamdersPlayers.steamder_id))
+      .innerJoin(
+        alias(steamdersPlayers, "sp_members"),
+        eq(steamdersPlayers.steamder_id, sql`sp_members.steamder_id`)
+      )
+      .innerJoin(
+        alias(players, "p_members"),
+        eq(sql`sp_members.player_id`, sql`p_members.id`)
+      )
       .where(
         and(
           eq(steamdersPlayers.player_id, id),
           eq(steamdersPlayers.status, 'completed')
         )
+      )
+      .groupBy(
+        steamdersPlayers.steamder_id,
+        steamdersPlayers.completed_at,
+        steamders.name,
+        steamders.private,
+        steamders.selected,
+        steamders.display_all_games,
+        steamders.all_games,
+        steamders.common_games,
+        steamders.admin_id
       )
       .execute();
 
@@ -245,7 +285,7 @@ export const getPlayer = async (fastify: FastifyInstance, id: bigint) => {
         // Information sur l'admin
         admin_id: sql`${steamders.admin_id}::text`,
         // Récupérer tous les membres dans un array
-        members: sql<Array<{id: string, username: string, avatar_hash: string}>>`
+        members: sql<Array<{ id: string, username: string, avatar_hash: string }>>`
       json_agg(
         json_build_object(
           'id', ${players.id}::text,
@@ -262,7 +302,7 @@ export const getPlayer = async (fastify: FastifyInstance, id: bigint) => {
           eq(steamders.complete, false)
         )
       )
-    // Join pour récupérer les informations des autres membres
+      // Join pour récupérer les informations des autres membres
       .innerJoin(
         alias(steamdersPlayers, 'other_members'),
         eq(steamdersPlayers.steamder_id, sql`other_members.steamder_id`)
@@ -336,12 +376,13 @@ export const getPlayers = async (
             WHEN COUNT(${steamdersPlayers.steamder_id}) = 0 THEN false
             ELSE false
           END
-        `
-
+        `,
+        is_admin: players.isAdmin
       })
       .from(players)
       .leftJoin(libraries, eq(libraries.player_id, players.id))
-      .leftJoin(steamdersPlayers, eq(steamdersPlayers.player_id, players.id));
+      .leftJoin(steamdersPlayers, eq(steamdersPlayers.player_id, players.id))
+      .groupBy(players.id, players.username, players.avatar_hash, players.isAdmin);
 
     // apply query filters
     if (filters) {
@@ -365,8 +406,6 @@ export const getPlayers = async (
       }
     }
 
-    query = query.groupBy(players.id);
-
     // apply sorting from options query if any
     if (sort) {
       const order = sort.order === 'desc' ? sql`DESC` : sql`ASC`;
@@ -388,19 +427,51 @@ export const getPlayers = async (
       .select({
         count: sql<number>`COUNT(DISTINCT ${players.id})`
       })
-      .from(players);
+      .from(players)
+      .leftJoin(libraries, eq(libraries.player_id, players.id))
+      .leftJoin(steamdersPlayers, eq(steamdersPlayers.player_id, players.id))
+      .where(filters?.search ? ilike(players.username, `%${filters.search}%`) : undefined)
+      .where(filters?.isAdmin !== undefined ? eq(players.isAdmin, filters.isAdmin) : undefined)
+      .having(filters?.hasActiveSteamder !== undefined
+        ? sql`BOOL_OR(${steamdersPlayers.status} = 'active') = ${filters.hasActiveSteamder}`
+        : undefined
+      )
+      .having(filters?.minGamesInLibrary !== undefined
+        ? sql`COUNT(DISTINCT ${libraries.id}) >= ${filters.minGamesInLibrary}`
+        : undefined
+      )
+
+    if (filters) {
+      if (filters.search) {
+        countQuery.where(ilike(players.username, `%${filters.search}%`));
+      }
+      if (filters.isAdmin !== undefined) {
+        countQuery.where(eq(players.isAdmin, filters.isAdmin));
+      }
+      if (filters.hasActiveSteamder !== undefined) {
+        countQuery.where(sql`EXISTS (
+            SELECT 1 FROM ${steamdersPlayers} sp 
+            WHERE sp.player_id = ${players.id} 
+            AND sp.status = 'active'
+          ) = ${filters.hasActiveSteamder}`);
+      }
+      if (filters.minGamesInLibrary !== undefined) {
+        countQuery.where(sql`(
+            SELECT COUNT(DISTINCT l.id) 
+            FROM ${libraries} l 
+            WHERE l.player_id = ${players.id}
+          ) >= ${filters.minGamesInLibrary}`);
+      }
+    }
 
     // exec both queries in parallels
     const [players_data, count_result] = await Promise.all([
-      query
-        .limit(limit)
-        .offset(offset)
-        .execute(),
+      query.limit(limit).offset(offset).execute(),
       countQuery.execute()
     ]);
 
-    const total = Number(count_result[0].count);
-    const total_pages = Math.ceil(total / limit);
+    const total = Number(count_result?.[0]?.count ?? 0);
+    const total_pages = Math.max(1, Math.ceil(total / limit));
 
     const formatted_players = players_data.map((player: PlayerResult) => ({
       id: player.id,
@@ -409,7 +480,8 @@ export const getPlayers = async (
       stats: {
         library_size: Number(player.library_size),
         steamders_completed: Number(player.steamders_completed),
-        has_active_steamder: player.has_active_steamder
+        has_active_steamder: player.has_active_steamder,
+        is_admin: player.is_admin
       }
     }));
 

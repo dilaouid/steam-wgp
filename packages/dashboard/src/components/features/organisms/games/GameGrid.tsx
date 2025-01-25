@@ -1,4 +1,5 @@
-import { TQueryParams, useGameMutations } from "@core/API/games";
+import { useGameMutations } from "@core/API/games";
+import { TQueryParams } from "@/core/API/games/types";
 import { useGames } from "@core/hooks/games/useGames";
 import { IGame } from "@core/types/Game";
 import { Route } from "@/routes/games";

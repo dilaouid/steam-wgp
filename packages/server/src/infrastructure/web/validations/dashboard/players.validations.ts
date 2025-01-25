@@ -14,8 +14,8 @@ export const getPlayersQuerySchema = z.object({
   sort_field: sortFieldSchema.optional(),
   sort_order: sortOrderSchema.optional(),
   search: z.string().optional(),
-  is_admin: z.boolean().optional(),
-  has_active_steamder: z.boolean().optional(),
+  is_admin: z.coerce.boolean().optional(),
+  has_active_steamder: z.coerce.boolean().optional(),
   min_games: z.number().int().min(0).optional(),
 });
 
@@ -23,7 +23,7 @@ export const updatePlayerBodySchema = z.object({
   avatar_hash: z.string().optional(),
   username: z.string().optional(),
   profileurl: z.string().optional(),
-  isAdmin: z.boolean().optional()
+  isAdmin: z.coerce.boolean().optional()
 });
 
 export type TGetPlayersQuery = z.infer<typeof getPlayersQuerySchema>;

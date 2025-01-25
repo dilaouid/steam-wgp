@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { AddGameModal } from "./AddGameModal";
-import { TQueryParams } from "@/core/API/games";
+import { TQueryParams } from "@/core/API/games/types";
 import { cn } from "@/core/utils";
 
 export const GameFilters = ({
