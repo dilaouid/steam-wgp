@@ -23,7 +23,7 @@ export const PlayerPage = ({ playerId }: { playerId: number }) => {
 
         {/* Library section - 2 columns */}
         <div className="lg:col-span-2">
-          <PlayerLibrary library={data.library} />
+          <PlayerLibrary library={data.library} player={data} />
         </div>
       </div>
     </div>
