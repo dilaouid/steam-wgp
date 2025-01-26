@@ -4,13 +4,13 @@ import { playerController } from "@controllers/dashboard/player.controller";
 
 export const updatePlayerOpts = {
   method: "PUT" as HTTPMethods,
-  url: "/:id",
+  url: "/:player_id",
   handler: playerController.update,
   schema: {
-    query: {
+    params: {
       type: "object",
       properties: {
-        id: { type: "string" },
+        player_id: { type: "string" },
       },
     },
     body: {
