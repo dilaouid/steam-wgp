@@ -32,7 +32,7 @@ export interface ICurrentSteamder {
 }
 
 export interface IPlayerDetails { 
-    id: string;
+    id: string | number;
     username: string;
     avatar_hash: string;
     profileurl: string;

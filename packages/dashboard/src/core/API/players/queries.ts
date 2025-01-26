@@ -42,5 +42,26 @@ export const playerQueries = {
             console.error("Erreur lors de la récupération des joueurs: " + err);
             throw new Error(err as string);
         });
+    },
+
+    update: async ({ id, isAdmin, avatar_hash, username, profileurl }: { id: number, isAdmin: boolean, avatar_hash: string, username: string, profileurl: string }) => {
+        const token = getCookieValue('token');
+        console.log(id);
+        const response = await fetch(`${DASHBOARD_API}/players/${id}`, {
+            headers: {
+                Authorization: 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT',
+            credentials: "include",
+            body: JSON.stringify({ isAdmin, avatar_hash, username, profileurl })
+        })
+
+        if (!response.ok) {
+            
+            const errorDetails = await response.json();
+            throw new Error(errorDetails.message);
+        }
+        return response.json();
     }
 }
