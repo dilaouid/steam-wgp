@@ -46,7 +46,6 @@ export const playerQueries = {
 
     update: async ({ id, isAdmin, avatar_hash, username, profileurl }: { id: number, isAdmin: boolean, avatar_hash: string, username: string, profileurl: string }) => {
         const token = getCookieValue('token');
-        console.log(id);
         const response = await fetch(`${DASHBOARD_API}/players/${id}`, {
             headers: {
                 Authorization: 'Bearer ' + token,
