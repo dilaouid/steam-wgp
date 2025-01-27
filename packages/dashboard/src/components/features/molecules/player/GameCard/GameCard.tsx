@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { cn } from "@core/utils";
 import { Eye, EyeOff, Lock, MoreVertical } from "lucide-react";
 import { IGameCardProps } from "./GameCard.props";
-import { useState } from "react";
 import { GameActionModal } from "../GameActionModal";
 import {
   DropdownMenu,

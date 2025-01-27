@@ -5,7 +5,7 @@ export const useCreateSteamder = () => {
     const queryClient = useQueryClient();
 
     return useMutation({ mutationFn: createSteamder, mutationKey: ['create', 'steamder'], onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["steamders"] })
+        queryClient.invalidateQueries({ queryKey: ["steamders"] });
         queryClient.invalidateQueries({ queryKey: ["steamders", "count"] })
     }, onError: (err) => {
         console.error(err);

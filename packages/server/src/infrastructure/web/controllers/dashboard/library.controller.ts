@@ -39,7 +39,7 @@ export const libraryController = {
 
   updateGames: createController(async ({ fastify, body, params }) => {
     const { player_id } = validPlayerId.parse(params);
-    const games = updateLibrarySchema.parse(body);
+    const { games } = updateLibrarySchema.parse(body);
 
     const library = await checkGamesInLibrary(fastify, player_id, games);
 

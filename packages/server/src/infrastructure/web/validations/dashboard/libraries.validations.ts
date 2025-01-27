@@ -10,8 +10,10 @@ export const addToLibrarySchema = z.object({
     .default(false)
 });
 
-export const updateLibrarySchema = z.array(
-  z.coerce
-    .number()
-    .min(1, { message: "invalid_id" })
-)
+export const updateLibrarySchema = z.object({
+  games: z.array(
+    z.coerce
+      .number()
+      .min(1, { message: "invalid_id" })
+  )
+});
