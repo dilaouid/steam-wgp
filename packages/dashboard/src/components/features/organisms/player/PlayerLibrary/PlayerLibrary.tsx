@@ -2,13 +2,14 @@ import { useState } from "react";
 
 import { Library, Loader2, Plus, Save } from "lucide-react";
 
+import { useLibraryMutations } from "@core/API/libraries";
 import { IPlayerDetails } from "@core/types/Player";
 
-import { Button } from "@/components/ui/button";
-
 import { GameCard } from "@features/molecules/player/GameCard";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useLibraryMutations } from "@/core/API/libraries";
+
+import { AddGameDialog } from "../AddGameDialog";
 
 export const PlayerLibrary = ({
   library,
@@ -18,6 +19,7 @@ export const PlayerLibrary = ({
   player: IPlayerDetails;
 }) => {
   const [changes, setChanges] = useState<number[]>([]);
+  const [isAddGameOpen, setIsAddGameOpen] = useState(false);
 
   const { updateLibrary } = useLibraryMutations(player.id as number);
 
@@ -63,7 +65,6 @@ export const PlayerLibrary = ({
               });
               setChanges([]);
             }}
-      
             disabled={!changes.length || updateLibrary.isPending}
             variant="outline"
             size="sm"
@@ -81,15 +82,15 @@ export const PlayerLibrary = ({
             )}
           </Button>
 
-          <Button
-            size="sm"
-            onClick={() => {
-              /* TODO: Open add game modal */
-            }}
-          >
+          <Button size="sm" onClick={() => setIsAddGameOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
             Ajouter un jeu
           </Button>
+
+          <AddGameDialog
+            isOpen={isAddGameOpen}
+            onClose={() => setIsAddGameOpen(false)}
+          />
         </div>
       </div>
 
