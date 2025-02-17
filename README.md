@@ -5,7 +5,7 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/dilaouid/steam-wgp)
 ![GitHub last commit](https://img.shields.io/github/last-commit/dilaouid/steam-wgp)
 ![License](https://img.shields.io/github/license/dilaouid/steam-wgp)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/43aa5e3c-4b06-4882-8de6-3b197b28f2b9/deploy-status)](https://app.netlify.com/sites/fandomscraper/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/43aa5e3c-4b06-4882-8de6-3b197b28f2b9/deploy-status)](https://app.netlify.com/sites/luxury-flan-667659/deploys)
 
 **SteamWGP** is an innovative platform designed to enhance the gaming experience for Steam users by enabling them to organize and join game sessions easily. Our service leverages the power of social gaming to help players find compatible game partners and decide collectively which game to play during their gaming sessions.
 
