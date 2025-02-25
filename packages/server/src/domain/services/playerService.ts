@@ -13,6 +13,7 @@ import {
 import { Player } from "@entities";
 import { HttpError } from "domain/HttpError";
 import { TGetPlayersQuery } from "@validations/dashboard";
+import { fetchingSteamLibrary, getGamesNotInDB, insertGamesInDatabase, insertGamesInLibrary, IProgressOpt, ISteamResponse, setInitialLibrary } from "./progressService";
 
 /**
  * Updates the avatar hash for a player.
@@ -231,3 +232,71 @@ export const update = async (fastify: FastifyInstance, id: bigint, data: Partial
     });
   }
 };
+
+export const syncPlayerLibrary = async (fastify: FastifyInstance, playerId: bigint): Promise<void> => {
+  try {
+    // 1. Get player library
+    fastify.log.info(`Starting library sync for player ${playerId}`);
+    const playerLibraryIds = await setInitialLibrary(fastify, playerId);
+    fastify.log.info(`Initial library set with ${playerLibraryIds.size} games`);
+
+    // 2. Fetch steam library
+    const { STEAM_GetOwnedGames, STEAM_API_KEY } = fastify.config;
+    fastify.log.info(`Using STEAM_GetOwnedGames: ${STEAM_GetOwnedGames}, API key available: ${!!STEAM_API_KEY}`);
+
+    const fetchedSteamLibrary = await fetchingSteamLibrary(
+      fastify,
+      playerLibraryIds,
+      STEAM_GetOwnedGames as string,
+      STEAM_API_KEY as string,
+      playerId
+    ) as IProgressOpt & { library: ISteamResponse | null };
+
+    fastify.log.info(`fetchingSteamLibrary returned: ${JSON.stringify({
+      message: fetchedSteamLibrary.message,
+      type: fetchedSteamLibrary.type,
+      complete: fetchedSteamLibrary.complete,
+      progress: fetchedSteamLibrary.progress,
+      hasLibrary: !!fetchedSteamLibrary.library
+    })}`);
+
+    // Si on ne peut pas accéder à la bibliothèque
+    if (!fetchedSteamLibrary.library) {
+      fastify.log.warn(`Steam library not accessible for player ${playerId}`);
+
+      // Vérifier si le problème est que le profil est privé
+      if (fetchedSteamLibrary.message === "steam_library_not_accessible") {
+        fastify.log.info("Possible private profile detected");
+        throw new Error("steam_profile_may_be_private");
+      }
+
+      throw new Error(fetchedSteamLibrary.message || "steam_library_not_accessible");
+    }
+
+    // À ce stade, nous avons la bibliothèque Steam
+    const steamLibrary = fetchedSteamLibrary.library;
+    fastify.log.info(`Steam library contains ${steamLibrary.games?.length || 0} games`);
+
+    // 3. Get games not in DB yet
+    const { gamesToAddToLibrary, appIdsNotInDB } = await getGamesNotInDB(fastify, steamLibrary, playerLibraryIds);
+    fastify.log.info(`Found ${gamesToAddToLibrary.length} games to add to library and ${appIdsNotInDB.length} games not in DB`);
+
+    // 4. Insert new games to the Games table
+    let gamesToAdd = 0;
+    if (appIdsNotInDB.length > 0) {
+      gamesToAdd = await insertGamesInDatabase(fastify, appIdsNotInDB);
+      fastify.log.info(`Inserted ${gamesToAdd} new games into the database`);
+    }
+
+    // 5. Insert games to the player's library
+    const insertedToLibrary = await insertGamesInLibrary(fastify, playerId, gamesToAddToLibrary);
+    fastify.log.info(`Inserted ${insertedToLibrary} games into player's library`);
+
+    if (insertedToLibrary < gamesToAddToLibrary.length && gamesToAddToLibrary.length > 0) {
+      fastify.log.warn(`Only ${insertedToLibrary} out of ${gamesToAddToLibrary.length} games were added to the library`);
+    }
+  } catch (error) {
+    fastify.log.error(`Failed to sync player library: ${error instanceof Error ? error.message : String(error)}`);
+    throw error;
+  }
+}

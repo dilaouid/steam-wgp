@@ -21,7 +21,7 @@ export const PlayerLibrary = ({
   const [changes, setChanges] = useState<number[]>([]);
   const [isAddGameOpen, setIsAddGameOpen] = useState(false);
 
-  const { updateLibrary } = useLibraryMutations(player.id as number);
+  const { update } = useLibraryMutations(player.id as number);
 
   const toggleGame = (gameId: number) => {
     setChanges((prev) => {
@@ -59,17 +59,17 @@ export const PlayerLibrary = ({
         <div className="flex items-center gap-2">
           <Button
             onClick={async () => {
-              await updateLibrary.mutateAsync({
+              await update.mutateAsync({
                 id: player.id as number,
                 games: changes,
               });
               setChanges([]);
             }}
-            disabled={!changes.length || updateLibrary.isPending}
+            disabled={!changes.length || update.isPending}
             variant="outline"
             size="sm"
           >
-            {updateLibrary.isPending ? (
+            {update.isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Mise à jour...
@@ -90,6 +90,7 @@ export const PlayerLibrary = ({
           <AddGameDialog
             isOpen={isAddGameOpen}
             onClose={() => setIsAddGameOpen(false)}
+            player_id={player.id as number}
           />
         </div>
       </div>

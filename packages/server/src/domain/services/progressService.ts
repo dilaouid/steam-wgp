@@ -31,20 +31,80 @@ export async function setInitialLibrary(f: FastifyInstance, playerId: bigint): P
 
 export async function fetchingSteamLibrary(f: FastifyInstance, library: any, baseUrl: string, API_KEY: string, playerId: bigint): Promise<Partial<IProgressOpt & { library: ISteamResponse | null}>> {
   f.log.info(`Fetching Steam library for player ${playerId}...`);
-  const steamLibraryRequest = await steamService.getLibrary({ playerId, baseUrl, API_KEY });
-  if (steamLibraryRequest == null || steamLibraryRequest.status !== 200) {
-    f.log.warn(`Steam API is not responding...`);
-    return { complete: true, library: null, progress: 0, type: 'danger', message: "steam_library_not_accessible_yet" };
-  }
-  const steamLibrary = await steamService.formatAPIResponse(steamLibraryRequest);
 
-  if (steamLibrary.response && !steamLibrary.response?.games) {
-    const complete = library.size > 0;
-    return { complete, library: null, progress: 15, type: 'danger', message: "steam_library_not_accessible" };
-  }
+  try {
+    // Vérifier les paramètres d'entrée
+    if (!baseUrl || !API_KEY) {
+      f.log.error(`Missing required parameters: baseUrl=${!!baseUrl}, API_KEY=${!!API_KEY}`);
+      return { complete: true, library: null, progress: 0, type: 'danger', message: "steam_api_config_missing" };
+    }
 
-  f.log.info('Steam library fetched successfully !');
-  return { complete: false, library: steamLibrary.response, progress: 20, type: 'info', message: "adding_games_to_library" };
+    const steamLibraryRequest = await steamService.getLibrary({ playerId, baseUrl, API_KEY });
+
+    if (steamLibraryRequest === null) {
+      f.log.warn(`Steam library request returned null - possible network error`);
+      return { complete: true, library: null, progress: 0, type: 'danger', message: "steam_library_network_error" };
+    }
+
+    f.log.info(`Steam API response status: ${steamLibraryRequest.status}`);
+
+    if (steamLibraryRequest.status !== 200) {
+      f.log.warn(`Steam API responded with non-200 status: ${steamLibraryRequest.status}`);
+      return { complete: true, library: null, progress: 0, type: 'danger', message: `steam_api_error_${steamLibraryRequest.status}` };
+    }
+
+    // Cloner la réponse pour pouvoir la lire deux fois
+    const clonedResponse = steamLibraryRequest.clone();
+    const responseText = await clonedResponse.text();
+    f.log.info(`Raw API response (first 200 chars): ${responseText.substring(0, 200)}...`);
+
+    try {
+      // Essayons de parser manuellement pour voir s'il y a des erreurs
+      const manualParse = JSON.parse(responseText);
+      f.log.info(`Manual parse success, response has keys: ${Object.keys(manualParse).join(', ')}`);
+
+      if (manualParse.response) {
+        f.log.info(`Response has keys: ${Object.keys(manualParse.response).join(', ')}`);
+
+        // Vérifier si games existe
+        if (!manualParse.response.games) {
+          f.log.warn(`No 'games' field in the response`);
+
+          // Vérifier s'il y a un message d'erreur spécifique
+          if (manualParse.response.error) {
+            f.log.error(`Steam API error: ${manualParse.response.error}`);
+            return { complete: true, library: null, progress: 0, type: 'danger', message: `steam_api_error: ${manualParse.response.error}` };
+          }
+
+          // Si le profil est privé, Steam renvoie parfois une réponse sans le champ games
+          const complete = library.size > 0;
+          return { complete, library: null, progress: 15, type: 'danger', message: "steam_library_not_accessible" };
+        }
+      }
+    } catch (parseError) {
+      f.log.error(`Failed to manually parse response: ${parseError}`);
+    }
+
+    // Utiliser la méthode standard pour formater la réponse
+    const steamLibrary = await steamService.formatAPIResponse(steamLibraryRequest);
+
+    if (!steamLibrary.response) {
+      f.log.warn(`Formatted response has no 'response' property`);
+      return { complete: true, library: null, progress: 0, type: 'danger', message: "steam_library_invalid_format" };
+    }
+
+    if (!steamLibrary.response.games) {
+      f.log.warn(`Steam library response does not contain games array`);
+      const complete = library.size > 0;
+      return { complete, library: null, progress: 15, type: 'danger', message: "steam_library_not_accessible" };
+    }
+
+    f.log.info(`Steam library fetched successfully with ${steamLibrary.response.games.length} games!`);
+    return { complete: false, library: steamLibrary.response, progress: 20, type: 'info', message: "adding_games_to_library" };
+  } catch (error) {
+    f.log.error(`Exception in fetchingSteamLibrary: ${error instanceof Error ? error.message : String(error)}`);
+    return { complete: true, library: null, progress: 0, type: 'danger', message: "steam_library_exception" };
+  }
 }
 
 /**

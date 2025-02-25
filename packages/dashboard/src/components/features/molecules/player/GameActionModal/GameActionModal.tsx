@@ -14,6 +14,7 @@ export const GameActionModal = ({
   isOpen,
   onClose,
   onConfirm,
+  children
 }: Omit<IGameActionModalProps, "isSelectable">) => (
   <AlertDialog open={isOpen} onOpenChange={onClose}>
     <AlertDialogContent>
@@ -22,9 +23,7 @@ export const GameActionModal = ({
           Action importante
         </AlertDialogTitle>
         <AlertDialogDescription>
-          Marquer ce jeu comme 'Solo' va le retirer des bibliothèques de TOUS
-          les joueurs et il ne sera plus disponible pour les Steamders.
-          Êtes-vous sûr ?
+          { children }
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>

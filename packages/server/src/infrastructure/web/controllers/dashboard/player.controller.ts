@@ -1,4 +1,4 @@
-import { deleteUser, getPlayersInfo, getUserInfo, update } from "@services/playerService";
+import { deleteUser, getPlayersInfo, getUserInfo, syncPlayerLibrary, update } from "@services/playerService";
 import { createController } from "@utils/controller";
 import { getPlayersQuerySchema, updatePlayerBodySchema, validPlayerId } from "@validations/dashboard";
 
@@ -45,4 +45,15 @@ export const playerController = {
       statusCode: 200
     };
   }),
+
+  syncLibrary: createController(async ({ fastify, params }) => {
+    const { player_id } = validPlayerId.parse(params);
+    await syncPlayerLibrary(fastify, player_id);
+
+    return {
+      message: "library_synced",
+      statusCode: 200
+    };
+  })
+
 }

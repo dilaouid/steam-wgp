@@ -1,5 +1,5 @@
 import { AddGameForm } from "@features/molecules/player/AddGameForm";
-import { useGameMutations } from "@core/API/games";
+import { useLibraryMutations } from "@core/API/libraries";
 import {
   Dialog,
   DialogContent,
@@ -11,11 +11,13 @@ import {
 export const AddGameDialog = ({
   isOpen,
   onClose,
+  player_id,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  player_id: number;
 }) => {
-  const { createGame } = useGameMutations();
+  const { add } = useLibraryMutations(player_id);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -29,9 +31,10 @@ export const AddGameDialog = ({
 
         <AddGameForm
           onSubmit={async (gameId) => {
-            await createGame.mutateAsync({
-              id: gameId,
-              is_selectable: true,
+            await add.mutateAsync({
+              game_id: gameId,
+              hidden: true,
+              player_id
             });
             onClose();
           }}

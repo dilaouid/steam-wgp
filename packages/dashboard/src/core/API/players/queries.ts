@@ -62,5 +62,25 @@ export const playerQueries = {
             throw new Error(errorDetails.message);
         }
         return response.json();
-    }
+    },
+
+    syncLibrary: (id: string | number, force = false) => {
+        const token = getCookieValue('token');
+        return fetch(`${DASHBOARD_API}/players/${id}/sync-library${force ? '?force=true' : ''}`, {
+            method: 'POST',
+            credentials: "include",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(async response => {
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Erreur lors de la synchronisation de la bibliothèque');
+            }
+            return data;
+        }).catch(err => {
+            console.error("Erreur lors de la synchronisation de la bibliothèque: ", err);
+            throw err;
+        });
+    }    
 }

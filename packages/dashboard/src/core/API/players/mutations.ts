@@ -12,6 +12,14 @@ export const usePlayerMutations = () => {
                     queryClient.invalidateQueries({ queryKey: ['players'] })
                 ]);
             }
+        }),
+        
+        syncLibrary: useMutation({
+            mutationFn: (id: string | number) => playerQueries.syncLibrary(id), // Accepter ID string ou number
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({ queryKey: ['player'] });
+                await queryClient.invalidateQueries({ queryKey: ['players'] });
+            }
         })
     };
 };

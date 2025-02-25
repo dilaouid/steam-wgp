@@ -6,7 +6,22 @@ type GetGameDetailsParams = { f: FastifyInstance; appId: number; };
 
 export const steamService = {
   getLibrary: async ({ playerId, baseUrl, API_KEY }: GetLibraryParams) => {
-    return fetch(`${baseUrl}/?key=${API_KEY}&steamid=${playerId}&include_appinfo=true&include_played_free_games=true&format=json`)
+    try {
+      console.log(`Calling Steam API with URL: ${baseUrl}?key=${API_KEY.substring(0, 3)}...&steamid=${playerId}&format=json&include_appinfo=true`);
+
+      const response = await fetch(`${baseUrl}?key=${API_KEY}&steamid=${playerId}&format=json&include_appinfo=true`);
+
+      console.log(`Steam API response status: ${response.status}`);
+
+      // Log headers to check content type
+      const headers = Object.fromEntries([...response.headers.entries()]);
+      console.log(`Response headers: ${JSON.stringify(headers)}`);
+
+      return response;
+    } catch (error) {
+      console.error(`Steam API getLibrary error: ${error instanceof Error ? error.message : String(error)}`);
+      return null;
+    }
   },
 
   // Fetch the game details from the steam api (is multiplayer or not, essentially)

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { cn } from "@core/utils";
-import { Eye, EyeOff, Lock, MoreVertical } from "lucide-react";
+import { Eye, EyeOff, Lock, MoreVertical, Trash2 } from "lucide-react";
 import { IGameCardProps } from "./GameCard.props";
 import { GameActionModal } from "../GameActionModal";
 import {
@@ -15,12 +15,17 @@ export const GameCard = ({ gameId, hidden, onToggle }: IGameCardProps) => {
   const { updateGame } = useGameMutations();
 
   const [imgError, setImgError] = useState(false);
-  const [showActionModal, setShowActionModal] = useState(false);
+  const [showSoloModal, setShowSoloModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [pendingAction, setPendingAction] = useState<boolean | null>(null);
 
   const handleGameAction = (isSelectable: boolean) => {
     setPendingAction(isSelectable);
-    setShowActionModal(true);
+    setShowSoloModal(true);
+  };
+
+  const handleDeleteGameAction = () => {
+    setShowDeleteModal(true);
   };
 
   return (
@@ -85,20 +90,46 @@ export const GameCard = ({ gameId, hidden, onToggle }: IGameCardProps) => {
             <Lock className="mr-2 h-4 w-4" />
             <span>Marquer comme solo</span>
           </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={() => handleDeleteGameAction()}
+            className="text-red-500"
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            <span>Supprimer de la bibliothèque</span>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
       <GameActionModal
-        isOpen={showActionModal}
-        onClose={() => setShowActionModal(false)}
+        isOpen={showSoloModal}
+        onClose={() => setShowSoloModal(false)}
         onConfirm={() => {
           updateGame.mutate({
             id: gameId,
             is_selectable: pendingAction!,
           });
-          setShowActionModal(false);
+          setShowSoloModal(false);
         }}
-      />
+      >
+        Marquer ce jeu comme 'Solo' va le retirer des bibliothèques de TOUS les
+        joueurs et il ne sera plus disponible pour les Steamders. Êtes-vous sûr
+        ?
+      </GameActionModal>
+
+      <GameActionModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={() => {
+          updateGame.mutate({
+            id: gameId,
+            is_selectable: pendingAction!,
+          });
+          setShowDeleteModal(false);
+        }}
+      >
+        Vous vous apprêtez à supprimer ce jeu de la bibliothèque du joueur, ce qui pourra affecter sa Steamder actuelle s'il en a une. Êtes-vous sûr ?
+      </GameActionModal>
     </div>
   );
 };

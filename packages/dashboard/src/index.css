@@ -64,3 +64,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes progressAnimation {
+  0% {
+    transform: scaleX(0);
+  }
+  50% {
+    transform: scaleX(0.75);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+.animate-progress {
+  animation: progressAnimation 2s ease-in-out infinite;
+}

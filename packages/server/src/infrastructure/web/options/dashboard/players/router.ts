@@ -4,7 +4,8 @@ import {
   getPlayerOpts,
   getPlayersOpts,
   updatePlayerOpts,
-  deletePlayerOpts
+  deletePlayerOpts,
+  syncLibraryOpts
 } from "@options/dashboard";
 
 /**
@@ -17,5 +18,6 @@ export default async function dashboardPlayersRouter(fastify: FastifyInstance) {
     fastify.route(getPlayerOpts);       // :GET     /dashboard/players/:playerId
     fastify.route(updatePlayerOpts);    // :PUT     /dashboard/players/:playerId
     fastify.route(deletePlayerOpts);    // :DELETE  /dashboard/players/:playerId
+    fastify.route(syncLibraryOpts);     // :POST    /dashboard/players/:playerId/sync-library
   });
 }

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ISteamder } from '../core/types/ISteamder';
+import { ISteamder } from '@core/types/ISteamder';
 
 type SteamderStore = {
     steamder: ISteamder | null;
