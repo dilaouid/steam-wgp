@@ -7,6 +7,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px', // Ajoute un breakpoint pour les écrans 4K et plus
+      },
       keyframes: {
         "fade-in": {
           "0%": {
